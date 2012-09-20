@@ -9,8 +9,9 @@ group :assets do
 end
 
 group :default do
-  gem 'jquery-rails'
+  gem 'enumerize'
   gem 'inherited_resources'
+  gem 'jquery-rails'
   gem 'pg'
   gem 'rails'
   gem 'russian'
@@ -20,4 +21,5 @@ end
 
 group :development do
   gem 'hirb', :require => false
+  gem 'rails-erd'
 end

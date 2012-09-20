@@ -1,0 +1,61 @@
+ru:
+  enumerize:
+    lesson:
+      kind:
+        design:     Курсовое проектирование
+        laboratory: Лабораторная работы
+        lecture:    Лекция
+        practice:   Практическое занятие
+        research:   Курсовая работа
+
+    presence:
+      kind:
+        was:   был
+        wasnt: не был
+
+  activerecord:
+    attributes:
+      discipline:
+        abbr:  Аббревиатура
+        title: Название дисциплины
+
+      faculty:
+        abbr:  Аббревиатура
+        title: Название факультета
+
+      group:
+        course: Номер курса
+        number: Номер группы
+
+      lecturer:
+        <<: *human
+
+      lesson:
+        classroom:    Учебная аудитория
+        date_on:      Дата занятия
+        kind:         Тип занятия
+        order_number: Порядковый номер занятия
+
+      person:       &human
+        name:       Имя
+        surname:    Фамилия
+        patronymic: Отчество
+
+      presence:
+        kind: Присутствие на занятии
+
+      student:
+        <<: *human
+
+    models:
+      discipline: Дисциплина
+      faculty:    Факультет
+      group:      Группа
+      lecturer:   Преподаватель
+      lesson:     Занятие
+      person:     Человек
+      presence:   Присутствие
+      student:    Студент
+
+
+
