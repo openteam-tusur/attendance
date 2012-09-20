@@ -9,10 +9,13 @@ group :assets do
 end
 
 group :default do
+  gem 'curb',                     :require => false
   gem 'enumerize'
   gem 'inherited_resources'
   gem 'jquery-rails'
+  gem 'openteam-commons'
   gem 'pg'
+  gem 'progress_bar',             :require => false
   gem 'rails'
   gem 'russian'
   gem 'simple_form'

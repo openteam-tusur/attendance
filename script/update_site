@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+load_rvm_rc() {
+  if [ -f ~/.rvm/scripts/rvm ]; then
+    source ~/.rvm/scripts/rvm
+  fi
+
+  RVMRC_DIR=${CURRENT_PATH}
+  for ((;;)); do
+    if [ -f ${RVMRC_DIR}/.rvmrc ]; then
+      . ${RVMRC_DIR}/.rvmrc
+      break
+    elif [ "${RVMRC_DIR}" == "/" ]; then
+      break
+    fi
+    RVMRC_DIR=$(dirname ${RVMRC_DIR})
+  done
+}
+
+exec_git() {
+  /usr/bin/env git --git-dir=${CURRENT_PATH}/.git --work-tree=${CURRENT_PATH} $@
+}
+
+exec_rake() {
+  RAILS_ENV=production ${CURRENT_PATH}/bin/rake -f ${CURRENT_PATH}/Rakefile $@
+}
+
+exec_bundle() {
+  BUNDLE_GEMFILE=${CURRENT_PATH}/Gemfile bundle $@
+}
+
+reload_rc_script() {
+  if [ $(/usr/bin/uname) == "FreeBSD" ]; then
+    RC_PATH=/usr/local/etc/rc.d/
+    RC_SCRIPT=${RC_PATH}/${PROJECT_GROUP}-${PROJECT_NAME}.sh
+    RC_SUBSCRIBER_SCRIPT=${RC_PATH}/${PROJECT_GROUP}-${PROJECT_NAME}-subscriber.sh
+  else
+    RC_PATH=/etc/init.d/
+    RC_SCRIPT=${RC_PATH}/${PROJECT_GROUP}-${PROJECT_NAME}
+    RC_SUBSCRIBER_SCRIPT=${RC_PATH}/${PROJECT_GROUP}-${PROJECT_NAME}-subscriber
+  fi
+
+  if [ -f ${RC_SCRIPT} ]; then
+    ${RC_SCRIPT} reload
+  fi
+  if [ -f ${RC_SUBSCRIBER_SCRIPT} ]; then
+    ${RC_SUBSCRIBER_SCRIPT} restart
+  fi
+}
+
+bundle_update() {
+  exec_bundle --path .bundle --binstubs --clean --without test:development
+}
+
+CURRENT_PATH=$(dirname $(dirname $(realpath $0)))
+
+PROJECT_GROUP=$(basename $(dirname ${CURRENT_PATH}))
+PROJECT_NAME=$(basename ${CURRENT_PATH})
+
+if [ $(/usr/bin/uname) == "FreeBSD" ]; then
+  exec_git checkout Gemfile.lock
+fi
+
+exec_git fetch
+exec_git merge origin/master
+
+load_rvm_rc
+
+bundle_update
+
+if [ -f "${CURRENT_PATH}/config/database.yml" ]; then
+  exec_rake db:migrate
+fi
+
+if [ "x${1}" == "x--assets" ]; then
+  exec_rake assets:precompile:primary assets:precompile:nondigest
+fi
+
+reload_rc_script
+
+if [ -f "${CURRENT_PATH}/lib/tasks/cron.rake" ]; then
+  exec_bundle exec whenever --update-crontab --load-file "${CURRENT_PATH}/config/schedule.rb"
+fi
+
+exec_rake airbrake:deploy TO=production
