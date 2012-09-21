@@ -1,0 +1,21 @@
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <%= render collection %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @group.students.each do |student| %>
+      <tr>
+        <td><%= student %></td>
+        <%#<% collection.each do |lesson| %>%>
+          <%#<td>%>
+            <%#<%= student.presences.where(:lesson => lesson) %>%>
+          <%#</td>%>
+        <%#<% end %>%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

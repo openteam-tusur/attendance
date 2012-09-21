@@ -1,4 +1,6 @@
 ru:
+  site_title:       Журнал посещаемости студентов ТУСУР
+
   enumerize:
     lesson:
       kind:
@@ -27,22 +29,22 @@ ru:
         course: Номер курса
         number: Номер группы
 
-      lecturer:
-        <<: *human
-
       lesson:
         classroom:    Учебная аудитория
         date_on:      Дата занятия
         kind:         Тип занятия
         order_number: Порядковый номер занятия
 
-      person:       &human
+      person: &human
         name:       Имя
         surname:    Фамилия
         patronymic: Отчество
 
       presence:
         kind: Присутствие на занятии
+
+      lecturer:
+        <<: *human
 
       student:
         <<: *human

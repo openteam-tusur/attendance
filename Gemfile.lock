@@ -32,6 +32,7 @@ GEM
       builder
       girl_friday
     arel (3.0.2)
+    attribute_normalizer (1.1.0)
     builder (3.0.3)
     choice (0.1.6)
     chronic (0.6.7)
@@ -169,10 +170,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  attribute_normalizer
   coffee-rails
   compass-rails
   curb
   enumerize
+  has_scope
   hirb
   inherited_resources
   jquery-rails

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920045656) do
+ActiveRecord::Schema.define(:version => 20120920094118) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -43,16 +43,15 @@ ActiveRecord::Schema.define(:version => 20120920045656) do
     t.string   "kind"
     t.string   "order_number"
     t.integer  "timetable_id"
+    t.text     "note"
     t.integer  "discipline_id"
     t.integer  "group_id"
-    t.integer  "lecturer_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
   add_index "lessons", ["discipline_id"], :name => "index_lessons_on_discipline_id"
   add_index "lessons", ["group_id"], :name => "index_lessons_on_group_id"
-  add_index "lessons", ["lecturer_id"], :name => "index_lessons_on_lecturer_id"
 
   create_table "people", :force => true do |t|
     t.string   "surname"
@@ -77,5 +76,15 @@ ActiveRecord::Schema.define(:version => 20120920045656) do
 
   add_index "presences", ["lesson_id"], :name => "index_presences_on_lesson_id"
   add_index "presences", ["student_id"], :name => "index_presences_on_student_id"
+
+  create_table "realizes", :force => true do |t|
+    t.integer  "lecturer_id"
+    t.integer  "lesson_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "realizes", ["lecturer_id"], :name => "index_realizes_on_lecturer_id"
+  add_index "realizes", ["lesson_id"], :name => "index_realizes_on_lesson_id"
 
 end

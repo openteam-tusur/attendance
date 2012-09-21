@@ -1,0 +1,11 @@
+<ul>
+  <%= render resource %>
+</ul>
+
+<ul class='calendar'>
+  <% (Time.zone.today - 5.days .. Time.zone.today + 5.days).each do |date| %>
+    <li class='day <%= 'today' if date == Time.zone.today %>'>
+      <%= link_to l(date, :format => '%d %B'), manage_group_scoped_lessons_path(@group, :date => date) %>
+    </li>
+  <% end %>
+</ul>
