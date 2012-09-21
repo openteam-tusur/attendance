@@ -1,0 +1,2 @@
+<%= presence.kind_text %>
+<%= link_to 'редактировать', edit_manage_group_student_lesson_presence_path(@group, presence.student, presence.lesson, presence), :remote => true, :class => "hide lesson_#{presence.lesson.id}" %>

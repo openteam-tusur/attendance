@@ -3,7 +3,7 @@
 class Lesson < ActiveRecord::Base
   include Enumerize
 
-  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id
+  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes
 
   belongs_to :discipline
   belongs_to :group
@@ -14,10 +14,14 @@ class Lesson < ActiveRecord::Base
 
   enumerize :kind, :in => [:lecture, :practice, :laboratory, :research, :design]
 
+  default_scope order(:order_number)
+
   scope :by_group_and_date, ->(group, date){ get_lessons_at(group, date) }
 
+  accepts_nested_attributes_for :presences
+
   def self.get_lessons_at(group, date)
-    collection = Group.find_by_number(group).lessons.any? ? Group.find_by_number(group).lessons : nil
+    collection = Group.find_by_number(group).lessons.where(:date_on => Time.zone.parse(date)).any? ? Group.find_by_number(group).lessons.where(:date_on => Time.zone.parse(date)) : nil
     collection ||= getted_lessons(group, date)
     Lesson.where(:id => collection.map(&:id))
   end

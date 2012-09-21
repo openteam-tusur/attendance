@@ -3,4 +3,6 @@ class Manage::GroupsController < Manage::ApplicationController
 
   defaults :finder => :find_by_number!
 
+  actions :all, :only => [:index, :show]
+
 end

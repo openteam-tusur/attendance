@@ -3,12 +3,12 @@
 class Presence < ActiveRecord::Base
   include Enumerize
 
-  attr_accessible :kind
+  attr_accessible :kind, :lesson_id, :student_id
 
   belongs_to :lesson
   belongs_to :student
 
-  enumerize :kind, :in => [:was, :wasnt]
+  enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked
 
   def to_s
     kind_text

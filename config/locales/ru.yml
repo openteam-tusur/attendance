@@ -12,8 +12,9 @@ ru:
 
     presence:
       kind:
-        was:   был
-        wasnt: не был
+        not_marked: не отмечен
+        was:        был
+        wasnt:      не был
 
   activerecord:
     attributes:

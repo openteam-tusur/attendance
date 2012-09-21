@@ -1,4 +1,5 @@
-<table>
+<h1>Журнал посещаемости на <%= l Time.zone.parse(params[:date]), :format => '%d %b' %> для <%= @group %></h1>
+<table class='ajaxed'>
   <thead>
     <tr>
       <td></td>
@@ -10,12 +11,20 @@
     <% @group.students.each do |student| %>
       <tr>
         <td><%= student %></td>
-        <%#<% collection.each do |lesson| %>%>
-          <%#<td>%>
-            <%#<%= student.presences.where(:lesson => lesson) %>%>
-          <%#</td>%>
-        <%#<% end %>%>
+        <% collection.each do |lesson| %>
+          <td>
+            <%= render student.attendace_on(lesson) %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
+    <tr>
+      <td></td>
+      <% collection.each do |lesson| %>
+        <td>
+          <%= link_to 'редактировать', '#', :id => "lesson_#{lesson.id}", :class => "edit_link" %>
+        </td>
+      <% end %>
+    </tr>
   </tbody>
 </table>

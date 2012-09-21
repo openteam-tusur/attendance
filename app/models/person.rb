@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
     value.present? && value.is_a?(String) ? value.mb_chars.titleize.gsub(/\./, '') : value
   end
 
+  default_scope order(:surname)
+
   def to_s
     "#{surname} #{name} #{patronymic}"
   end
