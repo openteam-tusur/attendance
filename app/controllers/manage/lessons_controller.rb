@@ -5,7 +5,7 @@ class Manage::LessonsController < Manage::ApplicationController
   end
 
   has_scope :date do |controller, scope, value|
-    scope.by_group_and_date(controller.params['group_id'], value)
+    scope.by_date(value)
   end
 
   actions :all, :only => :index

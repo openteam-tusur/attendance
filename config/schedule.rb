@@ -9,5 +9,13 @@ else
 end
 
 every :month do
-  rake 'cron'
+  rake 'sync:f_and_g'
+end
+
+every :sunday, :at => '1am' do
+  rake 'sync:students'
+end
+
+every :day, :at => '4am' do
+  rake 'sync:lessons'
 end
