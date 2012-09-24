@@ -11,6 +11,7 @@ end
 group :default do
   gem 'attribute_normalizer'
   gem 'curb'
+  gem 'default_value_for'
   gem 'enumerize'
   gem 'inherited_resources'
   gem 'jquery-rails'

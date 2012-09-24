@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920094118) do
+ActiveRecord::Schema.define(:version => 20120924045405) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20120920094118) do
     t.integer  "group_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.boolean  "active"
   end
 
   add_index "people", ["group_id"], :name => "index_people_on_group_id"

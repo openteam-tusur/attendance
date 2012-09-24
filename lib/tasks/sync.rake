@@ -40,6 +40,8 @@ namespace :sync do
 
         bar.increment!
       end
+
+      (group.students - group.students.where(:contingent_id => students.map{|s| s['student']['study_id']})).each{|student| student.update_attributes(:active => false)}
     end
   end
 
