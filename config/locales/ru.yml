@@ -4,11 +4,11 @@ ru:
   enumerize:
     lesson:
       kind:
-        design:     Курсовое проектирование
-        laboratory: Лабораторная работы
+        design:     Курс. проек.
+        laboratory: Лаб.раб.
         lecture:    Лекция
-        practice:   Практическое занятие
-        research:   Курсовая работа
+        practice:   Практика
+        research:   Курс. раб.
 
     presence:
       kind:

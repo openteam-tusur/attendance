@@ -80,9 +80,11 @@ class LessonSync
 
     response['lessons'].each do |lesson|
       discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
-      lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id(lesson['timetable_id']).tap do |item|
-        item.classroom    = lesson['classroom']
-        item.date_on      = Time.zone.parse(date)
+      lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom(
+                                                                                            :timetable_id => lesson['timetable_id'],
+                                                                                            :date_on => Time.zone.parse(date),
+                                                                                            :classroom => lesson['classroom']
+      ).tap do |item|
         item.kind         = lesson['kind']
         item.order_number = lesson['order_number']
         item.note         = lesson['note']
@@ -92,9 +94,9 @@ class LessonSync
 
       lesson['lecturers'].each do |lecturer|
         lecturer_obj = Lecturer.find_or_create_by_surname_and_name_and_patronymic(
-          :surname => lecturer['lastname'],
-          :name => lecturer['firstname'],
-          :patronymic => lecturer['middlename']
+          :surname => lecturer['lastname'].mb_chars.titleize.gsub(/\./, '').strip,
+          :name => lecturer['firstname'].mb_chars.titleize.gsub(/\./, '').strip,
+          :patronymic => lecturer['middlename'].mb_chars.titleize.gsub(/\./, '').strip
         )
 
         Realize.find_or_create_by_lecturer_id_and_lesson_id(:lecturer_id => lecturer_obj.id, :lesson_id => lesson_obj.id)

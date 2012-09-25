@@ -8,7 +8,7 @@ class Presence < ActiveRecord::Base
   belongs_to :lesson
   belongs_to :student
 
-  enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked
+  enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked, :predicates => true
 
   def to_s
     kind_text

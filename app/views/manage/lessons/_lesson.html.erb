@@ -1,9 +1,6 @@
-<td>
-  <%= lesson.discipline %>
-  <br />
-  <%= lesson.classroom %>
-  <br />
-  <%= lesson.kind_text %>
-  <br />
-  <%= lesson.lecturers.join(', ') %>
-</td>
+<th class=<%= lesson.kind %>>
+  <span class="discipline" title='<%= lesson.discipline %>'><%= lesson.discipline.abbr %></span>
+  <span class="kind"><%= lesson.kind_text %></span>
+  <span class="classroom"><%= lesson.classroom %></span>
+  <span class='lecturers'><%= lesson.lecturers.join(', ') %></span>
+</th>

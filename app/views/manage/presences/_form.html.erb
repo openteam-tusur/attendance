@@ -1,7 +1,13 @@
 <%= simple_form_for @student.attendace_on(@lesson), :url => [:manage, @group, @student, @lesson, @student.attendace_on(@lesson)], :html => { :remote => true } do |f| %>
   <%= f.input :student_id, :as => :hidden %>
   <%= f.input :lesson_id, :as => :hidden %>
-  <%= f.input :kind, :include_blank => false, :selected => :was %>
+
+  <% if f.object.not_marked? %>
+    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(1), :checked => 'was' %>
+  <% else %>
+    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(1) %>
+  <% end %>
+
   <%= f.submit :class => "hide lesson_#{@lesson.id}" %>
   <%= link_to "отмена", [:manage, @group, @student, @lesson, @student.attendace_on(@lesson)], :remote => true, :class => 'hide cancel_presence' %>
 <% end %>

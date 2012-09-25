@@ -13,6 +13,11 @@ class Group < ActiveRecord::Base
     "гр. #{number}"
   end
 
+  def filled_attendance_at?(date)
+    return true if lessons.by_date(date).empty?
+    lessons.by_date(date).flat_map{|l| l.presences.empty? || l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
+  end
+
   def to_param
     number
   end

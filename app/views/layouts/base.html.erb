@@ -8,6 +8,17 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <%= yield :content %>
+    <div class='main_wrapper'>
+      <div class="header">
+        <a href="/" class="logo">Томский государственный университет систем управления и радиоэлектроники</a>
+        <h1>Электронный журнал посещаемости студентов</h1>
+      </div>
+
+      <%= yield :calendar %>
+
+      <div class="content">
+        <%= yield :content %>
+      </div>
+    </div>
   </body>
 </html>
