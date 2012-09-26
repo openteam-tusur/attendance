@@ -28,4 +28,5 @@ end
 group :development do
   gem 'hirb', :require => false
   gem 'rails-erd'
+  gem 'rvm-capistrano'
 end
