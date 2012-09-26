@@ -37,6 +37,8 @@ $.fn.calculate_visible = () ->
     if control.hasClass('next')
       line_wrapper.animate(
         {'left': current_left-153},
+        duration: 'slow'
+        easing: 'easeOutElastic'
         complete: ->
           control.removeClass('proccessing')
           line_wrapper.calculate_visible()
@@ -45,6 +47,8 @@ $.fn.calculate_visible = () ->
     if control.hasClass('prev')
       line_wrapper.animate(
         {'left': current_left+153},
+        duration: 'slow'
+        easing: 'easeOutElastic'
         complete: ->
           control.removeClass('proccessing')
           line_wrapper.calculate_visible()
