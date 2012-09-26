@@ -273,10 +273,12 @@ body
             top: 1px
 
       .edit_link
+        background: #83b3c1
         +background-image(linear-gradient(#90c5d3, #83b3c1, #7ba7b2))
         border: 1px solid #75a3b0
 
       .cancel_link
+        background: #ce648c
         +background-image(linear-gradient(#db6c97, #ce648c, #c65d85))
         border: 1px solid #d46791
 
@@ -354,4 +356,5 @@ body
 
       &.on
         .thumb
-          +transform(translate3d(49px, 0, 0))
+          //+transform(translate3d(49px, 0, 0))
+          left: 49px
