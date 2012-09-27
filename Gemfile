@@ -9,6 +9,7 @@ group :assets do
 end
 
 group :default do
+  gem 'airbrake',                '3.1.2'
   gem 'attribute_normalizer'
   gem 'curb'
   gem 'default_value_for'
