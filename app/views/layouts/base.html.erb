@@ -8,7 +8,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div class='main_wrapper'>
+    <div class='main_wrapper <%= yield :main_wrapper_width %>'>
       <div class="header">
         <a href="/" class="logo">Томский государственный университет систем управления и радиоэлектроники</a>
         <h1>Электронный журнал посещаемости студентов</h1>

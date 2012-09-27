@@ -12,6 +12,10 @@ Attendance::Application.routes.draw do
       end
     end
 
+    resources :faculties, :only => [:index, :show] do
+      resources :groups, :only => [:show]
+    end
+
     root :to => 'groups#index'
   end
 

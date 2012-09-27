@@ -35,6 +35,13 @@ h6
 p
   margin: 0 0 0.1em 0
 
+a
+  color: #973c07
+
+  &:hover
+    color: #97532c
+    text-decoration: none
+
 table
   border-collapse: collapse
   width: 100%
@@ -45,11 +52,15 @@ table
 body
   background: #f7fbfe
   color: #333333
+  width: auto
 
 .main_wrapper
-  +clearfix
   margin: 20px auto
+  padding: 0 10px
   width: 980px
+
+  &.wide
+    width: auto
 
 .header
   +clearfix
@@ -107,11 +118,11 @@ body
       background: #ecedef
       height: 48px
       position: relative
-      width: 3000px
+      width: 55998px
 
       li
         float: left
-        height: 48px
+        height: 60px
 
         a
           +clearfix
@@ -151,14 +162,13 @@ body
           background: #90A2AC
 
           &:after
-            background: image_url('active.png') no-repeat
+            background: #F7FBFE image_url('active.png') no-repeat center center
             content: ''
             display: block
             height: 12px
-            margin-left: 70px
             position: absolute
             top: 48px
-            width: 19px
+            width: 153px
 
           span
             color: #fff
@@ -169,9 +179,19 @@ body
 
 .content
   +border-radius(10px)
+  +clearfix
   background: #fff
   border: 1px solid #e6e8e7
   padding: 18px
+  width: 100%
+
+  .nofilled_dates
+    color: #b72327
+    height: 0
+    left: 390px
+    position: relative
+    top: -105px
+    width: 500px
 
   table
     font-family: Arial, sans-serif
@@ -230,6 +250,27 @@ body
     .design
       background: #FFD5E5
 
+    tbody
+      .lecture
+        background: #E5FFD5
+        background: rgba(229, 255, 213, 0.5)
+
+      .practice
+        background: #D5F6FF
+        background: rgba(213, 246, 255, 0.5)
+
+      .laboratory
+        background: #D7D7F4
+        background: rgba(215, 215, 244, 0.5)
+
+      .research
+        background: #F4E3D7
+        background: rgba(244, 227, 215, 0.5)
+
+      .design
+        background: #FFD5E5
+        background: rgba(255, 213, 229, 0.5)
+
     .student
       text-align: left
 
@@ -281,6 +322,83 @@ body
         background: #ce648c
         +background-image(linear-gradient(#db6c97, #ce648c, #c65d85))
         border: 1px solid #d46791
+
+    &.faculty
+      border: none
+
+      thead
+        font-size: 1.6em
+
+        th
+          border-top: none
+
+          &.grey
+            border-bottom: none
+            color: #616e81
+
+
+      td, th
+        font-family: Georgia, serif
+        border-right: none
+        border-bottom: none
+
+      .faculty_title
+        border-left: none
+        width: 350px
+
+      .group_number, .course_number
+        border-left: none
+        padding-left: 150px
+        text-align: left
+
+      .group_number
+        &.warning
+          background: image_url('warning_group.png') no-repeat 135px center
+
+      .course
+        font-size: 1.4em
+        height: 87px
+
+        td
+          font-weight: bold
+
+      .group
+        font-size: 1.1em
+
+    &.group
+      .discipline_title
+      .student
+        .fio
+          display: block
+
+        .student_aaflwb, .student_aafsb
+          font-family: Georgia, serif
+          font-size: 1.1em
+          font-weight: bold
+
+      .percent
+        display: block
+        font-family: Georgia, serif
+        font-size: 1.1em
+
+      .fraction
+        color: #616e81
+        display: block
+        font-family: Georgia, serif
+
+      .period
+        font-size: 0.8em
+        td
+          padding: 0px 5px
+
+      .lesson
+        .lesson_kind
+          display: block
+
+        .lecturers
+          color: #616e81
+          display: block
+          font-size: 0.9em
 
   form
     height: 31px
@@ -358,3 +476,26 @@ body
         .thumb
           //+transform(translate3d(49px, 0, 0))
           left: 49px
+
+  .breadcrumbs
+    border-bottom: 1px solid #E6E8E7
+    font-family: Verdana, sans-serif
+    font-size: 0.9em
+    margin-bottom: 18px
+    padding-bottom: 18px
+
+    ul
+      +clearfix
+
+      li
+        float: left
+        margin: 0 10px 0 0
+
+        a
+          font-family: Verdana, sans-serif
+
+        &.with_rarr
+          &:after
+            content: '\2192'
+            margin: 0 0 0 10px
+

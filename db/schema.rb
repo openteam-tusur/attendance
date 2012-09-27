@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924045405) do
+ActiveRecord::Schema.define(:version => 20120926091822) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20120924045405) do
     t.integer  "student_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "date_on"
   end
 
   add_index "presences", ["lesson_id"], :name => "index_presences_on_lesson_id"

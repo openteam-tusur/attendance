@@ -25,7 +25,7 @@
         <td class='student'><%= student %></td>
         <% times.each_with_index do |time, order| %>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
-            <td><%= render student.attendace_on(lessons.first) %></td>
+            <td><%= render student.attendance_on(lessons.first) %></td>
           <% else %>
             <td>&mdash;</td>
           <% end %>
@@ -54,7 +54,7 @@
 
     <div class="days_wrapper">
       <ul>
-        <% @group.lessons.pluck(:date_on).uniq.sort.each do |date| %>
+        <% @group.lessons_from(@group.semester_begin).pluck(:date_on).uniq.sort.each do |date| %>
           <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= 'warning' if @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
             <%= link_to  manage_group_scoped_lessons_path(@group, :date => date.to_date) do %>
               <span class="number"><%= date.strftime('%e') %></span>

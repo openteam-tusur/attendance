@@ -1,0 +1,36 @@
+<table class='faculty'>
+  <thead>
+    <tr>
+      <th rowspan='2' class='faculty_title'><%= resource %></th>
+      <th class='grey'>прошедшая неделя</th>
+      <th class='grey'>с начала семестра</th>
+    </tr>
+    <tr>
+      <th class='faculty_aaflwb'></th>
+      <th class='faculty_aafsb'></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% resource.groups.group_by(&:course).sort.each do |course, groups| %>
+      <tr class='course'>
+        <td class='course_number'><%= "#{course} курс" %></td>
+        <td class='course_aaflwb'></td>
+        <td class='course_aafsb'></td>
+      </tr>
+      <% groups.each do |group| %>
+        <tr class='group'>
+          <td class='group_number'>
+            <%= link_to group, [:manage, resource, group] %>
+          </td>
+          <td class='group_aaflwb'>
+            <%= "%.1f" % (group.average_attendence_from_last_week_begin*100) %>%
+          </td>
+          <td class='group_aafsb'>
+            <%= "%.1f" % (group.average_attendence_from_semester_begin*100) %>%
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,5 +1,85 @@
-<ul>
-  <%= render resource %>
-</ul>
+<%= content_for :main_wrapper_width, 'wide' %>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to parent, [:manage, parent] %></li>
+    <li><%= resource %></li>
+  </ul>
+</div>
 
-<%= link_to l(Time.zone.today, :format => '%d %B'), manage_group_scoped_lessons_path(@group, :date => Time.zone.today) %>
+<h3><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></h3>
+
+<h6>Посещаемость за прошедшую неделю &mdash; <%= "%.1f" % (@group.average_attendence_from_last_week_begin*100) %>%</h6>
+<h6>Посещаемость с начала семестра &mdash; <%= "%.1f" % (@group.average_attendence_from_semester_begin*100) %>%</h6>
+<h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today) %></h6>
+
+<% if (nofilled_dates = @group.lessons_from(@group.semester_begin).pluck(:date_on).uniq.sort.select{|d| @group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
+  <div class="nofilled_dates">
+    <% if nofilled_dates.count < 20 %>
+      Журнал посещаемости не заполнен за <%= nofilled_dates.map{|d| l(d, :format => "%d %b")}.join(', ') %>
+    <% else %>
+      Журнал посещаемости не заполнялся больше 20 дней!
+    <% end %>
+  </div>
+<% end %>
+
+<table class="group wider_block">
+  <thead>
+    <tr>
+      <td rowspan='3'></td>
+      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+        <td colspan=<%= lessons.group_by(&:kind).count*2 %> title="<%= discilpine %>" class='discipline_title'><%= discilpine.abbr %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+        <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
+          <td colspan='2' class='lesson <%= lessons.first.kind %>'>
+            <span class='lesson_kind'><%= kind %></span>
+            <span class='lecturers'><%= lessons.map(&:lecturers).flatten.uniq.join(', ') %></span>
+          </td>
+        <% end %>
+      <% end %>
+    </tr>
+    <tr class='period'>
+      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+        <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
+          <td>неделя</td>
+          <td>семестр</td>
+        <% end %>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @group.students.each do |student| %>
+      <tr>
+        <td class='student'>
+          <span class='fio'><%= student %></span>
+          <span class='student_aaflwb'></span>/<span class='student_aafsb'></span>
+        </td>
+        <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+          <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
+            <td class='lesson_aaflwb lesson <%= lessons.first.kind %>'>
+              <% last_week_lessons = lessons.select{|l| l.date_on >= @group.last_week_begin} %>
+              <% attendanced_last_week_lessons = last_week_lessons.select{|l| student.attendance_on?(l)}.count %>
+              <span class="percent">
+                <%= last_week_lessons.any? ? "#{"%.1f" % ((attendanced_last_week_lessons.to_f/last_week_lessons.count)*100)}%" : '0.0%' %>
+              </span>
+              <span class="fraction">
+                <%= attendanced_last_week_lessons %>/<%= last_week_lessons.count %>
+              </span>
+            </td>
+            <td class='lesson_aafsb lesson <%= lessons.first.kind %>'>
+              <% attendanced_lessons = lessons.select{|l| student.attendance_on?(l)}.count %>
+              <span class="percent">
+                <%= "#{"%.1f" % ((attendanced_lessons.to_f/lessons.count)*100)}%" %>
+              </span>
+              <span class="fraction">
+                <%= attendanced_lessons %>/<%= lessons.count %>
+              </span>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
