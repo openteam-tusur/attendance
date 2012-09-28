@@ -12,6 +12,8 @@ class Presence < ActiveRecord::Base
 
   enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked, :predicates => true
 
+  scope :was, where(:kind => 'was')
+
   def to_s
     kind_text
   end

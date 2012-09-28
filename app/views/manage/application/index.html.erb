@@ -16,44 +16,20 @@
     <% Faculty.all.each do |faculty| %>
       <tr>
         <td><%= faculty %></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><%= faculty.average_attendance_from_last_week %></td>
+        <td><%= faculty.average_attendance_from_semester_begin %></td>
+        <td><%= faculty.students.count %></td>
       </tr>
       <% faculty.groups.group_by(&:course).sort.each do |course, groups| %>
         <tr>
           <td><%= "#{course} курс" %></td>
 
           <td>
-            <%= Group
-                  .where(:id => groups.map(&:id))
-                  .joins(:students)
-                  .joins(:presences)
-                  .select("DISTINCT(presences.id)")
-                  .where("presences.kind = 'was' AND presences.date_on >= ?", groups.first.last_week_begin)
-                  .count %>
-
-            <%= Group
-                  .where(:id => groups.map(&:id))
-                  .joins(:lessons)
-                  .where('lessons.date_on >= ?', groups.first.last_week_begin)
-                  .count %>
+            <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_last_week).map(&:to_f).sum/groups.count) %>
           </td>
 
           <td>
-            <%= Group
-                  .where(:id => groups.map(&:id))
-                  .joins(:students)
-                  .joins(:presences)
-                  .select("DISTINCT(presences.id)")
-                  .where("presences.kind = 'was' AND presences.date_on >= ?", groups.first.semester_begin)
-                  .count %>
-
-            <%= Group
-                  .where(:id => groups.map(&:id))
-                  .joins(:lessons)
-                  .where('lessons.date_on >= ?', groups.first.semester_begin)
-                  .count %>
+            <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_semester_begin).map(&:to_f).sum/groups.count) %>
           </td>
 
           <td>

@@ -6,16 +6,20 @@
       <th class='grey'>с начала семестра</th>
     </tr>
     <tr>
-      <th class='faculty_aaflwb'></th>
-      <th class='faculty_aafsb'></th>
+      <th class='faculty_aaflwb'><%= resource.average_attendance_from_last_week %></th>
+      <th class='faculty_aafsb'><%= resource.average_attendance_from_semester_begin %></th>
     </tr>
   </thead>
   <tbody>
     <% resource.groups.group_by(&:course).sort.each do |course, groups| %>
       <tr class='course'>
         <td class='course_number'><%= "#{course} курс" %></td>
-        <td class='course_aaflwb'></td>
-        <td class='course_aafsb'></td>
+        <td class='course_aaflwb'>
+          <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_last_week).map(&:to_f).sum/groups.count) %>
+        </td>
+        <td class='course_aafsb'>
+          <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_semester_begin).map(&:to_f).sum/groups.count) %>
+        </td>
       </tr>
       <% groups.each do |group| %>
         <tr class='group'>
@@ -23,10 +27,10 @@
             <%= link_to group, [:manage, resource, group] %>
           </td>
           <td class='group_aaflwb'>
-            <%= "%.1f" % (group.average_attendence_from_last_week_begin*100) %>%
+            <%= group.average_attendance_from_last_week %>
           </td>
           <td class='group_aafsb'>
-            <%= "%.1f" % (group.average_attendence_from_semester_begin*100) %>%
+            <%= group.average_attendance_from_semester_begin %>
           </td>
         </tr>
       <% end %>

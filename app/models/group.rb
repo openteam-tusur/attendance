@@ -19,30 +19,20 @@ class Group < ActiveRecord::Base
     lessons_from(semester_begin).by_date(date).flat_map{|l| l.presences.empty? || l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
   end
 
-  def average_attendence_from_semester_begin
-    average_attendence_from(semester_begin)
+  def average_attendance_from_semester_begin
+    "%.1f%" % (students.count.zero? ? 0 : students.map(&:average_attendance_from_semester_begin).map(&:to_f).sum/students.count)
   end
 
-  def average_attendence_from_last_week_begin
-    average_attendence_from(last_week_begin)
-  end
-
-  def average_attendence_from(date)
-    return 0 if students.empty?
-    attendance = Group
-      .joins(:students)
-      .joins(:presences)
-      .select("DISTINCT(presences.id)")
-      .where("groups.id = ? AND presences.date_on >= ? AND presences.date_on <= ? AND presences.kind = 'was'", self.id, date, (Time.zone.today-1.week).end_of_week).count
-
-    if faculty_id == 6
-      puts "#{number} #{attendance}"
-    end
-    (attendance.to_f/students.count)/lessons_from(date).count
+  def average_attendance_from_last_week
+    "%.1f%" % (students.count.zero? ? 0 : students.map(&:average_attendance_from_last_week).map(&:to_f).sum/students.count)
   end
 
   def last_week_begin
     (Time.zone.today - 1.week).beginning_of_week
+  end
+
+  def last_week_end
+    last_week_begin.end_of_week
   end
 
   def semester_begin

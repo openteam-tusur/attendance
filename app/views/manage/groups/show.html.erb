@@ -8,8 +8,8 @@
 
 <h3><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></h3>
 
-<h6>Посещаемость за прошедшую неделю &mdash; <%= "%.1f" % (@group.average_attendence_from_last_week_begin*100) %>%</h6>
-<h6>Посещаемость с начала семестра &mdash; <%= "%.1f" % (@group.average_attendence_from_semester_begin*100) %>%</h6>
+<h6>Посещаемость за прошедшую неделю &mdash; <%= @group.average_attendance_from_last_week %></h6>
+<h6>Посещаемость с начала семестра &mdash; <%= @group.average_attendance_from_semester_begin %></h6>
 <h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today) %></h6>
 
 <% if (nofilled_dates = @group.lessons_from(@group.semester_begin).pluck(:date_on).uniq.sort.select{|d| @group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
@@ -54,7 +54,7 @@
       <tr>
         <td class='student'>
           <span class='fio'><%= student %></span>
-          <span class='student_aaflwb'></span>/<span class='student_aafsb'></span>
+          <span class='student_aaflwb'><%= student.average_attendance_from_last_week %></span>/<span class='student_aafsb'><%= student.average_attendance_from_semester_begin %></span>
         </td>
         <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
           <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
