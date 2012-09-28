@@ -61,6 +61,6 @@ ru:
         wasnt:      не был
 
   simple_form:
-    placeholders:
+    hints:
       student:
-        search: Иванов Иван Иванович, 400
+        search: 'Например: Иванов Иван Иванович, 777'
