@@ -1,0 +1,52 @@
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to 'Результаты поиска', search_path(:params => {:student => { :search => "#{resource}, #{resource.group.number}" } }) %></li>
+    <li><%= resource %></li>
+  </ul>
+</div>
+
+<h3><%= "#{resource}, #{resource.group}, #{resource.group.course} курс, #{resource.group.faculty.abbr}" %></h3>
+
+<h6><%= link_to "Посмотреть расписание #{resource.group}", "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{resource.group.number}" %></h6>
+
+<table class="student">
+  <thead>
+    <tr>
+      <th colspan='2'></th>
+      <th>За прошедшую неделю</th>
+      <th>С начала семестра</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% resource.group.lessons_from(resource.group.semester_begin).group_by(&:discipline).sort{|a,b| a[0].title <=> b[0].title}.each do |discilpine, lessons| %>
+      <% index = 0 %>
+      <% lessons.group_by(&:kind_text).each do |kind, groupped_lessons| %>
+        <% index += 1 %>
+        <tr>
+          <% if index == 1 %>
+            <td rowspan='<%= lessons.group_by(&:kind_text).count %>'><%= discilpine %></td>
+          <% end %>
+
+          <td class='<%= groupped_lessons.first.kind %>'>
+            <%= kind %>
+            <span class='lecturers'>
+              <%= groupped_lessons.flat_map(&:lecturers).uniq.join(', ') %>
+            </span>
+          </td>
+
+          <td>
+            <% last_week_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.last_week_begin } %>
+            <% last_week_attendaced_lessons = last_week_lessons.select{|l| resource.attendance_on?(l)} %>
+            <%= last_week_attendaced_lessons.count %>/<%= last_week_lessons.count %>
+          </td>
+
+          <td>
+            <% semester_begin_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.semester_begin } %>
+            <% semester_begin_attendaced_lessons = semester_begin_lessons.select{|l| resource.attendance_on?(l)} %>
+            <%= semester_begin_attendaced_lessons.count %>/<%= semester_begin_lessons.count %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

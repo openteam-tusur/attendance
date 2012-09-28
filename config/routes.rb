@@ -1,7 +1,7 @@
 Attendance::Application.routes.draw do
   namespace :manage do
 
-    resources :groups, :only => [:index, :show] do
+    resources :groups, :only => [:index] do
       get '/lessons/(:date)' => 'lessons#index',
         :constraints => { :date => /\d{4}-[01][0-9]-[0123][0-9]/ },
         :as => :scoped_lessons
@@ -22,6 +22,7 @@ Attendance::Application.routes.draw do
 
   scope :module => :public do
     get 'search' => 'search#index'
+    resources :students, :only => [:show]
   end
 
   root :to => 'application#main_page'

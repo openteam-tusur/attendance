@@ -11,6 +11,8 @@ class Student < Person
 
   default_scope where(:active => true)
 
+  before_save :set_secure_id
+
   searchable do
     string :fio
     string :group_number do
@@ -28,5 +30,9 @@ class Student < Person
 
   def average_attendence
     presences.where("date_on >= ? AND kind = 'was'", group.semester_begin).count/group.lessons_from_semester_begin.count.to_f
+  end
+
+  def set_secure_id
+    self.secure_id = Digest::MD5.hexdigest(self.fio)
   end
 end

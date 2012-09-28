@@ -16,11 +16,10 @@
     <% end %>
   </div>
 <% end %>
-
 <%= content_for :content do %>
   <div class="content">
     <%= yield %>
   </div>
-<% end if @students %>
+<% end unless controller_name.match(/application/) %>
 
 <%= render :file => 'layouts/base' %>
