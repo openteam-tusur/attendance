@@ -1,83 +1,4 @@
-@import 'compass/reset'
-@import 'compass/utilities'
-@import 'compass/css3'
-
-html, body
-  font-size: 1em
-  line-height: 1.62em
-
-html, body, input, textarea, select, button, a, p
-  font-family: 'Georgia', serif
-  font-weight: normal
-
-h1, h2, h3, h4, h5, h6
-  font-weight: normal
-  margin: 0 0 0.62em 0
-
-h1
-  font-size: 2em
-
-h2
-  font-size: 1.7em
-
-h3
-  font-size: 1.5em
-
-h4
-  font-size: 1.4em
-
-h5
-  font-size: 1.2em
-
-h6
-  font-size: 1em
-
-p
-  margin: 0 0 0.1em 0
-
-a
-  color: #973c07
-
-  &:hover
-    color: #97532c
-    text-decoration: none
-
-table
-  border-collapse: collapse
-  width: 100%
-
-.hide
-  display: none
-
-body
-  background: #f7fbfe
-  color: #333333
-  width: auto
-
-.main_wrapper
-  margin: 20px auto
-  padding: 0 10px
-  width: 980px
-
-  &.wide
-    width: auto
-
-.header
-  +clearfix
-  margin: 0 0 36px 0
-
-  .logo
-    background: image_url('tusur.png') no-repeat
-    display: block
-    float: left
-    height: 47px
-    margin: 0 50px 0 0
-    text-indent: -9999px
-    width: 150px
-
-  h1
-    line-height: 47px
-    margin: 0
+@import 'commons/commons'
 
 .calendar_wrapper
   +clearfix
@@ -178,13 +99,6 @@ body
             background: image_url('warning_calendar.png') no-repeat 15px center
 
 .content
-  +border-radius(10px)
-  +clearfix
-  background: #fff
-  border: 1px solid #e6e8e7
-  padding: 18px
-  width: 100%
-
   .nofilled_dates
     color: #b72327
     height: 0
