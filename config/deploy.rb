@@ -33,19 +33,11 @@ set :keep_releases, 7
 set :bundle_gemfile,  "Gemfile"
 set :bundle_dir,      File.join(fetch(:shared_path), 'bundle')
 set :bundle_flags,    "--deployment --quiet --binstubs"
-set :bundle_without,  [:development, :test, :assets]
+set :bundle_without,  [:development, :test]
 role :web, domain
 role :app, domain
 role :db,  domain, :primary => true
 
-namespace :assets do
-  desc "Upload assets"
-  task :upload, :roles => :app do
-    run_locally("RAILS_ENV=development bin/rake assets:clean && RAILS_ENV=production bin/rake assets:precompile")
-    top.upload "public/assets", "#{deploy_to}/shared/", :via => :scp, :recursive => true
-    run "ln -s #{deploy_to}/shared/assets #{release_path}/public/assets"
-  end
-end
 namespace :deploy do
   desc "Copy config files"
   task :config_app, :roles => :app do
@@ -84,12 +76,11 @@ end
 # deploy
 after "deploy:finalize_update", "deploy:config_app"
 after "deploy", "deploy:migrate"
-after "deploy", "assets:upload"
 after "deploy", "deploy:copy_unicorn_config"
 after "deploy", "deploy:reload_servers"
-after "deploy:reload_servers", "deploy:cleanup"
+after "deploy:restart", "deploy:cleanup"
 after "deploy", "deploy:crontab"
-after "deploy", "deploy:airbrake"
+#after "deploy", "deploy:airbrake"
 
 # deploy:rollback
 after "deploy:rollback", "deploy:reload_servers"
