@@ -37,13 +37,13 @@
           <td>
             <% last_week_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.last_week_begin } %>
             <% last_week_attendaced_lessons = last_week_lessons.select{|l| resource.attendance_on?(l)} %>
-            <%= last_week_attendaced_lessons.count %>/<%= last_week_lessons.count %>
+            посещено <%= last_week_attendaced_lessons.count %> из <%= last_week_lessons.count %>
           </td>
 
           <td>
             <% semester_begin_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.semester_begin } %>
             <% semester_begin_attendaced_lessons = semester_begin_lessons.select{|l| resource.attendance_on?(l)} %>
-            <%= semester_begin_attendaced_lessons.count %>/<%= semester_begin_lessons.count %>
+            посещено <%= semester_begin_attendaced_lessons.count %> из <%= semester_begin_lessons.count %>
           </td>
         </tr>
       <% end %>
