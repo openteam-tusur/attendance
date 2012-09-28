@@ -1,21 +1,6 @@
 ru:
   site_title:       Журнал посещаемости студентов ТУСУР
 
-  enumerize:
-    lesson:
-      kind:
-        design:     Курс. проек.
-        laboratory: Лаб.раб.
-        lecture:    Лекция
-        practice:   Практика
-        research:   Курс. раб.
-
-    presence:
-      kind:
-        not_marked: не отмечен
-        was:        был
-        wasnt:      не был
-
   activerecord:
     attributes:
       discipline:
@@ -60,5 +45,22 @@ ru:
       presence:   Присутствие
       student:    Студент
 
+  enumerize:
+    lesson:
+      kind:
+        design:     Курс. проек.
+        laboratory: Лаб.раб.
+        lecture:    Лекция
+        practice:   Практика
+        research:   Курс. раб.
 
+    presence:
+      kind:
+        not_marked: не отмечен
+        was:        был
+        wasnt:      не был
 
+  simple_form:
+    placeholders:
+      student:
+        search: Иванов Иван Иванович, 400

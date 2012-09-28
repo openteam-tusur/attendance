@@ -1,1 +1,57 @@
 @import 'commons/commons'
+
+.search_form
+  +clearfix
+  margin: 0 0 40px 0
+
+  form
+    +clearfix
+    margin: 0 auto
+    padding: 5px
+    width: 430px
+
+    .input
+      float: left
+      margin: 0 10px 0 0
+
+      label
+        display: none
+
+      input
+        +border-radius(3px)
+        border: 1px solid #E6E8E7
+        font-family: Verdana, sans-serif
+        height: 30px
+        margin: 0
+        padding: 0 10px
+        width: 308px
+
+    .buttons
+
+      input
+        +border-radius(3px)
+        background: #86b6c4
+        +background-image(linear-gradient(#8fc4d2, #86b6c4, #7aa6b1))
+        +single-box-shadow(#999, 1px, 1px, 8px)
+        +single-text-shadow(#555, 1px, 1px)
+        border: 1px solid #75a3b0
+        color: #fefefc
+        font-family: Verdana, sans-serif
+        height: 30px
+        position: relative
+        width: 88px
+
+        &:hover
+          cursor: pointer
+
+        &:active
+          +single-box-shadow(#aaa, -1px, -1px, 8px)
+          left: -1px
+          top: 1px
+
+
+.empty
+  color: #999
+  font-size: 1.8em
+  padding: 50px 0
+  text-align: center

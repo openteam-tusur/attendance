@@ -20,5 +20,9 @@ Attendance::Application.routes.draw do
     root :to => 'groups#index'
   end
 
+  scope :module => :public do
+    get 'search' => 'search#index'
+  end
+
   root :to => 'application#main_page'
 end

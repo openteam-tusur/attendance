@@ -6,9 +6,21 @@
   <%= javascript_include_tag "public/application" %>
 <% end %>
 
-<%= content_for :content do %>
-  <%= link_to "Управление", manage_root_path %>
-  <%= yield %>
+<%= content_for :search_form do %>
+  <div class="search_form">
+    <%= simple_form_for :student, :url => search_path, :html => { :method => :get, :novalidate => true } do |f| %>
+      <%= f.input :search, :input_html => { :value => (params[:student][:search] if params[:student])} %>
+      <div class="buttons">
+        <%= f.submit 'Найти' %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
+
+<%= content_for :content do %>
+  <div class="content">
+    <%= yield %>
+  </div>
+<% end if @students %>
 
 <%= render :file => 'layouts/base' %>

@@ -3,6 +3,10 @@
   <head>
     <title><%= t('site_title') %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Keywords" content="посещаемость, журнал, ТУСУР, студенты">
+    <meta name="Description" content="Журнал посещаемости студентов ТУСУР">
+    <meta http-equiv="content-language" content="ru">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <%= yield :stylesheets %>
     <%= yield :javascripts %>
     <%= csrf_meta_tags %>
@@ -14,11 +18,9 @@
         <h1>Электронный журнал посещаемости студентов</h1>
       </div>
 
+      <%= yield :search_form %>
       <%= yield :calendar %>
-
-      <div class="content">
-        <%= yield :content %>
-      </div>
+      <%= yield :content %>
     </div>
   </body>
 </html>

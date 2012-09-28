@@ -8,7 +8,11 @@ class Person < ActiveRecord::Base
 
   default_scope order(:surname)
 
+  def fio
+    "#{surname} #{name} #{patronymic}".squish
+  end
+
   def to_s
-    "#{surname} #{name} #{patronymic}"
+    fio
   end
 end

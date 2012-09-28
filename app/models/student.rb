@@ -11,6 +11,13 @@ class Student < Person
 
   default_scope where(:active => true)
 
+  searchable do
+    string :fio
+    string :group_number do
+      group.number
+    end
+  end
+
   def attendance_on(lesson)
     presences.where(:lesson_id => lesson.id).first || presences.create(:lesson_id => lesson.id)
   end

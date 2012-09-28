@@ -7,7 +7,9 @@
 <% end %>
 
 <%= content_for :content do %>
-  <%= yield %>
+  <div class="content">
+    <%= yield %>
+  </div>
 <% end %>
 
 <%= render :file => 'layouts/base' %>

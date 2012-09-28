@@ -1,0 +1,16 @@
+<% if @students.any? %>
+  <ul>
+    <% @students.each do |student| %>
+      <li>
+        <%= link_to "#{student}, #{student.group}", '#' %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <% if params[:student][:search].blank? %>
+    <div class="empty">Вы ничего не ввели, а мы ничего не нашли ;(</div>
+  <% else %>
+    <% fio, group_number = params[:student][:search].split(',').map(&:strip) %>
+    <div class="empty">Мы не смогли найти <%= fio %> ;(</div>
+  <% end %>
+<% end %>
