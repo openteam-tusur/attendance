@@ -17,7 +17,7 @@ Attendance::Application.routes.draw do
       resources :groups, :only => [:show]
     end
 
-    root :to => 'groups#index'
+    root :to => 'application#index'
   end
 
   scope :module => :public do

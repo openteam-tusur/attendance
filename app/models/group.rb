@@ -33,8 +33,11 @@ class Group < ActiveRecord::Base
       .joins(:students)
       .joins(:presences)
       .select("DISTINCT(presences.id)")
-      .where("groups.id = ? AND presences.date_on >= ? AND presences.kind = 'was'", self.id, date).count
+      .where("groups.id = ? AND presences.date_on >= ? AND presences.date_on <= ? AND presences.kind = 'was'", self.id, date, (Time.zone.today-1.week).end_of_week).count
 
+    if faculty_id == 6
+      puts "#{number} #{attendance}"
+    end
     (attendance.to_f/students.count)/lessons_from(date).count
   end
 

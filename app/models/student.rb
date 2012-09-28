@@ -21,7 +21,7 @@ class Student < Person
   end
 
   def attendance_on(lesson)
-    presences.where(:lesson_id => lesson.id).first || presences.create(:lesson_id => lesson.id)
+    presences.where(:lesson_id => lesson.id).first
   end
 
   def attendance_on?(lesson)

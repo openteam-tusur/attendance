@@ -20,7 +20,7 @@ namespace :sync do
 
   desc 'Синхронизация студентов'
   task :students => :environment do
-    Group.find_each do |group|
+    Group.all.each do |group|
       p "Импорт студентов группы #{group.number}"
       students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.number}").body_str)
 
@@ -47,7 +47,7 @@ namespace :sync do
 
   desc 'Синхронизация уроков на предстоящий день'
   task :lessons => :environment do
-    Group.find_each do |group|
+    Group.all.each do |group|
       p "Расписание для #{group} на #{Time.zone.today.strftime('%Y-%m-%d')}"
       LessonSync.new(group.number, Time.zone.today.strftime('%Y-%m-%d'))
     end
@@ -57,7 +57,7 @@ namespace :sync do
   task :all_lessons => :environment do
     start_date = Time.zone.parse ENV['START_DATE']
     (start_date.to_date .. Time.zone.today).each do |date|
-      Group.find_each do |group|
+      Group.all.each do |group|
         p "Расписание для #{group} на #{date.strftime('%Y-%m-%d')}"
         LessonSync.new(group.number, date.strftime('%Y-%m-%d'))
       end
@@ -73,6 +73,7 @@ class LessonSync
   def get_lessons(group_number, date)
     response = JSON.parse(Curl.get("#{Settings['timetable.url']}/api/v1/timetables/#{group_number}/#{date}").body_str)
     lessons = []
+    group = Group.find_by_number(group_number)
 
     p '>>>>>>>>> Расписание не найдено' if response['lessons'].empty? || response.has_key?('error')
 
@@ -80,15 +81,16 @@ class LessonSync
 
     response['lessons'].each do |lesson|
       discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
-      lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom(
+      lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom_and_group_id(
                                                                                             :timetable_id => lesson['timetable_id'],
                                                                                             :date_on => Time.zone.parse(date),
-                                                                                            :classroom => lesson['classroom']
+                                                                                            :classroom => lesson['classroom'],
+                                                                                            :group_id => group.id
       ).tap do |item|
         item.kind         = lesson['kind']
         item.order_number = lesson['order_number']
         item.note         = lesson['note']
-        item.group_id     = Group.find_by_number(group_number).id
+        item.group_id     = group.id
         item.save!
       end
 
@@ -100,6 +102,10 @@ class LessonSync
         )
 
         Realize.find_or_create_by_lecturer_id_and_lesson_id(:lecturer_id => lecturer_obj.id, :lesson_id => lesson_obj.id)
+      end
+
+      group.students.pluck(:id).each do |student_id|
+        Presence.find_or_create_by_student_id_and_lesson_id(:student_id => student_id, :lesson_id => lesson_obj.id)
       end
 
       lessons << lesson_obj

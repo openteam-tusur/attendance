@@ -1,0 +1,66 @@
+<table class='university'>
+  <thead>
+    <tr>
+      <th rowspan='2'>Всего по университету</th>
+      <th>прошедшая неделя</th>
+      <th>с начала семестра</th>
+      <th rowspan='2'>всего студентов</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Faculty.all.each do |faculty| %>
+      <tr>
+        <td><%= faculty %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <% faculty.groups.group_by(&:course).sort.each do |course, groups| %>
+        <tr>
+          <td><%= "#{course} курс" %></td>
+
+          <td>
+            <%= Group
+                  .where(:id => groups.map(&:id))
+                  .joins(:students)
+                  .joins(:presences)
+                  .select("DISTINCT(presences.id)")
+                  .where("presences.kind = 'was' AND presences.date_on >= ?", groups.first.last_week_begin)
+                  .count %>
+
+            <%= Group
+                  .where(:id => groups.map(&:id))
+                  .joins(:lessons)
+                  .where('lessons.date_on >= ?', groups.first.last_week_begin)
+                  .count %>
+          </td>
+
+          <td>
+            <%= Group
+                  .where(:id => groups.map(&:id))
+                  .joins(:students)
+                  .joins(:presences)
+                  .select("DISTINCT(presences.id)")
+                  .where("presences.kind = 'was' AND presences.date_on >= ?", groups.first.semester_begin)
+                  .count %>
+
+            <%= Group
+                  .where(:id => groups.map(&:id))
+                  .joins(:lessons)
+                  .where('lessons.date_on >= ?', groups.first.semester_begin)
+                  .count %>
+          </td>
+
+          <td>
+            <%= Student.where(:group_id => groups.map(&:id)).count %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

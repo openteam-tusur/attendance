@@ -3,7 +3,7 @@
 class Lesson < ActiveRecord::Base
   include Enumerize
 
-  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes
+  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes, :group_id
 
   belongs_to :discipline
   belongs_to :group
