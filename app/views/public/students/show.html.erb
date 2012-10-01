@@ -7,7 +7,8 @@
 
 <h3><%= "#{resource}, #{resource.group}, #{resource.group.course} курс, #{resource.group.faculty.abbr}" %></h3>
 
-<h6><%= link_to "Посмотреть расписание #{resource.group}", "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{resource.group.number}" %></h6>
+<h6><%= link_to "Посмотреть расписание #{resource.group}",
+                "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(resource.group.number.mb_chars)}" %></h6>
 
 <table class="student">
   <thead>
