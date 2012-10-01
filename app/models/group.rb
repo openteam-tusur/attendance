@@ -9,6 +9,9 @@ class Group < ActiveRecord::Base
   has_many :presences, :through => :students
 
   default_scope order('number')
+  delegate :semester_begin, :to => :faculty
+  delegate :last_week_begin, :to => :faculty
+  delegate :last_week_end, :to => :faculty
 
   def to_s
     "гр. #{number}"
@@ -20,28 +23,11 @@ class Group < ActiveRecord::Base
   end
 
   def average_attendance_from_semester_begin
-    "%.1f%" % (students.count.zero? ? 0 : students.map(&:average_attendance_from_semester_begin).map(&:to_f).sum/students.count)
+    "%.1f%" % (students.count.zero? ? 0 : presences.was.starts(semester_begin).count.to_f*100 / presences.starts(semester_begin).count)
   end
 
   def average_attendance_from_last_week
-    "%.1f%" % (students.count.zero? ? 0 : students.map(&:average_attendance_from_last_week).map(&:to_f).sum/students.count)
-  end
-
-  def last_week_begin
-    (Time.zone.today - 1.week).beginning_of_week
-  end
-
-  def last_week_end
-    last_week_begin.end_of_week
-  end
-
-  def semester_begin
-    today = Time.zone.today
-    if today.month >= 9 && today.month <= 12
-      return Time.zone.parse("#{today.year}-09-01")
-    elsif today.month >= 2 && today.month <= 7
-      return Time.zone.parse("#{today.year}-02-01")
-    end
+    "%.1f%" % (students.count.zero? ? 0 : presences.was.starts(last_week_begin).ends(last_week_end).count.to_f*100 / presences.starts(last_week_begin).ends(last_week_end).count)
   end
 
   def lessons_from(date)

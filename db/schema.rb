@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120928042915) do
+ActiveRecord::Schema.define(:version => 20121001040856) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20120928042915) do
 
   create_table "lessons", :force => true do |t|
     t.string   "classroom"
-    t.datetime "date_on"
+    t.date     "date_on"
     t.string   "kind"
     t.string   "order_number"
     t.integer  "timetable_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20120928042915) do
     t.integer  "student_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.datetime "date_on"
+    t.date     "date_on"
   end
 
   add_index "presences", ["lesson_id"], :name => "index_presences_on_lesson_id"

@@ -83,7 +83,7 @@ class LessonSync
       discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
       lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom_and_group_id(
                                                                                             :timetable_id => lesson['timetable_id'],
-                                                                                            :date_on => Time.zone.parse(date),
+                                                                                            :date_on => Time.zone.parse(date).to_date,
                                                                                             :classroom => lesson['classroom'],
                                                                                             :group_id => group.id
       ).tap do |item|

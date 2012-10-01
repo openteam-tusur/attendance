@@ -12,7 +12,9 @@ class Presence < ActiveRecord::Base
 
   enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked, :predicates => true
 
-  scope :was, where(:kind => 'was')
+  scope :was, where("presences.kind = 'was'")
+  scope :starts, ->(date){ where("presences.date_on >= ?", date) }
+  scope :ends,   ->(date){ where("presences.date_on <= ?", date) }
 
   def to_s
     kind_text
