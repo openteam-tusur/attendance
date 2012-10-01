@@ -10,9 +10,9 @@
 
 <h6>Посещаемость за прошедшую неделю &mdash; <%= @group.average_attendance_from_last_week %></h6>
 <h6>Посещаемость с начала семестра &mdash; <%= @group.average_attendance_from_semester_begin %></h6>
-<h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today) %></h6>
+<h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today.to_date) %></h6>
 
-<% if (nofilled_dates = @group.lessons_from(@group.semester_begin).pluck(:date_on).uniq.sort.select{|d| @group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
+<% if (nofilled_dates = @group.lessons_from_semester_begin.pluck(:date_on).uniq.sort.select{|d| @group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
   <div class="nofilled_dates">
     <% if nofilled_dates.count < 20 %>
       Журнал посещаемости не заполнен за <%= nofilled_dates.map{|d| l(d, :format => "%d %b")}.join(', ') %>
@@ -26,12 +26,12 @@
   <thead>
     <tr>
       <td rowspan='3'></td>
-      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
         <td colspan=<%= lessons.group_by(&:kind).count*2 %> title="<%= discilpine %>" class='discipline_title'><%= discilpine.abbr %></td>
       <% end %>
     </tr>
     <tr>
-      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
         <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
           <td colspan='2' class='lesson <%= lessons.first.kind %>'>
             <span class='lesson_kind'><%= kind %></span>
@@ -41,7 +41,7 @@
       <% end %>
     </tr>
     <tr class='period'>
-      <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
         <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
           <td>неделя</td>
           <td>семестр</td>
@@ -56,10 +56,10 @@
           <span class='fio'><%= student %></span>
           <span class='student_aaflwb'><%= student.average_attendance_from_last_week %></span>/<span class='student_aafsb'><%= student.average_attendance_from_semester_begin %></span>
         </td>
-        <% @group.lessons_from(@group.semester_begin).group_by(&:discipline).each do |discilpine, lessons| %>
+        <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
           <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
             <td class='lesson_aaflwb lesson <%= lessons.first.kind %>'>
-              <% last_week_lessons = lessons.select{|l| l.date_on >= @group.last_week_begin} %>
+              <% last_week_lessons = lessons.select{|l| l.date_on >= Presence.last_week_begin} %>
               <% attendanced_last_week_lessons = last_week_lessons.select{|l| student.attendance_on?(l)}.count %>
               <span class="percent">
                 <%= last_week_lessons.any? ? "#{"%.1f" % ((attendanced_last_week_lessons.to_f/last_week_lessons.count)*100)}%" : '0.0%' %>

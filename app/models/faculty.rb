@@ -9,33 +9,27 @@ class Faculty < ActiveRecord::Base
 
   default_scope order(:title)
 
+  delegate :from_last_week, :to => :presences, :prefix => true
+  delegate :from_semester_begin, :to => :presences, :prefix => true
+
   def to_s
     "#{title}(#{abbr})"
   end
 
   def average_attendance_from_last_week
-    "%.1f%" % (groups.count.zero? ? 0 : presences.was.starts(last_week_begin).ends(last_week_end).count.to_f*100/presences.starts(last_week_begin).ends(last_week_end).count)
+    "%.1f%" % (groups.count.zero? ? 0 : presences_from_last_week.was.count.to_f*100/presences_from_last_week.count)
   end
 
   def average_attendance_from_semester_begin
-    "%.1f%" % (groups.count.zero? ? 0 : presences.was.starts(semester_begin).count.to_f*100/presences.starts(semester_begin).count)
+    "%.1f%" % (groups.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100/presences_from_semester_begin.count)
   end
 
-  def last_week_begin
-    (Time.zone.today - 1.week).beginning_of_week
+  def average_attendance_from_last_week_for(course_number)
+    "%.1f%" % (groups.count.zero? ? 0 : presences_from_last_week.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_last_week.where('groups.course = ?', course_number).count)
   end
 
-  def last_week_end
-    last_week_begin.end_of_week
-  end
-
-  def semester_begin
-    today = Time.zone.today
-    if today.month >= 9 && today.month <= 12
-      return Time.zone.parse("#{today.year}-09-01").to_date
-    elsif today.month >= 2 && today.month <= 7
-      return Time.zone.parse("#{today.year}-02-01").to_date
-    end
+  def average_attendance_from_semester_begin_for(course_number)
+    "%.1f%" % (groups.count.zero? ? 0 : presences_from_semester_begin.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_semester_begin.where('groups.course = ?', course_number).count)
   end
 
   def to_param

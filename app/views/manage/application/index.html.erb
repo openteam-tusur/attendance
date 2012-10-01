@@ -25,11 +25,11 @@
           <td><%= "#{course} курс" %></td>
 
           <td>
-            <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_last_week).map(&:to_f).sum/groups.count) %>
+            <%= faculty.average_attendance_from_last_week_for(course) %>
           </td>
 
           <td>
-            <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_semester_begin).map(&:to_f).sum/groups.count) %>
+            <%= faculty.average_attendance_from_semester_begin_for(course) %>
           </td>
 
           <td>

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Student < Person
-  attr_accessible :contingent_id
+  attr_accessible :contingent_id, :active
 
   belongs_to :group
   has_many :presences
@@ -11,9 +11,8 @@ class Student < Person
 
   default_scope where(:active => true)
 
-  delegate :semester_begin, :to => :group
-  delegate :last_week_begin, :to => :group
-  delegate :last_week_end, :to => :group
+  delegate :from_last_week, :to => :presences, :prefix => true
+  delegate :from_semester_begin, :to => :presences, :prefix => true
 
   before_save :set_secure_id
 
@@ -32,20 +31,12 @@ class Student < Person
     attendance_on(lesson).was?
   end
 
-  def presences_from_last_week
-    presences.starts(group.last_week_begin).ends(group.last_week_end)
-  end
-
   def attendanced_from_last_week
     presences_from_last_week.was
   end
 
   def average_attendance_from_last_week
     @average_attendance_from_last_week ||= "%.1f%" % (presences_from_last_week.count.zero? ? 0 : attendanced_from_last_week.count*100/presences_from_last_week.count.to_f)
-  end
-
-  def presences_from_semester_begin
-    presences.starts(group.semester_begin)
   end
 
   def attendanced_from_semester_begin

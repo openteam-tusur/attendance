@@ -13,11 +13,28 @@ class Presence < ActiveRecord::Base
   enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked, :predicates => true
 
   scope :was, where("presences.kind = 'was'")
-  scope :starts, ->(date){ where("presences.date_on >= ?", date) }
-  scope :ends,   ->(date){ where("presences.date_on <= ?", date) }
+  scope :from_last_week, ->{ where('presences.date_on >= ? and presences.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
+  scope :from_semester_begin, ->{ where('presences.date_on >= ?', Presence.semester_begin) }
 
   def to_s
     kind_text
+  end
+
+  def self.last_week_begin
+    (Time.zone.today - 1.week).beginning_of_week
+  end
+
+  def self.last_week_end
+    last_week_begin.end_of_week
+  end
+
+  def self.semester_begin
+    today = Time.zone.today
+    if today.month >= 9 && today.month <= 12
+      return Time.zone.parse("#{today.year}-09-01").to_date
+    elsif today.month >= 2 && today.month <= 7
+      return Time.zone.parse("#{today.year}-02-01").to_date
+    end
   end
 
   private

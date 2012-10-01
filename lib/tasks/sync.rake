@@ -11,9 +11,10 @@ namespace :sync do
     bar = ProgressBar.new(groups['groups'].count)
 
     groups['groups'].each do |group|
-      faculty = Faculty.find_or_create_by_abbr_and_title(:abbr => group['faculty_abbr'], :title => group['faculty_name'])
-      faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
-
+      unless group['number'] =~ /м/i || group['faculty_abbr'] =~ /\b[зв]ф\b/i
+        faculty = Faculty.find_or_create_by_abbr_and_title(:abbr => group['faculty_abbr'], :title => group['faculty_name'])
+        faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
+      end
       bar.increment!
     end
   end
@@ -21,12 +22,12 @@ namespace :sync do
   desc 'Синхронизация студентов'
   task :students => :environment do
     Group.all.each do |group|
-      p "Импорт студентов группы #{group.number}"
+      puts "Импорт студентов группы #{group.number}"
       students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.number}").body_str)
 
       bar = ProgressBar.new(students.count)
 
-      p "Студенты не найдены" if students.empty?
+      puts "Студенты не найдены" if students.empty?
 
       students.each do |student|
         student = student['student']
@@ -48,7 +49,7 @@ namespace :sync do
   desc 'Синхронизация уроков на предстоящий день'
   task :lessons => :environment do
     Group.all.each do |group|
-      p "Расписание для #{group} на #{Time.zone.today.strftime('%Y-%m-%d')}"
+      puts "Расписание для #{group} на #{Time.zone.today.strftime('%Y-%m-%d')}"
       LessonSync.new(group.number, Time.zone.today.strftime('%Y-%m-%d'))
     end
   end
@@ -58,7 +59,7 @@ namespace :sync do
     start_date = Time.zone.parse ENV['START_DATE']
     (start_date.to_date .. Time.zone.today).each do |date|
       Group.all.each do |group|
-        p "Расписание для #{group} на #{date.strftime('%Y-%m-%d')}"
+        puts "Расписание для #{group} на #{date.strftime('%Y-%m-%d')}"
         LessonSync.new(group.number, date.strftime('%Y-%m-%d'))
       end
     end
@@ -75,7 +76,7 @@ class LessonSync
     lessons = []
     group = Group.find_by_number(group_number)
 
-    p '>>>>>>>>> Расписание не найдено' if response['lessons'].empty? || response.has_key?('error')
+    puts '>>>>>>>>> Расписание не найдено' if response['lessons'].empty? || response.has_key?('error')
 
     bar = ProgressBar.new(response['lessons'].count)
 

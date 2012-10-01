@@ -9,29 +9,26 @@ class Group < ActiveRecord::Base
   has_many :presences, :through => :students
 
   default_scope order('number')
-  delegate :semester_begin, :to => :faculty
-  delegate :last_week_begin, :to => :faculty
-  delegate :last_week_end, :to => :faculty
+  delegate :from_last_week, :to => :presences, :prefix => true
+  delegate :from_semester_begin, :to => :presences, :prefix => true
+  delegate :from_last_week, :to => :lessons, :prefix => true
+  delegate :from_semester_begin, :to => :lessons, :prefix => true
 
   def to_s
     "гр. #{number}"
   end
 
   def filled_attendance_at?(date)
-    return true if lessons_from(semester_begin).by_date(date).empty?
-    lessons_from(semester_begin).by_date(date).flat_map{|l| l.presences.empty? || l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
+    return true if lessons.by_date(date).empty?
+    lessons.by_date(date).flat_map{|l| l.presences.empty? || l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
   end
 
   def average_attendance_from_semester_begin
-    "%.1f%" % (students.count.zero? ? 0 : presences.was.starts(semester_begin).count.to_f*100 / presences.starts(semester_begin).count)
+    "%.1f%" % (students.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100 / presences_from_semester_begin.count)
   end
 
   def average_attendance_from_last_week
-    "%.1f%" % (students.count.zero? ? 0 : presences.was.starts(last_week_begin).ends(last_week_end).count.to_f*100 / presences.starts(last_week_begin).ends(last_week_end).count)
-  end
-
-  def lessons_from(date)
-    lessons.where('date_on >= ?', date)
+    "%.1f%" % (students.count.zero? ? 0 : presences_from_last_week.was.count.to_f*100 / presences_from_last_week.count)
   end
 
   def to_param
