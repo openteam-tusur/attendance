@@ -7,8 +7,8 @@
       <th rowspan='2'>всего студентов</th>
     </tr>
     <tr>
-      <th></th>
-      <th></th>
+      <th><%= "%.1f%" % (Presence.from_last_week.was.count.to_f*100/Presence.from_last_week.count) %></th>
+      <th><%= "%.1f%" % (Presence.from_semester_begin.was.count.to_f*100/Presence.from_semester_begin.count) %></th>
     </tr>
   </thead>
 

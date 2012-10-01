@@ -6,5 +6,4 @@
 // = require ./presence_handler
 // = require ./switcher
 // = require ./calendar
-// = require ./counter
 // = require ./main
