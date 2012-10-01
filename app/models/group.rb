@@ -9,6 +9,7 @@ class Group < ActiveRecord::Base
   has_many :presences, :through => :students
 
   default_scope order('number')
+
   delegate :from_last_week, :to => :presences, :prefix => true
   delegate :from_semester_begin, :to => :presences, :prefix => true
   delegate :from_last_week, :to => :lessons, :prefix => true
@@ -20,7 +21,7 @@ class Group < ActiveRecord::Base
 
   def filled_attendance_at?(date)
     return true if lessons.by_date(date).empty?
-    lessons.by_date(date).flat_map{|l| l.presences.empty? || l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
+    !lessons.by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
   end
 
   def average_attendance_from_semester_begin

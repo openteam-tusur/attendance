@@ -19,7 +19,7 @@
     </tr>
   </thead>
   <tbody>
-    <% resource.group.lessons_from(resource.group.semester_begin).group_by(&:discipline).sort{|a,b| a[0].title <=> b[0].title}.each do |discilpine, lessons| %>
+    <% resource.group.lessons_from_semester_begin.group_by(&:discipline).sort{|a,b| a[0].title <=> b[0].title}.each do |discilpine, lessons| %>
       <% index = 0 %>
       <% lessons.group_by(&:kind_text).each do |kind, groupped_lessons| %>
         <% index += 1 %>
@@ -36,13 +36,13 @@
           </td>
 
           <td>
-            <% last_week_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.last_week_begin } %>
+            <% last_week_lessons = groupped_lessons.select{|l| l.date_on >= Presence.last_week_begin && l.date_on <= Presence.last_week_end } %>
             <% last_week_attendaced_lessons = last_week_lessons.select{|l| resource.attendance_on?(l)} %>
             посещено <%= last_week_attendaced_lessons.count %> из <%= last_week_lessons.count %>
           </td>
 
           <td>
-            <% semester_begin_lessons = groupped_lessons.select{|l| l.date_on >= resource.group.semester_begin } %>
+            <% semester_begin_lessons = groupped_lessons.select{|l| l.date_on >= Presence.semester_begin } %>
             <% semester_begin_attendaced_lessons = semester_begin_lessons.select{|l| resource.attendance_on?(l)} %>
             посещено <%= semester_begin_attendaced_lessons.count %> из <%= semester_begin_lessons.count %>
           </td>

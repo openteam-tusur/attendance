@@ -15,10 +15,10 @@
       <tr class='course'>
         <td class='course_number'><%= "#{course} курс" %></td>
         <td class='course_aaflwb'>
-          <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_last_week).map(&:to_f).sum/groups.count) %>
+          <%= resource.average_attendance_from_last_week_for(course) %>
         </td>
         <td class='course_aafsb'>
-          <%= "%.1f%" % (groups.count.zero? ? 0 : Group.where(:id => groups.map(&:id)).map(&:average_attendance_from_semester_begin).map(&:to_f).sum/groups.count) %>
+          <%= resource.average_attendance_from_semester_begin_for(course) %>
         </td>
       </tr>
       <% groups.each do |group| %>
