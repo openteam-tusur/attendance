@@ -6,6 +6,10 @@
   <%= javascript_include_tag "manage/application" %>
 <% end %>
 
+<%= content_for :manage_links do %>
+  <%= render :partial => "esp_auth/shared/header" %>
+<% end %>
+
 <%= content_for :content do %>
   <div class="content">
     <%= yield %>
