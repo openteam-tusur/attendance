@@ -54,7 +54,7 @@ namespace :deploy do
   desc "Reload Unicorn"
   task :reload_servers do
     sudo "/etc/init.d/nginx reload"
-    sudo "/etc/init.d/#{unicorn_instance_name} reload"
+    sudo "/etc/init.d/#{unicorn_instance_name} restart"
   end
 
   desc "Airbrake notify"
