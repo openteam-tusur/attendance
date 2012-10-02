@@ -47,6 +47,10 @@ ru:
 
   enumerize:
     lesson:
+      status:
+        take_place:       Занятие состоялось
+        wasnt_take_place: Занятие не состоялось
+
       kind:
         design:     Курс. проек.
         laboratory: Лаб.раб.

@@ -13,10 +13,14 @@ class Lesson < ActiveRecord::Base
   has_many :lecturers, :through => :realizes
 
   enumerize :kind, :in => [:lecture, :practice, :laboratory, :research, :design]
+  enumerize :state, :in => [:took_place, :wasnt_took_place], :default => :took_place, predicates: true
 
   default_scope order(:order_number)
 
+  default_value_for :state, :took_place
+
   scope :by_date, ->(date){ where(:date_on => Time.zone.parse(date).to_date) }
+  scope :took_place, where(:state => :took_place)
   scope :from_last_week, ->{ where('lessons.date_on >= ? and lessons.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
   scope :from_semester_begin, ->{ where('lessons.date_on >= ?', Presence.semester_begin) }
 

@@ -13,8 +13,9 @@ class Presence < ActiveRecord::Base
   enumerize :kind, :in => [:not_marked, :was, :wasnt], :default => :not_marked, :predicates => true
 
   scope :was, where("presences.kind = 'was'")
-  scope :from_last_week, ->{ where('presences.date_on >= ? and presences.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
-  scope :from_semester_begin, ->{ where('presences.date_on >= ?', Presence.semester_begin) }
+  scope :took_place, joins(:lesson).where("lessons.state = 'took_place'")
+  scope :from_last_week, ->{ took_place.where('presences.date_on >= ? and presences.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
+  scope :from_semester_begin, ->{ took_place.where('presences.date_on >= ?', Presence.semester_begin) }
 
   def to_s
     kind_text

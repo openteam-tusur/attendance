@@ -12,7 +12,7 @@
 <h6>Посещаемость с начала семестра &mdash; <%= @group.average_attendance_from_semester_begin %></h6>
 <h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today.to_date) %></h6>
 
-<% if (nofilled_dates = @group.lessons_from_semester_begin.pluck(:date_on).uniq.sort.select{|d| !@group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
+<% if (nofilled_dates = @group.lessons_from_semester_begin.took_place.pluck(:date_on).uniq.sort.select{|d| !@group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
   <div class="nofilled_dates">
     <% if nofilled_dates.count < 20 %>
       Журнал посещаемости не заполнен за <%= nofilled_dates.map{|d| l(d, :format => "%d %b")}.join(', ') %>
@@ -59,7 +59,7 @@
         <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
           <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
             <td class='lesson_aaflwb lesson <%= lessons.first.kind %>'>
-              <% last_week_lessons = lessons.select{|l| l.date_on >= Presence.last_week_begin} %>
+              <% last_week_lessons = lessons.select{|l| l.date_on >= Presence.last_week_begin && l.took_place? } %>
               <% attendanced_last_week_lessons = last_week_lessons.select{|l| student.attendance_on?(l)}.count %>
               <span class="percent">
                 <%= last_week_lessons.any? ? "#{"%.1f" % ((attendanced_last_week_lessons.to_f/last_week_lessons.count)*100)}%" : '0.0%' %>
@@ -69,7 +69,7 @@
               </span>
             </td>
             <td class='lesson_aafsb lesson <%= lessons.first.kind %>'>
-              <% attendanced_lessons = lessons.select{|l| student.attendance_on?(l)}.count %>
+              <% attendanced_lessons = lessons.select{|l| student.attendance_on?(l) && l.took_place? }.count %>
               <span class="percent">
                 <%= "#{"%.1f" % ((attendanced_lessons.to_f/lessons.count)*100)}%" %>
               </span>
