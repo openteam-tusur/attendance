@@ -3,5 +3,5 @@ class Manage::FacultiesController < Manage::ApplicationController
 
   defaults :finder => :find_by_abbr!
 
-  actions :all, :only => [:index, :show]
+  actions :all, :only => [:show]
 end

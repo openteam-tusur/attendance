@@ -4,10 +4,12 @@
       <% controller_namespace = controller_path.split('/').map(&:inquiry) %>
       <div class='navigation'>
         <% if can? :manage, :application %>
-          <% if content_for?(:esp_auth_manage_links)  %>
-            <%= yield(:esp_auth_manage_links) %>
-          <% else %>
-            <%= link_to 'Система управления', '/manage', :class => controller_namespace[0].manage? ? 'selected' : nil %>
+          <% if current_user.group_leader? %>
+            <%= link_to 'Система управления', manage_group_scoped_lessons_path(current_user.permissions.first.context) %>
+          <% elsif current_user.study_department_worker? %>
+            <%= link_to 'Система управления', manage_root_path %>
+          <% elsif current_user.faculty_worker? %>
+            <%= link_to 'Система управления', manage_faculty_path(current_user.permissions.first.context) %>
           <% end %>
         <% end %>
       </div>

@@ -7,7 +7,7 @@ class Manage::PresencesController < Manage::ApplicationController
     end
   end
 
-  actions :all, :except => :delete
+  actions :show, :update, :edit
 
   layout false
 end

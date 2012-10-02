@@ -8,7 +8,7 @@ class Manage::LessonsController < Manage::ApplicationController
     scope.by_date(value)
   end
 
-  actions :all, :only => :index
+  actions :index
 
   before_filter :set_today
 

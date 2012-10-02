@@ -3,6 +3,5 @@ class Manage::ApplicationController < ApplicationController
 
   layout 'manage'
 
-  def university_statistics
-  end
+  actions :only => []
 end
