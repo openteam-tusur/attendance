@@ -3,9 +3,9 @@
   <%= f.input :lesson_id, :as => :hidden %>
 
   <% if f.object.not_marked? %>
-    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(1), :checked => 'was' %>
+    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2), :checked => 'was' %>
   <% else %>
-    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(1) %>
+    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2) %>
   <% end %>
 
   <%= f.submit :class => "hide lesson_#{@lesson.id}" %>

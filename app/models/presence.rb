@@ -10,7 +10,7 @@ class Presence < ActiveRecord::Base
 
   before_save :set_date_on
 
-  enumerize :kind, :in => [:not_marked, :was, :wasnt, :valid_excuse], :default => :not_marked, :predicates => true
+  enumerize :kind, :in => [:not_marked, :valid_excuse, :was, :wasnt], :default => :not_marked, :predicates => true
 
   scope :was, where("presences.kind = 'was'")
   scope :took_place, joins(:lesson).where("lessons.state = 'took_place'")
