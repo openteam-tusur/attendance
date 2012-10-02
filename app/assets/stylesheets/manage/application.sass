@@ -134,6 +134,25 @@
         background: #FFD5E5
         background: rgba(255, 213, 229, 0.5)
 
+    .states
+      th
+        padding: 0
+
+        a
+          display: block
+          color: #fff
+          font-family: Verdana, sans-serif
+          text-decoration: none
+
+          &.wasnt_took_place
+            background: #d25776
+            +background(linear-gradient(#a03a52, #d25776, #df5d81))
+
+          &.took_place
+            background: #d0f1bc
+            +background(linear-gradient(#e2fed5, #d0f1bc, #bde3a6))
+            color: #666
+
     .student
       text-align: left
 

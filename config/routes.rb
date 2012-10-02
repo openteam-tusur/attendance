@@ -6,6 +6,10 @@ Attendance::Application.routes.draw do
         :constraints => { :date => /\d{4}-[01][0-9]-[0123][0-9]/ },
         :as => :scoped_lessons
 
+      resources :lessons, :only => [] do
+        put 'switch_state' => 'lessons#switch_state'
+      end
+
       resources :students, :only => [] do
         resources :lessons do
           resources :presences, :except => :delete

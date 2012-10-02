@@ -13,6 +13,12 @@ class Manage::LessonsController < Manage::ApplicationController
 
   before_filter :set_today
 
+  def switch_state
+    @lesson = Lesson.find(params[:lesson_id])
+    @lesson.switch_state
+    render :partial => 'manage/lessons/lesson_state', :locals => { :lesson => @lesson }, :layout => false and return
+  end
+
   private
     def set_today
       params[:date] ||= Time.zone.today.to_s

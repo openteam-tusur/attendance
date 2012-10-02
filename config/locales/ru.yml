@@ -1,4 +1,5 @@
 ru:
+  are_you_sure:     Вы уверены в том, что собираетесь сделать?
   site_title:       Журнал посещаемости студентов ТУСУР
 
   activerecord:
@@ -20,6 +21,7 @@ ru:
         date_on:      Дата занятия
         kind:         Тип занятия
         order_number: Порядковый номер занятия
+        state:        Статус занятия
 
       person: &human
         name:       Имя
@@ -47,9 +49,9 @@ ru:
 
   enumerize:
     lesson:
-      status:
-        take_place:       Занятие состоялось
-        wasnt_take_place: Занятие не состоялось
+      state:
+        took_place:       состоялось
+        wasnt_took_place: не состоялось
 
       kind:
         design:     Курс. проек.

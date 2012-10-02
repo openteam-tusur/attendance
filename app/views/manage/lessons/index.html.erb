@@ -3,7 +3,7 @@
 <table class='ajaxed'>
   <thead>
     <tr>
-      <th rowspan='2' class='title'><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></th>
+      <th rowspan='3' class='title'><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></th>
       <% times.each do |time| %>
         <th class='time'><%= time.html_safe %></th>
       <% end %>
@@ -12,6 +12,19 @@
       <% times.each_with_index do |time, order| %>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
             <%= render lessons %>
+          <% else %>
+            <th>&mdash;</th>
+          <% end %>
+      <% end %>
+    </tr>
+    <tr class='states'>
+      <% times.each_with_index do |time, order| %>
+          <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
+            <% lessons.each do |lesson|  %>
+              <th>
+                <%= render :partial => 'lesson_state', :locals => { :lesson => lesson } %>
+              </th>
+            <% end %>
           <% else %>
             <th>&mdash;</th>
           <% end %>

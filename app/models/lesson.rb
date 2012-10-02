@@ -3,7 +3,7 @@
 class Lesson < ActiveRecord::Base
   include Enumerize
 
-  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes, :group_id
+  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes, :group_id, :state
 
   belongs_to :discipline
   belongs_to :group
@@ -25,4 +25,16 @@ class Lesson < ActiveRecord::Base
   scope :from_semester_begin, ->{ where('lessons.date_on >= ?', Presence.semester_begin) }
 
   accepts_nested_attributes_for :presences
+
+  def switch_state
+    self.update_attributes! :state => opposite_state
+  end
+
+  def state_texts
+    Hash[Lesson.enumerized_attributes[:state].options].invert
+  end
+
+  def opposite_state
+    (self.class.state.values - [self.state]).first
+  end
 end

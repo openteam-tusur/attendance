@@ -1,0 +1,1 @@
+<%= link_to lesson.state.text, [:manage, lesson.group, lesson, :switch_state], :method => :put, :remote => true, :confirm => t('are_you_sure'), :class => lesson.state %>
