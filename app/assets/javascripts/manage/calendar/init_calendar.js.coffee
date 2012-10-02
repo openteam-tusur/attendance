@@ -17,14 +17,14 @@ $.fn.calculate_visible = () ->
 
 @init_calendar = () ->
   line_wrapper = $('.calendar_wrapper .days_wrapper ul')
-  line_wrapper.calculate_visible()
-
   active = line_wrapper.children('.active')
 
   if active.prevAll().length > 4
     line_wrapper.css('left', 918 - (active.position().left+active.outerWidth()))
   else
     line_wrapper.css('left', 0)
+
+  line_wrapper.calculate_visible()
 
   $('.calendar_wrapper .controls a').on 'click', (evt) ->
     control = $(evt.target)
