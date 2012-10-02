@@ -19,7 +19,7 @@ class Manage::LessonsController < Manage::ApplicationController
   end
 
   def index
-    authorize! :read, association_chain.last
+    authorize! :read, association_chain.last.lessons.build
   end
 
   private

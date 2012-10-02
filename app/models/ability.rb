@@ -53,5 +53,13 @@ class Ability
     can [:read, :switch_state], Lesson do |lesson|
       can? :read, lesson.group
     end
+
+    can :manage, Presence do |presence|
+      user.group_leader_of?(presence.group)
+    end
+
+    can [:read, :switch_state], Lesson do |lesson|
+      user.group_leader_of?(lesson.group)
+    end
   end
 end
