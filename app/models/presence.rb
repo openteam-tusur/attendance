@@ -7,6 +7,8 @@ class Presence < ActiveRecord::Base
 
   belongs_to :lesson
   belongs_to :student
+  has_one :group, :through => :student
+  has_one :faculty, :through => :group
 
   before_save :set_date_on
 

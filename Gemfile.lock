@@ -53,7 +53,7 @@ GEM
     bcrypt-ruby (3.0.1)
     builder (3.0.3)
     bunny (0.8.0)
-    cancan (1.6.7)
+    cancan (1.6.8)
     capistrano (2.13.4)
       highline
       net-scp (>= 1.0.0)
@@ -89,6 +89,7 @@ GEM
       warden (~> 1.2.1)
     devise-russian (2.0.1.1)
       devise
+    diff-lcs (1.1.3)
     enumerize (0.4.0)
       activesupport (>= 3.2)
     erubis (2.7.0)
@@ -230,6 +231,19 @@ GEM
       railties (~> 3.1)
     rsolr (1.0.8)
       builder (>= 2.1.2)
+    rspec (2.11.0)
+      rspec-core (~> 2.11.0)
+      rspec-expectations (~> 2.11.0)
+      rspec-mocks (~> 2.11.0)
+    rspec-core (2.11.1)
+    rspec-expectations (2.11.3)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.11.3)
+    rspec-rails (2.11.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec (~> 2.11.0)
     ruby-graphviz (1.0.8)
     russian (0.6.0)
       i18n (>= 0.5.0)
@@ -251,6 +265,7 @@ GEM
     sunspot (1.3.3)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
+    sunspot_matchers (1.3.0.2)
     sunspot_rails (1.3.3)
       nokogiri
       sunspot (= 1.3.3)
@@ -283,7 +298,6 @@ PLATFORMS
 DEPENDENCIES
   airbrake (= 3.1.2)
   attribute_normalizer
-  cancan (= 1.6.7)
   coffee-rails
   compass-rails
   curb
@@ -304,11 +318,13 @@ DEPENDENCIES
   progress_bar
   rails
   rails-erd
+  rspec-rails
   russian
   rvm-capistrano
   sass-rails
   simple_form
   sqlite3
+  sunspot_matchers
   sunspot_rails
   sunspot_solr
   therubyracer

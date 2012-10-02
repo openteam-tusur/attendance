@@ -1,5 +1,4 @@
 class Manage::LessonsController < Manage::ApplicationController
-  inherit_resources
 
   belongs_to :group, :finder => :find_by_number! do
     belongs_to :student, :optional => true
@@ -17,6 +16,10 @@ class Manage::LessonsController < Manage::ApplicationController
     @lesson = Lesson.find(params[:lesson_id])
     @lesson.switch_state
     render :partial => 'manage/lessons/lesson_state', :locals => { :lesson => @lesson }, :layout => false and return
+  end
+
+  def index
+    authorize! :read, association_chain.last
   end
 
   private

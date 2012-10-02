@@ -34,13 +34,24 @@ class Ability
     end
 
     ## app specific
-    can :manage, Subcontext do | subcontext |
-      user.manager_of? subcontext.context
+    can :manage, :all if user.manager?
+
+    can :read, :university_statistics if user.study_department_worker?
+
+    can :read, Faculty do |faculty|
+      user.faculty_worker_of?(faculty)
     end
 
-    can :manage, Subcontext do | subcontext |
-      user.manager_of? subcontext
+    can :read, Group do |group|
+      can? :read, group.faculty
     end
-    can :manage, :all
+
+    can :manage, Presence do |presence|
+      can? :read, presence.group
+    end
+
+    can [:read, :switch_state], Lesson do |lesson|
+      can? :read, lesson.group
+    end
   end
 end

@@ -3,6 +3,6 @@ class Manage::ApplicationController < ApplicationController
 
   layout 'manage'
 
-  def index
+  def university_statistics
   end
 end

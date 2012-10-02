@@ -3,81 +3,69 @@
 require 'spec_helper'
 
 describe Ability do
+
   context 'менеджер' do
     context 'корневого контекста' do
       subject { ability_for(manager_of(root)) }
 
       context 'управление контекстами' do
-        it { should     be_able_to(:manage, root) }
-        it { should     be_able_to(:manage, child_1) }
-        it { should     be_able_to(:manage, child_1_1) }
-        it { should     be_able_to(:manage, child_2) }
-      end
-
-      context 'управление подконтекстами' do
-        it { should     be_able_to(:manage, subcontext(root)) }
-        it { should     be_able_to(:manage, subcontext(child_1)) }
-        it { should     be_able_to(:manage, subcontext(child_1_1)) }
-        it { should     be_able_to(:manage, subcontext(child_2)) }
-      end
-
-      context 'управление правами доступа' do
-        it { should     be_able_to(:manage, another_manager_of(root).permissions.first) }
-        it { should     be_able_to(:manage, another_manager_of(child_1).permissions.first) }
-        it { should     be_able_to(:manage, another_manager_of(child_1_1).permissions.first) }
-        it { should     be_able_to(:manage, another_manager_of(child_2).permissions.first) }
+        it { should be_able_to(:manage, :all) }
       end
     end
+  end
 
-    context 'вложенного контекста' do
-      subject { ability_for(manager_of(child_1)) }
+  context 'Сотрудник учебного управления' do
+    subject { ability_for(study_department_worker_of(root)) }
 
-      context 'управление контекстами' do
-        it { should_not be_able_to(:manage, root) }
-        it { should     be_able_to(:manage, child_1) }
-        it { should     be_able_to(:manage, child_1_1) }
-        it { should_not be_able_to(:manage, child_2) }
-      end
-
-      context 'управление подконтекстами' do
-        it { should_not be_able_to(:manage, subcontext(root)) }
-        it { should     be_able_to(:manage, subcontext(child_1)) }
-        it { should     be_able_to(:manage, subcontext(child_1_1)) }
-        it { should_not be_able_to(:manage, subcontext(child_2)) }
-      end
-
-      context 'управление правами доступа' do
-        it { should_not be_able_to(:manage, another_manager_of(root).permissions.first) }
-        it { should     be_able_to(:manage, another_manager_of(child_1).permissions.first) }
-        it { should     be_able_to(:manage, another_manager_of(child_1_1).permissions.first) }
-        it { should_not be_able_to(:manage, another_manager_of(child_2).permissions.first) }
-      end
+    context 'управление контекстами' do
+      it { should_not be_able_to(:manage, :all) }
     end
 
-    context 'подконтеста' do
-      subject { ability_for(manager_of(subcontext(child_1)))}
-
-      context 'управление контекстами' do
-        it { should_not be_able_to(:manage, root) }
-        it { should_not be_able_to(:manage, child_1) }
-        it { should_not be_able_to(:manage, child_1_1) }
-        it { should_not be_able_to(:manage, child_2) }
-      end
-
-      context 'управление подконтекстами' do
-        it { should_not be_able_to(:manage, another_subcontext(root)) }
-        it { should_not be_able_to(:manage, another_subcontext(child_1)) }
-        it { should_not be_able_to(:manage, another_subcontext(child_1_1)) }
-        it { should_not be_able_to(:manage, another_subcontext(child_2)) }
-        it { should     be_able_to(:manage, subcontext(child_1)) }
-      end
-
-      context 'управление правами доступа' do
-        it { should_not be_able_to(:manage, another_manager_of(root).permissions.first) }
-        it { should_not be_able_to(:manage, another_manager_of(child_1).permissions.first) }
-        it { should_not be_able_to(:manage, another_manager_of(child_1_1).permissions.first) }
-        it { should_not be_able_to(:manage, another_manager_of(child_2).permissions.first) }
-      end
+    context 'просмотр статистики по факультетам' do
+      it { should be_able_to(:read, :univercity_statistics) }
     end
+  end
+
+  context 'Сотрудник факультета' do
+    let(:fsu) { Faculty.create(:title => 'Факультет систем управления') }
+    let(:rkf) { Faculty.create(:title => 'Факультет радиоконструирования') }
+    let(:g_fsu) { fsu.groups.create(:number => '433-2') }
+    let(:g_rkf) { rkf.groups.create(:number => '133-2') }
+    let(:s_g_fsu) { g_fsu.students.create(:surname => 'Иванов') }
+    let(:s_g_rkf) { g_rkf.students.create(:surname => 'Петров') }
+    let(:l_fsu) { g_fsu.lessons.create }
+    let(:l_rkf) { g_rkf.lessons.create }
+    let(:p_s_g_fsu) { Presence.create(:lesson_id => l_fsu.id, :student_id => s_g_fsu.id) }
+    let(:p_s_g_rkf) { Presence.create(:lesson_id => l_rkf.id, :student_id => s_g_rkf.id) }
+
+    subject { ability_for(faculty_worker_of(fsu)) }
+
+    context 'управление контекстами' do
+      it { should_not be_able_to(:manage, :all) }
+    end
+
+    context 'просмотр статистики по факультетам' do
+      it { should_not be_able_to(:read, :univercity_statistics) }
+    end
+
+    context 'просмотр статистики факультета' do
+      it { should     be_able_to(:read, fsu) }
+      it { should_not be_able_to(:read, rkf) }
+    end
+
+    context 'просмотр статистики группы' do
+      it { should     be_able_to(:read, g_fsu) }
+      it { should_not be_able_to(:read, g_rkf) }
+    end
+
+    context 'управлять посещаемостью группы' do
+      it { should     be_able_to(:manage, p_s_g_fsu) }
+      it { should     be_able_to(:switch_state, l_fsu) }
+      it { should_not be_able_to(:manage, p_s_g_rkf) }
+      it { should_not be_able_to(:switch_state, l_rkf) }
+    end
+  end
+
+  context 'Староста группы' do
   end
 end
