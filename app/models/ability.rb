@@ -41,5 +41,6 @@ class Ability
     can :manage, Subcontext do | subcontext |
       user.manager_of? subcontext
     end
+    can :manage, :all
   end
 end
