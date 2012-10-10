@@ -1,5 +1,4 @@
 class Manage::LessonsController < Manage::ApplicationController
-
   belongs_to :group, :finder => :find_by_number! do
     belongs_to :student, :optional => true
   end
