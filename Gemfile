@@ -11,6 +11,7 @@ end
 group :default do
   gem 'airbrake',                '3.1.2'
   gem 'attribute_normalizer'
+  gem 'compass-rails'
   gem 'curb'
   gem 'default_value_for'
   gem 'enumerize'
