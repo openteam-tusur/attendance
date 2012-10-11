@@ -62,10 +62,10 @@ ru:
 
     presence:
       kind:
-        not_marked: не отмечен
-        valid_excuse: уважительная причина
-        was:        был
-        wasnt:      не был
+        not_marked:   не отмечен
+        valid_excuse: ув.причина
+        was:          был
+        wasnt:        не был
 
   simple_form:
     hints:

@@ -2,10 +2,14 @@
   <%= f.input :student_id, :as => :hidden %>
   <%= f.input :lesson_id, :as => :hidden %>
 
-  <% if f.object.not_marked? %>
-    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2), :checked => 'was' %>
+  <% if current_user.faculty_worker? || current_user.manager? %>
+    <%= f.input :kind, :label => false, :as => :radio_buttons, :wrapper_html => { :class => 'simple_style' }  %>
   <% else %>
-    <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2) %>
+    <% if f.object.not_marked? %>
+      <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2), :checked => 'was' %>
+    <% else %>
+      <%= f.input :kind, :label => false, :as => :radio_buttons, :collection => Presence.kind.options.drop(2) %>
+    <% end %>
   <% end %>
 
   <%= f.submit :class => "hide lesson_#{@lesson.id}" %>

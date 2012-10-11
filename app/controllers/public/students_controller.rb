@@ -3,5 +3,5 @@ class Public::StudentsController < ApplicationController
 
   defaults :finder => :find_by_secure_id!
 
-  actions :all, :only => [:show]
+  actions :show
 end

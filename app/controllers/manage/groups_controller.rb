@@ -3,5 +3,5 @@ class Manage::GroupsController < Manage::ApplicationController
 
   belongs_to :faculty, :optional => true, :finder => :find_by_abbr!
 
-  actions :all, :only => [:index, :show]
+  actions :index, :show
 end

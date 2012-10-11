@@ -283,9 +283,28 @@
           font-size: 0.9em
 
   form
-    height: 31px
+    //height: 31px
 
-    .radio_buttons
+    .radio_buttons.simple_style
+      text-align: left
+
+      .radio
+        +clearfix
+        display: block
+        height: 15px
+        line-height: 15px
+        margin: 3px 0
+
+        input
+          +inline-block
+          margin: 0 5px 0 0
+
+        label
+          +inline-block
+          font-size: 0.9em
+          line-height: 15px
+
+    div.radio_buttons:not(.simple_style)
       +border-radius(20px)
       +box-shadow(#cd685e 0 1px 3px inset, rgba(237, 63, 45, 0.5) 0 12px 3px 2px inset)
       +clearfix
