@@ -42,6 +42,48 @@ a
     color: #97532c
     text-decoration: none
 
+body
+  &:before
+    background: image_url('preloader.gif') no-repeat center top
+    content: ''
+    display: block
+    height: 0
+    width: 0
+
+  &:after
+    background: image_url('blur.png') repeat
+    content: ''
+    display: block
+    width: 0
+    height: 0
+
+  &.processing
+    +clearfix
+    height: 100%
+
+    &:before
+      background: image_url('preloader.gif') no-repeat center top
+      color: #fafafa
+      content: '... идет выполение запроса ...'
+      padding: 25px 0
+      position: fixed
+      text-align: center
+      top: 45%
+      width: 100%
+      z-index: 99999
+
+    &:after
+      background: image_url('blur.png') repeat
+      bottom: 0
+      content: ''
+      display: block
+      left: 0
+      padding: 100%
+      position: absolute
+      right: 0
+      top: 0
+      z-index: 9999
+
 table
   border-collapse: collapse
   width: 100%

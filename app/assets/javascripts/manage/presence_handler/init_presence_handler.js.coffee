@@ -10,6 +10,7 @@ cancel_handler = () ->
 
 @init_presence_handler = () ->
   $('.edit_link').on 'click', (evt) ->
+    $('body').addClass('processing')
     link = $(evt.target)
     target_class = link.attr('id')
 
@@ -24,5 +25,8 @@ cancel_handler = () ->
       link.next('a').remove()
 
     $('.'+target_class).click()
+
+    $('.'+target_class+':last').closest('td').on 'ajax:success', ->
+      $('body').removeClass('processing')
 
     false
