@@ -1,6 +1,6 @@
 ru:
   are_you_sure:     Вы уверены в том, что собираетесь сделать?
-  site_title:       Журнал посещаемости студентов ТУСУР
+  site_title:       Журнал посещаемости ТУСУР
 
   activerecord:
     attributes:
