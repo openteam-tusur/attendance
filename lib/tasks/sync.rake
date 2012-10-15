@@ -21,13 +21,11 @@ namespace :sync do
 
   desc 'Синхронизация студентов'
   task :students => :environment do
+    bar = ProgressBar.new(Group.count)
     Group.all.each do |group|
-      puts "Импорт студентов группы #{group.number}"
-      students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.number}").body_str)
+      students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.contingent_number}").body_str)
 
-      bar = ProgressBar.new(students.count)
-
-      puts "Студенты не найдены" if students.empty?
+      puts "Группа №#{group.number}: студенты не найдены" if students.empty?
 
       students.each do |student|
         student = student['student']
@@ -39,10 +37,11 @@ namespace :sync do
           item.save!
         end
 
-        bar.increment!
       end
 
       (group.students - group.students.where(:contingent_id => students.map{|s| s['student']['study_id']})).each{|student| student.update_attributes(:active => false)}
+
+      bar.increment!
     end
   end
 

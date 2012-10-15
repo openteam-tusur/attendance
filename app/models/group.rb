@@ -15,6 +15,14 @@ class Group < ActiveRecord::Base
   delegate :from_last_week, :to => :lessons, :prefix => true
   delegate :from_semester_begin, :to => :lessons, :prefix => true
 
+  CONTINGENT_GROUP_NUMBERS = {
+    '128'   => '128-1',
+    '311'   => '311-1',
+    '369-1' => '369',
+    '910нС' => '910н-с',
+    '921нС' => '921н-с'
+  }
+
   def to_s
     "гр. #{number}"
   end
@@ -34,5 +42,9 @@ class Group < ActiveRecord::Base
 
   def to_param
     number
+  end
+
+  def contingent_number
+    CONTINGENT_GROUP_NUMBERS[number] || number
   end
 end
