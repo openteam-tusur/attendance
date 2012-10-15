@@ -11,10 +11,8 @@ namespace :sync do
     bar = ProgressBar.new(groups['groups'].count)
 
     groups['groups'].each do |group|
-      unless group['number'] =~ /м/i || group['faculty_abbr'] =~ /\b[зв]ф\b/i
-        faculty = Faculty.find_or_create_by_abbr_and_title(:abbr => group['faculty_abbr'], :title => group['faculty_name'])
-        faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
-      end
+      faculty = Faculty.find_or_create_by_abbr_and_title(:abbr => group['faculty_abbr'], :title => group['faculty_name'])
+      faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
       bar.increment!
     end
   end
@@ -47,69 +45,58 @@ namespace :sync do
 
   desc 'Синхронизация уроков на предстоящий день'
   task :lessons => :environment do
-    Group.all.each do |group|
-      puts "Расписание для #{group} на #{Time.zone.today.strftime('%Y-%m-%d')}"
-      LessonSync.new(group.number, Time.zone.today.strftime('%Y-%m-%d'))
-    end
+    LessonSync.new.sync_lessons(Date.today)
   end
 
   desc 'Синхронизация уроков с START_DATE=%Y-%m-%d'
   task :all_lessons => :environment do
-    start_date = Time.zone.parse ENV['START_DATE']
-    (start_date.to_date .. Time.zone.today).each do |date|
-      Group.all.each do |group|
-        puts "Расписание для #{group} на #{date.strftime('%Y-%m-%d')}"
-        LessonSync.new(group.number, date.strftime('%Y-%m-%d'))
-      end
+    start_date = Date.parse ENV['START_DATE']
+    (start_date.to_date .. Date.today).each do |date|
+      puts date
+      LessonSync.new.sync_lessons(date)
     end
   end
 end
 
 class LessonSync
-  def initialize(group_number, date)
-    get_lessons(group_number, date)
-  end
+  def sync_lessons(date)
+    response = JSON.parse(Curl.get("#{Settings['timetable.url']}/api/v1/timetables/by_date/#{date}").body_str)
+    bar = ProgressBar.new(response.count)
+    response.each do |group_number, lessons|
+      if group = Group.find_by_number(group_number)
+        lessons.each do |lesson|
+          discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
+          lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom_and_group_id(
+            :timetable_id => lesson['timetable_id'],
+            :date_on => date,
+            :classroom => lesson['classroom'],
+            :group_id => group.id
+          ).tap do |item|
+            item.kind         = lesson['kind']
+            item.order_number = lesson['order_number']
+            item.note         = lesson['note']
+            item.group_id     = group.id
+            item.save!
+          end
 
-  def get_lessons(group_number, date)
-    response = JSON.parse(Curl.get("#{Settings['timetable.url']}/api/v1/timetables/#{group_number}/#{date}").body_str)
-    lessons = []
-    group = Group.find_by_number(group_number)
+          lesson['lecturers'].each do |lecturer|
+            lecturer_obj = Lecturer.find_or_create_by_surname_and_name_and_patronymic(
+              :surname => lecturer['lastname'].mb_chars.titleize.gsub(/\./, '').strip,
+              :name => lecturer['firstname'].mb_chars.titleize.gsub(/\./, '').strip,
+              :patronymic => lecturer['middlename'].mb_chars.titleize.gsub(/\./, '').strip
+            )
 
-    puts '>>>>>>>>> Расписание не найдено' if response['lessons'].empty? || response.has_key?('error')
+            Realize.find_or_create_by_lecturer_id_and_lesson_id(:lecturer_id => lecturer_obj.id, :lesson_id => lesson_obj.id)
+          end
 
-    bar = ProgressBar.new(response['lessons'].count)
-
-    response['lessons'].each do |lesson|
-      discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
-      lesson_obj = discipline.lessons.find_or_initialize_by_timetable_id_and_date_on_and_classroom_and_group_id(
-                                                                                            :timetable_id => lesson['timetable_id'],
-                                                                                            :date_on => Time.zone.parse(date).to_date,
-                                                                                            :classroom => lesson['classroom'],
-                                                                                            :group_id => group.id
-      ).tap do |item|
-        item.kind         = lesson['kind']
-        item.order_number = lesson['order_number']
-        item.note         = lesson['note']
-        item.group_id     = group.id
-        item.save!
+          group.students.pluck(:id).each do |student_id|
+            Presence.find_or_create_by_student_id_and_lesson_id(:student_id => student_id, :lesson_id => lesson_obj.id)
+          end
+        end
+      else
+        puts "не могу найти группу #{group_number}"
       end
-
-      lesson['lecturers'].each do |lecturer|
-        lecturer_obj = Lecturer.find_or_create_by_surname_and_name_and_patronymic(
-          :surname => lecturer['lastname'].mb_chars.titleize.gsub(/\./, '').strip,
-          :name => lecturer['firstname'].mb_chars.titleize.gsub(/\./, '').strip,
-          :patronymic => lecturer['middlename'].mb_chars.titleize.gsub(/\./, '').strip
-        )
-
-        Realize.find_or_create_by_lecturer_id_and_lesson_id(:lecturer_id => lecturer_obj.id, :lesson_id => lesson_obj.id)
-      end
-
-      group.students.pluck(:id).each do |student_id|
-        Presence.find_or_create_by_student_id_and_lesson_id(:student_id => student_id, :lesson_id => lesson_obj.id)
-      end
-
-      lessons << lesson_obj
+      bar.increment!
     end
-    lessons
   end
 end
