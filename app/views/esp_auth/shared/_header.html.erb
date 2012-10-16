@@ -5,7 +5,14 @@
       <div class='navigation'>
         <% if can? :manage, :application %>
           <% if current_user.group_leader? %>
-            <%= link_to 'Система управления', manage_group_scoped_lessons_path(current_user.permissions.first.context) %>
+            <% if current_user.permissions.count > 1 %>
+              Система управления:
+              <% current_user.permissions.each do |permission| %>
+                <%= link_to "гр. #{permission.context.number}", manage_group_scoped_lessons_path(permission.context) %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Система управления', manage_group_scoped_lessons_path(current_user.permissions.first.context) %>
+            <% end %>
           <% elsif current_user.study_department_worker? %>
             <%= link_to 'Система управления', manage_root_path %>
           <% elsif current_user.faculty_worker? %>
