@@ -10,7 +10,7 @@ task :import_tusur_group_leaders => :environment do
     puts faculty
     groups.each do |group, student|
       if group_obj = Group.find_by_number(group.to_s)
-        User.find_or_initialize_by_uid(student['uid'].to_s).tap do |user|
+        if (user = User.find_or_initialize_by_uid(student['uid'].to_s)).new_record?
           user.first_name = student['name']
           user.last_name = student['surname']
           user.name = "#{student['name']} #{student['patronymic']} #{student['surname']}"
