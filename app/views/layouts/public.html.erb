@@ -23,3 +23,7 @@
 <% end unless controller_name.match(/application/) %>
 
 <%= render :file => 'layouts/base' %>
+
+<% if controller_name.match(/application/) %>
+  <%= render :partial => "layouts/video" %>
+<% end %>
