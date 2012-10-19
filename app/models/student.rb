@@ -13,14 +13,13 @@ class Student < Person
 
   delegate :from_last_week, :to => :presences, :prefix => true
   delegate :from_semester_begin, :to => :presences, :prefix => true
+  delegate :number, :to => :group, :prefix => true
 
   before_save :set_secure_id
 
   searchable do
-    string :fio
-    string :group_number do
-      group.number
-    end
+    text :fio
+    text :group_number
   end
 
   def attendance_on(lesson)
