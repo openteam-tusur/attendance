@@ -9,7 +9,7 @@ class Manage::LessonsController < Manage::ApplicationController
 
   actions :index
 
-  before_filter :set_today
+  before_filter :set_today, :only => :index
 
   def switch_state
     @lesson = Lesson.find(params[:lesson_id])
@@ -23,6 +23,6 @@ class Manage::LessonsController < Manage::ApplicationController
 
   private
     def set_today
-      params[:date] ||= Time.zone.today.to_s
+      params[:date] ||= @group.lessons.maximum(:date_on).to_s
     end
 end
