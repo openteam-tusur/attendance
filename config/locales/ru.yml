@@ -70,4 +70,4 @@ ru:
   simple_form:
     hints:
       student:
-        search: 'Например: Иванов Иван Иванович, 777'
+        search: 'Например: Иванов Иван 777'

@@ -18,7 +18,8 @@ class Student < Person
   before_save :set_secure_id
 
   searchable do
-    text :fio
+    text :surname
+    text :name
     text :group_number
   end
 
