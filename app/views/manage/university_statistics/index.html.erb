@@ -15,7 +15,7 @@
   <tbody>
     <% Faculty.all.each do |faculty| %>
       <tr>
-        <td><%= faculty %></td>
+        <td><%= link_to faculty.title, manage_faculty_path(faculty) %></td>
         <td><%= faculty.average_attendance_from_last_week %></td>
         <td><%= faculty.average_attendance_from_semester_begin %></td>
         <td><%= faculty.students.count %></td>
