@@ -6,14 +6,16 @@ task :import_tusur_group_leaders => :environment do
   yml_path = ENV['YML_PATH'] || "#{File.dirname(File.expand_path(__FILE__))}/group_leaders.yml"
   list = YAML.load_file(yml_path)
   list['group_leader'].each do |faculty, students|
-    students.delete_if {|s| s['sended'] }
-    next if students.empty?
-    bar = ProgressBar.new(students.count)
+    filtered_students = students.reject {|s| s['sended'] }
+    next if filtered_students.empty?
+
+    bar = ProgressBar.new(filtered_students.count)
     puts faculty
     current = nil
+
     begin
       User.transaction do
-        students.each do |student|
+        filtered_students.each do |student|
           current = student
           group = Group.find_by_number(student['group'].to_s) || raise("Группа #{group_number} не найдена !")
           if (user = User.find_or_initialize_by_uid(student['uid'].to_s)).new_record?
