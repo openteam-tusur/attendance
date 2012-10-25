@@ -8,20 +8,33 @@ task :import_tusur_group_leaders => :environment do
   list['group_leader'].each do |faculty, groups|
     bar = ProgressBar.new(groups.count)
     puts faculty
-    groups.each do |group, student|
-      if group_obj = Group.find_by_number(group.to_s)
-        if (user = User.find_or_initialize_by_uid(student['uid'].to_s)).new_record?
-          user.first_name = student['name']
-          user.last_name = student['surname']
-          user.name = "#{student['name']} #{student['patronymic']} #{student['surname']}"
-          user.email = student['email']
-          user.save!
-          user.permissions << Permission.new(:context => group_obj, :role => :group_leader)
+    record = nil
+    begin
+      User.transaction do
+        groups.each do |group_number, student|
+          record = student
+          group = Group.find_by_number(group_number) || raise("Группа #{group_number} не найдена !")
+          if (user = User.find_or_initialize_by_uid(student['uid'].to_s)).new_record?
+            user.first_name = student['name']
+            user.last_name  = student['surname']
+            user.name       = "#{student['name']} #{student['patronymic']} #{student['surname']}"
+            user.email      = student['email']
+            user.save!
+            user.permissions.create! :context => group, :role => :group_leader
+          end
+          bar.increment!
         end
-      else
-        puts "!!! #{group} не найдена !!!"
       end
-      bar.increment!
+    rescue => e
+      puts
+      puts
+      user_name = "#{record['surname']} #{record['name']} <#{record['email']}>"
+      divider = "-" * (user_name.length + 4)
+      puts divider
+      puts "| #{user_name} |"
+      puts divider
+      puts
+      raise e
     end
   end
 end
