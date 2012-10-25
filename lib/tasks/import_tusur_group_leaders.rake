@@ -6,6 +6,8 @@ task :import_tusur_group_leaders => :environment do
   yml_path = ENV['YML_PATH'] || "#{File.dirname(File.expand_path(__FILE__))}/group_leaders.yml"
   list = YAML.load_file(yml_path)
   list['group_leader'].each do |faculty, students|
+    students.delete_if {|s| s['sended'] }
+    next if students.empty?
     bar = ProgressBar.new(students.count)
     puts faculty
     current = nil
@@ -21,8 +23,8 @@ task :import_tusur_group_leaders => :environment do
             user.email      = student['email']
             user.save!
             user.permissions.create! :context => group, :role => :group_leader
+            bar.increment!
           end
-          bar.increment!
         end
       end
     rescue => e
