@@ -13,23 +13,21 @@ def user_for(record)
   end
 end
 
-def import_student(record)
+def process_student(record)
   user_for(record).permissions.create! :role    => :group_leader,
                                        :context => Group.find_by_number!(record['group'].to_s)
 end
 
-def import_dean(record)
+def process_dean(record)
   user_for(record).permissions.create! :role    => :faculty_worker,
                                        :context => Faculty.find_by_abbr!(record['faculty'].to_s)
 end
 
+def filtered_records
+  records.reject{|r| r['sended']}
+end
+
 desc 'Импорт пользователей в attendance'
 task :import_tusur_users => :environment do
-  process records.reject{|r| r['sended']} do |record|
-    if record['group']
-      import_student(record)
-    elsif record['faculty']
-      import_dean(record)
-    end
-  end
+  process
 end
