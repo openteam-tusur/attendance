@@ -8,6 +8,10 @@ def yaml
   @yaml ||= YAML.load_file(yml_path)
 end
 
+def records
+  @records ||= yaml.values.flatten
+end
+
 def write_yaml
   File.open(yml_path, "w"){ |f| f.write yaml.to_yaml }
 end

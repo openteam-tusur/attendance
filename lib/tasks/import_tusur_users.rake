@@ -25,7 +25,7 @@ end
 
 desc 'Импорт пользователей в attendance'
 task :import_tusur_users => :environment do
-  process yaml.values.flatten.reject{|r| r['sended']} do |record|
+  process records.reject{|r| r['sended']} do |record|
     if record['group']
       import_student(record)
     elsif record['faculty']
