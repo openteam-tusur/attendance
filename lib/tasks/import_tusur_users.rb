@@ -16,9 +16,13 @@ def write_yaml
   File.open(yml_path, "w"){ |f| f.write yaml.to_yaml }
 end
 
+def filtered_records
+  @filtered_records ||= records.select{|r| filter(r)}
+end
+
 def process
   current = nil
-  bar = ProgressBar.new(records.count)
+  bar = ProgressBar.new(filtered_records.count)
   begin
     User.transaction do
       filtered_records.each do |record|
@@ -28,7 +32,7 @@ def process
         elsif record['faculty']
           process_dean(record)
         else
-          process_user(record)
+          raise 'неизвестный тип записи'
         end
         bar.increment!
       end
