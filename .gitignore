@@ -5,6 +5,7 @@
 /config/database.yml
 /config/settings.yml
 /config/sunspot.yml
+/config/users.yml
 /db/*.sqlite3
 /log/*.log
 /log/*.log.lck
