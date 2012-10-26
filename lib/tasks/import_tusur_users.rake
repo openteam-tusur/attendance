@@ -14,17 +14,17 @@ def user_for(record)
 end
 
 def process_student(record)
-  user_for(record).permissions.create! :role    => :group_leader,
-                                       :context => Group.find_by_number!(record['group'].to_s)
+  user_for(record).permissions << Permission.new(:role    => :group_leader,
+                                                 :context => Group.find_by_number!(record['group'].to_s))
 end
 
 def process_dean(record)
-  user_for(record).permissions.create! :role    => :faculty_worker,
-                                       :context => Faculty.find_by_abbr!(record['faculty'].to_s)
+  user_for(record).permissions << Permission.new(:role    => :faculty_worker,
+                                                 :context => Faculty.find_by_abbr!(record['faculty'].to_s))
 end
 
-def filtered_records
-  records.reject{|r| r['sended']}
+def filter(record)
+  !record['sended']
 end
 
 desc 'Импорт пользователей в attendance'
