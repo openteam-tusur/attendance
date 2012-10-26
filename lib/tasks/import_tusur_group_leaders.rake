@@ -17,7 +17,7 @@ task :import_tusur_group_leaders => :environment do
       User.transaction do
         filtered_students.each do |student|
           current = student
-          group = Group.find_by_number(student['group'].to_s) || raise("Группа #{group_number} не найдена !")
+          group = Group.find_by_number(student['group'].to_s) || raise("Группа #{student['group']} не найдена !")
           if (user = User.find_or_initialize_by_uid(student['uid'].to_s)).new_record?
             user.first_name = student['name']
             user.last_name  = student['surname']
