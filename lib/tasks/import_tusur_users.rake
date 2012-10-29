@@ -24,7 +24,7 @@ def process_dean(record)
 end
 
 def filter(record)
-  !record['sended']
+  ENV['EMAIL'] ? record['email'] == ENV['EMAIL'] : !record['sended']
 end
 
 desc 'Импорт пользователей в attendance'
