@@ -8,8 +8,8 @@ class Lesson < ActiveRecord::Base
   belongs_to :discipline
   belongs_to :group
   belongs_to :lecturer
-  has_many :realizes
-  has_many :presences
+  has_many :realizes, :dependent => :destroy
+  has_many :presences, :dependent => :destroy
   has_many :lecturers, :through => :realizes
 
   enumerize :kind, :in => [:lecture, :practice, :laboratory, :research, :design]
