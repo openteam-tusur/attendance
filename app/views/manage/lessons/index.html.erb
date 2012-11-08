@@ -38,7 +38,7 @@
         <td class='student'><%= student %></td>
         <% times.each_with_index do |time, order| %>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
-            <td><%= render student.attendance_on(lessons.first) %></td>
+            <td><%= student.attendance_on(lessons.first) ? render(student.attendance_on(lessons.first)) : 'нет в списке' %></td>
           <% else %>
             <td>&mdash;</td>
           <% end %>
