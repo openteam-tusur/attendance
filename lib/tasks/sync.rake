@@ -48,10 +48,11 @@ namespace :sync do
     LessonSync.new.sync_lessons(Date.today)
   end
 
-  desc 'Синхронизация уроков с START_DATE=%Y-%m-%d'
+  desc 'Синхронизация уроков с START_DATE=%Y-%m-%d по END_DATE=%Y-%m-%d, если нет END_DATE то берется текущий день'
   task :all_lessons => :environment do
     start_date = Date.parse ENV['START_DATE']
-    (start_date.to_date .. Date.today).each do |date|
+    end_date   = ENV['END_DATE'].present? ? Date.parse(ENV['END_DATE']) : Date.today
+    (start_date.to_date .. end_date).each do |date|
       puts date
       LessonSync.new.sync_lessons(date)
     end
