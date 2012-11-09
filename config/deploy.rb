@@ -4,6 +4,7 @@ require "rvm/capistrano"
 load "config/deploy/settings"
 load "config/deploy/database"
 load "config/deploy/tag"
+load "config/deploy/maintenance"
 
 namespace :deploy do
   desc "Copy config files"
