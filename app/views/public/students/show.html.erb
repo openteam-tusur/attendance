@@ -10,16 +10,6 @@
 <h6><%= link_to "Посмотреть расписание #{resource.group}",
                 "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(resource.group.number.mb_chars)}" %></h6>
 
-<% if (nofilled_dates = resource.group.lessons_from_semester_begin.took_place.pluck(:date_on).uniq.sort.select{|d| !resource.group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
-  <div class="nofilled_dates">
-    <% if nofilled_dates.count < 20 %>
-      Журнал посещаемости не заполнен за <%= nofilled_dates.map{|d| l(d, :format => "%d %b")}.join(', ') %>
-    <% else %>
-      Журнал посещаемости не заполнялся больше 20 дней!
-    <% end %>
-  </div>
-<% end %>
-
 <table class="student">
   <thead>
     <tr>
