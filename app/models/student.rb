@@ -28,7 +28,7 @@ class Student < Person
   end
 
   def attendance_on?(lesson)
-    attendance_on(lesson).was?
+    attendance_on(lesson).nil? ? false : attendance_on(lesson).was?
   end
 
   def attendanced_from_last_week
