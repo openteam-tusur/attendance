@@ -1,18 +1,30 @@
-<%= content_for :stylesheets do %>
-  <%= stylesheet_link_tag "public/application", :media => "all" %>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Журнал посещаемости ТУСУР</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Keywords" content="посещаемость, журнал, ТУСУР, студенты">
+    <meta name="Description" content="Журнал посещаемости студентов ТУСУР">
+    <meta http-equiv="content-language" content="ru">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link href="http://attendance.tusur.ru/assets/public/application.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="http://attendance.tusur.ru/assets/public/application.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div class='main_wrapper'>
+      <div class="header">
+        <a href="/" class="logo">Томский государственный университет систем управления и радиоэлектроники</a>
+        <h1>Электронный журнал посещаемости студентов</h1>
+      </div>
 
-<%= content_for :javascripts do %>
-  <%= javascript_include_tag "public/application" %>
-<% end %>
+      <div class='content'>
+        <p>Электронный журнал посещаемости студентов в данный момент недоступен, пожалуйста, повторите попытку позднее.</p>
+      </div>
 
-<%= content_for :content do %>
-  <div class="content">
-    <%= yield %>
-    <h1>На сайте идут технические работы</h1>
-    <p>Электронный журнал посещаемости студентов в данный момент недоступен, пожалуйста, повторите попытку позднее.</p>
-    <p><a href="mailto:developers@openteam.ru">developers@openteam.ru</a></p>
-  </div>
-<% end unless controller_name.match(/application/) %>
-
-<%= render :file => 'layouts/base' %>
+      <div class="footer">
+        По всем вопросам позднееишите на <a href='mailto:openteam@tusur.ru'>openteam@tusur.ru</a><br/>
+        или создавайте тикеты на <a href='https://github.com/openteam-tusur/attendance/issues'>https://github.com/openteam-tusur/attendance/issues</a>
+      </div>
+    </div>
+  </body>
+</html>
