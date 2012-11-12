@@ -1,0 +1,1 @@
+{"filled": <%= (collection && collection.any?) ? @group.filled_attendance_at?(collection.first.date_on.strftime('%Y-%m-%d')) : true %>}
