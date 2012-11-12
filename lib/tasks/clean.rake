@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-desc 'Очистка'
+desc 'Очистка от дублей'
 task :clean => :environment do
   Lesson.pluck(:date_on).uniq.sort.each_with_index do |date_on, index|
     puts ''
@@ -25,3 +25,16 @@ task :clean => :environment do
   end
 end
 
+desc "Удалить указанные дни DAYS='%Y-%m-%d, ...'"
+task :remove => :environment do
+  if ENV['DAYS'].present?
+    ENV['DAYS'].split(',').each do |date|
+      if (lessons = Lesson.where(:date_on => Time.zone.parse(date).to_date)).any?
+        puts "Удаляются уроки за #{date}"
+        lessons.destroy_all
+      end
+    end
+  else
+    puts 'Не указал дни ;('
+  end
+end
