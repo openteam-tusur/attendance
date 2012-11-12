@@ -48,6 +48,6 @@ class Student < Person
   end
 
   def set_secure_id
-    self.secure_id = Digest::MD5.hexdigest(self.fio)
+    self.secure_id = Digest::MD5.hexdigest("#{self.fio}#{self.group_number}")
   end
 end
