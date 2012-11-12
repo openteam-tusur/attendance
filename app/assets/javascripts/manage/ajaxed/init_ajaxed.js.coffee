@@ -10,3 +10,12 @@ check_filled = () ->
       wrapper.html(jqXHR.responseText)
       init_switcher(wrapper) unless $('.simple_style', wrapper).length
       check_filled() unless wrapper.find('form').length > 0
+
+      $.ajax({
+        headers: {'Accept': 'application/json'}
+      })
+        .success (data, textStatus, jqXHR) ->
+          if $.parseJSON(jqXHR.responseText).filled
+            $('.days_wrapper .active').removeClass('warning')
+          else
+            $('.days_wrapper .active').addClass('warning')
