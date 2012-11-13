@@ -13,7 +13,7 @@ $.fn.calculate_visible = () ->
     controls.children('.prev').addClass('disabled')
   else
     controls.children('.prev').removeClass('disabled')
-  if total_width + current_offset <= li_width * 6
+  if total_width + current_offset <= li_width * 7
     controls.children('.next').addClass('disabled')
   else
     controls.children('.next').removeClass('disabled')
@@ -25,8 +25,9 @@ $.fn.calculate_visible = () ->
   active = line_wrapper.children('.active')
 
   if active.prevAll().length > 5
+    skip_count = active.attr('class').match(/index_(\d+)/)[1]
     line_wrapper.css
-      left: - (active.prevAll().length - 5) * li_width
+      left: - (active.prevAll().length-skip_count) * li_width
   else
     line_wrapper.css
       left: 0
@@ -42,7 +43,7 @@ $.fn.calculate_visible = () ->
 
     if control.hasClass('next')
       line_wrapper.animate(
-        {'left': current_left-li_width*6},
+        {'left': current_left-li_width*7},
         duration: 'slow'
         complete: ->
           control.removeClass('proccessing')
@@ -51,7 +52,7 @@ $.fn.calculate_visible = () ->
 
     if control.hasClass('prev')
       line_wrapper.animate(
-        {'left': current_left+li_width*6},
+        {'left': current_left+li_width*7},
         duration: 'slow'
         complete: ->
           control.removeClass('proccessing')

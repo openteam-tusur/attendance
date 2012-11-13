@@ -32,7 +32,7 @@
     height: 60px
     margin: 0 32px
     position: absolute
-    width: 919px
+    width: 917px
     z-index: 2
 
     ul
@@ -44,7 +44,7 @@
         float: left
         height: 60px
 
-        a
+        a, .day_wrapper
           +clearfix
           border-right: 1px solid #d3d1d2
           display: block
@@ -52,14 +52,14 @@
           margin: 4px 0
           text-decoration: none
           text-transform: lowercase
-          width: 152px
+          width: 130px
 
           .number
             color: #333
             font-size: 2.3em
             float: left
             height: 40px
-            margin: 0 5px 0 35px
+            margin: 6px 5px 0 20px
 
           .month
             +clearfix
@@ -78,6 +78,14 @@
             font-size: 0.7em
             line-height: 1.2em
 
+          &.free_day
+            span
+              color: #FF626A
+
+          &.unknown
+            span
+              color: #999
+
         &.active
           background: #90A2AC
 
@@ -95,7 +103,7 @@
 
         &.warning
           a
-            background: image_url('warning_calendar.png') no-repeat 15px center
+            background: image_url('warning_calendar.png') no-repeat 5px center
 
 .content
   .nofilled_dates
