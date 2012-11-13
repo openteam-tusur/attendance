@@ -67,14 +67,24 @@
 
     <div class="days_wrapper">
       <ul>
-        <% @group.lessons_from_semester_begin.pluck(:date_on).uniq.sort.each do |date| %>
-          <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= 'warning' unless @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
-            <%= link_to  manage_group_scoped_lessons_path(@group, :date => date.to_date) do %>
-              <span class="number"><%= date.strftime('%e') %></span>
-              <span class="month"><%= t("date.common_month_names")[date.month] %></span>
-              <span class="dow"><%= l(date, :format => '%A') %></span>
-            <% end %>
-          </li>
+        <% (@group.lessons_from_semester_begin.sort.first.date_on..@group.lessons_from_semester_begin.sort.last.date_on.end_of_week.to_date).each_slice(7).each do |dates| %>
+          <% dates.each_with_index do |date, index| %>
+            <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= "index_#{index}" %> <%= 'warning' unless @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
+              <% if @group.lessons.by_date(date.to_s).any? %>
+                <%= link_to  manage_group_scoped_lessons_path(@group, :date => date.to_date) do %>
+                  <span class="number"><%= date.strftime('%e') %></span>
+                  <span class="month"><%= t("date.common_month_names")[date.month] %></span>
+                  <span class="dow"><%= l(date, :format => '%A') %></span>
+                <% end %>
+              <% else %>
+                <div class="day_wrapper <%= date > @group.lessons_from_semester_begin.sort.last.date_on ? 'unknown' : 'free_day' %>">
+                  <span class="number"><%= date.strftime('%e') %></span>
+                  <span class="month"><%= t("date.common_month_names")[date.month] %></span>
+                  <span class="dow"><%= l(date, :format => '%A') %></span>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>
