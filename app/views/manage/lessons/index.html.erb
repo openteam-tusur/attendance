@@ -67,7 +67,7 @@
 
     <div class="days_wrapper">
       <ul>
-        <% (@group.lessons_from_semester_begin.sort.first.date_on..@group.lessons_from_semester_begin.sort.last.date_on.end_of_week.to_date).each_slice(7).each do |dates| %>
+        <% (@group.lessons_from_semester_begin.sort.first.date_on.beginning_of_week.to_date..@group.lessons_from_semester_begin.sort.last.date_on.end_of_week.to_date).each_slice(7).each do |dates| %>
           <% dates.each_with_index do |date, index| %>
             <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= "index_#{index}" %> <%= 'warning' unless @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
               <% if @group.lessons.by_date(date.to_s).any? %>
