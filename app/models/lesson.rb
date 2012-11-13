@@ -21,8 +21,8 @@ class Lesson < ActiveRecord::Base
 
   scope :by_date, ->(date){ where(:date_on => Time.zone.parse(date).to_date) }
   scope :took_place, where(:state => :took_place)
-  scope :from_last_week, ->{ where('lessons.date_on >= ? and lessons.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
-  scope :from_semester_begin, ->{ where('lessons.date_on >= ?', Presence.semester_begin) }
+  scope :from_last_week, ->{ took_place.where('lessons.date_on >= ? and lessons.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
+  scope :from_semester_begin, ->{ took_place.where('lessons.date_on >= ?', Presence.semester_begin) }
 
   accepts_nested_attributes_for :presences
 

@@ -29,7 +29,7 @@ class Group < ActiveRecord::Base
 
   def filled_attendance_at?(date)
     return true if lessons.by_date(date).empty?
-    !lessons.where(:state => :took_place).by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
+    !lessons.took_place.by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked?}}.uniq.include?(true)
   end
 
   def average_attendance_from_semester_begin
