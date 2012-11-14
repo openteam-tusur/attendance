@@ -50,7 +50,7 @@
       <% times.each_with_index do |time, order| %>
         <td>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
-            <%= link_to 'редактировать', '#', :id => "lesson_#{lessons.first.id}", :class => "edit_link" %>
+            <%= link_to 'редактировать', '#', :id => "lesson_#{lessons.first.id}", :class => "edit_link", :style => "#{'display:none;' if lessons.first.wasnt_took_place?}" %>
           <% end %>
         </td>
       <% end %>

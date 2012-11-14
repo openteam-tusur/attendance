@@ -28,6 +28,7 @@ class Lesson < ActiveRecord::Base
 
   def switch_state
     self.update_attributes! :state => opposite_state
+    self.presences.update_all(:kind => :not_marked)
   end
 
   def state_texts

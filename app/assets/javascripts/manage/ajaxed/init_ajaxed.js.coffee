@@ -19,3 +19,18 @@ check_filled = () ->
             $('.days_wrapper .active').removeClass('warning')
           else
             $('.days_wrapper .active').addClass('warning')
+
+      if target.hasClass('lesson_state')
+        lesson_id = 'lesson_'+target.attr('href').match(/(\d+)\/switch_state/)[1]
+        $('#'+lesson_id).toggle()
+
+        $('a.'+lesson_id).each ->
+          parent = $(this).closest('td')
+          url = $(this).attr('href').replace(/\/edit/, '')
+          $.ajax({
+            url: url
+          }).success (data, textStatus, jqXHR) ->
+            parent.html(jqXHR.responseText)
+
+
+
