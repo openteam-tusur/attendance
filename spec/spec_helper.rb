@@ -3,7 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-require 'sso_auth/spec_helper'
+require 'sso-auth/spec_helper'
 require 'cancan/matchers'
 require 'sunspot_matchers'
 
@@ -40,10 +40,9 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.include EspAuth::SpecHelper
+  config.include SsoAuth::SpecHelper
 
   config.before :all do
     Sunspot.session = SunspotMatchers::SunspotSessionSpy.new(Sunspot.session)
   end
-
 end
