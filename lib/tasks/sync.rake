@@ -68,13 +68,13 @@ class LessonSync
         lessons.each do |lesson|
           discipline = Discipline.find_or_create_by_abbr_and_title(lesson['discipline'])
           lesson_obj = discipline.lessons.find_or_initialize_by_order_number_and_date_on_and_classroom_and_group_id(
-            :order_number => lesson['order_number'],            
+            :order_number => lesson['order_number'].to_s,
             :date_on => date,
             :classroom => lesson['classroom'],
             :group_id => group.id
           ).tap do |item|
             item.kind         = lesson['kind']
-            item.timetable_id = lesson['timetable_id']            
+            item.timetable_id = lesson['timetable_id']
             item.note         = lesson['note']
             item.save!
           end
