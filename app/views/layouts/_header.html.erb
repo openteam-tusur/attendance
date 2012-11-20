@@ -21,12 +21,11 @@
         <% end %>
       </div>
       <div class='auth'>
-        <span class='current_user'><%= current_user %></span>
-        <%= link_to('Выход', sso_auth.destroy_user_session_path) %>
+        <%= render :partial => 'sso-auth/shared/user_box' %>
       </div>
     <% else %>
       <div class='auth'>
-        <%= link_to 'Вход в систему', user_omniauth_authorize_path(:identity)  %>
+        <%= render :partial => 'sso-auth/shared/user_box' %>
       </div>
     <% end %>
   </div>

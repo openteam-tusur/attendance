@@ -16,7 +16,7 @@ describe Ability do
 
   context 'менеджер' do
     context 'корневого контекста' do
-      subject { ability_for(manager_of(root)) }
+      subject { ability_for(manager) }
 
       context 'управление контекстами' do
         it { should be_able_to(:manage, :all) }
@@ -25,7 +25,7 @@ describe Ability do
   end
 
   context 'Сотрудник учебного управления' do
-    subject { ability_for(study_department_worker_of(root)) }
+    subject { ability_for(study_department_worker) }
 
     context 'управление контекстами' do
       it { should_not be_able_to(:manage, :all) }
