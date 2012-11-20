@@ -16,7 +16,7 @@ group :default do
   gem 'curb'
   gem 'default_value_for'
   gem 'enumerize'
-  gem 'esp-auth'
+  gem 'sso-auth'
   gem 'inherited_resources'
   gem 'jquery-rails'
   gem 'has_scope'
@@ -28,13 +28,6 @@ group :default do
   gem 'simple_form'
   gem 'sqlite3'
   gem 'sunspot_rails'
-
-  # HACK FOR HACK
-  gem 'oauth2', '0.6.1'
-  gem 'omniauth',  '1.1.0'
-  gem 'omniauth-oauth2', '1.0.2'
-  gem 'has_searcher', '< 0.0.90'
-  gem 'formtastic', '~> 2.1.0'
 end
 
 group :development do

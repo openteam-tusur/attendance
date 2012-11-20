@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :id, :uid, :name, :email, :nickname, :first_name, :last_name, :location, :description, :image
-  attr_accessible :phone, :urls, :raw_info
+  attr_accessible :id, :name, :email, :first_name, :last_name, :raw_info
 
-  esp_auth_user
+  sso_auth_user
 end
 
 # == Schema Information

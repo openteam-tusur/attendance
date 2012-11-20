@@ -11,18 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002025759) do
-
-  create_table "contexts", :force => true do |t|
-    t.string   "title"
-    t.string   "ancestry"
-    t.string   "weight"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "contexts", ["ancestry"], :name => "index_contexts_on_ancestry"
-  add_index "contexts", ["weight"], :name => "index_contexts_on_weight"
+ActiveRecord::Schema.define(:version => 20121120083428) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -124,14 +113,8 @@ ActiveRecord::Schema.define(:version => 20121002025759) do
     t.string   "uid"
     t.text     "name"
     t.text     "email"
-    t.text     "nickname"
     t.text     "first_name"
     t.text     "last_name"
-    t.text     "location"
-    t.text     "description"
-    t.text     "image"
-    t.text     "phone"
-    t.text     "urls"
     t.text     "raw_info"
     t.integer  "sign_in_count"
     t.datetime "current_sign_in_at"

@@ -1,5 +1,5 @@
-<div class='esp_auth_header_wrapper'>
-  <div class='esp_auth_header'>
+<div class='sso_auth_header_wrapper'>
+  <div class='sso_auth_header'>
     <% if current_user %>
       <% controller_namespace = controller_path.split('/').map(&:inquiry) %>
       <div class='navigation'>
@@ -22,7 +22,7 @@
       </div>
       <div class='auth'>
         <span class='current_user'><%= current_user %></span>
-        <%= link_to('Выход', esp_auth.destroy_user_session_path) %>
+        <%= link_to('Выход', sso_auth.destroy_user_session_path) %>
       </div>
     <% else %>
       <div class='auth'>
