@@ -33,6 +33,10 @@ class Group < ActiveRecord::Base
     !lessons.took_place.by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked? && p.student.present? }}.uniq.include?(true)
   end
 
+  def nofilled_dates
+    lessons_from_semester_begin.took_place.pluck(:date_on).uniq.sort.select{|d| !filled_attendance_at?(d.strftime('%y-%m-%d'))}
+  end
+
   def average_attendance_from_semester_begin
     "%.1f%" % (students.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100 / presences_from_semester_begin.count)
   end

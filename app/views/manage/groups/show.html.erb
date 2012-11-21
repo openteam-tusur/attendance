@@ -12,7 +12,7 @@
 <h6>Посещаемость с начала семестра &mdash; <%= @group.average_attendance_from_semester_begin %></h6>
 <h6><%= link_to 'Журнал посещаемости', manage_group_scoped_lessons_path(@group, :date => Time.zone.today.to_date) %></h6>
 
-<% if (nofilled_dates = @group.lessons_from_semester_begin.took_place.pluck(:date_on).uniq.sort.select{|d| !@group.filled_attendance_at?(d.strftime('%y-%m-%d'))}).any? %>
+<% if (nofilled_dates = @group.nofilled_dates).any? %>
   <div class="nofilled_dates">
     <% if nofilled_dates.count < 20 %>
       Журнал посещаемости не заполнен за <%= nofilled_dates.map{|d| l(d, :format => "%d %b")}.join(', ') %>
