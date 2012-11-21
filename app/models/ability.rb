@@ -5,7 +5,7 @@ class Ability
     return unless user
 
     can :manage, :application do
-      user.have_permissions?
+      user.permissions.any?
     end
 
     can :manage, :all if user.manager?
