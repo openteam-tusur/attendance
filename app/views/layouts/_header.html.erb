@@ -17,6 +17,8 @@
             <%= link_to 'Система управления', manage_root_path %>
           <% elsif current_user.faculty_worker? %>
             <%= link_to 'Система управления', manage_faculty_path(current_user.permissions.first.context) %>
+          <% elsif current_user.manager? %>
+            <%= link_to 'Статистика по университету', manage_root_path %>
           <% end %>
         <% end %>
       </div>
