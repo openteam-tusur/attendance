@@ -77,7 +77,7 @@
                   <span class="dow"><%= l(date, :format => '%A') %></span>
                 <% end %>
               <% else %>
-                <div class="day_wrapper <%= date > @group.lessons_from_semester_begin.sort.last.date_on ? 'unknown' : 'free_day' %>">
+                <div class="day_wrapper <%= date > Time.zone.today ? 'unknown' : 'free_day' %>">
                   <span class="number"><%= date.strftime('%e') %></span>
                   <span class="month"><%= t("date.common_month_names")[date.month] %></span>
                   <span class="dow"><%= l(date, :format => '%A') %></span>
