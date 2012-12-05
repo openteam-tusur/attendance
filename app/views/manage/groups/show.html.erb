@@ -25,28 +25,9 @@
 <table class="group wider_block">
   <thead>
     <tr>
-      <td rowspan='3'></td>
-      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
-        <td colspan=<%= lessons.group_by(&:kind).count*2 %> title="<%= discilpine %>" class='discipline_title'><%= discilpine.abbr %></td>
-      <% end %>
-    </tr>
-    <tr>
-      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
-        <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
-          <td colspan='2' class='lesson <%= lessons.first.kind %>'>
-            <span class='lesson_kind'><%= kind %></span>
-            <span class='lecturers'><%= lessons.map(&:lecturers).flatten.uniq.join(', ') %></span>
-          </td>
-        <% end %>
-      <% end %>
-    </tr>
-    <tr class='period'>
-      <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
-        <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
-          <td>неделя</td>
-          <td>семестр</td>
-        <% end %>
-      <% end %>
+      <td>ФИО</td>
+      <td>Неделя</td>
+      <td>Семестр</td>
     </tr>
   </thead>
   <tbody>
@@ -54,31 +35,13 @@
       <tr>
         <td class='student'>
           <span class='fio'><%= student %></span>
-          <span class='student_aaflwb'><%= student.average_attendance_from_last_week %></span>/<span class='student_aafsb'><%= student.average_attendance_from_semester_begin %></span>
         </td>
-        <% @group.lessons_from_semester_begin.group_by(&:discipline).each do |discilpine, lessons| %>
-          <% lessons.group_by(&:kind_text).each do |kind, lessons| %>
-            <td class='lesson_aaflwb lesson <%= lessons.first.kind %>'>
-              <% last_week_lessons = lessons.select{|l| l.date_on >= Presence.last_week_begin && l.took_place? } %>
-              <% attendanced_last_week_lessons = last_week_lessons.select{|l| student.attendance_on?(l)}.count %>
-              <span class="percent">
-                <%= last_week_lessons.any? ? "#{"%.1f" % ((attendanced_last_week_lessons.to_f/last_week_lessons.count)*100)}%" : '0.0%' %>
-              </span>
-              <span class="fraction">
-                <%= attendanced_last_week_lessons %>/<%= last_week_lessons.count %>
-              </span>
-            </td>
-            <td class='lesson_aafsb lesson <%= lessons.first.kind %>'>
-              <% attendanced_lessons = lessons.select{|l| student.attendance_on?(l) && l.took_place? }.count %>
-              <span class="percent">
-                <%= "#{"%.1f" % ((attendanced_lessons.to_f/lessons.count)*100)}%" %>
-              </span>
-              <span class="fraction">
-                <%= attendanced_lessons %>/<%= lessons.count %>
-              </span>
-            </td>
-          <% end %>
-        <% end %>
+        <td>
+          <span class='student_aaflwb'><%= student.average_attendance_from_last_week %></span>
+        </td>
+        <td>
+          <span class='student_aafsb'><%= student.average_attendance_from_semester_begin %></span>
+        </td>
       </tr>
     <% end %>
   </tbody>
