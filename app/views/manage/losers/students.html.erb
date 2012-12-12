@@ -26,7 +26,7 @@
             <%= student.lose_count %>
           </td>
           <td>
-            <%= student.group %>
+            <%= link_to student.group, manage_faculty_group_path(@faculty, student.group) %>
           </td>
         </tr>
       <% end %>
