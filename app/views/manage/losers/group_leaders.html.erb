@@ -6,25 +6,28 @@
   </ul>
 </div>
 
-<h5 class='center'>Старосты не заполнившие журнал на прошлой неделе:</h5>
-<table>
-  <thead>
-    <tr>
-      <th>Староста</th>
-      <th>Группа</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @groups.each do |group| %>
+<h5>Старосты не заполнившие журнал на прошлой неделе:</h5>
+<% if @groups.any? %>
+  <table>
+    <thead>
       <tr>
-        <td>
-          <%= Permission.for_context(group).map(&:user).map(&:name).join(', ') %>
-        </td>
-        <td>
-          <%= group %>
-        </td>
+        <th>Староста</th>
+        <th>Группа</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td>
+            <%= Permission.for_context(group).map(&:user).map(&:name).join(', ') %>
+          </td>
+          <td>
+            <%= group %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty">Все заполнили журнал</div>
+<% end %>

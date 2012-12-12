@@ -17,19 +17,19 @@ class Faculty < ActiveRecord::Base
   end
 
   def average_attendance_from_last_week
-    "%.1f%" % (groups.count.zero? ? 0 : presences_from_last_week.was.count.to_f*100/presences_from_last_week.count)
+    "%.1f%" % (groups.count.zero?||presences_from_last_week.count.zero? ? 0 : presences_from_last_week.was.count.to_f*100/presences_from_last_week.count)
   end
 
   def average_attendance_from_semester_begin
-    "%.1f%" % (groups.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100/presences_from_semester_begin.count)
+    "%.1f%" % (groups.count.zero?||presences_from_semester_begin.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100/presences_from_semester_begin.count)
   end
 
   def average_attendance_from_last_week_for(course_number)
-    "%.1f%" % (groups.count.zero? ? 0 : presences_from_last_week.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_last_week.where('groups.course = ?', course_number).count)
+    "%.1f%" % (groups.count.zero?||presences_from_last_week.where('groups.course = ?', course_number).count.zero? ? 0 : presences_from_last_week.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_last_week.where('groups.course = ?', course_number).count)
   end
 
   def average_attendance_from_semester_begin_for(course_number)
-    "%.1f%" % (groups.count.zero? ? 0 : presences_from_semester_begin.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_semester_begin.where('groups.course = ?', course_number).count)
+    "%.1f%" % (groups.count.zero?||presences_from_semester_begin.where('groups.course = ?', course_number).count.zero? ? 0 : presences_from_semester_begin.was.where('groups.course = ?', course_number).count.to_f*100/presences_from_semester_begin.where('groups.course = ?', course_number).count)
   end
 
   def lose_students(lose_level=0.2)
