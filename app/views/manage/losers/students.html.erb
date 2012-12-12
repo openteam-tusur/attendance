@@ -7,27 +7,31 @@
 </div>
 
 <h3 class='center'>Студенты пропустившие более 20% занятий на прошлой неделе</h3>
-<table>
-  <thead>
-    <tr>
-      <th>ФИО студента</th>
-      <th>Кол-во пропущенных занятий</th>
-      <th>Группа</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @students.each do |student| %>
+<% if @students.any? %>
+  <table>
+    <thead>
       <tr>
-        <td>
-          <%= student.fio %>
-        </td>
-        <td>
-          <%= student.lose_count %>
-        </td>
-        <td>
-          <%= student.group %>
-        </td>
+        <th>ФИО студента</th>
+        <th>Кол-во пропущенных занятий</th>
+        <th>Группа</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td>
+            <%= student.fio %>
+          </td>
+          <td>
+            <%= student.lose_count %>
+          </td>
+          <td>
+            <%= student.group %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty">Никто не пропускал занятия</div>
+<% end %>

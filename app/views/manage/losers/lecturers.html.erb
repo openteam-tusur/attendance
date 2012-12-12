@@ -7,10 +7,35 @@
 </div>
 
 <h5 class='center'>Преподаватели пропустившие занятия на прошлой неделе:</h5>
-<ul>
-  <% @lecturers.each do |lecturer| %>
-    <li>
-      <%= lecturer.fio %>
-    </li>
-  <% end %>
-</ul>
+<% if @lessons.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Дата</th>
+        <th>ФИО преподавателя</th>
+        <th>Дисциплина</th>
+        <th>Группа</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @lessons.group_by(&:date_on).sort.each do |date_on, lessons| %>
+        <% lessons.group_by(&:discipline).sort.each do |discipline, lessons| %>
+          <tr>
+            <td><%= l date_on %></td>
+            <td>
+              <%= lessons.flat_map(&:lecturers).map(&:fio).uniq.join(', ') %>
+            </td>
+            <td>
+              <%= discipline %>
+            </td>
+            <td>
+              <%= lessons.flat_map(&:group).map(&:to_s).uniq.join(', ') %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty">Никто не пропускал занятия</div>
+<% end %>
