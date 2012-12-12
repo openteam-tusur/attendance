@@ -1,0 +1,16 @@
+<%= content_for :main_wrapper_width, 'wide' %>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to @faculty, [:manage, @faculty] %></li>
+    <li>Преподаватели пропускающие занятия</li>
+  </ul>
+</div>
+
+<h5 class='center'>Преподаватели пропустившие занятия на прошлой неделе:</h5>
+<ul>
+  <% @lecturers.each do |lecturer| %>
+    <li>
+      <%= lecturer.fio %>
+    </li>
+  <% end %>
+</ul>

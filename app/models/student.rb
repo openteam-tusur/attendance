@@ -2,6 +2,7 @@
 
 class Student < Person
   attr_accessible :contingent_id, :active
+  attr_accessor :lose_count
 
   belongs_to :group
   has_many :presences

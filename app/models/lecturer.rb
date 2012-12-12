@@ -3,6 +3,7 @@
 class Lecturer < Person
   has_many :realizes
   has_many :lessons, :through => :realizes
+  has_many :groups, :through => :lessons
 
   def to_s
     res = []

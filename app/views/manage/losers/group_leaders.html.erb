@@ -1,0 +1,30 @@
+<%= content_for :main_wrapper_width, 'wide' %>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to @faculty, [:manage, @faculty] %></li>
+    <li>Старосты не заполнившие журнал</li>
+  </ul>
+</div>
+
+<h5 class='center'>Старосты не заполнившие журнал на прошлой неделе:</h5>
+<table>
+  <thead>
+    <tr>
+      <th>Староста</th>
+      <th>Группа</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td>
+          <%= Permission.for_context(group).map(&:user).map(&:name).join(', ') %>
+        </td>
+        <td>
+          <%= group %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

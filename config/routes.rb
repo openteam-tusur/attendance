@@ -19,6 +19,9 @@ Attendance::Application.routes.draw do
 
     resources :faculties, :only => [:show] do
       resources :groups, :only => [:show]
+      get '/losers/group_leaders'    => 'losers#group_leaders', :as => :losers_group_leaders
+      get '/losers/lecturers'        => 'losers#lecturers', :as => :losers_lecturers
+      get '/losers/students'         => 'losers#students', :as => :losers_students
     end
 
     root :to => 'university_statistics#index'
