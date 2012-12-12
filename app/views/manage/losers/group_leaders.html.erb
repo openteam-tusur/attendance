@@ -22,7 +22,7 @@
             <%= Permission.for_context(group).map(&:user).map(&:name).join(', ') %>
           </td>
           <td>
-            <%= group %>
+            <%= link_to group, manage_faculty_group_path(@faculty, group) %>
           </td>
         </tr>
       <% end %>
