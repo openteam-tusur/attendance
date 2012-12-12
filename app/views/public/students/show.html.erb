@@ -8,7 +8,13 @@
 <h3><%= "#{resource}, #{resource.group}, #{resource.group.course} курс, #{resource.group.faculty.abbr}" %></h3>
 
 <h6><%= link_to "Посмотреть расписание #{resource.group}",
-                "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(resource.group.number.mb_chars)}" %></h6>
+"#{Settings['timetable.url']}/faculties/#{I18n.transliterate(resource.group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(resource.group.number.mb_chars)}" %></h6>
+
+<% if resource.group.nofilled_dates.count > 5 %>
+  <div class="warning" style='font-size: 20px; color: red; text-align: center; margin: 10px;'>
+    <%= "Журнал не заполнялся #{resource.group.nofilled_dates.count} дней" %>
+  </div>
+<% end %>
 
 <table class="student">
   <thead>
