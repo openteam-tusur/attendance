@@ -26,7 +26,7 @@ class Manage::LosersController < ApplicationController
     end
 
     def authorize_user
-      authorize! :manage, @faculty
+      authorize! :read, @faculty
     end
 end
 
