@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <% lecturer.losed_lessons.group_by(&:date_on).each do |_, lessons| %>
+        <% lecturer.losed_lessons(@faculty).group_by(&:date_on).each do |_, lessons| %>
           <% lessons.group_by(&:order_number).each do |_, lessons| %>
             <% lessons.group_by(&:kind).each do |_, lessons| %>
               <tr>
