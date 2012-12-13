@@ -13,7 +13,7 @@ class Lecturer < Person
     res.join(' ')
   end
 
-  def losed_lessons
-    lessons.where("lessons.state = 'wasnt_took_place' AND lessons.date_on BETWEEN ? AND ?", Presence.last_week_begin, Presence.last_week_end)
+  def losed_lessons(faculty)
+    lessons.joins(:group).where("lessons.state = 'wasnt_took_place' AND groups.faculty_id = ? AND lessons.date_on BETWEEN ? AND ?", faculty.id, Presence.last_week_begin, Presence.last_week_end)
   end
 end
