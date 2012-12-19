@@ -15,14 +15,3 @@ errors:
 
 #storage
   #url:         http://esp-storage.openteam.ru
-
-unicorn:
-  workers:      2
-  timeout:      300
-
-deploy:
-  tusur:
-    gateway:              user@host
-    application:          appname.ru
-    domain:               user@host
-    port:                 port

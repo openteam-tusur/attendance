@@ -1,4 +1,4 @@
-settings_yml_path = "config/settings.yml"
+settings_yml_path = "config/deploy.yml"
 config = YAML::load(File.open(settings_yml_path))
 raise "not found deploy key in settings.yml. see settings.yml.example" unless config['deploy']['tusur']
 application = config['deploy']['tusur']["application"]
