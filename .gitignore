@@ -3,6 +3,7 @@
 /.bundle
 /bin
 /config/database.yml
+/config/deploy.yml
 /config/settings.yml
 /config/sunspot.yml
 /config/users.yml
