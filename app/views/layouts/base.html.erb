@@ -25,10 +25,7 @@
       <%= yield :content %>
       <%= yield :video %>
 
-      <div class="footer">
-        По всем вопросам пишите на <a href='mailto:openteam@tusur.ru'>openteam@tusur.ru</a><br/>
-        или создавайте тикеты на <a href='https://github.com/openteam-tusur/attendance/issues'>https://github.com/openteam-tusur/attendance/issues</a>
-      </div>
+      <%= render :partial => 'layouts/footer' %>
     </div>
     <% if Rails.env.production? %>
       <!-- Yandex.Metrika counter -->
