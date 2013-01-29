@@ -25,6 +25,10 @@ class Manage::LessonsController < Manage::ApplicationController
 
   private
     def set_today
-      params[:date] ||= @group.lessons.maximum(:date_on).to_s
+      if @group.lessons_from_semester_begin.any?
+        params[:date] ||= @group.lessons_from_semester_begin.maximum(:date_on).to_s
+      else
+        params[:date] == Time.zone.today.to_s
+      end
     end
 end

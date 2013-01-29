@@ -36,7 +36,8 @@ $.fn.calculate_visible = () ->
 
   $('.calendar_wrapper .controls a').click (evt) ->
     control = $(evt.target)
-    current_left = line_wrapper.position().left
+    #current_left = line_wrapper.position().left
+    current_left = parseInt(line_wrapper.css('left'))
 
     return false if control.hasClass('proccessing') || line_wrapper.children('li').length < 7 || control.hasClass('disabled')
     control.addClass('proccessing')

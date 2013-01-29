@@ -1,24 +1,25 @@
-<% times = ['08:50 &ndash; 10:25', '10:40 &ndash; 12:15', '13:15 &ndash; 14:50', '15:00 &ndash; 16:35', '16:45 &ndash; 18:20', '18:30 &ndash; 20:05', '20:15 &ndash; 21:50'] %>
+<% if @group.lessons_from_semester_begin.any? %>
+  <% times = ['08:50 &ndash; 10:25', '10:40 &ndash; 12:15', '13:15 &ndash; 14:50', '15:00 &ndash; 16:35', '16:45 &ndash; 18:20', '18:30 &ndash; 20:05', '20:15 &ndash; 21:50'] %>
 
-<table class='ajaxed'>
-  <thead>
-    <tr>
-      <th rowspan='3' class='title'><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></th>
-      <% times.each do |time| %>
-        <th class='time'><%= time.html_safe %></th>
-      <% end %>
-    </tr>
-    <tr>
-      <% times.each_with_index do |time, order| %>
+  <table class='ajaxed'>
+    <thead>
+      <tr>
+        <th rowspan='3' class='title'><%= "Группа #{@group.number}, #{@group.course} курс, #{@group.faculty.abbr}" %></th>
+        <% times.each do |time| %>
+          <th class='time'><%= time.html_safe %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <% times.each_with_index do |time, order| %>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
             <%= render lessons %>
           <% else %>
             <th>&mdash;</th>
           <% end %>
-      <% end %>
-    </tr>
-    <tr class='states'>
-      <% times.each_with_index do |time, order| %>
+        <% end %>
+      </tr>
+      <tr class='states'>
+        <% times.each_with_index do |time, order| %>
           <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
             <% lessons.each do |lesson|  %>
               <th>
@@ -28,65 +29,68 @@
           <% else %>
             <th>&mdash;</th>
           <% end %>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @group.students.each do |student| %>
-      <tr>
-        <td class='student'><%= student %></td>
-        <% times.each_with_index do |time, order| %>
-          <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
-            <td><%= student.attendance_on(lessons.first) ? render(student.attendance_on(lessons.first)) : 'нет в списке' %></td>
-          <% else %>
-            <td>&mdash;</td>
-          <% end %>
         <% end %>
       </tr>
-    <% end %>
-    <tr class='buttons_wrapper'>
-      <td></td>
-      <% times.each_with_index do |time, order| %>
-        <td>
-          <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
-            <%= link_to 'редактировать', '#', :id => "lesson_#{lessons.first.id}", :class => "edit_link", :style => "#{'display:none;' if lessons.first.wasnt_took_place?}" %>
+    </thead>
+
+    <tbody>
+      <% @group.students.each do |student| %>
+        <tr>
+          <td class='student'><%= student %></td>
+          <% times.each_with_index do |time, order| %>
+            <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
+              <td><%= student.attendance_on(lessons.first) ? render(student.attendance_on(lessons.first)) : 'нет в списке' %></td>
+            <% else %>
+              <td>&mdash;</td>
+            <% end %>
           <% end %>
-        </td>
+        </tr>
       <% end %>
-    </tr>
-  </tbody>
-</table>
-
-<%= content_for :calendar do %>
-  <div class="calendar_wrapper">
-    <div class="controls">
-      <a href="#" class='prev'>&nbsp;</a>
-      <a href="#" class='next'>&nbsp;</a>
-    </div>
-
-    <div class="days_wrapper">
-      <ul>
-        <% (@group.lessons_from_semester_begin.sort.first.date_on.beginning_of_week.to_date..@group.lessons_from_semester_begin.sort.last.date_on.end_of_week.to_date).each_slice(7).each do |dates| %>
-          <% dates.each_with_index do |date, index| %>
-            <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= "index_#{index}" %> <%= 'warning' unless @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
-              <% if @group.lessons.by_date(date.to_s).any? %>
-                <%= link_to  manage_group_scoped_lessons_path(@group, :date => date.to_date) do %>
-                  <span class="number"><%= date.strftime('%e') %></span>
-                  <span class="month"><%= t("date.common_month_names")[date.month] %></span>
-                  <span class="dow"><%= l(date, :format => '%A') %></span>
-                <% end %>
-              <% else %>
-                <div class="day_wrapper <%= date > Time.zone.today ? 'unknown' : 'free_day' %>">
-                  <span class="number"><%= date.strftime('%e') %></span>
-                  <span class="month"><%= t("date.common_month_names")[date.month] %></span>
-                  <span class="dow"><%= l(date, :format => '%A') %></span>
-                </div>
-              <% end %>
-            </li>
-          <% end %>
+      <tr class='buttons_wrapper'>
+        <td></td>
+        <% times.each_with_index do |time, order| %>
+          <td>
+            <% if lessons = collection.group_by(&:order_number)["#{order+1}"] %>
+              <%= link_to 'редактировать', '#', :id => "lesson_#{lessons.first.id}", :class => "edit_link", :style => "#{'display:none;' if lessons.first.wasnt_took_place?}" %>
+            <% end %>
+          </td>
         <% end %>
-      </ul>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= content_for :calendar do %>
+    <div class="calendar_wrapper">
+      <div class="controls">
+        <a href="#" class='prev'>&nbsp;</a>
+        <a href="#" class='next'>&nbsp;</a>
+      </div>
+
+      <div class="days_wrapper">
+        <ul>
+          <% (@group.lessons_from_semester_begin.map(&:date_on).min.beginning_of_week.to_date..@group.lessons_from_semester_begin.map(&:date_on).max.end_of_week.to_date).each_slice(7).each do |dates| %>
+            <% dates.each_with_index do |date, index| %>
+              <li class='<%= date.strftime('%Y-%m-%d') == params['date'] ? 'active' : 'fake' %> <%= "index_#{index}" %> <%= 'warning' unless @group.filled_attendance_at?(date.strftime('%y-%m-%d')) %>'>
+                <% if @group.lessons.by_date(date.to_s).any? %>
+                  <%= link_to  manage_group_scoped_lessons_path(@group, :date => date.to_date) do %>
+                    <span class="number"><%= date.strftime('%e') %></span>
+                    <span class="month"><%= t("date.common_month_names")[date.month] %></span>
+                    <span class="dow"><%= l(date, :format => '%A') %></span>
+                  <% end %>
+                <% else %>
+                  <div class="day_wrapper <%= date > Time.zone.today ? 'unknown' : 'free_day' %>">
+                    <span class="number"><%= date.strftime('%e') %></span>
+                    <span class="month"><%= t("date.common_month_names")[date.month] %></span>
+                    <span class="dow"><%= l(date, :format => '%A') %></span>
+                  </div>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
+  <% end %>
+<% else %>
+  Пока нет расписания для вашей группы на данный семестр
 <% end %>
