@@ -33,10 +33,10 @@ class Presence < ActiveRecord::Base
 
   def self.semester_begin
     today = Time.zone.today
-    if today.month >= 9 && today.month <= 12
+    if today.month >= 8 && today.month <= 12
       return Time.zone.parse("#{today.year}-09-01").to_date
-    elsif today.month >= 2 && today.month <= 7
-      return Time.zone.parse("#{today.year}-02-01").to_date
+    elsif today.month >= 1 && today.month <= 7
+      return Time.zone.parse("#{today.year}-01-01").to_date
     end
   end
 
