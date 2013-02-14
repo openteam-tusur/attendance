@@ -16,6 +16,6 @@ every :sunday, :at => '1am' do
   rake 'sync:students'
 end
 
-every :day, :at => '4am' do
+every '*/10 * * * *' do
   rake 'sync:lessons'
 end
