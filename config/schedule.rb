@@ -9,13 +9,13 @@ else
 end
 
 every :month do
-  rake 'sync:f_and_g'
+  rake 'sync:f_and_g', :output => { :error => 'error-fg.log', :standard => 'cron-fg.log'}
 end
 
 every :sunday, :at => '1am' do
-  rake 'sync:students'
+  rake 'sync:students', :output => { :error => 'error-students.log', :standard => 'cron-students.log'}
 end
 
-every '*/10 * * * *' do
-  rake 'sync:lessons'
+every :day, :at => '4am' do
+  rake 'sync:lessons', :output => { :error => 'error-lessons.log', :standard => 'cron-lessons.log'}
 end
