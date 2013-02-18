@@ -5,7 +5,7 @@
     Поэтому данный предмет отсутствует в журнале посещаемости.
   </p>
   <p>
-   Если в <%= link_to 'расписании группы', "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(@group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(@group.number.mb_chars)}" %> при наведении на клеточку в таблице появляется название предмета со звездочкой, то его не будет в журнале.
+   Если в <%= link_to 'расписании группы', "#{Settings['timetable.url']}/faculties/#{I18n.transliterate(@group.faculty.abbr.mb_chars.downcase)}/groups/#{I18n.transliterate(@group.number.mb_chars.downcase)}" %> при наведении на клеточку в таблице появляется название предмета со звездочкой, то его не будет в журнале.
   </p>
 </div>
 <% if @group.lessons_from_semester_begin.any? %>
