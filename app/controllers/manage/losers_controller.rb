@@ -9,7 +9,16 @@ class Manage::LosersController < ApplicationController
   before_filter :authorize_user
 
   def group_leaders
-    @groups = Group.joins(:presences).where("presences.kind = 'not_marked' AND groups.faculty_id = ? AND presences.date_on BETWEEN ? AND ?", @faculty.id, Presence.last_week_begin, Presence.last_week_end).uniq
+   @groups =  Presence
+                .where(:kind => 'not_marked')
+                .where(:date_on => Presence.last_week_begin..Presence.last_week_end)
+                .joins(:lesson)
+                .where('lessons.state' => :took_place)
+                .joins(:faculty)
+                .where('faculties.id' => @faculty.id)
+                .where('people.active' => true)
+                .map(&:group)
+                .uniq
   end
 
   def students
