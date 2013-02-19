@@ -15,6 +15,9 @@ namespace :sync do
       faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
       bar.increment!
     end
+
+    message = I18n.localize(Time.now, :format => :short) + " Синхронизация факультетов и групп успешно завершена!"
+    Airbrake.notify(:error_class => "rake sync:f_and_g", :error_message => message)
   end
 
   desc 'Синхронизация студентов'
@@ -23,7 +26,12 @@ namespace :sync do
     Group.all.each do |group|
       students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.contingent_number}").body_str)
 
-      puts "Группа №#{group.number}: студенты не найдены" if students.empty?
+      if students.empty?
+        puts "Группа №#{group.number}: студенты не найдены"
+
+        message = I18n.localize(Time.now, :format => :short) + " Группа №#{group_number}: студенты не найдены"
+        Airbrake.notify(:error_class => "rake sync:students", :error_message => message)
+      end
 
       students.each do |student|
         student = student['student']
@@ -36,11 +44,13 @@ namespace :sync do
         end
 
       end
-
       (group.students - group.students.where(:contingent_id => students.map{|s| s['student']['study_id']})).each{|student| student.update_attributes(:active => false)}
 
       bar.increment!
     end
+
+    message = I18n.localize(Time.now, :format => :short) + " Синхронизация студентов успешно завершена!"
+    Airbrake.notify(:error_class => "rake sync:students", :error_message => message)
   end
 
   desc 'Синхронизация уроков на предстоящий день'
@@ -95,8 +105,14 @@ class LessonSync
         end
       else
         puts "не могу найти группу #{group_number}"
+
+        message = I18n.localize(Time.now, :format => :short) + " При импорте предметов не удалось найти группу #{group_number}."
+        Airbrake.notify(:error_class => "rake sync:lessons", :error_message => message)
       end
       bar.increment!
     end
+
+    message = I18n.localize(Time.now, :format => :short) + " Импорт предметов из расписания успешно завершен!"
+    Airbrake.notify(:error_class => "rake sync:lessons", :error_message => message)
   end
 end
