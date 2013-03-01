@@ -23,7 +23,7 @@ group :default do
   gem 'openteam-commons'
   gem 'pg'
   gem 'progress_bar',             :require => false
-  gem 'rails'
+  gem 'rails',                    '~>3.2.12'
   gem 'russian'
   gem 'simple_form'
   gem 'sqlite3'
@@ -31,6 +31,7 @@ group :default do
 end
 
 group :development do
+  gem 'brakeman'
   gem 'hirb', :require => false
   gem 'rails-erd'
   gem 'rvm-capistrano'
