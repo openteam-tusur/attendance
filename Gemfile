@@ -23,7 +23,7 @@ group :default do
   gem 'openteam-commons'
   gem 'pg'
   gem 'progress_bar',             :require => false
-  gem 'rails',                    '~>3.2.12'
+  gem 'rails',                    '~>3.2.13'
   gem 'russian'
   gem 'simple_form'
   gem 'sqlite3'
