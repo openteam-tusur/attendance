@@ -1,35 +1,35 @@
-require File.expand_path('../directories.rb', __FILE__)
+# ------------------------------------------------------------------------------
+# Sample rails 3 config
+# ------------------------------------------------------------------------------
 
-dir = Directories.new
+# Set your full path to application.
+APP_DIR = File.expand_path('../../', __FILE__)
 
-def dir.settings
-  heroku? ? {} : (YAML.load_file(config('settings.yml'))['unicorn'] || {})
-end
-def dir.old_pid
-  "#{pid_file}.oldbin"
-end
+# Set unicorn options
+worker_processes 2
+preload_app true
+timeout 180
 
+# Fill path to your app
+working_directory APP_DIR
 
-worker_processes  (dir.settings['workers'] || ENV['UNICORN_WORKERS'] || 2).to_i
-timeout           (dir.settings['timeout'] || ENV['UNICORN_TIMEOUT'] || 300).to_i
-preload_app       true
-pid               dir.pid_file
+# Set up socket location
+listen "#{APP_DIR}/tmp/sockets/unicorn.sock", :backlog => 64
 
-listen            ENV['PORT'].to_i, :tcp_nopush => false if ENV['PORT'].to_i > 0
+# Loging
+stderr_path "#{APP_DIR}/log/unicorn.stderr.log"
+stdout_path "#{APP_DIR}/log/unicorn.stdout.log"
 
-unless dir.heroku?
-  listen            "/tmp/#{dir.group}-#{dir.project}.sock", :backlog => 64
-
-  stdout_path       dir.log('stdout.log')
-  stderr_path       dir.log('stderr.log')
-end
+# Set master PID location
+pid "#{APP_DIR}/tmp/pids/unicorn.pid"
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
-
-  if File.exists?(dir.old_pid) && server.pid != dir.old_pid
+  old_pid = "#{server.config[:pid]}.oldbin"
+  if File.exists?(old_pid) && server.pid != old_pid
     begin
-      Process.kill("QUIT", File.read(dir.old_pid).to_i)
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+      Process.kill(sig, File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end

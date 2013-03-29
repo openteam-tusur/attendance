@@ -32,9 +32,11 @@ end
 
 group :development do
   gem 'brakeman'
+  gem 'capistrano-db-tasks', :git => 'git://github.com/openteam/capistrano-db-tasks'
+  gem 'capistrano-unicorn',  :git => 'git://github.com/sosedoff/capistrano-unicorn'
   gem 'hirb', :require => false
+  gem 'openteam-capistrano'
   gem 'rails-erd'
-  gem 'rvm-capistrano'
   gem 'sunspot_solr'
 end
 
