@@ -36,13 +36,13 @@ namespace :sync do
       group.students.update_all(:active => false)
 
       student_hashes.each do |student_hash|
-        group.students.find_or_initialize_by_contingent_id(student_hash['study_id']).tap do |student|
-          student.surname    =  student_hash['lastname']
-          student.name       =  student_hash['firstname']
-          student.patronymic =  student_hash['patronymic']
-          student.save!
-        end
-
+        student = Student.unscoped.find_or_initialize_by_contingent_id(student_hash['study_id'])
+        student.surname    =  student_hash['lastname']
+        student.name       =  student_hash['firstname']
+        student.patronymic =  student_hash['patronymic']
+        student.group      =  group
+        student.active     =  true
+        student.save!
       end
 
       bar.increment!
