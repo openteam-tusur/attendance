@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-require 'curb'
+require 'open-uri'
 require 'progress_bar'
 
 namespace :sync do
   desc 'Получить список факультетов и групп'
   task :f_and_g => :environment do
-    groups = JSON.parse(Curl.get("#{Settings['timetable.url']}/api/v1/groups.json").body_str)
+    groups = JSON.parse(open("#{Settings['timetable.url']}/api/v1/groups.json").read)
 
     bar = ProgressBar.new(groups['groups'].count)
 
@@ -24,27 +24,26 @@ namespace :sync do
   task :students => :environment do
     bar = ProgressBar.new(Group.count)
     Group.all.each do |group|
-      students = JSON.parse(Curl.get("#{Settings['students.url']}/students.json?student_search[group]=#{group.contingent_number}").body_str)
+      student_hashes = JSON.parse(open("#{Settings['students.url']}/api/v1/students?group=#{URI.encode(group.contingent_number)}").read)
 
-      if students.empty?
+      if student_hashes.empty?
         puts "Группа №#{group.number}: студенты не найдены"
 
         message = I18n.localize(Time.now, :format => :short) + " Группа №#{group_number}: студенты не найдены"
         Airbrake.notify(:error_class => "rake sync:students", :error_message => message)
       end
 
-      students.each do |student|
-        student = student['student']
+      group.students.update_all(:active => false)
 
-        group.students.find_or_initialize_by_contingent_id(student['study_id']).tap do |item|
-          item.surname    =  student['lastname']
-          item.name       =  student['firstname']
-          item.patronymic =  student['patronymic']
-          item.save!
+      student_hashes.each do |student_hash|
+        group.students.find_or_initialize_by_contingent_id(student_hash['study_id']).tap do |student|
+          student.surname    =  student_hash['lastname']
+          student.name       =  student_hash['firstname']
+          student.patronymic =  student_hash['patronymic']
+          student.save!
         end
 
       end
-      (group.students - group.students.where(:contingent_id => students.map{|s| s['student']['study_id']})).each{|student| student.update_attributes(:active => false)}
 
       bar.increment!
     end
