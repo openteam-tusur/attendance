@@ -1,15 +1,8 @@
 GIT
-  remote: git://github.com/openteam/capistrano-db-tasks
-  revision: b6b81df2d6965c456e8ca4cf3aa325c95a542b36
+  remote: git://github.com/sgruhier/capistrano-db-tasks
+  revision: 229c2a63ebb43a61ed2aa1f042d4d447ee186037
   specs:
     capistrano-db-tasks (0.2)
-
-GIT
-  remote: git://github.com/sosedoff/capistrano-unicorn
-  revision: dc49187df68e92bc04b7b0fa42da1e24f70d69f5
-  specs:
-    capistrano-unicorn (0.1.7)
-      capistrano
 
 GEM
   remote: https://rubygems.org/
@@ -70,6 +63,8 @@ GEM
       net-ssh-gateway (>= 1.1.0)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
+    capistrano-unicorn (0.1.7)
+      capistrano
     choice (0.1.6)
     chronic (0.9.0)
     chunky_png (1.2.6)
@@ -110,7 +105,7 @@ GEM
     haml (3.1.8)
     has_scope (0.5.1)
     hashie (1.2.0)
-    highline (1.6.15)
+    highline (1.6.16)
     hike (1.2.1)
     hirb (0.7.0)
     httpauth (0.2.0)
@@ -153,7 +148,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    openteam-capistrano (0.0.8)
+    openteam-capistrano (0.0.12)
       capistrano-db-tasks
       capistrano-ext
       capistrano-unicorn
@@ -294,7 +289,7 @@ DEPENDENCIES
   auto_html
   brakeman
   capistrano-db-tasks!
-  capistrano-unicorn!
+  capistrano-unicorn
   coffee-rails
   compass-rails
   curb
