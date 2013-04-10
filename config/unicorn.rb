@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 
 # Set your full path to application.
-APP_DIR = File.expand_path('../../', __FILE__)
+app_dir = File.expand_path('../../', __FILE__)
 
 # Set unicorn options
 worker_processes 2
@@ -11,17 +11,17 @@ preload_app true
 timeout 180
 
 # Fill path to your app
-working_directory APP_DIR
+working_directory app_dir
 
 # Set up socket location
-listen "#{APP_DIR}/tmp/sockets/unicorn.sock", :backlog => 64
+listen "#{app_dir}/tmp/sockets/unicorn.sock", :backlog => 64
 
 # Loging
-stderr_path "#{APP_DIR}/log/unicorn.stderr.log"
-stdout_path "#{APP_DIR}/log/unicorn.stdout.log"
+stderr_path "#{app_dir}/log/unicorn.stderr.log"
+stdout_path "#{app_dir}/log/unicorn.stdout.log"
 
 # Set master PID location
-pid "#{APP_DIR}/tmp/pids/unicorn.pid"
+pid "#{app_dir}/tmp/pids/unicorn.pid"
 
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
