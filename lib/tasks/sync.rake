@@ -6,7 +6,7 @@ require 'progress_bar'
 namespace :sync do
   desc 'Получить список факультетов и групп'
   task :f_and_g => :environment do
-    groups = JSON.parse(open("#{Settings['timetable.url']}/api/v1/groups.json").read)
+    groups = JSON.parse(open("#{Settings['timetable.url']}/api/v1/groups/internal.json").read)
 
     bar = ProgressBar.new(groups['groups'].count)
 
