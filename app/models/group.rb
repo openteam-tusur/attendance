@@ -7,6 +7,8 @@ class Group < ActiveRecord::Base
   has_many :students
   has_many :lessons
   has_many :presences, :through => :students
+  has_many :permissions, :as => :context
+  has_many :group_leaders, :through => :permissions, :source => :user, :conditions => "permissions.role = 'group_leader'"
 
   default_scope order('number')
 

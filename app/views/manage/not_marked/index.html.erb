@@ -1,0 +1,12 @@
+<h1>Незаполненные дни</h1>
+<% if @days.any? %>
+<ul>
+  <% @days.each do |day| %>
+    <li>
+      <%= link_to l(day, :format => :long), manage_group_scoped_lessons_path(@group, day) %>
+    </li>
+  <% end %>
+</ul>
+<% else %>
+  <p class="empty">Нет незаполненных дней</p>
+<% end %>

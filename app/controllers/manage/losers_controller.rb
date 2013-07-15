@@ -26,7 +26,7 @@ class Manage::LosersController < ApplicationController
   end
 
   def lecturers
-    @lecturers = Lecturer.joins(:groups).where('groups.faculty_id=?', @faculty.id).joins(:lessons).where("lessons.state='wasnt_took_place' AND lessons.date_on BETWEEN ? AND ?", Presence.last_week_begin, Presence.last_week_end).uniq
+    @lecturers = Lecturer.joins(:groups).where('groups.faculty_id=?', @faculty.id).joins(:lessons).where("lessons.state='wasnt_took_place' AND lessons.date_on BETWEEN ? AND ?", Presence.semester_begin, Presence.last_week_end).uniq
   end
 
   private
