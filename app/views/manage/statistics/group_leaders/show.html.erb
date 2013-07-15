@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>№</th>
+      <th>ФИО старосты</th>
+      <th>Дата</th>
+      <th>Группа</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% index = 0 %>
+    <% if @groups.values.flatten.empty? %>
+      <tr>
+        <td colspan='4'>Все заполнено</td>
+      </tr>
+    <% else %>
+      <% @groups.each do |group, days| %>
+        <% next if days.empty? %>
+        <tr>
+          <td><%= index += 1 %></td>
+          <td><%= group.group_leaders.join(', ') %></td>
+          <td><%= days.map{|d| l(d, :format => :long)}.join(', ') %></td>
+          <td><%= group.number %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

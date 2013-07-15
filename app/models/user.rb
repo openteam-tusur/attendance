@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   sso_auth_user
 
   has_many :groups, :through => :permissions, :source => :context, :source_type => Group
+
+  alias_attribute :to_s, :name
 end
 
 # == Schema Information

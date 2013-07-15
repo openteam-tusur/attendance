@@ -58,4 +58,18 @@ class Faculty < ActiveRecord::Base
   def to_param
     abbr
   end
+
+  def loser_group_leaders(starts_on, ends_on)
+    starts_on = starts_on.present? ? starts_on.to_date : Presence.semester_begin
+    ends_on = ends_on.present? ? ends_on.to_date : Presence.last_week_end
+
+    Hash[groups.includes(:group_leaders).map { |g|
+        [g, g.presences.joins(:lesson)
+         .select('presences.date_on')
+         .where("lessons.state = 'took_place'")
+         .where("presences.kind = 'not_marked'")
+         .where('presences.date_on BETWEEN ? AND ?', starts_on, ends_on).map(&:date_on).uniq.sort]
+      }
+    ]
+  end
 end
