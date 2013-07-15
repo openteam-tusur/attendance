@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   attr_accessible :id, :name, :email, :first_name, :last_name, :raw_info
 
   sso_auth_user
+
+  has_many :groups, :through => :permissions, :source => :context, :source_type => Group
 end
 
 # == Schema Information

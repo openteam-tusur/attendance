@@ -11,9 +11,11 @@
               Система управления:
               <% current_user.permissions.where(:role => :group_leader).each do |permission| %>
                 <%= link_to "гр. #{permission.context.number}", manage_group_scoped_lessons_path(permission.context) %>
+                <%= link_to "Незаполненные дни гр. #{permission.context.number}", not_marked_manage_group_path(permission.context) %>
               <% end %>
             <% else %>
               <%= link_to 'Система управления', manage_group_scoped_lessons_path(current_user.permissions.first.context) %>
+              <%= link_to 'Незаполненные дни', not_marked_manage_group_path(current_user.permissions.first.context) %>
             <% end %>
           <% end %>
 

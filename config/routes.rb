@@ -8,6 +8,7 @@ Attendance::Application.routes.draw do
     end
 
     resources :groups, :only => [] do
+      get '/not_marked' => 'not_marked#index', :on => :member
       get '/lessons/(:date)' => 'lessons#index',
         :constraints => { :date => /\d{4}-[01][0-9]-[0123][0-9]/ },
         :as => :scoped_lessons
