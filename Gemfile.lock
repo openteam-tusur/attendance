@@ -85,7 +85,7 @@ GEM
       highline (>= 1.5.2)
       multi_json (>= 1.1)
     curb (0.8.1)
-    default_value_for (2.0.1)
+    default_value_for (2.0.3)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)

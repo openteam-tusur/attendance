@@ -1,6 +1,12 @@
 Attendance::Application.routes.draw do
   namespace :manage do
 
+    namespace :statistics do
+      resources :faculties, :only => [:index, :show] do
+        resources :groups, :only => [:index, :show]
+      end
+    end
+
     resources :groups, :only => [] do
       get '/lessons/(:date)' => 'lessons#index',
         :constraints => { :date => /\d{4}-[01][0-9]-[0123][0-9]/ },
