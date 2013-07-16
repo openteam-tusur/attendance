@@ -1,3 +1,9 @@
+<div>
+  <%= link_to 'Назад к факультету', manage_faculty_path(@faculty) %>
+</div>
+
+<%= render :partial => 'search_form', :locals => { :path => manage_statistics_lecturers_path(@faculty.abbr) } %>
+
 <h5>Преподаватели <%= @faculty.abbr %> пропустившие занятия</h5>
 <table>
   <thead>
@@ -16,7 +22,7 @@
       <tr>
         <td colspan='5' style='font-weight: bold;'><%= lecturer %></td>
       </tr>
-      <% lessons.sort_by(&:date_on).each do |lesson| %>
+      <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
         <tr>
           <td><%= index += 1 %></td>
           <td><%= l lesson.date_on, :format => :long %></td>

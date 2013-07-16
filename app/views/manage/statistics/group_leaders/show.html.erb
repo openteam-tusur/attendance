@@ -1,4 +1,11 @@
+<div>
+  <%= link_to 'Назад к факультету', manage_faculty_path(@faculty) %>
+</div>
+
 <h5>Старосты <%= @faculty.abbr %> незаполнившие журнал</h5>
+
+<%= render :partial => 'search_form', :locals => { :path => manage_statistics_group_leaders_path(@faculty.abbr) } %>
+
 <table>
   <thead>
     <tr>
