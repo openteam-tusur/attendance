@@ -7,7 +7,6 @@ class Lesson < ActiveRecord::Base
 
   belongs_to :discipline
   belongs_to :group
-  belongs_to :lecturer
   has_many :realizes, :dependent => :destroy
   has_many :presences, :dependent => :destroy
   has_many :lecturers, :through => :realizes

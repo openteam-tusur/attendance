@@ -14,7 +14,8 @@ class Manage::Statistics::GroupLeadersController < ApplicationController
   end
 
   def show
-    @groups = Faculty.find(params[:faculty_id]).loser_group_leaders(params[:starts_on], params[:ends_on])
+    @faculty = Faculty.find_by_abbr!(params[:faculty_abbr])
+    @groups = @faculty.loser_group_leaders(params[:starts_on], params[:ends_on])
   end
 
 private

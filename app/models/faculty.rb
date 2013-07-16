@@ -4,6 +4,7 @@ class Faculty < ActiveRecord::Base
   attr_accessible :abbr, :title
 
   has_many :groups
+  has_many :lessons, :through => :groups
   has_many :students, :through => :groups
   has_many :presences, :through => :students
 
@@ -71,5 +72,14 @@ class Faculty < ActiveRecord::Base
          .where('presences.date_on BETWEEN ? AND ?', starts_on, ends_on).map(&:date_on).uniq.sort]
       }
     ]
+  end
+
+  def loser_lecturers(starts_on, ends_on)
+    starts_on = starts_on.present? ? starts_on.to_date : Presence.semester_begin
+    ends_on = ends_on.present? ? ends_on.to_date : Presence.last_week_end
+
+    lessons.joins(:lecturers).select('DISTINCT people.surname, lessons.*, groups.number')
+      .where("lessons.state='wasnt_took_place' AND lessons.date_on BETWEEN ? AND ?", starts_on, ends_on)
+      .group_by{|l| l.lecturers.first}
   end
 end
