@@ -1,0 +1,35 @@
+<h5>Преподаватели пропустившие занятия</h5>
+<table>
+  <thead>
+    <tr>
+      <th>№</th>
+      <th>Дата</th>
+      <th>ФИО преподавателя</th>
+      <th>Дисциплина</th>
+      <th>Вид занятия</th>
+      <th>Группа</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% index = 0 %>
+    <% @faculties.each do |faculty, lecturers| %>
+      <tr>
+        <td colspan='6'><%= faculty %></td>
+      </tr>
+
+      <% lecturers.each do |lecturers, lessons| %>
+        <% next if lessons.empty? %>
+        <% lessons.each do |lesson| %>
+          <tr>
+            <td><%= index += 1 %></td>
+            <td><%= lesson.date_on %></td>
+            <td><%= lecturers.map(&:to_s).join(', ') %> </td>
+            <td><%= lesson.discipline %></td>
+            <td><%= lesson.kind.text %></td>
+            <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
