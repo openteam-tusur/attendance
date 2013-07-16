@@ -1,4 +1,7 @@
 <h5>Старосты незаполнившие журнал</h5>
+
+<%= render :partial => 'search_form', :locals => { :path => manage_statistics_group_leaders_path } %>
+
 <table>
   <thead>
     <tr>
@@ -12,7 +15,7 @@
     <% index = 0 %>
     <% @faculties.each do |faculty, groups| %>
       <tr>
-        <td colspan='4'><%= faculty %></td>
+        <td colspan='4' style='font-weight: bold;'><%= link_to faculty, manage_statistics_faculty_group_leaders_path(faculty.abbr) %></td>
       </tr>
       <% if Hash[groups].values.flatten.empty? %>
         <tr>

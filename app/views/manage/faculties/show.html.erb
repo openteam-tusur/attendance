@@ -1,3 +1,9 @@
+<ul>
+  <li><%= link_to "Студенты пропускающие занятия", manage_faculty_losers_students_path(@faculty) %></li>
+  <li><%= link_to 'Старосты незаполнившие журнал', manage_statistics_faculty_group_leaders_path(@faculty) %></li>
+  <li><%= link_to 'Преподаватели пропускающие занятия', manage_statistics_faculty_lecturers_path(@faculty) %></li>
+</ul>
+
 <table class='faculty'>
   <thead>
     <tr>
@@ -37,9 +43,3 @@
     <% end %>
   </tbody>
 </table>
-
-<ul>
-  <li><%= link_to "Студенты пропускающие занятия", manage_faculty_losers_students_path(@faculty) %></li>
-  <li><%= link_to "Преподаватели пропускающие занятия", manage_faculty_losers_lecturers_path(@faculty) %></li>
-  <li><%= link_to "Старосты не заполнившие журнал", manage_faculty_losers_group_leaders_path(@faculty) %></li>
-</ul>

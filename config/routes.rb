@@ -1,13 +1,12 @@
 Attendance::Application.routes.draw do
   namespace :manage do
-
     namespace :statistics do
       scope 'losers' do
         get '/lecturers' => 'lecturers#index'
-        get '/lecturers/:faculty_abbr' => 'lecturers#show'
+        get '/lecturers/:faculty_abbr' => 'lecturers#show', :as => :faculty_lecturers
 
         get '/group_leaders' => 'group_leaders#index'
-        get '/group_leaders/:faculty_abbr' => 'group_leaders#show'
+        get '/group_leaders/:faculty_abbr' => 'group_leaders#show', :as => :faculty_group_leaders
 
         get '/students' => 'students#index'
         get '/students/:faculty_abbr' => 'students#show'

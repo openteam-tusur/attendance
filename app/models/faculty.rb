@@ -61,7 +61,7 @@ class Faculty < ActiveRecord::Base
   end
 
   def loser_group_leaders(starts_on, ends_on)
-    starts_on = starts_on.present? ? starts_on.to_date : Presence.semester_begin
+    starts_on = starts_on.present? ? starts_on.to_date : Presence.last_week_begin
     ends_on = ends_on.present? ? ends_on.to_date : Presence.last_week_end
 
     Hash[groups.includes(:group_leaders).map { |g|
@@ -75,7 +75,7 @@ class Faculty < ActiveRecord::Base
   end
 
   def loser_lecturers(starts_on, ends_on)
-    starts_on = starts_on.present? ? starts_on.to_date : Presence.semester_begin
+    starts_on = starts_on.present? ? starts_on.to_date : Presence.last_week_begin
     ends_on = ends_on.present? ? ends_on.to_date : Presence.last_week_end
 
     lessons.joins(:lecturers).select('DISTINCT people.surname, lessons.*, groups.number')
