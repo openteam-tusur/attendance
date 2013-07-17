@@ -28,6 +28,10 @@ class Permission < ActiveRecord::Base
   scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
   scope :faculty_workers, -> { where(:role => :faculty_worker) }
 
+  def self.activate_for_user(user)
+    where(:state => :inactive, :email => user.email).update_all :state => :active
+  end
+
   def to_s
     ''.tap { |s|
       s << (user ? "#{user.last_name} #{user.first_name} (#{email})" : email)
