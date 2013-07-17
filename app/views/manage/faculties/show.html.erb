@@ -10,6 +10,7 @@
       <th rowspan='2' class='faculty_title'><%= resource %></th>
       <th class='grey'>прошедшая неделя</th>
       <th class='grey'>с начала семестра</th>
+      <th rowspan='2' class='grey'>Староста</th>
     </tr>
     <tr>
       <th class='faculty_aaflwb'><%= resource.average_attendance_from_last_week %></th>
@@ -26,6 +27,7 @@
         <td class='course_aafsb'>
           <%= resource.average_attendance_from_semester_begin_for(course) %>
         </td>
+        <td></td>
       </tr>
       <% groups.each do |group| %>
         <tr class='group'>
@@ -37,6 +39,13 @@
           </td>
           <td class='group_aafsb'>
             <%= group.average_attendance_from_semester_begin %>
+          </td>
+          <td>
+            <% if group.permissions.any? %>
+              <%= render group.permissions %>
+            <% else %>
+               <%= link_to 'Добавить', new_manage_group_group_leader_permission_path(group)  %>
+            <% end %>
           </td>
         </tr>
       <% end %>

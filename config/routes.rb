@@ -1,6 +1,10 @@
 Attendance::Application.routes.draw do
   namespace :manage do
-    resources :permissions
+    resources :permissions, :only => :destroy
+
+    resources :group, :only => [] do
+      resources :group_leader_permissions, :only => [:new, :create]
+    end
 
     namespace :statistics do
       scope 'losers' do
