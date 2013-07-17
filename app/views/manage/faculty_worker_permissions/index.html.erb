@@ -14,8 +14,7 @@
           <ul>
             <% faculty.faculty_worker_permissions.each do |permission| %>
               <li>
-                <%= permission.user if permission.user %>
-                <%= permission.email %>
+                <%= permission.to_s %>
                 <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
               </li>
             <% end %>

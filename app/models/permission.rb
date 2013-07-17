@@ -22,11 +22,18 @@ class Permission < ActiveRecord::Base
   scope :for_role,    ->(role)    { where :role => role }
   scope :for_context, ->(context) { where :context_id => context.try(:id), :context_type => context.try(:class) }
 
-  enumerize :state, :in => [:active, :inactive], :default => :inactive
+  enumerize :state, :in => [:active, :inactive], :default => :inactive, :predicates => true
   enumerize :role, :in => %w[manager group_leader study_department_worker faculty_worker]
 
   scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
   scope :faculty_workers, -> { where(:role => :faculty_worker) }
+
+  def to_s
+    ''.tap { |s|
+      s << (user ? "#{user.last_name} #{user.first_name} (#{email})" : email)
+      s << " (#{state_text})" if inactive?
+    }
+  end
 end
 
 # == Schema Information
