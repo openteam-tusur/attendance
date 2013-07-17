@@ -1,0 +1,17 @@
+<h5>Старосты групп</h5>
+<ul>
+  <% @group_leader_permissions.each do |permission| %>
+    <li>
+      <%= "#{permission.user.last_name} #{permission.user.first_name } #{permission.context}" %>
+    </li>
+  <% end %>
+</ul>
+
+<h5>Работники факультетов</h5>
+<ul>
+  <% @faculty_worker_permissions.sort_by{|p| p.user.last_name}.each do |permission| %>
+    <li>
+      <%= "#{permission.user} #{permission.context}" %>
+    </li>
+  <% end %>
+</ul>

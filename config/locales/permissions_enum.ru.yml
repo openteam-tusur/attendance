@@ -2,8 +2,13 @@ ru:
   activerecord:
     attributes:
       permission:
-        role_enum:
+        role_enum: &roles
           manager:                 Менеджер
           group_leader:            Староста группы
           study_department_worker: Сотрудник учебного управления
           faculty_worker:          Сотрудник факультета
+
+  enumerize:
+    role:
+      <<: *roles
+
