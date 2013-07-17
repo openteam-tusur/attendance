@@ -2,6 +2,8 @@ ru:
   activerecord:
     attributes:
       permission:
+        email: Электронная почта
+
         role_enum: &roles
           manager:                 Менеджер
           group_leader:            Староста группы
@@ -11,4 +13,8 @@ ru:
   enumerize:
     role:
       <<: *roles
+
+    state:
+      active: Активирована
+      inactive: Неактивирована
 
