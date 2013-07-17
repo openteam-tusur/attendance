@@ -35,6 +35,7 @@ group :development do
   gem 'capistrano-db-tasks', :git => 'git://github.com/sgruhier/capistrano-db-tasks'
   gem 'capistrano-unicorn'
   gem 'hirb', :require => false
+  gem 'letter_opener'
   gem 'openteam-capistrano'
   gem 'rails-erd'
   gem 'sunspot_solr'
