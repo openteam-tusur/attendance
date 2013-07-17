@@ -1,7 +1,7 @@
 class Manage::GroupLeaderPermissionsController < ApplicationController
   inherit_resources
 
-  actions :new, :create
+  actions :new, :create, :destroy
 
   belongs_to :group, :finder => :find_by_number
 
@@ -11,6 +11,12 @@ class Manage::GroupLeaderPermissionsController < ApplicationController
 
   def create
     create! {
+      redirect_to manage_faculty_path(@group.faculty) and return
+    }
+  end
+
+  def destroy
+    destroy! {
       redirect_to manage_faculty_path(@group.faculty) and return
     }
   end
