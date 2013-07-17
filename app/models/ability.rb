@@ -42,5 +42,8 @@ class Ability
       user.faculty_worker_of?(faculty)
     end
 
+    can :manage_group_leader_permissions, Faculty do |faculty|
+      user.faculty_worker_of?(faculty)
+    end
   end
 end

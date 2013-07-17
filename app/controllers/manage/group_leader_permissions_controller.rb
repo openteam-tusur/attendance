@@ -13,6 +13,8 @@ class Manage::GroupLeaderPermissionsController < ApplicationController
     render :file => "#{Rails.root}/public/403", :formats => [:html], :status => 403, :layout => false
   end
 
+  before_filter :authorize_user
+
   def create
     create! {
       redirect_to manage_faculty_path(@group.faculty) and return
@@ -26,6 +28,10 @@ class Manage::GroupLeaderPermissionsController < ApplicationController
   end
 
   protected
+
+  def authorize_user
+    authorize! :manage_group_leader_permissions, Group.find_by_number!(params[:group_id]).faculty
+  end
 
   def build_resource
     super
