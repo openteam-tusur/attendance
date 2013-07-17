@@ -28,8 +28,10 @@ class Permission < ActiveRecord::Base
   scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
   scope :faculty_workers, -> { where(:role => :faculty_worker) }
 
+  after_create :send_invitation
+
   def self.activate_for_user(user)
-    where(:state => :inactive, :email => user.email).update_all :state => :active
+    where(:state => :inactive, :email => user.email).update_all :state => :active, :user_id => user.id
   end
 
   def to_s
@@ -37,6 +39,12 @@ class Permission < ActiveRecord::Base
       s << (user ? "#{user.last_name} #{user.first_name} (#{email})" : email)
       s << " (#{state_text})" if inactive?
     }
+  end
+
+  private
+
+  def send_invitation
+    PermissionMailer.invitation_email(self).deliver
   end
 end
 
