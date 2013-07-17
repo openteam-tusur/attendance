@@ -1,6 +1,18 @@
-<h5>Добавление старосты группы <%= @group.number %></h5>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to "Статистика факультета #{@group.faculty.abbr}", manage_faculty_path(@group.faculty.abbr) %></li>
+    <li>Добавление старосты группы <%= @group.number %></li>
+  </ul>
+</div>
 
-<%= simple_form_for @permission, :url => manage_group_group_leader_permissions_path(@group) do |f| %>
-  <%= f.input :email %>
-  <%= f.submit 'Добавить' %>
-<% end %>
+<h5 class='center'>Добавление старосты группы <%= @group.number %></h5>
+
+<div class="adding_form">
+  <%= simple_form_for @permission, :url => manage_group_group_leader_permissions_path(@group) do |f| %>
+    <%= f.input :email %>
+    <div class="buttons">
+      <%= f.submit 'Добавить' %>
+      <%= link_to 'Отмена', manage_faculty_path(@group.faculty.abbr) %>
+    </div>
+  <% end %>
+</div>

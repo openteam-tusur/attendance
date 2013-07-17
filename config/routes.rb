@@ -7,9 +7,6 @@ Attendance::Application.routes.draw do
 
         get '/group_leaders' => 'group_leaders#index'
         get '/group_leaders/:faculty_abbr' => 'group_leaders#show', :as => :faculty_group_leaders
-
-        get '/students' => 'students#index'
-        get '/students/:faculty_abbr' => 'students#show'
       end
     end
 
@@ -38,8 +35,8 @@ Attendance::Application.routes.draw do
       resources :groups, :only => [:show]
       resources :faculty_worker_permissions, :only => [:new, :create]
 
-      get '/losers/group_leaders'    => 'losers#group_leaders', :as => :losers_group_leaders
-      get '/losers/lecturers'        => 'losers#lecturers', :as => :losers_lecturers
+      #get '/losers/group_leaders'    => 'losers#group_leaders', :as => :losers_group_leaders
+      #get '/losers/lecturers'        => 'losers#lecturers', :as => :losers_lecturers
       get '/losers/students'         => 'losers#students', :as => :losers_students
     end
 

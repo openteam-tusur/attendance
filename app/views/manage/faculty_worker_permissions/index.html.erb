@@ -1,3 +1,12 @@
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to 'Статистика ВУЗа', manage_root_path %></li>
+    <li>Представители деканатов</li>
+  </ul>
+</div>
+
+<h5 class='center'>Представители деканатов</h5>
+
 <table>
   <thead>
     <tr>
@@ -12,7 +21,7 @@
         <td><%= faculty %></td>
         <td>
           <ul>
-            <% faculty.faculty_worker_permissions.each do |permission| %>
+            <% faculty.faculty_worker_permissions.sort_by{|p| p.user.last_name}.each do |permission| %>
               <li>
                 <%= permission.to_s %>
                 <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>

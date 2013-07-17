@@ -1,6 +1,19 @@
-<h5>Добавление представителя факультета <%= @faculty.abbr %></h5>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to 'Статистика ВУЗа', manage_root_path %></li>
+    <li class='with_rarr'><%= link_to 'Представители деканатов', manage_faculty_worker_permissions_path %></li>
+    <li>Добавление представителя факультета <%= @faculty.abbr %></li>
+  </ul>
+</div>
 
-<%= simple_form_for @permission, :url => manage_faculty_faculty_worker_permissions_path(@faculty) do |f| %>
-  <%= f.input :email %>
-  <%= f.submit 'Добавить' %>
-<% end %>
+<h5 class='center'>Добавление представителя факультета <%= @faculty.abbr %></h5>
+
+<div class="adding_form">
+  <%= simple_form_for @permission, :url => manage_faculty_faculty_worker_permissions_path(@faculty) do |f| %>
+    <%= f.input :email %>
+    <div class="buttons">
+      <%= f.submit 'Добавить' %>
+      <%= link_to "Отмена", manage_faculty_worker_permissions_path %>
+    </div>
+  <% end %>
+</div>

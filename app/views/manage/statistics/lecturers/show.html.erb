@@ -1,10 +1,19 @@
-<div>
-  <%= link_to 'Назад к факультету', manage_faculty_path(@faculty) %>
+<div class="breadcrumbs">
+  <ul>
+    <% if current_user.manager? %>
+      <li class='with_rarr'><%= link_to 'Преподаватели пропустившие занятия по ВУЗу', manage_statistics_lecturers_path %></li>
+    <% end %>
+    <% if current_user.faculty_worker? %>
+      <li class='with_rarr'><%= link_to "Факультет #{@faculty.abbr}", manage_faculty_path(@faculty.abbr) %></li>
+    <% end %>
+    <li>Преподаватели <%= @faculty.abbr %> пропустившие занятия</li>
+  </ul>
 </div>
+
+<h5 class='center'>Преподаватели <%= @faculty.abbr %> пропустившие занятия</h5>
 
 <%= render :partial => 'search_form', :locals => { :path => manage_statistics_lecturers_path(@faculty.abbr) } %>
 
-<h5>Преподаватели <%= @faculty.abbr %> пропустившие занятия</h5>
 <table>
   <thead>
     <tr>
@@ -17,19 +26,25 @@
   </thead>
   <tbody>
     <% index = 0 %>
-    <% @lecturers.sort_by{ |l, v| l.surname }.each do |lecturer, lessons| %>
-      <% next if lessons.empty? %>
+    <% if @lecturers.values.flatten.empty? %>
       <tr>
-        <td colspan='5' style='font-weight: bold;'><%= lecturer %></td>
+        <td colspan='5'>Все заполнено</td>
       </tr>
-      <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
+    <% else %>
+      <% @lecturers.sort_by{ |l, v| l.surname }.each do |lecturer, lessons| %>
+        <% next if lessons.empty? %>
         <tr>
-          <td><%= index += 1 %></td>
-          <td><%= l lesson.date_on, :format => :long %></td>
-          <td><%= lesson.discipline %></td>
-          <td><%= lesson.kind_text %></td>
-          <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+          <td colspan='5' style='font-weight: bold;'><%= lecturer %></td>
         </tr>
+        <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
+          <tr>
+            <td><%= index += 1 %></td>
+            <td><%= l lesson.date_on, :format => :long %></td>
+            <td><%= lesson.discipline %></td>
+            <td><%= lesson.kind_text %></td>
+            <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>
