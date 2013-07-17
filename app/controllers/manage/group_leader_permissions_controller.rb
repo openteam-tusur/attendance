@@ -9,6 +9,10 @@ class Manage::GroupLeaderPermissionsController < ApplicationController
 
   layout 'manage'
 
+  rescue_from CanCan::AccessDenied do |exception|
+    render :file => "#{Rails.root}/public/403", :formats => [:html], :status => 403, :layout => false
+  end
+
   def create
     create! {
       redirect_to manage_faculty_path(@group.faculty) and return

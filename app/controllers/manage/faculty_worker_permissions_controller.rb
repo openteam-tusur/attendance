@@ -9,13 +9,16 @@ class Manage::FacultyWorkerPermissionsController < ApplicationController
 
   layout 'manage'
 
+  rescue_from CanCan::AccessDenied do |exception|
+    render :file => "#{Rails.root}/public/403", :formats => [:html], :status => 403, :layout => false
+  end
+
   def index
-    @faculties = Faculty.all
+    @faculties = Faculty.reorder('abbr ASC')
   end
 
   def create
     create! {
-      p @permission.errors
       redirect_to manage_faculty_worker_permissions_path and return
     }
   end

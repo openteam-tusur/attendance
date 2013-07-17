@@ -1,9 +1,11 @@
-<ul>
-  <li><%= link_to 'Старосты незаполнившие журнал', manage_statistics_group_leaders_path %></li>
-  <li><%= link_to 'Преподаватели пропускающие занятия', manage_statistics_lecturers_path %></li>
-</ul>
+<div class="breadcrumbs">
+  <ul>
+    <li class='with_rarr'><%= link_to 'Статистика ВУЗа', manage_root_path %></li>
+    <li>Преподаватели пропустившие занятия</li>
+  </ul>
+</div>
 
-<h5>Преподаватели пропустившие занятия</h5>
+<h5 class='center'>Преподаватели пропустившие занятия</h5>
 
 <%= render :partial => 'search_form', :locals => { :path => manage_statistics_lecturers_path } %>
 

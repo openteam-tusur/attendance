@@ -1,8 +1,16 @@
-<div>
-  <%= link_to 'Назад к факультету', manage_faculty_path(@faculty) %>
+<div class="breadcrumbs">
+  <ul>
+    <% if current_user.manager? %>
+      <li class='with_rarr'><%= link_to 'Старосты незаполнившие журнал по ВУЗу', manage_statistics_group_leaders_path %></li>
+    <% end %>
+    <% if current_user.faculty_worker? %>
+      <li class='with_rarr'><%= link_to "Факультет #{@faculty.abbr}", manage_faculty_path(@faculty.abbr) %></li>
+    <% end %>
+    <li>Старосты <%= @faculty.abbr %> незаполнившие журнал</li>
+  </ul>
 </div>
 
-<h5>Старосты <%= @faculty.abbr %> незаполнившие журнал</h5>
+<h5 class='center'>Старосты <%= @faculty.abbr %> незаполнившие журнал</h5>
 
 <%= render :partial => 'search_form', :locals => { :path => manage_statistics_group_leaders_path(@faculty.abbr) } %>
 
