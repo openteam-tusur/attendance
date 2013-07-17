@@ -1,5 +1,7 @@
 Attendance::Application.routes.draw do
   namespace :manage do
+    resources :permissions
+
     namespace :statistics do
       scope 'losers' do
         get '/lecturers' => 'lecturers#index'

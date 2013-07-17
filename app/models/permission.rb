@@ -1,7 +1,15 @@
 class Permission < ActiveRecord::Base
+  include Enumerize
+
   attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid, :user_name, :user_email, :user_search, :polymorphic_context
 
   sso_auth_permission(:roles => %w[manager group_leader study_department_worker faculty_worker])
+
+  enumerize :state, :in => [:active, :inactive], :default => :inactive
+  enumerize :role, :in => %w[manager group_leader study_department_worker faculty_worker]
+
+  scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
+  scope :faculty_workers, -> { where(:role => :faculty_worker) }
 end
 
 # == Schema Information
