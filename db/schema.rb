@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716082446) do
+ActiveRecord::Schema.define(:version => 20130717021917) do
 
   create_table "disciplines", :force => true do |t|
     t.text     "title"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130716082446) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "state"
+    t.string   "email"
   end
 
   add_index "permissions", ["user_id", "role", "context_id", "context_type"], :name => "by_user_and_role_and_context"

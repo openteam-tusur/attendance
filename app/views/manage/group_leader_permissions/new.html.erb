@@ -1,0 +1,6 @@
+<h5>Добавление старосты</h5>
+
+<%= simple_form_for @permission, :url => manage_group_group_leader_permissions_path(@group) do |f| %>
+  <%= f.input :email %>
+  <%= f.submit 'Добавить' %>
+<% end %>

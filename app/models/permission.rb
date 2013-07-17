@@ -1,7 +1,15 @@
 class Permission < ActiveRecord::Base
   include Enumerize
 
-  attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid, :user_name, :user_email, :user_search, :polymorphic_context
+  def self.validates_presence_of(*attr_names)
+    super attr_names - [:user]
+  end
+
+  attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid,
+    :user_name, :user_email, :user_search, :polymorphic_context, :email
+
+  validates_uniqueness_of :role, :scope => [:email, :context_id, :context_type]
+  validates_presence_of :email, :context_id, :context_type, :role
 
   sso_auth_permission(:roles => %w[manager group_leader study_department_worker faculty_worker])
 
