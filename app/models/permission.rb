@@ -1,17 +1,26 @@
 class Permission < ActiveRecord::Base
   include Enumerize
 
+  attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid,
+    :user_name, :user_email, :user_search, :polymorphic_context, :email
+
   def self.validates_presence_of(*attr_names)
     super attr_names - [:user]
   end
 
-  attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid,
-    :user_name, :user_email, :user_search, :polymorphic_context, :email
+  def self.available_roles
+    %w[manager group_leader study_department_worker faculty_worker]
+  end
 
-  validates_uniqueness_of :role, :scope => [:email, :context_id, :context_type]
+  belongs_to :context, :polymorphic => true
+  belongs_to :user
+
   validates_presence_of :email, :context_id, :context_type, :role
+  validates_inclusion_of  :role, :in => available_roles + available_roles.map(&:to_sym)
+  validates_uniqueness_of :role, :scope => [:email, :context_id, :context_type]
 
-  sso_auth_permission(:roles => %w[manager group_leader study_department_worker faculty_worker])
+  scope :for_role,    ->(role)    { where :role => role }
+  scope :for_context, ->(context) { where :context_id => context.try(:id), :context_type => context.try(:class) }
 
   enumerize :state, :in => [:active, :inactive], :default => :inactive
   enumerize :role, :in => %w[manager group_leader study_department_worker faculty_worker]

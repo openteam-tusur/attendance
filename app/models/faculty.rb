@@ -7,11 +7,16 @@ class Faculty < ActiveRecord::Base
   has_many :lessons, :through => :groups
   has_many :students, :through => :groups
   has_many :presences, :through => :students
+  has_many :permissions, :foreign_key => :context_id, :conditions => { :context_type => 'Faculty' }
 
   default_scope order(:title)
 
   delegate :from_last_week, :to => :presences, :prefix => true
   delegate :from_semester_begin, :to => :presences, :prefix => true
+
+  def faculty_worker_permissions
+    permissions.where(:role => :faculty_worker)
+  end
 
   def to_s
     "#{title}(#{abbr})"

@@ -1,0 +1,6 @@
+<h5>Добавление представителя факультета <%= @faculty.abbr %></h5>
+
+<%= simple_form_for @permission, :url => manage_faculty_faculty_worker_permissions_path(@faculty) do |f| %>
+  <%= f.input :email %>
+  <%= f.submit 'Добавить' %>
+<% end %>

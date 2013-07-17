@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>Факультет</th>
+      <th>Представитель</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @faculties.each do |faculty| %>
+      <tr>
+        <td><%= faculty %></td>
+        <td>
+          <ul>
+            <% faculty.faculty_worker_permissions.each do |permission| %>
+              <li>
+                <%= permission.user if permission.user %>
+                <%= permission.email %>
+                <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
+              </li>
+            <% end %>
+          </ul>
+          <%= link_to 'Добавить', new_manage_faculty_faculty_worker_permission_path(faculty) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
