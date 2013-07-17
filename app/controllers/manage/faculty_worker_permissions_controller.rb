@@ -13,6 +13,8 @@ class Manage::FacultyWorkerPermissionsController < ApplicationController
     render :file => "#{Rails.root}/public/403", :formats => [:html], :status => 403, :layout => false
   end
 
+  before_filter :authorize_user
+
   def index
     @faculties = Faculty.reorder('abbr ASC')
   end
@@ -30,6 +32,10 @@ class Manage::FacultyWorkerPermissionsController < ApplicationController
   end
 
   protected
+
+  def authorize_user
+    authorize! :manage, Permission
+  end
 
   def build_resource
     super
