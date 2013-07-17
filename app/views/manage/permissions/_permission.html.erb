@@ -1,4 +1,2 @@
-<%= permission.user if permission.user %>
-<%= permission.email %>
-<%= permission.state_text %>
+<%= permission %>
 <%= link_to 'Удалить', manage_group_group_leader_permission_path(permission.context, permission), :method => :delete, :confirm => 'Вы уверены?' %>

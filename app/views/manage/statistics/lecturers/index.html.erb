@@ -24,20 +24,26 @@
         <td colspan='6' style='font-weight: bold;'><%= link_to faculty, manage_statistics_faculty_lecturers_path(faculty.abbr) %></td>
       </tr>
 
-      <% lecturers.sort_by{ |l, v| l.surname }.each do |lecturer, lessons| %>
-        <tr>
-          <td colspan='5' style='font-weight: bold;'><%= lecturer %></td>
-        </tr>
-        <% next if lessons.empty? %>
-        <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
+      <% if lecturers.any? %>
+        <% lecturers.sort_by{ |l, v| l.surname }.each do |lecturer, lessons| %>
           <tr>
-            <td><%= index += 1 %></td>
-            <td><%= l lesson.date_on, :format => :long %></td>
-            <td><%= lesson.discipline %></td>
-            <td><%= lesson.kind.text %></td>
-            <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+            <td colspan='5' style='font-weight: bold;'><%= lecturer %></td>
           </tr>
+          <% next if lessons.empty? %>
+          <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
+            <tr>
+              <td><%= index += 1 %></td>
+              <td><%= l lesson.date_on, :format => :long %></td>
+              <td><%= lesson.discipline %></td>
+              <td><%= lesson.kind.text %></td>
+              <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+            </tr>
+          <% end %>
         <% end %>
+      <% else %>
+        <tr>
+          <td colspan='5'>Нет преподавателей пропустивших занятия</td>
+        </tr>
       <% end %>
     <% end %>
   </tbody>
