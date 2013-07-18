@@ -16,17 +16,18 @@ group :default do
   gem 'curb'
   gem 'default_value_for'
   gem 'enumerize'
-  gem 'sso-auth'
+  gem 'has_scope'
   gem 'inherited_resources'
   gem 'jquery-rails'
-  gem 'has_scope'
   gem 'openteam-commons'
   gem 'pg'
+  gem 'postmark-rails'
   gem 'progress_bar',             :require => false
   gem 'rails',                    '~>3.2.13'
   gem 'russian'
   gem 'simple_form'
   gem 'sqlite3'
+  gem 'sso-auth'
   gem 'sunspot_rails'
 end
 
