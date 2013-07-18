@@ -40,7 +40,7 @@ class Permission < ActiveRecord::Base
   private
 
   def send_invitation
-    PermissionMailer.invitation_email(self).deliver
+    PermissionMailer.delay.invitation_email(self)
   end
 end
 
