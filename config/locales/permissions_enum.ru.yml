@@ -13,8 +13,3 @@ ru:
   enumerize:
     role:
       <<: *roles
-
-    state:
-      active: Активирована
-      inactive: Неактивирована
-
