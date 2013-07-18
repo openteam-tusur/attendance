@@ -1,17 +1,24 @@
 app:
   secret:       SECRET
+  mail_from:    MAIL
 
 errors:
   key:          KEY
   url:          http://errors.openteam.ru
 
-#solr:
-#  url:          http://localhost:8982/solr
+postmark:
+  api_key:      key
 
-#sso:
-#  key:          KEY
-#  secret:       SECRET
-#  url:          http://esp-sso.openteam.ru
+timetable:
+  url:          URL
 
-#storage
-  #url:         http://esp-storage.openteam.ru
+students:
+  url:          URL
+
+solr:
+  url:          URL
+
+sso:
+ key:           KEY
+ secret:        SECRET
+ url:           URL
