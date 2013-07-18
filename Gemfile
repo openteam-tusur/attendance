@@ -14,6 +14,7 @@ group :default do
   gem 'auto_html'
   gem 'compass-rails'
   gem 'curb'
+  gem 'daemons'
   gem 'default_value_for'
   gem 'delayed_job_active_record'
   gem 'enumerize'
