@@ -34,7 +34,7 @@
           <tr>
             <td><%= index += 1 %></td>
             <td><%= group.group_leaders.join(', ') %></td>
-            <td><%= days.map{|d| l(d, :format => :long)}.join(', ') %></td>
+            <td><%= raw days.map{|d| link_to(l(d, :format => :long), manage_group_scoped_lessons_path(group, d)) }.join(', ') %></td>
             <td><%= group.number %></td>
           </tr>
         <% end %>

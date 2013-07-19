@@ -38,7 +38,7 @@
               <td><%= l lesson.date_on, :format => :long %></td>
               <td><%= lesson.discipline %></td>
               <td><%= lesson.kind.text %></td>
-              <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+              <td><%= raw lessons.flat_map(&:group).map{|g| link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on))}.join(', ') %></td>
             </tr>
           <% end %>
         <% end %>
