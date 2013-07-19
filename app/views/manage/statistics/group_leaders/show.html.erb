@@ -12,7 +12,7 @@
 
 <h5 class='center'>Старосты <%= @faculty.abbr %> незаполнившие журнал</h5>
 
-<%= render :partial => 'search_form', :locals => { :path => manage_statistics_group_leaders_path(@faculty.abbr) } %>
+<%= render :partial => 'search_form', :locals => { :path => manage_statistics_faculty_group_leaders_path(@faculty.abbr) } %>
 
 <table>
   <thead>
