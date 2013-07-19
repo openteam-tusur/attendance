@@ -18,18 +18,19 @@
   <tbody>
     <% @faculties.each do |faculty| %>
       <tr>
-        <td><%= faculty %></td>
-        <td>
-          <ul>
-            <% faculty.faculty_worker_permissions.sort_by{ |p| p.user.try(:last_name) || '' }.each do |permission| %>
-              <li>
-                <%= permission.to_s %>
-                <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
-              </li>
-            <% end %>
-          </ul>
-          <%= link_to 'Добавить', new_manage_faculty_faculty_worker_permission_path(faculty) %>
-        </td>
+        <td rowspan='<%= faculty.faculty_worker_permissions.count + 2 %>'><%= faculty %></td>
+      </tr>
+      <% faculty.faculty_worker_permissions.sort_by{|p| p.user.last_name}.each do |permission| %>
+        <tr>
+          <td>
+            <%= permission %>
+            <span class='last_log'>Последний вход: <%= l permission.user.last_sign_in_at, :format => :long %></span>
+            <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to 'Добавить', new_manage_faculty_faculty_worker_permission_path(faculty) %></td>
       </tr>
     <% end %>
   </tbody>
