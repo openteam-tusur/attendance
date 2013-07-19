@@ -12,7 +12,7 @@
 
 <h5 class='center'>Преподаватели <%= @faculty.abbr %> пропустившие занятия</h5>
 
-<%= render :partial => 'search_form', :locals => { :path => manage_statistics_lecturers_path(@faculty.abbr) } %>
+<%= render :partial => 'search_form', :locals => { :path => manage_statistics_faculty_lecturers_path(@faculty.abbr) } %>
 
 <table>
   <thead>
