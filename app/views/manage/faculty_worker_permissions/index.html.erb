@@ -20,11 +20,11 @@
       <tr>
         <td rowspan='<%= faculty.faculty_worker_permissions.count + 2 %>'><%= faculty %></td>
       </tr>
-      <% faculty.faculty_worker_permissions.sort_by{|p| p.user.last_name}.each do |permission| %>
+      <% faculty.faculty_worker_permissions.each do |permission| %>
         <tr>
           <td>
             <%= permission %>
-            <% if permission.user.last_sign_in_at %>
+            <% if permission.user && permission.user.last_sign_in_at %>
               <span class='last_log'>Последний вход: <%= l permission.user.last_sign_in_at, :format => :long %></span>
             <% end %>
             <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
