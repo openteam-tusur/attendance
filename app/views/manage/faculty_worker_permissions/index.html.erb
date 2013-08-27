@@ -24,7 +24,9 @@
         <tr>
           <td>
             <%= permission %>
-            <span class='last_log'>Последний вход: <%= l permission.user.last_sign_in_at, :format => :long %></span>
+            <% if permission.user.last_log %>
+              <span class='last_log'>Последний вход: <%= l permission.user.last_sign_in_at, :format => :long %></span>
+            <% end %>
             <%= link_to 'Удалить', manage_faculty_worker_permission_path(permission), :method => :delete, :confirm => 'Вы уверены?' %>
           </td>
         </tr>
