@@ -7,15 +7,23 @@ namespace :sync do
   desc 'Получить список факультетов и групп'
   task :f_and_g => :environment do
     groups = JSON.parse(open("#{Settings['timetable.url']}/api/v1/groups/internal.json").read)
+    Group.update_all(:deleted_at => Time.zone.now)
 
     bar = ProgressBar.new(groups['groups'].count)
 
     groups['groups'].each do |group|
       faculty = Faculty.find_or_create_by_abbr_and_title(:abbr => group['faculty_abbr'], :title => group['faculty_name'])
-      faculty.groups.find_or_create_by_number_and_course(:number => group['number'], :course => group['course'])
+
+      faculty.groups.find_or_initialize_by_number(group['number']).tap do |g|
+        g.course = group['course']
+        g.deleted_at = nil
+        g.save!
+      end
+
       bar.increment!
     end
 
+    Group.where('deleted_at IS NOT NULL').map(&:destroy)
     message = I18n.localize(Time.now, :format => :short) + " Синхронизация факультетов и групп успешно завершена!"
     Airbrake.notify(:error_class => "rake sync:f_and_g", :error_message => message)
   end
