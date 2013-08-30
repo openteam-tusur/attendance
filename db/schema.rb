@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718045446) do
+ActiveRecord::Schema.define(:version => 20130830025635) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20130718045446) do
     t.integer  "faculty_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "groups", ["faculty_id"], :name => "index_groups_on_faculty_id"
