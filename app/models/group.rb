@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
   attr_accessible :course, :number
 
   belongs_to :faculty
-  has_many :students
+  has_many :students, :dependent => :destroy
   has_many :lessons
   has_many :presences, :through => :students
   has_many :permissions, :as => :context
