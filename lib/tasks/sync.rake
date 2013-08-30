@@ -37,7 +37,7 @@ namespace :sync do
       if student_hashes.empty?
         puts "Группа №#{group.number}: студенты не найдены"
 
-        message = I18n.localize(Time.now, :format => :short) + " Группа №#{group_number}: студенты не найдены"
+        message = I18n.localize(Time.now, :format => :short) + " Группа №#{group.number}: студенты не найдены"
         Airbrake.notify(:error_class => "rake sync:students", :error_message => message)
       end
 
