@@ -291,6 +291,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    validates_email_format_of (1.5.3)
     warden (1.2.1)
       rack (>= 1.0)
     whenever (0.8.2)
@@ -337,3 +338,4 @@ DEPENDENCIES
   sunspot_solr
   turbo-sprockets-rails3
   uglifier
+  validates_email_format_of

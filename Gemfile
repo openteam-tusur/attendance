@@ -31,6 +31,7 @@ group :default do
   gem 'sqlite3'
   gem 'sso-auth'
   gem 'sunspot_rails'
+  gem 'validates_email_format_of'
 end
 
 group :development do
