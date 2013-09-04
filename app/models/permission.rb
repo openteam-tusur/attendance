@@ -18,6 +18,7 @@ class Permission < ActiveRecord::Base
   validates_presence_of :email, :context_id, :context_type, :role
   validates_inclusion_of  :role, :in => available_roles + available_roles.map(&:to_sym)
   validates_uniqueness_of :role, :scope => [:email, :context_id, :context_type]
+  validates_email_format_of :email
 
   scope :for_role,    ->(role)    { where :role => role }
   scope :for_context, ->(context) { where :context_id => context.try(:id), :context_type => context.try(:class) }
