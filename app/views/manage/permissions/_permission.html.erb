@@ -1,5 +1,5 @@
 <%= permission %>
-<% if permission.user? %>
+<% if permission.user %>
   <span class='last_log'>Последний вход: <%= l permission.user.last_sign_in_at, :format => :long %></span>
 <% end %>
 <%= link_to 'Удалить', manage_group_group_leader_permission_path(permission.context, permission), :method => :delete, :confirm => 'Вы уверены?' %>
