@@ -35,10 +35,10 @@
           <% lessons.uniq.sort_by(&:date_on).each do |lesson| %>
             <tr>
               <td><%= index += 1 %></td>
-              <td><%= l lesson.date_on, :format => :long %></td>
+              <td><%= l lesson.date_on, :format => '%e.%m.%y' %></td>
               <td><%= lesson.discipline %></td>
               <td><%= lesson.kind.text %></td>
-              <td><%= raw lessons.flat_map(&:group).map{|g| link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on))}.join(', ') %></td>
+              <td><%= raw lessons.uniq.flat_map(&:group).uniq.map{|g| link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on))}.join(', ') %></td>
             </tr>
           <% end %>
         <% end %>
