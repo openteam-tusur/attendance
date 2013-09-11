@@ -42,7 +42,7 @@
             <td><%= l lesson.date_on, :format => :long %></td>
             <td><%= lesson.discipline %></td>
             <td><%= lesson.kind_text %></td>
-            <td><%= lessons.flat_map(&:group).map(&:to_s).join(', ') %></td>
+            <td><%= lessons.uniq.flat_map(&:group).uniq.map(&:to_s).join(', ') %></td>
           </tr>
         <% end %>
       <% end %>
