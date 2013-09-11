@@ -21,8 +21,8 @@
       </thead>
       <tbody>
         <% lecturer.losed_lessons(@faculty).group_by(&:date_on).each do |_, lessons| %>
-          <% lessons.group_by(&:order_number).each do |_, lessons| %>
-            <% lessons.group_by(&:kind).each do |_, lessons| %>
+          <% lessons.uniq.group_by(&:order_number).each do |_, lessons| %>
+            <% lessons.uniq.group_by(&:kind).each do |_, lessons| %>
               <tr>
                 <td><%= l lessons.first.date_on %></td>
                 <td><%= lessons.first.discipline.title %></td>
