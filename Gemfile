@@ -18,6 +18,7 @@ group :default do
   gem 'default_value_for'
   gem 'delayed_job_active_record'
   gem 'enumerize'
+  gem 'grape'
   gem 'has_scope'
   gem 'inherited_resources'
   gem 'jquery-rails'
