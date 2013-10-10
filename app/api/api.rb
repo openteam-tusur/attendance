@@ -19,6 +19,11 @@ class API < Grape::API
     return { :error => 'Discipline not found' } if discipline.nil?
 
     lesson_ids = discipline.lesson_ids
-    student.presences.from_semester_begin.where('lessons.id' => lesson_ids).group_by(&:kind).map{|a,b| { a => b.count }}.reduce(:merge)
+    student.
+      presences.
+        from_semester_begin.
+          where('lessons.id' => lesson_ids).
+            group_by{ |p| p.lesson.kind }.
+              map{ |k, p| { k => p.group_by(&:kind).map{ |kind, presences| { kind => presences.count } }.reduce(&:merge) } }.reduce(&:merge)
   end
 end
