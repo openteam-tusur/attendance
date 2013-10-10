@@ -48,5 +48,7 @@ Attendance::Application.routes.draw do
     resources :students, :only => [:show]
   end
 
+  mount API => '/'
+
   root :to => 'application#main_page'
 end
