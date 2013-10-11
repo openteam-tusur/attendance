@@ -2,9 +2,6 @@
 
 class Person < ActiveRecord::Base
   attr_accessible :name, :patronymic, :surname
-  normalize_attributes :name, :patronymic, :surname, :with => [:strip, :blank], :after => [:strip, :blank] do |value|
-    value.present? && value.is_a?(String) ? value.mb_chars.titleize.gsub(/\./, '') : value
-  end
 
   default_scope order(:surname)
 
