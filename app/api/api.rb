@@ -11,7 +11,7 @@ class API < Grape::API
     group = Group.find_by_number(params[:group])
     return { :error => 'Group not found' } if group.nil?
 
-    surname, name, patronymic = params[:student].split(/\s/)
+    surname, name, patronymic = params[:student].split(/\s/, 3)
     student = group.students.find_by_name_and_patronymic_and_surname(name, patronymic, surname)
     return { :error => 'Student not found' } if student.nil?
 
