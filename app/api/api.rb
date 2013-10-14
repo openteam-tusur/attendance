@@ -22,7 +22,7 @@ class API < Grape::API
     student.
       presences.
         from_semester_begin.
-          where('lessons.id' => lesson_ids).
+          where('lessons.id' => lesson_ids, 'lessons.group_id' => group.id).
             group_by{ |p| p.lesson.kind }.
               map{ |k, p| { k => p.group_by(&:kind).map{ |kind, presences| { kind => presences.count } }.reduce(&:merge) } }.reduce(&:merge) || { :error => 'Presence not found' }
   end
