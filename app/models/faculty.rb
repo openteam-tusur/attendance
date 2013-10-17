@@ -73,6 +73,7 @@ class Faculty < ActiveRecord::Base
         [g, g.presences.joins(:lesson)
          .select('presences.date_on')
          .where("lessons.state = 'took_place'")
+         .where('lessons.group_id' => g.id)
          .where("presences.kind = 'not_marked'")
          .where('presences.date_on BETWEEN ? AND ?', starts_on, ends_on).map(&:date_on).uniq.sort]
       }
