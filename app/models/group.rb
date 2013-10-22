@@ -36,7 +36,8 @@ class Group < ActiveRecord::Base
   # TODO: Фиговый фикс student.present?, а все из-за default_scope
   def filled_attendance_at?(date)
     return true if lessons.by_date(date).empty?
-    !lessons.took_place.by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked? && p.student.present? }}.uniq.include?(true)
+    #!lessons.took_place.by_date(date).flat_map{|l| l.presences.map{|p| p.not_marked? && p.student.present? }}.uniq.include?(true)
+    !lessons.took_place.by_date(date).flat_map(&:presences).select{|p| students.include?(p.student) }.map{|p| p.not_marked? && p.student.present? }.uniq.include?(true)
   end
 
   def nofilled_dates
