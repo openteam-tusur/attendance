@@ -11,6 +11,7 @@ class Manage::NotMarkedController < ApplicationController
     @days = @group.presences.joins(:lesson)
               .select('presences.date_on')
               .where("lessons.state = 'took_place'")
+              .where('lessons.group_id' => @group.id)
               .where("presences.kind = 'not_marked'")
               .where('presences.date_on BETWEEN ? AND ?', Presence.semester_begin, Presence.last_week_end).map(&:date_on).uniq.sort
   end
