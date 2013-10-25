@@ -5,6 +5,7 @@
     <% end %>
     <% if current_user.faculty_worker? %>
       <li class='with_rarr'><%= link_to "Факультет #{@faculty.abbr}", manage_faculty_path(@faculty.abbr) %></li>
+      <li class='with_rarr'><%= link_to "Преподаватели пропустившие занятия", manage_statistics_lecturers_path %></li>
     <% end %>
     <li>Преподаватели <%= @faculty.abbr %> пропустившие занятия</li>
   </ul>
