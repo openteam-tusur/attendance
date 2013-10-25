@@ -1,6 +1,11 @@
 <div class="breadcrumbs">
   <ul>
-    <li class='with_rarr'><%= link_to 'Статистика ВУЗа', manage_root_path %></li>
+    <% if current_user.manager? %>
+      <li class='with_rarr'><%= link_to 'Статистика ВУЗа', manage_root_path %></li>
+    <% end %>
+    <% if current_user.faculty_worker? %>
+      <li class='with_rarr'><%= link_to "Факультет #{current_user.permissions.first.context.abbr}", manage_faculty_path(current_user.permissions.first.context.abbr) %></li>
+    <% end %>
     <li>Преподаватели пропустившие занятия</li>
   </ul>
 </div>
@@ -23,7 +28,11 @@
     <% index = 0 %>
     <% @faculties.each do |faculty, lecturers| %>
       <tr>
-        <td colspan='6' style='font-weight: bold;'><%= link_to faculty, manage_statistics_faculty_lecturers_path(faculty.abbr) %></td>
+        <% if can?(:read, faculty) %>
+          <td colspan='6' style='font-weight: bold;'><%= link_to faculty, manage_statistics_faculty_lecturers_path(faculty.abbr) %></td>
+        <% else %>
+          <td colspan='6' style='font-weight: bold;'><%= faculty %></td>
+        <% end %>
       </tr>
 
       <% if lecturers.any? %>
@@ -38,7 +47,7 @@
               <td><%= l lesson.date_on, :format => '%e.%m.%y' %></td>
               <td><%= lesson.discipline %></td>
               <td><%= lesson.kind.text %></td>
-              <td><%= raw lessons.uniq.flat_map(&:group).uniq.map{|g| link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on))}.join(', ') %></td>
+              <td><%= raw lessons.uniq.flat_map(&:group).uniq.map{|g| can?(:read, g) ? link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on)) : g}.join(', ') %></td>
             </tr>
           <% end %>
         <% end %>

@@ -36,7 +36,7 @@ class Ability
       user.group_leader_of?(lesson.group)
     end
 
-    can :read_statistics, :faculties if user.study_department_worker?
+    can :read_statistics, :faculties if (user.study_department_worker? || user.faculty_worker?)
 
     can :read_statistics, Faculty do |faculty|
       user.faculty_worker_of?(faculty)
