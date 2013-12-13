@@ -11,8 +11,9 @@ class Faculty < ActiveRecord::Base
 
   default_scope order(:title)
 
-  delegate :from_last_week, :to => :presences, :prefix => true
-  delegate :from_semester_begin, :to => :presences, :prefix => true
+  delegate :from_last_week,       :to => :presences, :prefix => true
+  delegate :from_semester_begin,  :to => :presences, :prefix => true
+  delegate :by_period,            :to => :presences, :prefix => true
 
   def faculty_worker_permissions
     permissions.where(:role => :faculty_worker)
@@ -28,6 +29,14 @@ class Faculty < ActiveRecord::Base
 
   def average_attendance_from_semester_begin
     "%.1f%" % (groups.count.zero?||presences_from_semester_begin.count.zero? ? 0 : presences_from_semester_begin.was.count.to_f*100/presences_from_semester_begin.count)
+  end
+
+  def average_attendance_by_period(from, to)
+    "%.1f%" % (groups.count.zero?||presences_by_period(from, to).count.zero? ? 0 : presences_by_period(from, to).was.count.to_f*100/presences_by_period(from, to).count)
+  end
+
+  def average_attendance_by_period_for_course(from, to, course_number)
+    "%.1f%" % (groups.count.zero?||presences_by_period(from, to).where('groups.course = ?', course_number).count.zero? ? 0 : presences_by_period(from, to).where('groups.course = ?', course_number).was.count.to_f*100/presences_by_period(from, to).where('groups.course = ?', course_number).count)
   end
 
   def average_attendance_from_last_week_for(course_number)

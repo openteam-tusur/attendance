@@ -16,7 +16,8 @@ class Presence < ActiveRecord::Base
 
   scope :was, where(:presences => { :kind => [:was, :valid_excuse] })
   scope :took_place, joins(:lesson).where("lessons.state = 'took_place'")
-  scope :from_last_week, ->{ took_place.where('presences.date_on >= ? and presences.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
+  scope :from_last_week, ->{ by_period(Presence.last_week_begin, Presence.last_week_end) }
+  scope :by_period, ->(from, to) { took_place.where('presences.date_on >= ? and presences.date_on <= ?', from, to) }
   scope :from_semester_begin, ->{ took_place.where('presences.date_on >= ?', Presence.semester_begin) }
 
   def to_s

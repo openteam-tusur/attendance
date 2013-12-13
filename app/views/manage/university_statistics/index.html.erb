@@ -10,13 +10,14 @@
   <thead>
     <tr>
       <th rowspan='2'>Всего по университету</th>
-      <th>прошедшая неделя</th>
-      <th>с начала семестра</th>
+      <th>
+        за период
+        <%= render :partial => 'search_form', :locals => { :path => manage_root_path } %>
+      </th>
       <th rowspan='2'>всего студентов</th>
     </tr>
     <tr>
-      <th><%= Presence.from_last_week.any? ? "%.1f%" % (Presence.from_last_week.was.count.to_f*100/Presence.from_last_week.count) : '0.0%' %></th>
-      <th><%= Presence.from_semester_begin.any? ? "%.1f%" % (Presence.from_semester_begin.was.count.to_f*100/Presence.from_semester_begin.count) : '0.0%' %></th>
+      <th><%= Presence.by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)).any? ? "%.1f%" % (Presence.by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)).was.count.to_f*100/Presence.by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)).count) : '0.0%' %></th>
     </tr>
   </thead>
 
@@ -24,8 +25,7 @@
     <% Faculty.all.each do |faculty| %>
       <tr>
         <td><%= link_to faculty.title, manage_faculty_path(faculty) %></td>
-        <td><%= faculty.average_attendance_from_last_week %></td>
-        <td><%= faculty.average_attendance_from_semester_begin %></td>
+        <td><%= faculty.average_attendance_by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)) %></td>
         <td><%= faculty.students.count %></td>
       </tr>
       <% faculty.groups.group_by(&:course).sort.each do |course, groups| %>
@@ -33,11 +33,7 @@
           <td><%= "#{course} курс" %></td>
 
           <td>
-            <%= faculty.average_attendance_from_last_week_for(course) %>
-          </td>
-
-          <td>
-            <%= faculty.average_attendance_from_semester_begin_for(course) %>
+            <%= faculty.average_attendance_by_period_for_course((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end), course) %>
           </td>
 
           <td>
