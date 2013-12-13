@@ -14,6 +14,7 @@ class Group < ActiveRecord::Base
 
   delegate :from_last_week, :to => :presences, :prefix => true
   delegate :from_semester_begin, :to => :presences, :prefix => true
+  delegate :by_period, :to => :presences, :prefix => true
   delegate :from_last_week, :to => :lessons, :prefix => true
   delegate :from_semester_begin, :to => :lessons, :prefix => true
 
@@ -50,6 +51,10 @@ class Group < ActiveRecord::Base
 
   def average_attendance_from_last_week
     "%.1f%" % ((students.count.zero? || presences_from_last_week.count.zero?) ? 0 : presences_from_last_week.was.count.to_f*100 / presences_from_last_week.count)
+  end
+
+  def average_attendance_by_period(from, to)
+    "%.1f%" % ((students.count.zero? || presences_by_period(from, to).count.zero?) ? 0 : presences_by_period(from, to).was.count.to_f*100 / presences_by_period(from, to).count)
   end
 
   def to_param

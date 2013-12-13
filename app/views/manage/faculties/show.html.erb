@@ -8,13 +8,14 @@
   <thead>
     <tr>
       <th rowspan='2' class='faculty_title'><%= resource %></th>
-      <th class='grey'>прошедшая неделя</th>
-      <th class='grey'>с начала семестра</th>
+      <th class='gray'>
+        за период
+        <%= render :partial => 'search_form', :locals => { :path => manage_faculty_path(@faculty) } %>
+      </th>
       <th rowspan='2' class='grey'>Староста</th>
     </tr>
     <tr>
-      <th class='faculty_aaflwb'><%= resource.average_attendance_from_last_week %></th>
-      <th class='faculty_aafsb'><%= resource.average_attendance_from_semester_begin %></th>
+      <th class='faculty_aaflwb'><%= resource.average_attendance_by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)) %></th>
     </tr>
   </thead>
   <tbody>
@@ -22,10 +23,7 @@
       <tr class='course'>
         <td class='course_number'><%= "#{course} курс" %></td>
         <td class='course_aaflwb'>
-          <%= resource.average_attendance_from_last_week_for(course) %>
-        </td>
-        <td class='course_aafsb'>
-          <%= resource.average_attendance_from_semester_begin_for(course) %>
+          <%= resource.average_attendance_by_period_for_course((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end), course) %>
         </td>
         <td></td>
       </tr>
@@ -35,10 +33,7 @@
             <%= link_to group, [:manage, resource, group] %>
           </td>
           <td class='group_aaflwb'>
-            <%= group.average_attendance_from_last_week %>
-          </td>
-          <td class='group_aafsb'>
-            <%= group.average_attendance_from_semester_begin %>
+            <%= group.average_attendance_by_period((params[:starts_on].try(:to_date) || Presence.last_week_begin), (params[:ends_on].try(:to_date) || Presence.last_week_end)) %>
           </td>
           <td>
             <% if group.permissions.any? %>
