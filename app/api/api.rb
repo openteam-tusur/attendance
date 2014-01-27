@@ -7,6 +7,7 @@ class API < Grape::API
     requires :student,    type: String, desc: "Student full name"
     requires :discipline, type: String, desc: "Discipline title"
   end
+
   get :attendance do
     group = Group.find_by_number(params[:group])
     return { :error => 'Group not found' } if group.nil?
@@ -25,5 +26,21 @@ class API < Grape::API
           where('lessons.id' => lesson_ids, 'lessons.group_id' => group.id).
             group_by{ |p| p.lesson.kind }.
               map{ |k, p| { k => p.group_by(&:kind).map{ |kind, presences| { kind => presences.count } }.reduce(&:merge) } }.reduce(&:merge) || { :error => 'Presence not found' }
+  end
+
+  get :permissions do
+    user = User.find_by_uid(params[:uid])
+    return { :error => 'User not found' } unless user.present?
+
+    { :permissions => user.permissions.map do |permission|
+      { :role => permission.role,
+        :context => {
+          :kind => permission.context_type,
+          :remote_id => permission.context_id,
+          :title => permission.context.try(:to_s)
+        }
+      }
+    end
+    }
   end
 end
