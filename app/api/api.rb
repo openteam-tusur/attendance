@@ -6,6 +6,7 @@ class API < Grape::API
     requires :group,      type: String, desc: "Group number"
     requires :student,    type: String, desc: "Student full name"
     requires :discipline, type: String, desc: "Discipline title"
+    requires :uid,        type: Integer
   end
 
   get :attendance do
