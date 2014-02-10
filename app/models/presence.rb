@@ -37,7 +37,7 @@ class Presence < ActiveRecord::Base
     if today.month >= 8 && today.month <= 12
       return Time.zone.parse("#{today.year}-09-01").to_date
     elsif today.month >= 1 && today.month <= 7
-      return Time.zone.parse("#{today.year}-02-11").to_date
+      return Time.zone.parse("#{today.year}-02-10").to_date
     end
   end
 
