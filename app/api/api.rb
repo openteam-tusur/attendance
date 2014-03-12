@@ -6,7 +6,6 @@ class API < Grape::API
     requires :group,      type: String, desc: "Group number"
     requires :student,    type: String, desc: "Student full name"
     requires :discipline, type: String, desc: "Discipline title"
-    requires :uid,        type: Integer
   end
 
   get :attendance do
@@ -29,6 +28,9 @@ class API < Grape::API
               map{ |k, p| { k => p.group_by(&:kind).map{ |kind, presences| { kind => presences.count } }.reduce(&:merge) } }.reduce(&:merge) || { :error => 'Presence not found' }
   end
 
+  params do
+    requires :uid,        type: Integer
+  end
   get :permissions do
     user = User.find_by_uid(params[:uid])
     return { :error => 'User not found' } unless user.present?
