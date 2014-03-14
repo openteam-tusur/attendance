@@ -29,7 +29,7 @@ class API < Grape::API
   end
 
   params do
-    requires :uid,        type: Integer
+    requires :uid,        type: String
   end
   get :permissions do
     user = User.find_by_uid(params[:uid])
