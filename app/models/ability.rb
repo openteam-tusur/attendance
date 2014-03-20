@@ -8,7 +8,7 @@ class Ability
       user.permissions.any?
     end
 
-    can :manage, :all if user.manager?
+    can :manage, :all if user.manager? || user.administrator?
 
     can :read, :university_statistics if user.study_department_worker?
 
