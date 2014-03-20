@@ -1,6 +1,6 @@
 <div class="breadcrumbs">
   <ul>
-    <% if current_user.manager? %>
+    <% if current_user.manager? || current_user.administrator? %>
       <li class='with_rarr'><%= link_to 'Старосты незаполнившие журнал по ВУЗу', manage_statistics_group_leaders_path %></li>
     <% end %>
     <% if current_user.faculty_worker? %>

@@ -9,7 +9,7 @@ class Permission < ActiveRecord::Base
   end
 
   def self.available_roles
-    %w[manager group_leader study_department_worker faculty_worker]
+    %w[administrator manager group_leader study_department_worker faculty_worker]
   end
 
   belongs_to :context, :polymorphic => true
@@ -26,7 +26,7 @@ class Permission < ActiveRecord::Base
   scope :for_role,    ->(role)    { where :role => role }
   scope :for_context, ->(context) { where :context_id => context.try(:id), :context_type => context.try(:class) }
 
-  enumerize :role, :in => %w[manager group_leader study_department_worker faculty_worker]
+  enumerize :role, :in => %w[administrator manager group_leader study_department_worker faculty_worker]
 
   scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
   scope :faculty_workers, -> { where(:role => :faculty_worker) }
