@@ -22,7 +22,9 @@
           <% if current_user.study_department_worker? %>
             <%= link_to 'Система управления', manage_root_path %>
           <% elsif current_user.faculty_worker? %>
-            <%= link_to current_user.permissions.where(:role => :faculty_worker).first.context.abbr, manage_faculty_path(current_user.permissions.where(:role => :faculty_worker).first.context) %>
+            <% current_user.permissions.where(:role => :faculty_worker).each do |faculty| %>
+              <%= link_to faculty.context.abbr, manage_faculty_path(faculty.context) %>
+            <% end %>
           <% elsif current_user.manager? || current_user.administrator? %>
             <%= link_to 'Статистика по университету', manage_root_path %>
           <% end %>
