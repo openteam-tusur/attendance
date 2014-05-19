@@ -47,7 +47,7 @@
               <td><%= l lesson.date_on, :format => '%e.%m.%y' %></td>
               <td><%= lesson.discipline %></td>
               <td><%= lesson.kind.text %></td>
-              <td><%= raw lessons.uniq.flat_map(&:group).uniq.map{|g| can?(:read, g) ? link_to(g.to_s, manage_group_scoped_lessons_path(g, lesson.date_on)) : g}.join(', ') %></td>
+              <td><%= can?(:read, lesson.group) ? link_to(lesson.group, manage_group_scoped_lessons_path(lesson.group, lesson.date_on)) : lesson.group %></td>
             </tr>
           <% end %>
         <% end %>
