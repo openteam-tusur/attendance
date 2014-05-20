@@ -14,11 +14,12 @@ class Presence < ActiveRecord::Base
 
   enumerize :kind, :in => [:not_marked, :valid_excuse, :was, :wasnt], :default => :not_marked, :predicates => true
 
-  scope :was, where(:presences => { :kind => [:was, :valid_excuse] })
-  scope :took_place, joins(:lesson).where("lessons.state = 'took_place'")
-  scope :from_last_week, ->{ by_period(Presence.last_week_begin, Presence.last_week_end) }
-  scope :by_period, ->(from, to) { took_place.where('presences.date_on >= ? and presences.date_on <= ?', from, to) }
-  scope :from_semester_begin, ->{ took_place.where('presences.date_on >= ?', Presence.semester_begin) }
+  scope :with_active_students,                joins(:student).where('people.active = ?', true)
+  scope :was,                                 where(:presences => { :kind => [:was, :valid_excuse] })
+  scope :took_place,                          joins(:lesson).where("lessons.state = 'took_place'")
+  scope :by_period,           ->(from, to) {  took_place.with_active_students.where('presences.date_on >= ? and presences.date_on <= ?', from, to) }
+  scope :from_last_week,      ->{             by_period(Presence.last_week_begin, Presence.last_week_end) }
+  scope :from_semester_begin, ->{             by_period(Presence.semester_begin, Date.today) }
 
   def to_s
     kind_text
