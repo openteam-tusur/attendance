@@ -1,6 +1,7 @@
 class Public::SearchController < ApplicationController
   def index
-    surname, name, group_number = params[:student][:search].split(/[^[:alnum:]-]+/)
+
+    surname, name, group_number = params[:student].try(:[], :search).to_s.split(/[^[:alnum:]-]+/)
 
     group_number="non existent group" unless surname.presence && name.presence && group_number.presence
 

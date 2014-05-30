@@ -7,7 +7,7 @@
     <% end %>
   </ul>
 <% else %>
-  <% if params[:student][:search].blank? %>
+  <% if params[:student].try(:[], :search).blank? %>
     <div class="empty">Вы ничего не ввели, а мы ничего не нашли ;(</div>
   <% else %>
     <% fio, group_number = params[:student][:search].split(',').map(&:strip) %>
