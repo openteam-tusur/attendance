@@ -1,73 +1,21 @@
 ru:
-  are_you_sure:     Вы уверены в том, что собираетесь сделать?
-  site_title:       Журнал посещаемости ТУСУР
+  site: Электронный журнал посещаемости ТУСУР
 
-  activerecord:
-    attributes:
-      discipline:
-        abbr:  Аббревиатура
-        title: Название дисциплины
+  page_title:
+    dashboard:
+      index:  Главная страница
 
-      faculty:
-        abbr:  Аббревиатура
-        title: Название факультета
+    main_page:
+      index:  Главная страница
 
-      group:
-        course: Номер курса
-        number: Номер группы
+    permissions:
+      index:  Управление правами
 
-      lesson:
-        classroom:    Учебная аудитория
-        date_on:      Дата занятия
-        kind:         Тип занятия
-        order_number: Порядковый номер занятия
-        state:        Статус занятия
+    search:
+      index:  'Поиск: %{title}'
 
-      person: &human
-        name:       Имя
-        surname:    Фамилия
-        patronymic: Отчество
+    statistic:
+      show:   Статистика посещаемости
 
-      presence:
-        kind: Присутствие на занятии
-
-      lecturer:
-        <<: *human
-
-      student:
-        <<: *human
-
-    models:
-      discipline: Дисциплина
-      faculty:    Факультет
-      group:      Группа
-      lecturer:   Преподаватель
-      lesson:     Занятие
-      person:     Человек
-      presence:   Присутствие
-      student:    Студент
-
-  enumerize:
-    lesson:
-      state:
-        took_place:       состоялось
-        wasnt_took_place: не состоялось
-
-      kind:
-        design:     Курс. проек.
-        laboratory: Лаб.раб.
-        lecture:    Лекция
-        practice:   Практика
-        research:   Курс. раб.
-
-    presence:
-      kind:
-        not_marked:   не отмечен
-        valid_excuse: ув.причина
-        was:          был
-        wasnt:        не был
-
-  simple_form:
-    hints:
-      student:
-        search: 'Например: Иванов Иван 777'
+    syncs:
+      index:  Журнал синхронизации

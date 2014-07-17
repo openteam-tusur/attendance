@@ -1,24 +1,25 @@
 app:
-  secret:       SECRET
-  mail_from:    MAIL
+  domain:    .domain                             #delete the line in development
+  secret:    SECRET
+  from:      mail@mail.ma
+  host:      hostname
 
-errors:
-  key:          KEY
-  url:          http://errors.openteam.ru
+devise:
+  secret:    SECRET
+
+messaging:
+  url:       redis://host:6379/8
 
 postmark:
-  api_key:      key
+  api_key:   123456
 
-timetable:
-  url:          URL
+redis:
+  url:       redis://redis.example.com:7372/12
 
-students:
-  url:          URL
-
-solr:
-  url:          URL
+session_store:
+  url:       redis://host:6379/0/sessions
 
 sso:
- key:           KEY
- secret:        SECRET
- url:           URL
+  url:       http://sso.tusur.ru/
+  key:       KEY
+  secret:    SECRET
