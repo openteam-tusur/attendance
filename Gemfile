@@ -1,51 +1,28 @@
 source 'https://rubygems.org'
 
-group :assets do
-  gem 'coffee-rails'
-  gem 'compass-rails'
-  gem 'sass-rails'
-  gem 'turbo-sprockets-rails3'
-  gem 'uglifier'
-end
-
 group :default do
-  gem 'airbrake',                '3.1.2'
-  gem 'attribute_normalizer'
-  gem 'auto_html'
-  gem 'curb'
-  gem 'daemons'
-  gem 'default_value_for'
-  gem 'delayed_job_active_record'
-  gem 'enumerize'
-  gem 'grape'
-  gem 'has_scope'
+  gem 'coffee-rails',           '~> 4.0.0'
+  gem 'compass-rails'
   gem 'inherited_resources'
   gem 'jquery-rails'
   gem 'openteam-commons'
   gem 'pg'
-  gem 'postmark-rails'
-  gem 'progress_bar',             :require => false
-  gem 'rails',                    '~>3.2.13'
-  gem 'russian'
-  gem 'simple_form'
-  gem 'sqlite3'
-  gem 'sso-auth'
-  gem 'sunspot_rails'
-  gem 'validates_email_format_of'
+  gem 'rails',                  '4.0.8'
+  gem 'rest-client'
+  gem 'sass-rails',             '~> 4.0.2'
+  gem 'simple-navigation'
+  gem 'sinatra',                '>= 1.3.0', :require => nil
+  gem 'sidekiq'
+  gem 'sso-auth',               '0.1.2'
+  gem 'uglifier',               '>= 1.3.0'
 end
 
 group :development do
-  gem 'brakeman'
-  gem 'capistrano-db-tasks', :git => 'git://github.com/sgruhier/capistrano-db-tasks'
-  gem 'capistrano-unicorn'
-  gem 'hirb', :require => false
-  gem 'letter_opener'
-  gem 'openteam-capistrano'
+  gem 'hirb'
+  gem 'openteam-capistrano',    '~> 1.0.9'
   gem 'rails-erd'
-  gem 'sunspot_solr'
 end
 
-group :test do
-  gem 'rspec-rails'
-  gem 'sunspot_matchers'
+group :production do
+  gem 'unicorn'
 end

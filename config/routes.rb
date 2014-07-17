@@ -1,54 +1,39 @@
+require 'sidekiq/web'
 Attendance::Application.routes.draw do
-  namespace :manage do
-    namespace :statistics do
-      scope 'losers' do
-        get '/lecturers' => 'lecturers#index'
-        get '/lecturers/:faculty_abbr' => 'lecturers#show', :as => :faculty_lecturers
-
-        get '/group_leaders' => 'group_leaders#index'
-        get '/group_leaders/:faculty_abbr' => 'group_leaders#show', :as => :faculty_group_leaders
-      end
-    end
-
-    resources :faculty_worker_permissions, :only => [:index, :destroy]
-
-    resources :groups, :only => [] do
-      get '/not_marked' => 'not_marked#index', :on => :member
-      get '/lessons/(:date)' => 'lessons#index',
-        :constraints => { :date => /\d{4}-[01][0-9]-[0123][0-9]/ },
-        :as => :scoped_lessons
-
-      resources :lessons, :only => [] do
-        put 'switch_state' => 'lessons#switch_state'
-      end
-
-      resources :students, :only => [] do
-        resources :lessons, :only => [] do
-          resources :presences, :only => [:show, :update, :edit]
-        end
-      end
-
-      resources :group_leader_permissions, :only => [:new, :create, :destroy]
-    end
-
-    resources :faculties, :only => [:show] do
-      resources :groups, :only => [:show]
-      resources :faculty_worker_permissions, :only => [:new, :create]
-
-      #get '/losers/group_leaders'    => 'losers#group_leaders', :as => :losers_group_leaders
-      #get '/losers/lecturers'        => 'losers#lecturers', :as => :losers_lecturers
-      get '/losers/students'         => 'losers#students', :as => :losers_students
-    end
-
-    root :to => 'university_statistics#index'
-  end
-
   scope :module => :public do
-    get 'search' => 'search#index'
-    resources :students, :only => [:show]
+    get '/search' => 'search#index'
+    get '/statistic/:uid' => 'statistic#show', :as => :statistic
+    root :to => 'main_page#index'
   end
 
-  mount API => '/'
+  namespace :admin do
+    resources :permissions
+    resources :syncs
+    mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
+    root 'dashboard#index'
+  end
 
-  root :to => 'application#main_page'
+  namespace :curator do
+    root 'dashboard#index'
+  end
+
+  namespace :dean do
+    root 'dashboard#index'
+  end
+
+  namespace :education_department do
+    root 'dashboard#index'
+  end
+
+  namespace :group_leader do
+    root 'dashboard#index'
+  end
+
+  namespace :lecturer do
+    root 'dashboard#index'
+  end
+
+  namespace :subdepartment do
+    root 'dashboard#index'
+  end
 end
