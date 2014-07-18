@@ -2,11 +2,27 @@ ru:
   site: Электронный журнал посещаемости ТУСУР
 
   page_title:
+    attendances:
+      index:  Заполнение журнала посещаемости
+
     dashboard:
       index:  Главная страница
 
+    disruptions:
+      index:  Сорванные преподавателями занятия
+
+    group:
+      show:   'Статистика посещаемости группы %{title}'
+
+    groups:
+      index:  Статистика посещаемости групп
+      show:   'Статистика посещаемости группы %{title}'
+
     main_page:
       index:  Главная страница
+
+    miss_reasons:
+      index:  Уважительные причины пропуска преподавателями занятий
 
     permissions:
       index:  Управление правами
@@ -14,8 +30,14 @@ ru:
     search:
       index:  'Поиск: %{title}'
 
-    statistic:
-      show:   Статистика посещаемости
+    statistics:
+      index:  Статистика посещаемости
+
+    students:
+      show:   'Статистика посещаемости %{title}'
 
     syncs:
       index:  Журнал синхронизации
+
+    unfilled:
+      index:  Незаполненные дни
