@@ -10,12 +10,12 @@ Attendance::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
     resources :permissions
     resources :syncs
-    root 'dashboard#index'
+    root 'syncs#index'
   end
 
   namespace :curator do
     resources :groups
-    root 'dashboard#index'
+    root 'groups#index'
   end
 
   namespace :dean do
@@ -23,7 +23,7 @@ Attendance::Application.routes.draw do
     resources :miss_reasons
     resources :permissions
     resources :statistics
-    root 'dashboard#index'
+    root 'statistics#index'
   end
 
   namespace :education_department do
@@ -31,25 +31,25 @@ Attendance::Application.routes.draw do
     resources :permissions
     resources :statistics
     resources :miss_reasons
-    root 'dashboard#index'
+    root 'statistics#index'
   end
 
   namespace :group_leader do
     get '/unfilled' => 'unfilled#index'
     resource :group
     resources :attendances
-    root 'dashboard#index'
+    root 'attendances#index'
   end
 
   namespace :lecturer do
     resources :disruptions
     resources :groups
-    root 'dashboard#index'
+    root 'groups#index'
   end
 
   namespace :subdepartment do
     resources :disruptions
     resources :groups
-    root 'dashboard#index'
+    root 'disruptions#index'
   end
 end
