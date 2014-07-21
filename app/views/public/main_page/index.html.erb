@@ -3,12 +3,4 @@
   <input type="submit" value="Искать">
 </form>
 
-<ul>
-  <li><%= link_to 'Администратор', admin_root_path %></li>
-  <li><%= link_to 'Куратор группы', curator_root_path %></li>
-  <li><%= link_to 'Преподаватель', lecturer_root_path %></li>
-  <li><%= link_to 'Сотрудник деканата', dean_root_path %></li>
-  <li><%= link_to 'Сотрудник кафедры', subdepartment_root_path %></li>
-  <li><%= link_to 'Староста группы', group_leader_root_path %></li>
-  <li><%= link_to 'Учебное управление', education_department_root_path %></li>
-</ul>
+<%= render_navigation :context => :namespaces if user_signed_in? %>

@@ -12,7 +12,7 @@ Attendance::Application.routes.draw do
     root :to => 'main_page#index'
   end
 
-  namespace :admin do
+  namespace :administrator do
     mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
     resources :permissions
     resources :syncs

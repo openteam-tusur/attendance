@@ -41,3 +41,12 @@ ru:
 
     unfilled:
       index:  Незаполненные дни
+
+  roles_name:
+    administrator:         Администратор
+    curator:               Куратор группы
+    dean:                  Деканат
+    education_department:  Учебное управление
+    group_leader:          Староста группы
+    lecturer:              Преподаватель
+    subdepartment:         Кафедра
