@@ -1,4 +1,4 @@
-class Lecturer::DisruptionsController < ApplicationController
+class Lecturer::DisruptionsController < AuthController
   def index
   end
 end

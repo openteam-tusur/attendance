@@ -1,4 +1,4 @@
-class GroupLeader::UnfilledController < ApplicationController
+class GroupLeader::UnfilledController < AuthController
   def index
   end
 end

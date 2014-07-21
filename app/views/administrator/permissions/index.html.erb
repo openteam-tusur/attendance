@@ -1,0 +1,15 @@
+<ul class='role_tabs'>
+  <% Permission.available_roles.each do |role| %>
+    <li><%= link_to I18n.t("role_names.#{role}"), administrator_permissions_path(:for_role => role) %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Добавить роль", new_administrator_permission_path(:for_role => params[:for_role]) if params[:for_role].present? %>
+
+<% if @permissions.any? %>
+  <ul>
+    <%= render @permissions %>
+  </ul>
+<% else %>
+  <div class="empty">Нет ни одной роли</div>
+<% end %>

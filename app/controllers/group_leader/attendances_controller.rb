@@ -1,4 +1,4 @@
-class GroupLeader::AttendancesController < ApplicationController
+class GroupLeader::AttendancesController < AuthController
   def index
   end
 end

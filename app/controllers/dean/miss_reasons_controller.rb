@@ -1,4 +1,4 @@
-class Dean::MissReasonsController < ApplicationController
+class Dean::MissReasonsController < AuthController
   def index
   end
 end

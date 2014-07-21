@@ -14,7 +14,7 @@ Attendance::Application.routes.draw do
 
   namespace :administrator do
     mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
-    resources :permissions
+    resources :permissions, :only => [:index, :new, :create]
     resources :syncs
     root 'syncs#index'
   end

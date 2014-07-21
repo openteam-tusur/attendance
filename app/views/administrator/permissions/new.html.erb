@@ -1,0 +1,5 @@
+<%= simple_form_for [:administrator, @permission] do |f| %>
+  <%= f.input :user_id, :collection => User.all %>
+  <%= f.input :role,    :collection => Permission.available_roles, :label_method => ->(label) { I18n.t("role_names.#{label}") } %>
+  <%= f.submit 'Сохранить' %>
+<% end %>
