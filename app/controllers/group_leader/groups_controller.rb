@@ -1,4 +1,4 @@
-class GroupLeader::GroupsController < ApplicationController
+class GroupLeader::GroupsController < AuthController
   def show
   end
 end

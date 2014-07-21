@@ -1,4 +1,4 @@
-class Dean::StatisticsController < ApplicationController
+class Dean::StatisticsController < AuthController
   def index
   end
 end

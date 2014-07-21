@@ -26,6 +26,8 @@ ru:
 
     permissions:
       index:  Управление правами
+      new:    Добавление права доступа
+      create: Добавление права доступа
 
     search:
       index:  'Поиск: %{title}'
@@ -42,7 +44,7 @@ ru:
     unfilled:
       index:  Незаполненные дни
 
-  roles_name:
+  role_names:
     administrator:         Администратор
     curator:               Куратор группы
     dean:                  Деканат

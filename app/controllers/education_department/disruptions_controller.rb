@@ -1,4 +1,4 @@
-class EducationDepartment::DisruptionsController < ApplicationController
+class EducationDepartment::DisruptionsController < AuthController
   def index
   end
 end

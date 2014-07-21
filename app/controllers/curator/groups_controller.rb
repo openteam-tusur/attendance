@@ -1,4 +1,4 @@
-class Curator::GroupsController < ApplicationController
+class Curator::GroupsController < AuthController
   def show
   end
 

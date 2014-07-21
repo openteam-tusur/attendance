@@ -1,4 +1,4 @@
-class Dean::DisruptionsController < ApplicationController
+class Dean::DisruptionsController < AuthController
   def index
   end
 end

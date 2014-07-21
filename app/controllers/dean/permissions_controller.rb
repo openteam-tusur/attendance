@@ -1,4 +1,4 @@
-class Dean::PermissionsController < ApplicationController
+class Dean::PermissionsController < AuthController
   def index
   end
 end

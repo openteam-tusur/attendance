@@ -1,4 +1,4 @@
-class EducationDepartment::MissReasonsController < ApplicationController
+class EducationDepartment::MissReasonsController < AuthController
   def index
   end
 end
