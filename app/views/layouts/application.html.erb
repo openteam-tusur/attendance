@@ -7,6 +7,14 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+
+    <% if user_signed_in? %>
+      <%= current_user.email %> |
+      <%= link_to 'Выход', destroy_user_session_path, :method => :delete %>
+    <% else %>
+      <%= link_to 'Вход', new_user_session_path %>
+    <% end %>
+
     <%= render_menu(current_namespace) if current_namespace && current_namespace != :public %>
     <hr>
     <br>
