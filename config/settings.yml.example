@@ -23,3 +23,6 @@ sso:
   url:       http://sso.tusur.ru/
   key:       KEY
   secret:    SECRET
+
+profile:
+  url:       http://profile.url

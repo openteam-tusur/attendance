@@ -7,19 +7,17 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <div id="wrapper">
+      <%= render 'navigation' %>
 
-    <% if user_signed_in? %>
-      <%= current_user.email %> |
-      <%= link_to 'Выход', destroy_user_session_path, :method => :delete %>
-    <% else %>
-      <%= link_to 'Вход', new_user_session_path %>
-    <% end %>
+      <div class='container'>
+        <h1><%= page_title %></h1>
+        <%= yield %>
+      </div>
+    </div>
 
-    <%= render_menu(current_namespace) if current_namespace && current_namespace != :public %>
+    <%= render :partial => 'footer' %>
 
-    <hr>
-    <br>
-    <h1><%= page_title %></h1>
-    <%= yield %>
+    <%= yield :stop_ie if content_for?(:stop_ie) %>
   </body>
 </html>
