@@ -1,4 +1,20 @@
 ru:
+  activemodel:
+    errors:
+      messages:
+        email_address_not_routable: такого адреса не существует
+        invalid_email_address:      неверный адрес электронной почты
+
+  activerecord:
+    errors:
+      models:
+        permission:
+          attributes:
+            user_id:
+              blank: не может быть пустым, если вы не указали электронную почту
+            email:
+              blank: не может быть пустым, если вы не выбрали пользователя
+
   site: Электронный журнал посещаемости ТУСУР
 
   page_title:

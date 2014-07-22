@@ -11,21 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721084427) do
+ActiveRecord::Schema.define(version: 20140722040833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "faculties", force: true do |t|
+    t.string   "title"
+    t.string   "abbr"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "number"
+    t.integer  "course"
+    t.integer  "subdepartment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["subdepartment_id"], name: "index_groups_on_subdepartment_id", using: :btree
 
   create_table "permissions", force: true do |t|
     t.integer  "user_id"
     t.integer  "context_id"
     t.string   "context_type"
     t.string   "role"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "permissions", ["user_id", "role", "context_id", "context_type"], name: "by_user_and_role_and_context", unique: true, using: :btree
+
+  create_table "subdepartments", force: true do |t|
+    t.string   "title"
+    t.string   "abbr"
+    t.integer  "faculty_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subdepartments", ["faculty_id"], name: "index_subdepartments_on_faculty_id", using: :btree
 
   create_table "syncs", force: true do |t|
     t.string   "state"
