@@ -1,0 +1,50 @@
+<% content_for :tusur_header_second_menu do %>
+  <ul class='nav navbar-nav hidden-sm'>
+    <li class='dropdown'>
+      <a href='/' class='dropdown-toggle has_arrow' data-toggle='dropdown'>Электронный журнал посещаемости<b class='caret'></b></a>
+      <%= render_navigation :renderer => :first_renderer, :level => 1, :context => :namespaces %>
+    </li>
+  </ul>
+<% end %>
+
+<% content_for :tusur_header_auth_block do %>
+  <ul class='nav navbar-nav navbar-right auth_block'>
+    <% if current_user %>
+      <li class='notification_icon'>
+        <%= link_to "#{Settings['profile.url']}notifications", :class => 'notifications', :title => 'Уведомления' do %>
+          <span class='counter'><%= current_user.get_notifications > 0 ? "+#{current_user.get_notifications}" : '' %></span>
+          <%= image_tag image_url('mail.png'), :width => 16, :height => 16 %>
+        <% end %>
+      </li>
+      <li class="dropdown">
+        <div class="dropdown-toggle login" data-toggle='dropdown'>
+          <span class='current_user'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.name %></span>
+          <b class='caret'></b>
+        </div>
+        <ul class="dropdown-menu">
+          <% current_user.get_menu.each do |k, v| %>
+            <li>
+              <%= link_to k, v %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% else %>
+      <li class='sign_in'>
+        <%= link_to 'Вход в систему', user_omniauth_authorize_path(:identity)  %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% content_for :tusur_header_second_menu_left do %>
+  <%= render_navigation :renderer => :second_renderer, :level => 1, :context => :namespaces %>
+<% end %>
+
+<% content_for :tusur_header_mobile_menu_block do %>
+  <ul class='nav navbar-nav'>
+    <%= render_navigation :renderer => :mobile_menu_renderer, :level => 1, :context => :namespaces %>
+  </ul>
+<% end %>
+
+<%= render :partial => 'tusur_header/tusur_header' %>

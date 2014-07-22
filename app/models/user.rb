@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+  gravtastic
+  has_remote_profile
   sso_auth_user
 
   def after_oauth_authentication
