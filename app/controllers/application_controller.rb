@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   private
   def redirect_to_namespace
-    return if !user_signed_in? && available_user_namespaces.empty?
+    return if !user_signed_in? || available_user_namespaces.empty?
     return if available_user_namespaces.include?(current_namespace.to_s)
     redirect_to [current_user.permissions.first.role.to_sym, :root]
   end
