@@ -1,4 +1,46 @@
 @import 'compass/reset'
 
+html, body
+  height: 100%
+
+body
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: 14px
+  color: #222
+
 h1
   font-weight: bold
+
+#wrapper
+  min-height: 100%
+  height: auto
+  margin: 0 auto -35px
+  padding: 0 0 35px
+
+#footer
+  background: #f2f2f2
+  bottom: 0
+  height: 35px
+  position: relative
+  width: 100%
+
+  .copyright
+    background: #005bae
+    color: #fff
+    font-size: 13px
+    height: 35px
+    line-height: 35px
+
+  .feedback, .openteam
+    a
+      color: #fff
+      text-decoration: underline
+
+      &:hover
+        text-decoration: none
+
+  .feedback
+    float: left
+
+  .openteam
+    float: right
