@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722040833) do
+ActiveRecord::Schema.define(version: 20140723084129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "disciplines", force: true do |t|
+    t.string   "abbr"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "faculties", force: true do |t|
     t.string   "title"
@@ -33,6 +40,57 @@ ActiveRecord::Schema.define(version: 20140722040833) do
 
   add_index "groups", ["subdepartment_id"], name: "index_groups_on_subdepartment_id", using: :btree
 
+  create_table "lessons", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "discipline_id"
+    t.string   "classroom"
+    t.date     "date_on"
+    t.string   "kind"
+    t.string   "order_number"
+    t.string   "timetable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lessons", ["discipline_id"], name: "index_lessons_on_discipline_id", using: :btree
+  add_index "lessons", ["group_id"], name: "index_lessons_on_group_id", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.string   "participate_type"
+    t.integer  "participate_id"
+    t.string   "person_type"
+    t.integer  "person_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["participate_id", "participate_type"], name: "index_memberships_on_participate_id_and_participate_type", using: :btree
+  add_index "memberships", ["person_id", "person_type"], name: "index_memberships_on_person_id_and_person_type", using: :btree
+
+  create_table "misses", force: true do |t|
+    t.integer  "person_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "misses", ["person_id"], name: "index_misses_on_person_id", using: :btree
+
+  create_table "people", force: true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "surname"
+    t.string   "patronymic"
+    t.integer  "contingent_id"
+    t.integer  "directory_id"
+    t.string   "secure_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "permissions", force: true do |t|
     t.integer  "user_id"
     t.integer  "context_id"
@@ -44,6 +102,28 @@ ActiveRecord::Schema.define(version: 20140722040833) do
   end
 
   add_index "permissions", ["user_id", "role", "context_id", "context_type"], name: "by_user_and_role_and_context", unique: true, using: :btree
+
+  create_table "presences", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "lesson_id"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presences", ["lesson_id"], name: "index_presences_on_lesson_id", using: :btree
+  add_index "presences", ["student_id"], name: "index_presences_on_student_id", using: :btree
+
+  create_table "realizes", force: true do |t|
+    t.integer  "lecturer_id"
+    t.integer  "lesson_id"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "realizes", ["lecturer_id"], name: "index_realizes_on_lecturer_id", using: :btree
+  add_index "realizes", ["lesson_id"], name: "index_realizes_on_lesson_id", using: :btree
 
   create_table "subdepartments", force: true do |t|
     t.string   "title"

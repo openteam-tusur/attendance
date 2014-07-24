@@ -13,11 +13,14 @@
       <div class='container'>
         <h1><%= page_title %></h1>
         <%= yield %>
+        <%= render_navigation :context => :namespaces if user_signed_in? %>
+        <%= render_menu(current_namespace) if current_namespace && current_namespace != :public %>
       </div>
     </div>
 
     <%= render :partial => 'footer' %>
 
     <%= yield :stop_ie if content_for?(:stop_ie) %>
+
   </body>
 </html>

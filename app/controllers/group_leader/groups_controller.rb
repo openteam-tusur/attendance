@@ -1,4 +1,3 @@
 class GroupLeader::GroupsController < AuthController
-  def show
-  end
+  inherit_resources
 end
