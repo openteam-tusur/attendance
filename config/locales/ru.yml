@@ -18,7 +18,7 @@ ru:
   site: Электронный журнал посещаемости ТУСУР
 
   page_title:
-    attendances:
+    lessons:
       index:  Заполнение журнала посещаемости
 
     dashboard:
@@ -26,9 +26,6 @@ ru:
 
     disruptions:
       index:  Сорванные преподавателями занятия
-
-    group:
-      show:   'Статистика посещаемости группы %{title}'
 
     groups:
       index:  Статистика посещаемости групп

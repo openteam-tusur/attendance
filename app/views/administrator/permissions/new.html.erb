@@ -1,7 +1,7 @@
 <%= simple_form_for [:administrator, @permission] do |f| %>
   <%= f.input :user_id,       :collection => User.all, :label_method => :sso_auth_name %>
   <%= f.input :email %>
-  <%= f.input :context_type,  :as => :hidden, :value => @context_type %>
+  <%= f.input :context_type,  :as => :hidden, :input_html => { :value => @context_type } %>
   <%= f.input :context_id,    :collection => @context_ids  %>
   <%= f.input :role,          :as => :hidden %>
   <%= f.submit 'Сохранить' %>
