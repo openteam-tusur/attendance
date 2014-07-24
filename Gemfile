@@ -11,6 +11,7 @@ group :default do
   gem 'jquery-rails'
   gem 'openteam-commons'
   gem 'pg'
+  gem 'progress_bar'
   gem 'rails',                  '4.0.8'
   gem 'redis',                  '= 3.0.7'
   gem 'redis-rails'
