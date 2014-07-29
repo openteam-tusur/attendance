@@ -5,4 +5,8 @@ class Lesson < ActiveRecord::Base
   has_many   :students,   :through    => :presences
   has_many   :realizes,   :dependent  => :destroy
   has_many   :lecturers,  :through    => :realizes
+
+  scope :by_date,     ->(date) { where(:date_on => date) }
+  scope :actual,      ->       { where(:deleted_at => nil) }
+  scope :not_actual,  ->       { where.not(:deleted_at => nil) }
 end

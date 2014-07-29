@@ -8,6 +8,7 @@ class CreatePeople < ActiveRecord::Migration
       t.integer :contingent_id
       t.integer :directory_id
       t.string :secure_id
+      t.datetime :deleted_at
 
       t.timestamps
     end

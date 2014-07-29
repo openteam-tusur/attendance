@@ -8,6 +8,7 @@ class CreateLessons < ActiveRecord::Migration
       t.string :kind
       t.string :order_number
       t.string :timetable_id
+      t.date :deleted_at
 
       t.timestamps
     end

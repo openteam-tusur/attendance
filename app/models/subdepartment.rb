@@ -6,6 +6,9 @@ class Subdepartment < ActiveRecord::Base
   has_many    :lecturers,       :through => :memberships, :source => :person, :source_type => 'Lecturer'
   has_many    :people,          :through => :memberships, :source => :person, :source_type => 'Person'
 
-  validates_uniqueness_of :title
+  validates_uniqueness_of :title, :scope => :abbr
   normalize_attribute :title
+
+  scope :actual,      -> { where(:deleted_at => nil) }
+  scope :not_actual,  -> { where.not(:deleted_at => nil) }
 end

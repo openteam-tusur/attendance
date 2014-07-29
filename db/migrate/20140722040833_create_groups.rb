@@ -4,6 +4,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :number
       t.integer :course
       t.references :subdepartment, index: true
+      t.datetime :deleted_at
 
       t.timestamps
     end
