@@ -4,4 +4,7 @@ class Student < Person
 
   has_many :presences,   :dependent => :destroy
   has_many :lessons,     :through => :presences
+
+  scope :actual,      -> { where(:deleted_at => nil) }
+  scope :not_actual,  -> { where.not(:deleted_at => nil) }
 end

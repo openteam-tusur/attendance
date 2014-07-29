@@ -1,3 +1,3 @@
 every 1.day do
-  rake 'sync:structure'
+  rake 'sync:lessons'
 end

@@ -4,6 +4,7 @@ class CreateSubdepartments < ActiveRecord::Migration
       t.string :title
       t.string :abbr
       t.references :faculty, index: true
+      t.datetime :deleted_at
 
       t.timestamps
     end

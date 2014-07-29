@@ -8,5 +8,8 @@ class Group < ActiveRecord::Base
   validates_presence_of :number
   normalize_attribute :number
 
+  scope :actual,      -> { where(:deleted_at => nil) }
+  scope :not_actual,  -> { where.not(:deleted_at => nil) }
+
   alias_attribute :to_s, :number
 end

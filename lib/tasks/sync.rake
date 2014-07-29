@@ -1,50 +1,50 @@
 require 'open-uri'
 require 'progress_bar'
 
+require 'catchers/structure_catcher'
+require 'catchers/group_catcher'
+require 'catchers/student_catcher'
+require 'catchers/lesson_catcher'
+
 namespace :sync do
-  desc 'Синхронизация факультетов, кафедр, групп и студентов'
+  desc 'Синхронизация факультетов, кафедр'
   task :structure => :environment do
     begin
-      groups = JSON.parse(open("#{Settings['timetable.url']}/attendance/groups.json").read)
-
-      bar = ProgressBar.new(groups.count)
-
-      groups.each do |group_number|
-        students = JSON.parse(open(URI.encode("#{Settings['students.url']}/api/v1/students?group=#{group_number}")).read)
-        if students.empty?
-          next
-        end
-
-        # Faculty
-        faculty_hash = students.first['group']['subfaculty']['faculty']
-        faculty = Faculty.find_or_create_by(:title => faculty_hash['name'], :abbr => faculty_hash['abbr'])
-
-        # Subdepartment
-        subdepartment_hash = students.first['group']['subfaculty']
-        subdepartment = faculty.subdepartments.find_or_create_by(:title => subdepartment_hash['name'], :abbr => subdepartment_hash['abbr'])
-
-        # Group
-        group_hash = students.first['group']
-        group = subdepartment.groups.find_or_create_by(:course => group_hash['course'], :number => group_hash['number'])
-
-        students.each do |student|
-          Student.find_or_initialize_by(:contingent_id => student['study_id']).tap do |s|
-            s.surname    = student['lastname']
-            s.name       = student['firstname']
-            s.patronymic = student['patronymic']
-
-            s.save
-            group.students << s
-          end
-        end
-
-        bar.increment!
-      end
-
-      Sync.create(:title => 'Синхронизация факультетов, кафедр, групп и студентов завершена')
-
+      StructureCatcher.new.sync
+      Sync.create :title => 'Синхронизация факультетов и кафедр прошла успешно'
     rescue Exception => e
-      Sync.create(:title => "При синхронизации факультетов, кафедр, групп и студентов возникла ошибка: #{e}", :state => :failure)
+      Sync.create :title => "При синхронизации факультетов и кафедр произошла ошибка: \"#{e}\"", :state => :failure
+    end
+  end
+
+  desc 'Синхронизация групп'
+  task :groups => :structure do
+    begin
+      GroupCatcher.new.sync
+      Sync.create :title => 'Синхронизация групп прошла успешно'
+    rescue Exception => e
+      Sync.create :title => "При синхронизации групп произошла ошибка: \"#{e}\"", :state => :failure
+    end
+  end
+
+  desc 'Синхронизация студентов'
+  task :students => :groups do
+    begin
+      StudentCatcher.new.sync
+      Sync.create :title => 'Синхронизация студентов прошла успешно'
+    rescue Exception => e
+      Sync.create :title => "При синхронизации студентов произошла ошибка: \"#{e}\"", :state => :failure
+    end
+  end
+
+  desc 'Синхронизация занятий на предстоящий день'
+  task :lessons => :students do
+    date = Date.today
+    begin
+      LessonCatcher.new(date).sync
+      Sync.create :title => "Синхронизация занятий на #{date} прошла успешно"
+    rescue Exception => e
+      Sync.create :title => "При синхронизации занятий на #{date} произошла ошибка: \"#{e}\"", :state => :failure
     end
   end
 end

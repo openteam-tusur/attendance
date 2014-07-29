@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
   create_table "faculties", force: true do |t|
     t.string   "title"
     t.string   "abbr"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
     t.string   "number"
     t.integer  "course"
     t.integer  "subdepartment_id"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
     t.string   "kind"
     t.string   "order_number"
     t.string   "timetable_id"
+    t.date     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
     t.integer  "contingent_id"
     t.integer  "directory_id"
     t.string   "secure_id"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,6 +133,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
     t.string   "title"
     t.string   "abbr"
     t.integer  "faculty_id"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -43,7 +43,7 @@ Attendance::Application.routes.draw do
 
   namespace :group_leader do
     get '/unfilled' => 'unfilled#index'
-    resources :groups
+    resource :group
     resources :lessons
     root 'lessons#index'
   end
