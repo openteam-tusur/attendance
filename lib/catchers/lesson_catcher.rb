@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class LessonCatcher
-  def initialize(starts_at, ends_at=Date.today)
+  def initialize(starts_at=Date.today, ends_at=Date.today)
     self.starts_at = starts_at
     self.ends_at = ends_at
   end
@@ -43,18 +43,12 @@ class LessonCatcher
 
     def import_lessons_for(group_number, lessons, date)
         lessons.each do |lesson|
-
+          lesson_id = nil
           discipline = import_discipline(lesson['discipline']['title'], lesson['discipline']['abbr'])
-          group      = Group.find_by(:number => group_number)
-
-          lesson['lecturers'].each do |lecturer|
-            subdepartment = Subdepartment.find_by(:abbr => lecturer['subdepartment'])
-            if subdepartment
-              subdepartment.lecturers.find_or_create_by(:surname => lecturer['lastname'], :name => lecturer['firstname'], :patronymic => lecturer['middlename'])
-            else
-              p "Кафедра >>#{lecturer['subdepartment']}<< не найдена"
-              next
-            end
+          begin
+            group      = Group.find_by!(:number => group_number)
+          rescue ActiveRecord::RecordNotFound
+            raise "Не найдена группа #{group_number}"
           end
 
           Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s).tap do |l|
@@ -64,9 +58,27 @@ class LessonCatcher
             l.kind         = lesson['kind']
             l.order_number = lesson['order_number']
             l.discipline   = discipline
-            l.save
+            l.deleted_at   = nil
+            l.save!
+            lesson_id = l.id
           end
 
+          lesson['lecturers'].each do |lecturer|
+            begin
+              subdepartment = Subdepartment.find_by!(:abbr => lecturer['subdepartment'])
+            rescue ActiveRecord::RecordNotFound
+              next
+              #raise "Не найдена кафедра #{lecturer['subdepartment']}"
+            end
+            lect = (subdepartment.people.find_by(:surname => lecturer['lastname'].squish, :name => lecturer['firstname'].squish, :patronymic => lecturer['middlename'].squish) ||
+              subdepartment.lecturers.create(:surname => lecturer['lastname'], :name => lecturer['firstname'], :patronymic => lecturer['middlename']))
+
+            Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
+          end
+
+          group.people.pluck(:id).each do |student_id|
+            Presence.find_or_create_by(:student_id => student_id, :lesson_id => lesson_id)
+          end
         end
     end
 

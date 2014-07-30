@@ -41,10 +41,22 @@ namespace :sync do
   task :lessons => :students do
     date = Date.today
     begin
-      LessonCatcher.new(date).sync
+      LessonCatcher.new.sync
       Sync.create :title => "Синхронизация занятий на #{date} прошла успешно"
     rescue Exception => e
       Sync.create :title => "При синхронизации занятий на #{date} произошла ошибка: \"#{e}\"", :state => :failure
+    end
+  end
+
+  desc 'Синхронизация занятий c start по end, если нет end, то берется текущий день. %Y-%m-%d'
+  task :lessons_by, [:start, :end] => :environment do |t, args|
+    abort 'Укажите промежуток дат!' if args.empty? || args['start'].nil?
+    dates = args.to_hash.values.compact.map{ |d| Date.parse(d) }
+    begin
+      LessonCatcher.new(*dates).sync
+      Sync.create :title => "Синхронизация занятий с #{dates[0]} по #{dates[1] || Date.today} прошла успешно. L - #{Lesson.count}, G - #{Group.count}, S - #{Student.count}, L - #{Lecturer.count}, P - #{Presence.count}, R - #{Realize.count}"
+    rescue Exception => e
+      Sync.create :title => "При синхронизации занятий с #{dates[0]} по #{dates[1] || Date.today} произошла ошибка: \"#{e}\"", :state => :failure
     end
   end
 end
