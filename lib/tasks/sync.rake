@@ -11,7 +11,7 @@ namespace :sync do
   task :structure => :environment do
     begin
       StructureCatcher.new.sync
-      Sync.create :title => 'Синхронизация факультетов и кафедр прошла успешно'
+      Sync.create :title => "Синхронизация факультетов и кафедр прошла успешно. (#{Faculty.actual.where('created_at >= ?', Date.today).count + Subdepartment.actual.where('created_at >= ?', Date.today).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации факультетов и кафедр произошла ошибка: \"#{e}\"", :state => :failure
     end
@@ -21,7 +21,7 @@ namespace :sync do
   task :groups => :structure do
     begin
       GroupCatcher.new.sync
-      Sync.create :title => 'Синхронизация групп прошла успешно'
+      Sync.create :title => "Синхронизация групп прошла успешно. (#{Group.actual.where('created_at >= ?', Date.today).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации групп произошла ошибка: \"#{e}\"", :state => :failure
     end
@@ -31,7 +31,7 @@ namespace :sync do
   task :students => :groups do
     begin
       StudentCatcher.new.sync
-      Sync.create :title => 'Синхронизация студентов прошла успешно'
+      Sync.create :title => "Синхронизация студентов прошла успешно. (#{Student.actual.where('created_at >= ?', Date.today).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации студентов произошла ошибка: \"#{e}\"", :state => :failure
     end
@@ -42,21 +42,21 @@ namespace :sync do
     date = Date.today
     begin
       LessonCatcher.new.sync
-      Sync.create :title => "Синхронизация занятий на #{date} прошла успешно"
+      Sync.create :title => "Синхронизация занятий на #{I18n.l(date, :format => '%d %B %Y')} прошла успешно. (#{Lesson.actual.where(:date_on => date).count} занятий)"
     rescue Exception => e
-      Sync.create :title => "При синхронизации занятий на #{date} произошла ошибка: \"#{e}\"", :state => :failure
+      Sync.create :title => "При синхронизации занятий на #{I18n.l(date, :format => '%d %B %Y')} произошла ошибка: \"#{e}\"", :state => :failure
     end
   end
 
-  desc 'Синхронизация занятий c start по end, если нет end, то берется текущий день. %Y-%m-%d'
+  desc 'Синхронизация занятий c start по end. %Y-%m-%d'
   task :lessons_by, [:start, :end] => :environment do |t, args|
-    abort 'Укажите промежуток дат!' if args.empty? || args['start'].nil?
-    dates = args.to_hash.values.compact.map{ |d| Date.parse(d) }
+    abort 'Укажите промежуток дат!' if args.empty? || args['start'].nil? || args['end'].nil?
+    dates = args.to_hash.values_at(:start, :end).map{ |d| Date.parse(d) }
     begin
       LessonCatcher.new(*dates).sync
-      Sync.create :title => "Синхронизация занятий с #{dates[0]} по #{dates[1] || Date.today} прошла успешно. L - #{Lesson.count}, G - #{Group.count}, S - #{Student.count}, L - #{Lecturer.count}, P - #{Presence.count}, R - #{Realize.count}"
+      Sync.create :title => "Синхронизация занятий с #{I18n.l(dates[0], :format => '%d %B %Y')} по #{I18n.l(dates[1], :format => '%d %B %Y')} прошла успешно. (#{Lesson.actual.where(:date_on => dates[0]..dates[1]).count} занятий)"
     rescue Exception => e
-      Sync.create :title => "При синхронизации занятий с #{dates[0]} по #{dates[1] || Date.today} произошла ошибка: \"#{e}\"", :state => :failure
+      Sync.create :title => "При синхронизации занятий с #{I18n.l(dates[0], :format => '%d %B %Y')} по #{I18n.l(dates[1], :format => '%d %B %Y')} произошла ошибка: \"#{e}\"", :state => :failure
     end
   end
 end
