@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :curated_groups, -> { where('permissions.role = ?', :curator) },      :through => :permissions, :source => :context, :source_type => 'Group'
   has_many :leaded_groups,  -> { where('permissions.role = ?', :group_leader) }, :through => :permissions, :source => :context, :source_type => 'Group'
+  has_many :teached_disciplines, -> { where('permissions.role = ?', :lecturer) },     :through => :permissions, :source => :context, :source_type => 'Discipline'
+  has_many :subdepartments, -> { where('permissions.role = ?', :subdepartment) }, :through => :permissions, :source => :context, :source_type => 'Subdepartment'
 
   def after_oauth_authentication
     Permission.where(:email => self.email).each {|p| p.update_attribute(:user_id, self.id) }

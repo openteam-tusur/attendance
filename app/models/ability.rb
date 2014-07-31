@@ -33,5 +33,15 @@ class Ability
       can :read,   Group
       can :read,   Unfilled
     end
+
+    if user.lecturer? && namespace == :lecturer
+      can :read,   Disruption
+      can :read,   Group
+    end
+
+    if user.subdepartment? && namespace == :subdepartment
+      can :read,   Disruption
+      can :read,   Group
+    end
   end
 end
