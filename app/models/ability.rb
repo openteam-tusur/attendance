@@ -22,5 +22,9 @@ class Ability
       can :read,   Group
       can :read,   Unfilled
     end
+
+    if user.curator? && namespace == :curator
+      can :manage, Group
+    end
   end
 end
