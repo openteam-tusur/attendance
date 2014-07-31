@@ -34,7 +34,7 @@ ru:
     main_page:
       index:  Главная страница
 
-    miss_reasons:
+    misses:
       index:  Уважительные причины пропуска преподавателями занятий
 
     permissions:

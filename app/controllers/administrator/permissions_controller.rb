@@ -14,22 +14,22 @@ class Administrator::PermissionsController < AuthController
           @context_ids  = nil
         when 'curator'
           @context_type = 'Group'
-          @context_ids  = Group.all
+          @context_ids  = Group.order('number')
         when 'dean'
           @context_type = 'Faculty'
-          @context_ids  = Faculty.all
+          @context_ids  = Faculty.order('title')
         when 'education_department'
           @context_type = nil
           @context_ids  = nil
         when 'group_leader'
           @context_type = 'Group'
-          @context_ids  = Group.all
+          @context_ids  = Group.order('number')
         when 'lecturer'
           @context_type = 'Discipline'
-          @context_ids  = Discipline.all
+          @context_ids  = Discipline.order('title')
         when 'subdepartment'
           @context_type = 'Subdepartment'
-          @context_ids  = Subdepartment.all
+          @context_ids  = Subdepartment.order('title')
       end
     end
 

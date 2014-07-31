@@ -4,4 +4,6 @@ class Lecturer < Person
 
   has_many :realizes,       :dependent => :destroy
   has_many :lessons,        :through => :realizes
+
+  has_many :misses,         :as => :missing, :dependent => :destroy
 end
