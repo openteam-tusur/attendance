@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   has_many   :memberships,                                    :as => :participate,      :dependent => :destroy
   has_many   :students,                                       :through => :memberships, :source => :person, :source_type => 'Student'
   has_many   :people,         -> { order('people.surname') }, :through => :memberships, :source => :person, :source_type => 'Person'
+  has_many   :lessons,                                        :dependent => :destroy
 
   validates_presence_of :number
   normalize_attribute :number

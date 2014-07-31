@@ -27,7 +27,7 @@ Attendance::Application.routes.draw do
 
   namespace :dean do
     resources :disruptions
-    resources :miss_reasons
+    resources :misses
     resources :permissions
     resources :statistics
     root 'statistics#index'
@@ -37,7 +37,7 @@ Attendance::Application.routes.draw do
     resources :disruptions
     resources :permissions
     resources :statistics
-    resources :miss_reasons
+    resources :misses
     root 'statistics#index'
   end
 

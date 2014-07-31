@@ -72,7 +72,8 @@ ActiveRecord::Schema.define(version: 20140723084129) do
   add_index "memberships", ["person_id", "person_type"], name: "index_memberships_on_person_id_and_person_type", using: :btree
 
   create_table "misses", force: true do |t|
-    t.integer  "person_id"
+    t.integer  "missing_id"
+    t.string   "missing_type"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.text     "note"
@@ -80,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140723084129) do
     t.datetime "updated_at"
   end
 
-  add_index "misses", ["person_id"], name: "index_misses_on_person_id", using: :btree
+  add_index "misses", ["missing_id", "missing_type"], name: "index_misses_on_missing_id_and_missing_type", using: :btree
 
   create_table "people", force: true do |t|
     t.string   "type"

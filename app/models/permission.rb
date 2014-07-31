@@ -6,6 +6,7 @@ class Permission < ActiveRecord::Base
   validates_presence_of   :email,   :if => 'user_id.nil?'
   validates_presence_of   :context_type, :context_id, :unless => ->{ %w(administrator education_department).include?(role) }
   validates_uniqueness_of :role,    :scope => [:context_id, :context_type, :email, :user_id]
+  validates_uniqueness_of :role,    :scope => [:context_type, :email, :user_id], :if => -> (p) { p.role == 'group_leader' }
   validates_email_format_of :email, :check_mx => true, :allow_nil => true
 
   def role_text
