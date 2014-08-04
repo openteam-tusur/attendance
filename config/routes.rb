@@ -16,17 +16,17 @@ Attendance::Application.routes.draw do
   namespace :administrator do
     mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
     resources :permissions, :only => [:index, :new, :create]
-    resources :syncs
+    resources :syncs,       :only => [:index]
     root 'syncs#index'
   end
 
   namespace :curator do
-    resources :groups
+    resources :groups,      :only => [:index, :show]
     root 'groups#index'
   end
 
   namespace :dean do
-    resources :disruptions
+    resources :disruptions, :only => [:index]
     resources :misses
     resources :permissions
     resources :statistics
@@ -43,8 +43,12 @@ Attendance::Application.routes.draw do
 
   namespace :group_leader do
     get '/unfilled' => 'unfilled#index'
-    resource :group
-    resources :lessons
+    resource :group,       :only => [:show]
+    resources :lessons,    :only => [:index] do
+      resources :presences, :only => [] do
+        get 'change', :on => :member
+      end
+    end
     root 'lessons#index'
   end
 

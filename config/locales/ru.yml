@@ -17,6 +17,12 @@ ru:
 
   site: Электронный журнал посещаемости ТУСУР
 
+  states:
+    presences:
+      empty:   Не отмечен
+      was:   Был
+      wasnt: Не был
+
   page_title:
     lessons:
       index:  Заполнение журнала посещаемости

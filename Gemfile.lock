@@ -158,8 +158,6 @@ GEM
     progress_bar (1.0.0)
       highline (~> 1.6.1)
       options (~> 2.3.0)
-    puma (2.9.0)
-      rack (>= 1.1, < 2.0)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -305,7 +303,6 @@ DEPENDENCIES
   openteam-commons
   pg
   progress_bar
-  puma
   quiet_assets
   rails (= 4.0.8)
   rails-erd

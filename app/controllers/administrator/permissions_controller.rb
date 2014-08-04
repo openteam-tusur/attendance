@@ -1,5 +1,4 @@
 class Administrator::PermissionsController < AuthController
-  inherit_resources
   actions :index, :new, :create
 
   has_scope :for_role
@@ -25,8 +24,8 @@ class Administrator::PermissionsController < AuthController
           @context_type = 'Group'
           @context_ids  = Group.order('number')
         when 'lecturer'
-          @context_type = 'Discipline'
-          @context_ids  = Discipline.order('title')
+          @context_type = 'Lecturer'
+          @context_ids  = Lecturer.order('surname')
         when 'subdepartment'
           @context_type = 'Subdepartment'
           @context_ids  = Subdepartment.order('title')

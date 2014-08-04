@@ -9,4 +9,5 @@ class Lesson < ActiveRecord::Base
   scope :by_date,     ->(date) { where(:date_on => date) }
   scope :actual,      ->       { where(:deleted_at => nil) }
   scope :not_actual,  ->       { where.not(:deleted_at => nil) }
+  scope :unfilled,    ->       { joins(:presences).where(:presences => { :state => nil }).uniq }
 end

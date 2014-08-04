@@ -33,7 +33,6 @@ group :development do
   gem 'openteam-capistrano',    '~> 1.0.9'
   gem 'quiet_assets'
   gem 'rails-erd'
-  gem 'puma'
 end
 
 group :production do

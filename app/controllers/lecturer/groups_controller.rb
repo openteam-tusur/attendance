@@ -1,6 +1,6 @@
 class Lecturer::GroupsController < AuthController
   def index
-    @disciplines = current_user.teached_disciplines
-    @groups = @disciplines.map(&:groups).flatten
+    @lecturer = current_user.lecturers.first
+    @groups   = @lecturer.groups
   end
 end
