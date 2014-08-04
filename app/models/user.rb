@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :lecturers,      -> { where('permissions.role = ?', :lecturer) },     :through => :permissions, :source => :context, :source_type => 'Lecturer'
   has_many :subdepartments, -> { where('permissions.role = ?', :subdepartment) }, :through => :permissions, :source => :context, :source_type => 'Subdepartment'
 
+  alias_attribute :to_s, :short_name
+
   def after_oauth_authentication
     Permission.where(:email => self.email).each {|p| p.update_attribute(:user_id, self.id) }
   end
@@ -16,5 +18,25 @@ class User < ActiveRecord::Base
   def group
     return if permissions.for_role(:group_leader).empty?
     permissions.for_role(:group_leader).first.context
+  end
+
+  def short_name
+    res = 'anonymous'
+
+    if name
+      fio = name.split(/\s+/)
+      case fio.count
+      when 1
+        res = fio[0]
+      when 2
+        res = "#{fio[1]} #{fio[0][0]}."
+      when 3
+        res = "#{fio[2]} #{fio[0][0]}. #{fio[1][0]}."
+      else
+        res = "#{fio[-1][0]} #{fio[0][0]}."
+      end if fio.any?
+    end
+
+    res
   end
 end
