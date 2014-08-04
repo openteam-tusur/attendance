@@ -15,10 +15,10 @@ class Ability
     end
 
     if user.dean? && namespace == :dean
-      can :read,   Statistic
-      can :manage, Permission, :context_type => ['Group']
-      can :manage, Miss,       :missing_type => ['Student']
       can :read,   Disruption
+      can :manage, Miss,       :missing_type => ['Student']
+      can :manage, Permission, :context_type => ['Group']
+      can :read,   Statistic
     end
 
     if user.education_department? && namespace == :education_department
@@ -31,7 +31,7 @@ class Ability
     if user.group_leader? && namespace == :group_leader
       can :manage, Lesson
       can :read,   Group
-      can :read,   Unfilled
+      can :change, Presence
     end
 
     if user.lecturer? && namespace == :lecturer

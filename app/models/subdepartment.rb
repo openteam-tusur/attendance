@@ -11,4 +11,8 @@ class Subdepartment < ActiveRecord::Base
 
   scope :actual,      -> { where(:deleted_at => nil) }
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
+
+  def to_s
+    abbr
+  end
 end

@@ -2,8 +2,29 @@
 <% @group.lessons.pluck(:date_on).uniq.each do |date| %>
   <%= link_to date, group_leader_lessons_path(:by_date => date) %>
 <% end %>
-<ul>
-  <% @lessons.each do |lesson| %>
-    <li><%= lesson.discipline.title %></li>
-  <% end %>
-</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>ФИО</th>
+      <% @lessons.each do |lesson| %>
+        <th>
+          <%= lesson.discipline.title %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @group.people.each do |student| %>
+      <tr>
+        <td><%= student %></td>
+        <% @lessons.each do |lesson| %>
+          <td>
+            <%= presence = lesson.presences.by_student(student) %>
+            <%= link_to 'изменить', change_group_leader_lesson_presence_path(lesson, presence) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -5,4 +5,8 @@ class Discipline < ActiveRecord::Base
 
   validates_uniqueness_of :title, :scope => [:abbr]
   normalize_attributes :title, :abbr
+
+  def to_s
+    title
+  end
 end

@@ -4,6 +4,10 @@ class AuthController < ApplicationController
   load_and_authorize_resource
   before_filter        :redirect_to_namespace
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
   def current_ability
     Ability.new(current_user, current_namespace)
   end
