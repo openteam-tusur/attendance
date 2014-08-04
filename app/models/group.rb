@@ -13,4 +13,12 @@ class Group < ActiveRecord::Base
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
 
   alias_attribute :to_s, :number
+
+  def group_leader
+    permissions.where(:role => :group_leader).first.user
+  end
+
+  def absent_days
+    lessons.unfilled.by_semester.map(&:date_on).uniq.count
+  end
 end
