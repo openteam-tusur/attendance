@@ -23,6 +23,7 @@ group :default do
   gem 'simple_form'
   gem 'sinatra',                '>= 1.3.0', :require => nil
   gem 'sso-auth',               '0.1.4'
+  gem 'sunspot_rails',          '~> 2.1.1'
   gem 'tusur_header'
   gem 'uglifier',               '>= 1.3.0'
   gem 'validates_email_format_of'
