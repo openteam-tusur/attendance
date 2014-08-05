@@ -32,6 +32,7 @@ class Ability
       can :manage, Lesson
       can :read,   Group
       can [:change, :check_all, :uncheck_all], Presence
+      can :change, Realize
     end
 
     if user.lecturer? && namespace == :lecturer

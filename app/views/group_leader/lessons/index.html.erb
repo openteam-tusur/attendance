@@ -9,6 +9,8 @@
       <th>ФИО</th>
       <% @lessons.each do |lesson| %>
         <th>
+          <%= lesson.realizes.first %>
+          <%= link_to 'изменить', change_group_leader_lesson_realizes_path(lesson) %>
           <div>
             <%= lesson.discipline.title %>
           </div>
