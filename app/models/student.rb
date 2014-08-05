@@ -7,6 +7,12 @@ class Student < Person
 
   has_many :misses,         :as => :missing, :dependent => :destroy
 
+  before_create :set_secure_id
+
   scope :actual,      -> { where(:deleted_at => nil) }
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
+
+  def set_secure_id
+    self.secure_id = Digest::MD5.hexdigest("#{self.to_s}#{self.contingent_id}")
+  end
 end
