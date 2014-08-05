@@ -9,7 +9,7 @@ Attendance::Application.routes.draw do
 
   scope :module => :public do
     get '/search' => 'search#index'
-    get '/students/:uid' => 'students#show', :as => :student
+    get '/students/:id' => 'students#show', :as => :student
     root :to => 'main_page#index'
   end
 

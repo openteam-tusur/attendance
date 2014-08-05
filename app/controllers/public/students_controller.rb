@@ -1,5 +1,5 @@
 class Public::StudentsController < ApplicationController
   def show
-    params[:uid]
+    @student = Student.find_by(:secure_id => params[:id])
   end
 end

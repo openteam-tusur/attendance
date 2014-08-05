@@ -1,3 +1,11 @@
+<%= render :partial => 'form' %>
+
+<% if @results.any? %>
   <ul>
-    <li><%= link_to 'Иванов Иван Иванович, гр. 444', student_path(1) %></li>
+    <% @results.each do |student| %>
+      <li><%= link_to student, student_path(student.secure_id) %></li>
+    <% end %>
   </ul>
+<% else %>
+  <span>Ничего не найдено</span>
+<% end %>
