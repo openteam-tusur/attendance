@@ -9,7 +9,13 @@
       <th>ФИО</th>
       <% @lessons.each do |lesson| %>
         <th>
-          <%= lesson.discipline.title %>
+          <div>
+            <%= lesson.discipline.title %>
+          </div>
+          <div class='check_helper'>
+            <%= link_to "Все были",    check_all_group_leader_lesson_presences_path(lesson), :class => 'check_all' %>
+            <%= link_to "Все не были", uncheck_all_group_leader_lesson_presences_path(lesson), :class => 'uncheck_all' %>
+          </div>
         </th>
       <% end %>
     </tr>
@@ -19,9 +25,8 @@
       <tr>
         <td><%= student %></td>
         <% @lessons.each do |lesson| %>
-          <td>
-            <%= presence = lesson.presences.by_student(student) %>
-            <%= link_to 'изменить', change_group_leader_lesson_presence_path(lesson, presence) %>
+          <td class='presence_cell'>
+            <%= render :partial => 'group_leader/presences/presence', :locals => { :presence => lesson.presences.by_student(student), :lesson => lesson } %>
           </td>
         <% end %>
       </tr>

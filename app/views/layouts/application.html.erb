@@ -4,9 +4,10 @@
     <title><%= document_title %></title>
     <%= stylesheet_link_tag    'application', :media => 'all' %>
     <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag "#{current_namespace}" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body class='<%= current_namespace %>_namespace'>
     <div id="wrapper">
       <%= render 'navigation' %>
 
