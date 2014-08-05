@@ -31,7 +31,7 @@ class Ability
     if user.group_leader? && namespace == :group_leader
       can :manage, Lesson
       can :read,   Group
-      can :change, Presence
+      can [:change, :check_all, :uncheck_all], Presence
     end
 
     if user.lecturer? && namespace == :lecturer

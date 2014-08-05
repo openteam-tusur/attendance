@@ -5,7 +5,7 @@ class Presence < ActiveRecord::Base
   scope :by_student, ->(student) { find_by(:student_id => student.id) }
 
   def change_state
-    state.nil? ? self.state = :was : state == :was ? self.state = :wasnt : self.state = :was
+    state.nil? ? self.state = 'was' : state == 'was' ? self.state = 'wasnt' : self.state = 'was'
   end
 
   def to_s
