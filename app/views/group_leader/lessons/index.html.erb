@@ -10,7 +10,7 @@
       <% @lessons.each do |lesson| %>
         <th>
           <%= lesson.realizes.first %>
-          <%= link_to 'изменить', change_group_leader_lesson_realizes_path(lesson) %>
+          <%= link_to 'изменить', change_group_leader_lesson_realizes_path(lesson), :data => { :confirm => t('confirm.realize') } %>
           <div>
             <%= lesson.discipline.title %>
           </div>
