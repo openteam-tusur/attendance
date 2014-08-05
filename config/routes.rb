@@ -50,6 +50,9 @@ Attendance::Application.routes.draw do
         get 'check_all', :on => :collection
         get 'uncheck_all', :on => :collection
       end
+      resources :realizes, :only => [] do
+        get 'change', :on => :collection
+      end
     end
     root 'lessons#index'
   end

@@ -23,6 +23,10 @@ ru:
       was:   Был
       wasnt: Не был
 
+    realizes:
+      was:   Состоялось
+      wasnt: Не состоялось
+
   page_title:
     lessons:
       index:  Заполнение журнала посещаемости
