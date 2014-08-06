@@ -14,11 +14,16 @@ class Student < Person
 
   searchable do
     string(:info)
+    integer(:faculty_id) { actual_group.try(:subdepartment).try(:faculty_id) }
     string :deleted_at
   end
 
   def info
     "#{self.surname} #{self.name} #{actual_group.number}"
+  end
+
+  def as_json(options)
+    super(:only => :id).merge(:label => info, :value => info)
   end
 
   def actual_group
