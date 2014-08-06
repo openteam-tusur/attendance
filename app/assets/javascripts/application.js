@@ -1,4 +1,13 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.autocomplete
+//= require jquery.ui.datepicker
+//= require jquery.ui.slider
+//= require jquery.ui.button
+//= require jquery-ui/jquery-ui-timepicker-addon.js
+//= require jquery-ui/jquery-ui-sliderAccess.js
+//= require jquery-ui/jquery-ui-timepicker-ru.js
+//= require jquery-ui/jquery.ui.datepicker-ru.js
+//= require datetime_picker
 //= require bootstrap
 //= require tusur_header
