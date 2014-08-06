@@ -6,6 +6,12 @@ ru:
         invalid_email_address:      неверный адрес электронной почты
 
   activerecord:
+    attributes:
+      miss:
+        starts_at: С
+        ends_at: По
+        note: Причина
+
     errors:
       models:
         permission:
@@ -48,7 +54,7 @@ ru:
       index:  Главная страница
 
     misses:
-      index:  Уважительные причины пропуска преподавателями занятий
+      index:  Уважительные причины пропуска занятий
 
     permissions:
       index:  Управление правами
