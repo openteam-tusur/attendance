@@ -30,6 +30,7 @@ Attendance::Application.routes.draw do
     resources :misses
     resources :permissions
     resources :statistics
+    get 'students' => 'students#index'
     root 'statistics#index'
   end
 
