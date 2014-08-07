@@ -1,25 +1,11 @@
 require 'open-uri'
 
 class LessonCatcher
+  attr_accessor :starts_at, :ends_at
+
   def initialize(starts_at=Date.today, ends_at=Date.today)
     self.starts_at = starts_at
     self.ends_at = ends_at
-  end
-
-  def starts_at=(starts_at)
-    @starts_at = starts_at
-  end
-
-  def starts_at
-    @starts_at
-  end
-
-  def ends_at=(ends_at)
-    @ends_at = ends_at
-  end
-
-  def ends_at
-    @ends_at
   end
 
   def sync
@@ -51,10 +37,9 @@ class LessonCatcher
             raise "Не найдена группа #{group_number}"
           end
 
-          Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s).tap do |l|
+          Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date).tap do |l|
             l.group        = group
             l.classroom    = lesson['classroom']
-            l.date_on      = date
             l.kind         = lesson['kind']
             l.order_number = lesson['order_number']
             l.discipline   = discipline
