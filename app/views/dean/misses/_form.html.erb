@@ -1,5 +1,5 @@
 <%= simple_form_for [:dean, @miss] do |f| %>
-  <%= f.input :name, :input_html => { :class => 'absent_autocomplete', :value => @miss.missing.try(:info)}, :label => 'ФИО' %>
+  <%= f.input :name, :input_html => { :class => 'students_autocomplete', :value => @miss.missing.try(:info)}, :label => 'ФИО' %>
   <%= f.input :missing_id, :as => :hidden %>
   <%= f.input :starts_at, :as => :datetime_picker %>
   <%= f.input :ends_at, :as => :datetime_picker %>

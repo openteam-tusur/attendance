@@ -1,5 +1,5 @@
 $ ->
-  $('.absent_autocomplete').autocomplete
+  $('.students_autocomplete').autocomplete
     source: '/dean/students'
     minLength: 2
     select: (event, ui) ->
