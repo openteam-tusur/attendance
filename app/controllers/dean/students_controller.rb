@@ -1,7 +1,7 @@
 require 'student_searcher'
 
 class Dean::StudentsController < AuthController
-  actions :all, :except => :show
+  actions :index
 
   before_filter :build_faculty, :only => [:index]
 
