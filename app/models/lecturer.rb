@@ -7,4 +7,21 @@ class Lecturer < Person
   has_many :groups,         -> { uniq.order('groups.number') }, :through => :lessons
 
   has_many :misses,         :as => :missing, :dependent => :destroy
+
+  searchable do
+    string :info
+    string :deleted_at
+  end
+
+  def info
+    "#{self.to_s} #{actual_subdepartment.abbr}"
+  end
+
+  def actual_subdepartment
+    subdepartments.where(:memberships => { :deleted_at => nil }).first
+  end
+
+  def as_json(options)
+    super(:only => :id).merge(:label => info, :value => info)
+  end
 end
