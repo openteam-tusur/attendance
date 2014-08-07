@@ -1,1 +1,1 @@
-<li><%= permission.user.name || permission.email %> | <%= permission.role_text %> <%= permission.context %></li>
+<li><%= permission.user.try(:name) || permission.email %> | <%= permission.role_text %> <%= permission.context %></li>
