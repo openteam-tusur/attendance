@@ -14,4 +14,20 @@ module ApplicationHelper
   def current_namespace
     controller_path.split('/')[-2].try(:to_sym)
   end
+
+  def day_classes(groupped_lessons, day)
+    realized_lessons_by_date = groupped_lessons[day].select{|l| l.realizes.first.state == 'was'}
+
+    classes = ['day']
+
+    if realized_lessons_by_date.select{ |l| l.presences.map(&:state).include?(nil) }.any?
+      classes << 'unfilled'
+    else
+      classes << 'filled'
+    end
+
+    classes << 'current' if day == @date
+
+    classes.join(' ')
+  end
 end

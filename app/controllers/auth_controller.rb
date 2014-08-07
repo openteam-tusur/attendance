@@ -20,6 +20,6 @@ class AuthController < ApplicationController
   end
 
   def available_user_namespaces
-    current_user.permissions.pluck(:role)
+    @available_user_namespaces ||= current_user.permissions.pluck(:role)
   end
 end

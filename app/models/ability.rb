@@ -4,17 +4,19 @@ class Ability
   def initialize(user, namespace)
     return unless user
 
-    if user.administrator? && namespace == :administrator
+    roles = user.permissions.pluck(:role).uniq
+
+    if roles.include?('administrator') && namespace == :administrator
       can :manage,  Permission
       can :read,    Sync
       can :read,    :sidekiq
     end
 
-    if user.curator? && namespace == :curator
+    if roles.include?('curator') && namespace == :curator
       can :manage, Group
     end
 
-    if user.dean? && namespace == :dean
+    if roles.include?('dean') && namespace == :dean
       can :read,   Disruption
       can :manage, Miss,       :missing_type => ['Student']
       can :manage, Permission, :context_type => ['Group']
@@ -22,7 +24,7 @@ class Ability
       can :read,   Student
     end
 
-    if user.education_department? && namespace == :education_department
+    if roles.include?('education_department') && namespace == :education_department
       can :read,   Statistic
       can :manage, Permission, :context_type => ['Faculty', 'Subdepartment']
       can :read,   Disruption
@@ -30,19 +32,19 @@ class Ability
       can :read,   Lecturer
     end
 
-    if user.group_leader? && namespace == :group_leader
+    if roles.include?('group_leader') && namespace == :group_leader
       can :manage, Lesson
       can :read,   Group
       can [:change, :check_all, :uncheck_all], Presence
       can :change, Realize
     end
 
-    if user.lecturer? && namespace == :lecturer
+    if roles.include?('lecturer') && namespace == :lecturer
       can :read,   Disruption
       can :read,   Group
     end
 
-    if user.subdepartment? && namespace == :subdepartment
+    if roles.include?('subdepartment') && namespace == :subdepartment
       can :read,   Disruption
       can :read,   Group
     end
