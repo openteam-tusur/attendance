@@ -84,3 +84,27 @@ ru:
     group_leader:          Староста группы
     lecturer:              Преподаватель
     subdepartment:         Кафедра
+
+  lesson:
+    kind:
+      lecture:
+        abbr: Лк
+        name: Лекция
+      practice:
+        abbr: Практ.
+        name: Практика
+      laboratory:
+        abbr: Лаб. раб.
+        name: Лабораторная работа
+      research:
+        abbr: Курс. работа
+        name: Курсовая работа
+      design:
+        abbr: Курс. проект
+        name: Курсовое проектирование
+      test:
+        abbr: Зачет
+        name: Зачет
+      exam:
+        abbr: Экзамен
+        name: Экзамен
