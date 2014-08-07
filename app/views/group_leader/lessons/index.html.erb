@@ -25,13 +25,15 @@
               <% end %>
 
               <% days.each do |day| %>
-                <div class="day<%= ' weekend' if day < Date.today && @group.lessons.by_date(day).empty? %><%= ' unfilled' if @group.lessons.unfilled.by_date(day).any? %><%=' filled' if @group.lessons.filled.by_date(day).any? %><%= ' current' if day == @date %>">
-                  <% if @group.lessons.by_date(day).empty? %>
+                <% if @lessons_groupped_by_day[day].nil? %>
+                  <div class="day weekend">
                     <%= day.day %>
-                  <% else %>
+                  </div>
+                <% else %>
+                  <div class="<%= day_classes(@lessons_groupped_by_day, day) %>">
                     <%= link_to day.day, group_leader_lessons_path(:by_date => day) %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -66,7 +68,7 @@
         <td><%= student %></td>
         <% @lessons.each do |lesson| %>
           <td class='presence_cell'>
-            <%= render :partial => 'group_leader/presences/presence', :locals => { :presence => lesson.presences.by_student(student), :lesson => lesson } %>
+            <%= render :partial => 'group_leader/presences/presence', :locals => { :presence => lesson.presences.select{|p| p.student_id == student.id }.first, :lesson => lesson } %>
           </td>
         <% end %>
       </tr>
