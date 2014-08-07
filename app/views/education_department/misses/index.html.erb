@@ -1,0 +1,23 @@
+<%= link_to "Добавить уважительную причину", new_education_department_miss_path %>
+<table>
+  <thead>
+    <tr>
+      <td>ФИО преподавателя</td>
+      <td>Кафедра</td>
+      <td>Период отсутствия</td>
+      <td>Причина</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @misses.each do |miss| %>
+      <tr>
+        <td><%= miss.missing %></td>
+        <td><%= miss.missing.actual_subdepartment %></td>
+        <td><%= miss.absent_period %></td>
+        <td><%= miss.note %></td>
+        <td><%= link_to "удалить", education_department_miss_path(miss), :method => :delete %></td>
+        <td><%= link_to "редактировать", edit_education_department_miss_path(miss) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

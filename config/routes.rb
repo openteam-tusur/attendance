@@ -27,7 +27,7 @@ Attendance::Application.routes.draw do
 
   namespace :dean do
     resources :disruptions, :only => [:index]
-    resources :misses
+    resources :misses, :except => [:show]
     resources :permissions
     resources :statistics
     get 'students' => 'students#index'
@@ -38,7 +38,8 @@ Attendance::Application.routes.draw do
     resources :disruptions
     resources :permissions
     resources :statistics
-    resources :misses
+    resources :misses, :except => [:show]
+    get 'lecturers' => 'lecturers#index'
     root 'statistics#index'
   end
 
