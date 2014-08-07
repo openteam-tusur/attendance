@@ -1,3 +1,5 @@
+require 'lesson_time'
+
 class Lesson < ActiveRecord::Base
   include Semester
 
@@ -24,5 +26,13 @@ class Lesson < ActiveRecord::Base
 
   def realized?
     realizes.select(:state).first.state == 'was'
+  end
+
+  def lesson_time
+    LessonTime.new(self.order_number, self.date_on).lesson_time
+  end
+
+  def kind_abbr
+    I18n.t("lesson.kind.#{kind}.abbr")
   end
 end
