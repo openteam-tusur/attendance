@@ -1,7 +1,45 @@
-<%= @group.number  %>
-<% @group.lessons.pluck(:date_on).uniq.each do |date| %>
-  <%= link_to date, group_leader_lessons_path(:by_date => date) %>
-<% end %>
+<div class="calendar_wrapper">
+  <%= l @date, :format => '%d %B %Y' %>
+
+  <div class="calendar_viewport">
+    <div class='calendar'>
+      <div class='months'>
+        <% (@date.beginning_of_year..@date.end_of_year).group_by(&:month).each do |month, days| %>
+          <div class="month">
+            <div class="month_title">
+              <%= I18n.t('date.month_names')[month] %>
+            </div>
+
+            <div class="day_names">
+              <% I18n.t("date.abbr_day_names").rotate(1).each do |day_name| %>
+                <div class="day_name">
+                  <%= day_name %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="days">
+
+              <% (days.first.wday-1).times do %>
+                <div class="day empty"></div>
+              <% end %>
+
+              <% days.each do |day| %>
+                <div class="day<%= ' weekend' if day < Date.today && @group.lessons.by_date(day).empty? %><%= ' unfilled' if @group.lessons.unfilled.by_date(day).any? %><%=' filled' if @group.lessons.filled.by_date(day).any? %><%= ' current' if day == @date %>">
+                  <% if @group.lessons.by_date(day).empty? %>
+                    <%= day.day %>
+                  <% else %>
+                    <%= link_to day.day, group_leader_lessons_path(:by_date => day) %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <table>
   <thead>

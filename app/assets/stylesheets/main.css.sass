@@ -1,4 +1,5 @@
 @import 'compass/reset'
+@import 'compass/utilities'
 
 html, body
   height: 100%
@@ -45,3 +46,94 @@ h1
 
   .openteam
     float: right
+
+.calendar_wrapper
+  float: right
+
+.calendar_viewport
+  +clearfix
+  height: 250px
+  overflow-y: scroll
+
+.calendar
+  +clearfix
+  width: 224px
+
+  .day_names
+    +clearfix
+
+    .day_name
+      float: left
+      height: 32px
+      line-height: 32px
+      text-align: center
+      width: 32px
+
+  .months
+    +clearfix
+
+    .month
+      +clearfix
+
+      .month_title
+        background: #D6D5D3
+        text-align: center
+        padding: 7px 0
+
+      .days
+        +clearfix
+        width: 224px
+
+        .day
+          border: #D5D5D5 1px solid
+          float: left
+          line-height: 28px
+          height: 28px
+          margin: 2px
+          text-align: center
+          width: 28px
+
+          a
+            display: block
+            height: 28px
+            position: relative
+            width: 28px
+
+            &:before
+              content: ''
+              display: block
+              height: 6px
+              position: absolute
+              width: 6px
+
+          &.empty
+            border-color: #fff
+
+          &.current
+            border-color: #000
+
+            a
+              &:before
+                background: #fff
+
+          &.weekend
+            a
+              color: #999999
+
+              &:before
+                background: #999999
+
+
+          &.filled
+            a
+              color: #65B261
+
+              &:before
+                background: #65B261
+
+          &.unfilled
+            a
+              color: #355CA9
+
+              &:before
+                background: #355CA9
