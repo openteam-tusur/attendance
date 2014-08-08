@@ -1,6 +1,8 @@
 class Faculty < ActiveRecord::Base
   has_many :permissions,    :as => :context, :dependent => :destroy
   has_many :subdepartments, :dependent => :destroy
+  has_many :lecturers, :through => :subdepartments
+  has_many :realizes, :through => :lecturers
 
   validates_uniqueness_of :title, :scope => :abbr
   normalize_attribute :title
