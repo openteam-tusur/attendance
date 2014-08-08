@@ -55,13 +55,13 @@ class LessonCatcher
               next
               #raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
-            lect = (subdepartment.people.find_by(:surname => lecturer['lastname'].squish, :name => lecturer['firstname'].squish, :patronymic => lecturer['middlename'].squish) ||
+            lect = (subdepartment.lecturers.find_by(:surname => lecturer['lastname'].squish, :name => lecturer['firstname'].squish, :patronymic => lecturer['middlename'].squish) ||
               subdepartment.lecturers.create(:surname => lecturer['lastname'], :name => lecturer['firstname'], :patronymic => lecturer['middlename']))
 
             Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
           end
 
-          group.people.pluck(:id).each do |student_id|
+          group.students.pluck(:id).each do |student_id|
             Presence.find_or_create_by(:student_id => student_id, :lesson_id => lesson_id)
           end
         end
