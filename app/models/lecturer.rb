@@ -1,5 +1,5 @@
 class Lecturer < Person
-  has_many :memberships,    :as => :person, :dependent => :destroy
+  has_many :memberships,    -> { where(:person_type => 'Lecturer')  }, :class_name => 'Membership', :foreign_key => :person_id, :dependent => :destroy
   has_many :subdepartments, :through => :memberships, :source => :participate, :source_type => 'Subdepartment'
 
   has_many :realizes,       :dependent => :destroy
