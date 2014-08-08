@@ -3,8 +3,7 @@ class Subdepartment < ActiveRecord::Base
   has_many    :groups,          :dependent => :destroy
   has_many    :permissions,     :as => :context, :dependent => :destroy
   has_many    :memberships,     :as => :participate,          :dependent => :destroy
-  has_many    :lecturers,       :through => :memberships, :source => :person, :source_type => 'Lecturer'
-  has_many    :people,          :through => :memberships, :source => :person, :source_type => 'Person'
+  has_many    :lecturers,       -> { where(:memberships => { :person_type => 'Lecturer' }) }, :through => :memberships, :foreign_key => :person_id, :dependent => :destroy
 
   validates_uniqueness_of :title, :scope => :abbr
   normalize_attribute :title
