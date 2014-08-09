@@ -5,6 +5,7 @@
     <%= stylesheet_link_tag    'application', :media => 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag "#{current_namespace}" %>
+    <%= javascript_include_tag 'http://code.highcharts.com/highcharts.js', 'chartkick' %>
     <%= csrf_meta_tags %>
   </head>
   <body class='<%= current_namespace %>_namespace'>
