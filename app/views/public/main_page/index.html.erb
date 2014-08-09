@@ -1,1 +1,16 @@
 <%= render :partial => 'public/search/form' %>
+
+<% was = Presence.joins(:lesson => :realizes)
+  .where(:lessons => { :deleted_at => nil})
+  .where(:realizes => { :state => 'was'})
+  .where(:presences => { :state => 'was' })
+  .where.not(:presences => { :state => nil })
+  .group('lessons.date_on').count %>
+<% all = Presence.joins(:lesson => :realizes)
+  .where(:lessons => { :deleted_at => nil})
+  .where(:realizes => { :state => 'was'})
+  .where.not(:presences => { :state => nil })
+  .group('lessons.date_on').count %>
+
+<% data =Hash[was.merge(all) { |k, v1, v2| v1*100.0/v2 }.map{|k,v| [k.iso8601, v]}] %>
+<%= line_chart data, :height => '400px', :library => { :chart => { :zoomType => 'x'}} %>
