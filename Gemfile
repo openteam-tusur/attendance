@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 group :default do
   gem 'attribute_normalizer'
+  gem 'chartkick'
   gem 'coffee-rails',           '~> 4.0.0'
   gem 'compass-rails'
   gem 'enumerize'
