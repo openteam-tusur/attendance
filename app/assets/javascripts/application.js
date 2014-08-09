@@ -11,3 +11,4 @@
 //= require datetime_picker
 //= require bootstrap
 //= require tusur_header
+//= require highcharts

@@ -12,11 +12,11 @@ class Student < Person
   scope :actual,      -> { where(:deleted_at => nil) }
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
 
-  #searchable do
-    #string(:info)
-    #integer(:faculty_id) { actual_group.try(:subdepartment).try(:faculty_id) }
-    #string :deleted_at
-  #end
+  searchable do
+    string(:info)
+    integer(:faculty_id) { actual_group.try(:subdepartment).try(:faculty_id) }
+    string :deleted_at
+  end
 
   def info
     "#{self.surname} #{self.name} #{actual_group.try(:number)}"
