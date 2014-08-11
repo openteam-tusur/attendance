@@ -8,7 +8,12 @@
 
 <% if @permissions.any? %>
   <ul>
-    <%= render @permissions %>
+    <% @permissions.each do |permission| %>
+      <li>
+        <%= permission %>
+        <%= link_to 'удалить', administrator_permission_path(permission), :method => :delete %>
+      </li>
+    <% end %>
   </ul>
 <% else %>
   <div class="empty">Нет ни одной роли</div>

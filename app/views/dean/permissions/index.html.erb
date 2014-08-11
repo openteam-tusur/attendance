@@ -1,0 +1,20 @@
+<ul class='role_tabs'>
+  <% Permission.available_roles_for(:dean).each do |role| %>
+    <li><%= link_to I18n.t("role_names.#{role}"), dean_permissions_path(:for_role => role) %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Добавить роль", new_dean_permission_path(:for_role => params[:for_role]) if params[:for_role].present? %>
+
+<% if @permissions.any? %>
+  <ul>
+    <% @permissions.each do |permission| %>
+      <li>
+        <%= permission %>
+        <%= link_to "удалить", dean_permission_path(permission), :method => :delete %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty">Нет ни одной роли</div>
+<% end %>

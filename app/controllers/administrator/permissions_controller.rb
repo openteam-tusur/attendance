@@ -1,5 +1,5 @@
 class Administrator::PermissionsController < AuthController
-  actions :index, :new, :create
+  actions :index, :new, :create, :destroy
 
   has_scope :for_role
 
