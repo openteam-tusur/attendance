@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
   belongs_to :subdepartment
   has_many   :permissions,  :as => :context,          :dependent => :destroy
   has_many   :memberships,  :as => :participate,      :dependent => :destroy
-  has_many   :students,      -> { where(:memberships => { :person_type => 'Student' }) }, :through => :memberships, :foreign_key => :person_id, :dependent => :destroy
+  has_many   :students,     :through => :memberships, :source => :person, :source_type => 'Person', :class_name => 'Student'
   has_many   :lessons,      :dependent => :destroy
 
   validates_presence_of :number

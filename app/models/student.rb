@@ -1,5 +1,5 @@
 class Student < Person
-  has_many :memberships,  -> { where(:person_type => 'Student')  }, :class_name => 'Membership', :foreign_key => :person_id, :dependent => :destroy
+  has_many :memberships, :as => :person
   has_many :groups,      :through => :memberships, :source => :participate, :source_type => 'Group'
 
   has_many :presences,   :dependent => :destroy
@@ -19,7 +19,7 @@ class Student < Person
   end
 
   def info
-    "#{self.surname} #{self.name} #{actual_group.number}"
+    "#{self.surname} #{self.name} #{actual_group.try(:number)}"
   end
 
   def as_json(options)
