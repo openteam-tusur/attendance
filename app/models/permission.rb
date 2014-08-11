@@ -13,8 +13,10 @@ class Permission < ActiveRecord::Base
 
   def self.available_roles_for(role_name)
     case role_name
-    when :dean
-      [:group_leader, :curator]
+      when :dean
+        [:group_leader, :curator]
+      when :education_department
+        [:dean, :subdepartment]
     end
   end
 

@@ -1,8 +1,8 @@
-<%= simple_form_for [:dean, @permission], :url => dean_permissions_path(@permission, :for_role => params[:for_role]) do |f| %>
+<%= simple_form_for [:education_department, @permission], :url => education_department_permissions_path(@permission, :for_role => params[:for_role]) do |f| %>
   <%= f.input :user_id,       :collection => User.all, :label_method => :sso_auth_name %>
   <%= f.input :email %>
   <%= f.input :context_id,    :collection => @context_ids, :label_method => :to_s if @context_ids %>
   <%= f.input :role,          :as => :hidden %>
   <%= f.submit 'Сохранить' %>
-  <%= link_to 'Отмена', dean_permissions_path(:for_role => params[:for_role]) %>
+  <%= link_to 'Отмена', education_department_permissions_path(:for_role => params[:for_role]) %>
 <% end %>

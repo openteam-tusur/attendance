@@ -4,11 +4,11 @@ class User < ActiveRecord::Base
   has_remote_profile
   sso_auth_user
 
-  has_many :curated_groups, -> { where('permissions.role = ?', :curator) },      :through => :permissions, :source => :context, :source_type => 'Group'
-  has_many :leaded_groups,  -> { where('permissions.role = ?', :group_leader) }, :through => :permissions, :source => :context, :source_type => 'Group'
-  has_many :lecturers,      -> { where('permissions.role = ?', :lecturer) },     :through => :permissions, :source => :context, :source_type => 'Lecturer'
+  has_many :curated_groups, -> { where('permissions.role = ?', :curator) },       :through => :permissions, :source => :context, :source_type => 'Group'
+  has_many :leaded_groups,  -> { where('permissions.role = ?', :group_leader) },  :through => :permissions, :source => :context, :source_type => 'Group'
+  has_many :lecturers,      -> { where('permissions.role = ?', :lecturer) },      :through => :permissions, :source => :context, :source_type => 'Lecturer'
   has_many :subdepartments, -> { where('permissions.role = ?', :subdepartment) }, :through => :permissions, :source => :context, :source_type => 'Subdepartment'
-  has_many :faculties,      -> { where('permissions.role = ?', :dean) }, :through => :permissions, :source => :context, :source_type => 'Faculty'
+  has_many :faculties,      -> { where('permissions.role = ?', :dean) },          :through => :permissions, :source => :context, :source_type => 'Faculty'
 
   alias_attribute :to_s, :short_name
 
