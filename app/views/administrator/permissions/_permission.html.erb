@@ -1,7 +1,5 @@
 <li class="list-item <%= cycle( "odd", "even" ) %>">
-  <span class="user">
-    <%= permission.user.try(:name) %>, <%= mail_to permission.user.email, permission.user.email %>
-  </span>
+  <%= content_tag(:span, permission, :class => 'user') %>
 
   <span class="actions pull-right">
     <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
@@ -11,8 +9,5 @@
                 :class => 'js-delete' %>
   </span>
 
-  <span class="role pull-right">
-    <%= permission.role_text %>
-    <%= permission.context %>
-  </span>
+  <%= content_tag(:span, 'роль неактивна', :class => 'role pull-right') unless permission.user %>
 </li>
