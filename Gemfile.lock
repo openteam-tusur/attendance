@@ -1,15 +1,3 @@
-PATH
-  remote: /Users/tab/projects/tusur_header
-  specs:
-    tusur_header (0.1.3)
-      bootstrap-sass (~> 3.1.1)
-      coffee-rails
-      compass-rails
-      jquery-rails
-      rest-client
-      sass-rails (>= 3.2)
-      stop_ie (>= 0.1.5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -293,6 +281,14 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    tusur_header (0.1.4)
+      bootstrap-sass (~> 3.1.1)
+      coffee-rails
+      compass-rails
+      jquery-rails
+      rest-client
+      sass-rails (>= 3.2)
+      stop_ie (>= 0.1.5)
     tzinfo (0.3.41)
     uglifier (2.5.1)
       execjs (>= 0.3.0)
@@ -342,7 +338,7 @@ DEPENDENCIES
   sinatra (>= 1.3.0)
   sso-auth (= 0.1.4)
   sunspot_rails (~> 2.1.1)
-  tusur_header!
+  tusur_header
   uglifier (>= 1.3.0)
   unicorn
   validates_email_format_of
