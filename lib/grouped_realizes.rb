@@ -1,6 +1,6 @@
 class GroupedRealizes
   def initialize
-    @realizes = Realize.wasnt.with_lessons.ordered
+    @realizes = Realize.wasnt.with_lessons.ordered_by_lecturer
   end
 
   def by_faculty
