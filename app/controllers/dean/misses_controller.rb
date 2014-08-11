@@ -1,6 +1,7 @@
 class Dean::MissesController < AuthController
-  has_scope :for_missing, :default => 'Student'
   actions :all, :except => :show
+
+  has_scope :for_missing, :default => 'Student'
 
   private
 

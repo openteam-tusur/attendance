@@ -1,4 +1,6 @@
 class Dean::PermissionsController < AuthController
-  def index
-  end
+  actions :index, :new, :create, :destroy
+
+  has_scope :for_context, :default => 'Group'
+  has_scope :for_role
 end
