@@ -15,7 +15,7 @@ class Group < ActiveRecord::Base
   alias_attribute :to_s, :number
 
   def group_leader
-    permissions.where(:role => :group_leader).first.user
+    permission = permissions.where(:role => :group_leader).first ? permission.user : 'нет старосты'
   end
 
   def absent_days

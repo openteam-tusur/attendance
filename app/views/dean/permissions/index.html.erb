@@ -11,7 +11,7 @@
     <% @permissions.each do |permission| %>
       <li>
         <%= permission %>
-        <%= link_to "удалить", dean_permission_path(permission), :method => :delete %>
+        <%= link_to "удалить", dean_permission_path(permission, :for_role => permission.role), :method => :delete %>
       </li>
     <% end %>
   </ul>
