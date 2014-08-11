@@ -12,7 +12,9 @@
       <%= render 'navigation' %>
 
       <div class='container'>
-        <%= render_menu(current_namespace) if current_namespace && current_namespace != :public %>
+        <%#= render_menu(current_namespace) if current_namespace && current_namespace != :public %>
+        <%= render 'breadcrumbs' %>
+
         <h1><%= page_title %></h1>
         <%= yield %>
       </div>
