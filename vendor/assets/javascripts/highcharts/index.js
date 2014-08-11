@@ -1,5 +1,5 @@
 /*
- *= require './highcharts.src.js'
+ *= require './highcharts'
  *= require './init'
  *= require 'chartkick'
  */
