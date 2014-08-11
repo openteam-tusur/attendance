@@ -3,9 +3,10 @@ class Realize < ActiveRecord::Base
   belongs_to :lesson
   after_initialize :set_state
 
-  scope :wasnt, -> { where(:state => :wasnt) }
-  scope :ordered, -> { joins(:lecturer).joins(:lesson).order('people.surname, lessons.date_on desc')}
-  scope :with_lessons, -> { includes(:lesson) }
+  scope :wasnt,               -> { where(:state => :wasnt) }
+  scope :ordered_by_lecturer, -> { joins(:lecturer).joins(:lesson).order('people.surname, lessons.date_on desc')}
+  scope :ordered_by_lesson,   -> { joins(:lesson).order('lessons.date_on desc') }
+  scope :with_lessons,        -> { includes(:lesson) }
 
   def to_s
     I18n.t("states.realizes.#{state}")
