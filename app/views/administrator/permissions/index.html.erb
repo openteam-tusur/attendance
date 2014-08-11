@@ -1,20 +1,23 @@
-<ul class='role_tabs'>
-  <% Permission.available_roles.each do |role| %>
-    <li><%= link_to I18n.t("role_names.#{role}"), administrator_permissions_path(:for_role => role) %></li>
-  <% end %>
-</ul>
-
-<%= link_to "Добавить роль", new_administrator_permission_path(:for_role => params[:for_role]) if params[:for_role].present? %>
-
-<% if @permissions.any? %>
-  <ul>
-    <% @permissions.each do |permission| %>
-      <li>
-        <%= permission %>
-        <%= link_to 'удалить', administrator_permission_path(permission), :method => :delete %>
+<div class="tab-sidebar">
+  <ul class='nav'>
+    <% Permission.available_roles.each do |role| %>
+      <li <%= 'class=active' if params[:for_role] == role %>>
+        <%= link_to I18n.t("role_names.#{role}"), administrator_permissions_path(:for_role => role) %>
       </li>
     <% end %>
   </ul>
-<% else %>
-  <div class="empty">Нет ни одной роли</div>
-<% end %>
+</div>
+
+<div class="tab-content">
+  <%= link_to "Добавить роль", new_administrator_permission_path(:for_role => params[:for_role]), :class => 'btn btn-primary btn-sm' if params[:for_role].present? %>
+
+  <% if @permissions.any? %>
+    <ul class="list ajaxed">
+      <%= render @permissions %>
+    </ul>
+  <% else %>
+    <ul class="list">
+      <li class="empty">Нет ни одной роли</li>
+    </ul>
+  <% end %>
+</div>

@@ -1,4 +1,5 @@
 @import 'compass/reset'
+@import 'compass/css3'
 @import 'compass/utilities'
 
 html, body
@@ -10,8 +11,9 @@ body
   color: #222
 
 h1
-  font-size: 18px
-  font-weight: bold
+  font-size: 20px
+  font-weight: 400
+  margin: 15px 0
 
 #wrapper
   min-height: 100%
@@ -47,6 +49,10 @@ h1
   .openteam
     float: right
 
+.breadcrumbs
+  margin: 20px 0
+
+// Calendar -->
 .calendar_wrapper
   float: right
 
@@ -133,3 +139,68 @@ h1
 
               &:before
                 background: #355CA9
+// <-- Calendar
+
+
+// Lists -->
+.list
+  margin: 20px 0
+
+  .list-item
+    line-height: 30px
+    margin: 0 8px 0 0
+    padding: 0 8px
+
+    &.even
+      background: #fff
+
+    &.odd
+      background: #f2f2f2
+
+    .role
+      color: #9a9a9a
+
+    .actions
+      margin: 0 -25px 0 0
+
+      a
+        color: #9a9a9a
+
+// <-- Lists
+
+
+// Permissions -->
+.tab-sidebar, .tab-content
+  float: left
+
+.tab-sidebar
+  width: 220px
+  border-right: 1px solid #dedede
+
+  ul
+    margin: 0 -1px 0 0
+
+  li
+    margin: 3px 0
+
+    a:hover
+      +border-bottom-left-radius(2px)
+      +border-top-left-radius(2px)
+      color: #005582
+
+    &.active
+      +border-bottom-left-radius(2px)
+      +border-top-left-radius(2px)
+      border: 1px solid #dedede
+      border-right-color: #fff
+
+      a
+        color: #000
+
+.tab-content
+  border-top: 1px solid #dedede
+  height: 100%
+  padding: 15px
+  width: 920px
+
+// <-- Permissions

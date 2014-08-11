@@ -1,0 +1,18 @@
+<li class="list-item <%= cycle( "odd", "even" ) %>">
+  <span class="user">
+    <%= permission.user.try(:name) %>, <%= mail_to permission.user.email, permission.user.email %>
+  </span>
+
+  <span class="actions pull-right">
+    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                administrator_permission_path(permission, :for_role => permission.role),
+                :method => :delete,
+                :remote => true,
+                :class => 'js-delete' %>
+  </span>
+
+  <span class="role pull-right">
+    <%= permission.role_text %>
+    <%= permission.context %>
+  </span>
+</li>

@@ -1,9 +1,13 @@
 class Administrator::PermissionsController < AuthController
   actions :index, :new, :create, :destroy
 
-  has_scope :for_role
+  has_scope :for_role, :default => 'administrator'
 
   before_filter :build_context, :on => [:new, :create]
+
+  def destroy
+    destroy!{ render :nothing => true and return }
+  end
 
   private
     def build_context

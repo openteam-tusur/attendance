@@ -6,6 +6,7 @@ group :default do
   gem 'coffee-rails',           '~> 4.0.0'
   gem 'compass-rails'
   gem 'enumerize'
+  gem 'font-awesome-sass'
   gem 'gravtastic'
   gem 'has_scope'
   gem 'inherited_resources'
@@ -26,7 +27,7 @@ group :default do
   gem 'sinatra',                '>= 1.3.0', :require => nil
   gem 'sso-auth',               '0.1.4'
   gem 'sunspot_rails',          '~> 2.1.1'
-  gem 'tusur_header'
+  gem 'tusur_header',           :path => '/Users/tab/projects/tusur_header'
   gem 'uglifier',               '>= 1.3.0'
   gem 'validates_email_format_of'
 end
