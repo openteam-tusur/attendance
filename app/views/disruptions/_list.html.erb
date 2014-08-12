@@ -1,26 +1,30 @@
-<table>
-  <thead>
-    <tr>
-      <td>Дисциплина</td>
-      <td>Дата</td>
-      <td>Уважительная причина</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @disruptions.each do |teacher, realizes| %>
+<div class="table-responsive">
+  <table class="table table-condensed table-disruptions">
+    <thead>
       <tr>
-        <td><%= teacher.to_s %></td>
+        <td>Преподаватель / Дисциплина</td>
+        <td>Дата</td>
+        <td>Уважительная причина</td>
       </tr>
-      <% realizes.each do |realize| %>
-        <tr>
-          <td>
-            <%= realize.lesson.discipline.title %>
-            <%= " (#{realize.lesson.kind_abbr})" %>
-          </td>
-          <td><%= I18n.l(realize.lesson.date_on) %></td>
-          <td><%= realize.missed_by_cause? ? 'Да' : 'Нет' %></td>
+    </thead>
+    <tbody>
+      <% @disruptions.each do |teacher, realizes| %>
+        <tr class="teacher">
+          <td colspan="3"><%= teacher.to_s %></td>
         </tr>
+        <% realizes.each do |realize| %>
+          <tr class="lesson">
+            <td>
+              <%= realize.lesson.discipline.title %>
+              <%= " (#{realize.lesson.kind_abbr})" %>
+            </td>
+            <td><%= I18n.l(realize.lesson.date_on) %></td>
+            <td>
+              <%= realize.missed_by_cause? ? content_tag(:span, 'Да') : content_tag(:span, 'Нет', :class => 'no') %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
