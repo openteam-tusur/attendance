@@ -1,23 +1,28 @@
-<%= link_to "Добавить уважительную причину", new_education_department_miss_path %>
-<table>
-  <thead>
-    <tr>
-      <td>ФИО преподавателя</td>
-      <td>Кафедра</td>
-      <td>Период отсутствия</td>
-      <td>Причина</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @misses.each do |miss| %>
+<%= link_to "Добавить уважительную причину", new_education_department_miss_path, :class => 'btn btn-sm btn-primary' %>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-striped">
+    <thead>
       <tr>
-        <td><%= miss.missing %></td>
-        <td><%= miss.missing.actual_subdepartment %></td>
-        <td><%= miss.absent_period %></td>
-        <td><%= miss.note %></td>
-        <td><%= link_to "удалить", education_department_miss_path(miss), :method => :delete %></td>
-        <td><%= link_to "редактировать", edit_education_department_miss_path(miss) %></td>
+        <td>ФИО преподавателя</td>
+        <td>Кафедра</td>
+        <td>Период отсутствия</td>
+        <td>Причина</td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @misses.each do |miss| %>
+        <tr>
+          <td><%= miss.missing %></td>
+          <td><%= miss.missing.actual_subdepartment %></td>
+          <td><%= miss.absent_period %></td>
+          <td><%= miss.note %></td>
+          <td class="actions">
+            <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_education_department_miss_path(miss) %>
+            <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, education_department_miss_path(miss), :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
