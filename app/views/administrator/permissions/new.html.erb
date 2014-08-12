@@ -1,9 +1,14 @@
-<%= simple_form_for [:administrator, @permission], :url => administrator_permissions_path(@permission, :for_role => params[:for_role]) do |f| %>
+<%= simple_form_for [:administrator, @permission],
+                    :url => administrator_permissions_path(@permission, :for_role => params[:for_role]),
+                    :html => { :class => 'form-horizontal' },
+                    :wrapper => :horizontal_form do |f| %>
+
   <%= f.input :user_id,       :collection => User.all, :label_method => :sso_auth_name %>
   <%= f.input :email %>
   <%= f.input :context_type,  :as => :hidden, :input_html => { :value => @context_type } %>
   <%= f.input :context_id,    :collection => @context_ids, :label_method => :to_s if @context_ids %>
   <%= f.input :role,          :as => :hidden %>
-  <%= f.submit 'Сохранить' %>
-  <%= link_to 'Отмена', administrator_permissions_path(:for_role => params[:for_role]) %>
+
+  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
+  <%= link_to 'Отмена', administrator_permissions_path(:for_role => params[:for_role]), :class => 'btn btn-default btn-sm' %>
 <% end %>
