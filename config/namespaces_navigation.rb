@@ -17,6 +17,35 @@ SimpleNavigation::Configuration.run do |navigation|
         role_item.item :groups, I18n.t('page_title.groups.index'), curator_groups_path
       end
 
+      if role == 'dean'
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path(:for_role => :group_leader)
+        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        dean_misses_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
+        role_item.item :statistics,   I18n.t('page_title.statistics.index'),    dean_statistics_path
+      end
+
+      if role == 'education_department'
+        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),       education_department_misses_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),  education_department_disruptions_path
+        role_item.item :statistics,   I18n.t('page_title.statistics.index'),   education_department_statistics_path
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),  education_department_permissions_path
+      end
+
+      if role == 'group_leader'
+        role_item.item :statistics, I18n.t('page_title.groups.show', :title => current_user.leaded_groups.first),   group_leader_group_path
+        role_item.item :lessons,    I18n.t('page_title.lessons.index'),                                             group_leader_lessons_path
+      end
+
+      if role == 'lecturer'
+        role_item.item :disruptions, I18n.t('page_title.disruptions.index'), lecturer_disruptions_path
+        role_item.item :groups,      I18n.t('page_title.groups.index'),      lecturer_groups_path
+      end
+
+      if role == 'subdepartment'
+        role_item.item :disruptions,   I18n.t('page_title.disruptions.index'),  subdepartment_disruptions_path
+        role_item.item :statistics,    I18n.t('page_title.groups.index'),       subdepartment_groups_path
+      end
+
       end if current_user.send("#{role}?")
     end if user_signed_in?
   end
