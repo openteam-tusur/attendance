@@ -1,1 +1,4 @@
-<li class='<%= sync.state %>'><%= l sync.created_at %> <%= sync.title %></li>
+<li class='list-item list-bordered <%= sync.state %>'>
+  <span class='date'><%= l sync.created_at %></span>
+  <span class='message'><%= sync.title.html_safe %></span>
+</li>
