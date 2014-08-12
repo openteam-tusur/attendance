@@ -7,6 +7,11 @@ ru:
 
   activerecord:
     attributes:
+      permission:
+        context_id: Группа
+        email:      E-mail
+        user_id:    ФИО
+
       miss:
         starts_at: С
         ends_at: По

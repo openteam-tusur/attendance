@@ -6,7 +6,9 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item role.to_sym, I18n.t("role_names.#{role}"), [role.to_sym, :root] do |role_item|
 
       if role == 'administrator'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path do |permission|
+          permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
+        end
         role_item.item :sync,         I18n.t('page_title.syncs.index'),         administrator_syncs_path
         role_item.item :sidekiq,     'Sidekiq',                                 administrator_sidekiq_path
       end

@@ -23,7 +23,7 @@ group :default do
   gem 'sass-rails',             '~> 4.0.2'
   gem 'sidekiq'
   gem 'simple-navigation'
-  gem 'simple_form'
+  gem 'simple_form',            '~> 3.1.0.rc2'
   gem 'sinatra',                '>= 1.3.0', :require => nil
   gem 'sso-auth',               '0.1.4'
   gem 'sunspot_rails',          '~> 2.1.1'
