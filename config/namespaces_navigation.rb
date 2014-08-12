@@ -29,10 +29,10 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'education_department'
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),  education_department_permissions_path
         role_item.item :miss_reason,  I18n.t('page_title.misses.index'),       education_department_misses_path
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),  education_department_disruptions_path
         role_item.item :statistics,   I18n.t('page_title.statistics.index'),   education_department_statistics_path
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),  education_department_permissions_path
       end
 
       if role == 'group_leader'
