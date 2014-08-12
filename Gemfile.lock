@@ -281,7 +281,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tusur_header (0.1.4)
+    tusur_header (0.1.5)
       bootstrap-sass (~> 3.1.1)
       coffee-rails
       compass-rails
