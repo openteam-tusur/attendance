@@ -1,0 +1,21 @@
+<table>
+  <thead>
+    <tr>
+      <td>Дисциплина</td>
+      <td>Дата</td>
+      <td>Уважительная причина</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @disruptions.each do |realize| %>
+      <tr>
+        <td>
+          <%= realize.lesson.discipline.title %>
+          <%= " (#{realize.lesson.kind_abbr})" %>
+        </td>
+        <td><%= I18n.l(realize.lesson.date_on) %></td>
+        <td><%= realize.missed_by_cause? ? 'Да' : 'Нет' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
