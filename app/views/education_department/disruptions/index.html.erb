@@ -1,28 +1,31 @@
 <% @disruptions.each do |faculty, lecturers_with_realizes| %>
   <% next unless lecturers_with_realizes.any? %>
-  <div>
-    <%= faculty.title %>
-    <table>
+  <h4><%= faculty.title %></h4>
+
+  <div class="table-responsive">
+    <table class="table table-condensed table-disruptions">
       <thead>
         <tr>
-          <td>Дисциплина</td>
+          <td>Преподаватель / Дисциплина</td>
           <td>Дата</td>
           <td>Уважительная причина</td>
         </tr>
       </thead>
       <tbody>
         <% lecturers_with_realizes.each do |lecturer, realizes| %>
-          <tr>
-            <td><%= lecturer.to_s %></td>
+          <tr class="teacher">
+            <td colspan="3"><%= lecturer.to_s %></td>
           </tr>
           <% realizes.each do |realize| %>
-            <tr>
+            <tr class="lesson">
               <td>
                 <%= realize.lesson.discipline.title %>
                 <%= " (#{realize.lesson.kind_abbr})" %>
               </td>
               <td><%= I18n.l(realize.lesson.date_on) %></td>
-              <td><%= realize.missed_by_cause? ? 'Да' : 'Нет' %></td>
+              <td>
+                <%= realize.missed_by_cause? ? content_tag(:span, 'Да') : content_tag(:span, 'Нет', :class => 'no') %>
+              </td>
             </tr>
           <% end %>
         <% end %>
