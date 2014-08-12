@@ -1,9 +1,14 @@
 <%= simple_form_for [:administrator, @permission],
                     :url => administrator_permissions_path(@permission, :for_role => params[:for_role]),
-                    :html => { :class => 'form-horizontal' },
+                    :html => { :class => 'form-horizontal form-permission' },
                     :wrapper => :horizontal_form do |f| %>
 
   <%= f.input :user_id,       :collection => User.all, :label_method => :sso_auth_name %>
+
+  <div class="form-group">
+    <span class="separator col-md-offset-1 col-md-5">или</span>
+  </div>
+
   <%= f.input :email %>
   <%= f.input :context_type,  :as => :hidden, :input_html => { :value => @context_type } %>
   <%= f.input :context_id,    :collection => @context_ids, :label_method => :to_s if @context_ids %>
