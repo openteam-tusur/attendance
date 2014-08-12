@@ -190,6 +190,22 @@ h1
 // <-- Lists
 
 
+// Tables -->
+thead
+  color: #818181
+
+td
+  border: none !important
+
+  &.actions
+    background-color: #fff !important
+
+    a
+      color: #9a9a9a
+
+// <-- Tables
+
+
 // Permissions -->
 .tab-sidebar, .tab-content
   float: left
@@ -250,3 +266,19 @@ h1
       width: 205px
 
 // <-- Permissions
+
+// Misses -->
+.form-miss
+  .form-group
+    +clearfix
+
+  .datetime_picker
+    width: 200px
+
+  .start-miss, .end-miss
+    float: left
+
+  .start-miss
+    margin: 0 0 15px 53px
+
+// <-- Misses
