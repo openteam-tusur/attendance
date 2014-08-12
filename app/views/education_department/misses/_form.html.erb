@@ -1,8 +1,22 @@
-<%= simple_form_for [:education_department, @miss] do |f| %>
+<%= simple_form_for [:education_department, @miss],
+                    :html => { :class => 'form-horizontal form-miss' },
+                    :wrapper => :horizontal_form do |f| %>
+
   <%= f.input :name, :input_html => { :class => 'lecturers_autocomplete', :value => @miss.missing.try(:info)}, :label => 'ФИО' %>
   <%= f.input :missing_id, :as => :hidden %>
-  <%= f.input :starts_at, :as => :datetime_picker %>
-  <%= f.input :ends_at, :as => :datetime_picker %>
+
+  <%= f.input :starts_at,
+              :as => :string,
+              :input_html => { :class => 'datetime_picker' },
+              :wrapper_html => { :class => 'start-miss' } %>
+
+  <%= f.input :ends_at,
+              :as => :string,
+              :input_html => { :class => 'datetime_picker' },
+              :wrapper_html => { :class => 'end-miss' } %>
+
   <%= f.input :note %>
-  <%= f.submit 'Сохранить' %>
+
+  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
+  <%= link_to 'Отмена', education_department_misses_path, :class => 'btn btn-default btn-sm' %>
 <% end %>
