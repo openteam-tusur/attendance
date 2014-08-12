@@ -18,7 +18,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'dean'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path(:for_role => :group_leader)
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path
         role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        dean_misses_path
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
         role_item.item :statistics,   I18n.t('page_title.statistics.index'),    dean_statistics_path

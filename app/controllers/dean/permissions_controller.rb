@@ -6,6 +6,10 @@ class Dean::PermissionsController < AuthController
 
   before_filter :build_context, :on => [:new, :create]
 
+  def destroy
+    destroy!{ render :nothing => true and return }
+  end
+
   private
     def build_context
       @faculty      = current_user.faculties.first
