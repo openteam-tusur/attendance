@@ -151,14 +151,35 @@ h1
     margin: 0 8px 0 0
     padding: 0 8px
 
+    &.list-bordered
+      border-top: 1px solid #d5d5d5
+
+      &:last-child
+        border-bottom: 1px solid #d5d5d5
+
     &.even
       background: #fff
 
     &.odd
       background: #f2f2f2
 
+    .date
+      color: #949494
+
     .role
       color: #9a9a9a
+
+    .message
+      margin: 0 0 0 45px
+
+      .success, .failure
+        font-weight: bold
+
+      .success
+        color: #00b362
+
+      .failure
+        color: #dc0000
 
     .actions
       margin: 0 -25px 0 0
