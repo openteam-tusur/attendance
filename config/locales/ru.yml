@@ -8,7 +8,7 @@ ru:
   activerecord:
     attributes:
       permission:
-        context_id: Группа
+        context_id: Контекст
         email:      E-mail
         user_id:    ФИО
 
