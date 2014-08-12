@@ -8,13 +8,13 @@ class Lecturer < Person
 
   has_many :misses,         -> { where(:missing_type => 'Lecturer') }, :class_name => 'Miss', :foreign_key => :missing_id, :dependent => :destroy
 
-  searchable do
+  searchable :auto_index => false do
     string :info
     string :deleted_at
   end
 
   def info
-    "#{self.to_s} #{actual_subdepartment.try(:abbr)}"
+    "#{self.to_s} #{actual_subdepartment.abbr}"
   end
 
   def actual_subdepartment

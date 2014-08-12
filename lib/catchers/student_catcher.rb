@@ -46,6 +46,7 @@ class StudentCatcher
           s.memberships.update_all(:deleted_at => Time.zone.now)
           s.groups << group
         end
+        s.index
       end
     end
   end
