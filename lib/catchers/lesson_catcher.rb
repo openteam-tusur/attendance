@@ -60,6 +60,8 @@ class LessonCatcher
                                                              :patronymic => lecturer['middlename'].squish)
             lect.index
 
+            lect.permissions.find_or_create_by(:email => lecturer['email'], :role => :lecturer) if lecturer['email'].present?
+
             Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
           end
 
