@@ -8,8 +8,17 @@ class Permission < ActiveRecord::Base
   validates_presence_of   :user_id, :if => 'email.nil?'
   validates_presence_of   :email,   :if => 'user_id.nil?'
   validates_presence_of   :context_type, :context_id, :unless => ->{ %w(administrator education_department).include?(role) }
-  validates_uniqueness_of :role,    :scope => [:context_id, :context_type, :email, :user_id]
-  validates_uniqueness_of :role,    :scope => [:context_type, :email, :user_id], :if => -> (p) { ['group_leader', 'dean', 'subdepartment'].include?(p.role) }
+  validates_uniqueness_of :role,    :scope => [:context_id, :context_type, :email, :user_id],
+                                    :message => 'У пользователя не может быть несколько одинаковых ролей'
+
+  validates_uniqueness_of :role,    :scope => [:context_type, :email, :user_id],
+                                    :message => ->(error, attributes) { "У одного пользователя не может быть несколько ролей #{I18n.t("role_names.#{attributes[:value]}")}"},
+                                    :if => -> (p) { ['group_leader', 'dean', 'subdepartment', 'lecturer'].include?(p.role) }
+
+  validates_uniqueness_of :role,    :scope => [:context_id, :context_type],
+                                    :message => ->(error, attributes) { "У группы не может быть несколько ролей #{I18n.t("role_names.#{attributes[:value]}")}" },
+                                    :if => -> (p) { ['group_leader', 'curator'].include?(p.role) }
+
   validates_email_format_of :email, :check_mx => true, :allow_nil => true
 
   scope :for_context, ->(context) { where(:context_type => context)}
