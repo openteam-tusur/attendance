@@ -1,44 +1,55 @@
-<div class="calendar_wrapper">
-  <%= l @date, :format => '%d %B %Y' %>
+<div class="calendar-wrapper">
+  <%= content_tag(:span, (l @date, :format => '%d %B %Y'), :class => 'date') %>
 
-  <div class="calendar_viewport">
+  <div class="calendar-legend">
+    <span class="empty">Были занятия, не заполнено</span>
+    <span class="filled">Были занятия, заполнено</span>
+    <span class="weekend">Выходные и праздничные дни</span>
+  </div>
+
+  <div class="js-scroll scroll-up">
+  </div>
+
+  <div class="calendar-viewport">
     <div class='calendar'>
-      <div class='months'>
-        <% (@date.beginning_of_year..@date.end_of_year).group_by(&:month).each do |month, days| %>
-          <div class="month">
-            <div class="month_title">
-              <%= I18n.t('date.month_names')[month] %>
-            </div>
+      <% (@date.beginning_of_year..@date.end_of_year).group_by(&:month).each do |month, days| %>
+        <div class="month<%= ' current' if month == @date.month %>">
+          <div class="month-title">
+            <%= I18n.t('date.month_names')[month] %>
+          </div>
 
-            <div class="day_names">
-              <% I18n.t("date.abbr_day_names").rotate(1).each do |day_name| %>
-                <div class="day_name">
-                  <%= day_name %>
+          <div class="day-names">
+            <% I18n.t("date.abbr_day_names").rotate(1).each do |day_name| %>
+              <div class="day-name">
+                <%= day_name %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="days">
+            <% (days.first.wday-1).times do %>
+              <div class="day empty"></div>
+            <% end %>
+
+            <% days.each do |day| %>
+              <% if @lessons_groupped_by_day[day].nil? %>
+                <div class="day weekend">
+                  <%= day.day %>
+                </div>
+              <% else %>
+                <div class="<%= day_classes(@lessons_groupped_by_day, day) %>">
+                  <%= link_to day.day, group_leader_lessons_path(:by_date => day) %>
                 </div>
               <% end %>
-            </div>
-
-            <div class="days">
-
-              <% (days.first.wday-1).times do %>
-                <div class="day empty"></div>
-              <% end %>
-
-              <% days.each do |day| %>
-                <% if @lessons_groupped_by_day[day].nil? %>
-                  <div class="day weekend">
-                    <%= day.day %>
-                  </div>
-                <% else %>
-                  <div class="<%= day_classes(@lessons_groupped_by_day, day) %>">
-                    <%= link_to day.day, group_leader_lessons_path(:by_date => day) %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
+            <% end %>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
+
   </div>
+
+  <div class="js-scroll scroll-down">
+  </div>
+
 </div>

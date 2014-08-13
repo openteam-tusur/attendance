@@ -155,94 +155,145 @@ h4
 
 
 // Calendar -->
-.calendar_wrapper
+.calendar-wrapper
   float: right
   width: 220px
-  border: 1px solid #d5d5d5
 
-.calendar_viewport
+  .date
+    font-size: 18px
+
+  .calendar-legend
+    margin: 15px 0
+
+    .empty, .filled, .weekend
+      line-height: 18px
+      position: relative
+      padding: 0 0 0 15px
+
+      &:before
+        content: ''
+        display: block
+        height: 6px
+        position: absolute
+        top: 3px
+        width: 6px
+
+    .empty
+      color: #005bac
+
+      &:before
+        background: #005bac
+
+    .filled
+      color: #02b45c
+
+      &:before
+        background: #02b45c
+
+    .weekend
+      color: #222
+
+      &:before
+        background: #9a9a9a
+
+.calendar-viewport
   +clearfix
-  height: 550px
-  overflow-y: scroll
+  border: 1px solid #d5d5d5
+  height: 415px
+  //overflow-y: scroll
+  position: relative
+
+.scroll-up, .scroll-down
+  background: #f2f2f2 image-url('presence/scroll-up.png') no-repeat center center
+  border: 1px solid #d5d5d5
+  border-bottom: none
+  height: 24px
+  text-align: center
+
+.scroll-down
+  +rotate(180deg)
 
 .calendar
   +clearfix
-  width: 186px
+  margin: 0 auto
+  position: absolute
+  top: 0
 
-  .day_names
+  .day-names
     +clearfix
 
-    .day_name
+    .day-name
+      color: #9a9a9a
       float: left
-      height: 32px
-      line-height: 32px
+      height: 25px
+      line-height: 25px
       text-align: center
-      width: 32px
+      width: 26px
 
-  .months
+  .month
     +clearfix
+    padding: 12px 15px
+    border-bottom: 1px solid #d5d5d5
 
-    .month
+    .month-title
+      background: #d6d5d3
+      text-align: center
+      padding: 7px 0
+
+    .days
       +clearfix
+      //width: 224px
 
-      .month_title
-        background: #D6D5D3
+      .day
+        border: #d5d5d5 1px solid
+        float: left
+        font-size: 12px
+        height: 22px
+        line-height: 22px
+        margin: 2px
         text-align: center
-        padding: 7px 0
+        width: 22px
 
-      .days
-        +clearfix
-        //width: 224px
+        a
+          display: block
+          height: 22px
+          position: relative
+          width: 22px
 
-        .day
-          border: #D5D5D5 1px solid
-          float: left
-          line-height: 28px
-          height: 28px
-          margin: 2px
-          text-align: center
-          width: 28px
+          &:before
+            content: ''
+            display: block
+            height: 5px
+            position: absolute
+            width: 5px
+
+        &.empty
+          border-color: #fff
+
+        &.current
+          border-color: #000
 
           a
-            display: block
-            height: 28px
-            position: relative
-            width: 28px
+            &:before
+              background: #fff
+
+        &.weekend
+          color: #999999
+
+
+        &.filled
+          a
+            color: #65B261
 
             &:before
-              content: ''
-              display: block
-              height: 6px
-              position: absolute
-              width: 6px
+              background: #65B261
 
-          &.empty
-            border-color: #fff
+        &.unfilled
+          a
+            color: #355CA9
 
-          &.current
-            border-color: #000
-
-            a
-              &:before
-                background: #fff
-
-          &.weekend
-            color: #999999
-
-
-          &.filled
-            a
-              color: #65B261
-
-              &:before
-                background: #65B261
-
-          &.unfilled
-            a
-              color: #355CA9
-
-              &:before
-                background: #355CA9
+            &:before
+              background: #355CA9
 // <-- Calendar
 
 
