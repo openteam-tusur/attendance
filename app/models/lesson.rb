@@ -33,6 +33,10 @@ class Lesson < ActiveRecord::Base
     LessonTime.new(self.order_number, self.date_on).lesson_time
   end
 
+  def lesson_lecturers
+    lecturers.map(&:short_name).join(', ')
+  end
+
   def kind_abbr
     I18n.t("lesson.kind.#{kind}.abbr")
   end
