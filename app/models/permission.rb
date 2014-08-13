@@ -1,6 +1,9 @@
 class Permission < ActiveRecord::Base
   sso_auth_permission :roles => %W(administrator curator dean education_department group_leader lecturer subdepartment)
 
+  after_save  :notify_about_add, :if => :user_changed?
+  after_destroy :notify_about_delete, :if => :with_user?
+
   normalize_attribute     :email
   validates_presence_of   :user_id, :if => 'email.nil?'
   validates_presence_of   :email,   :if => 'user_id.nil?'
@@ -10,6 +13,25 @@ class Permission < ActiveRecord::Base
   validates_email_format_of :email, :check_mx => true, :allow_nil => true
 
   scope :for_context, ->(context) { where(:context_type => context)}
+  def with_user?
+    self.user.present?
+  end
+
+  def user_changed?
+    self.user_id_changed?
+  end
+
+  def notify_about_delete
+    redis = Redis.new(:url => Settings['messaging.url'])
+    index = redis.incr("profile:attendance:del_permission:index")
+    redis.set "profile:attendance:del_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
+  end
+
+  def notify_about_add
+    redis = Redis.new(:url => Settings['messaging.url'])
+    index = redis.incr("profile:attendance:add_permission:index")
+    redis.set "profile:attendance:add_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
+  end
 
   def self.available_roles_for(role_name)
     case role_name
