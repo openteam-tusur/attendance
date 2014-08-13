@@ -18,6 +18,10 @@ class Lecturer < Person
     "#{self.to_s} #{actual_subdepartment.abbr}"
   end
 
+  def short_name
+    "#{surname} #{name.first}. #{patronymic.first}."
+  end
+
   def actual_subdepartment
     subdepartments.where(:memberships => { :deleted_at => nil }).first
   end
