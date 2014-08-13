@@ -13,6 +13,7 @@
   <%= f.input :context_type,  :as => :hidden, :input_html => { :value => @context_type } %>
   <%= f.input :context_id,    :collection => @context_ids, :label_method => :to_s if @context_ids %>
   <%= f.input :role,          :as => :hidden %>
+  <%= content_tag :div, f.error(:role), :class => :error %>
 
   <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
   <%= link_to 'Отмена', administrator_permissions_path(:for_role => params[:for_role]), :class => 'btn btn-default btn-sm' %>
