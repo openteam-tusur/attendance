@@ -82,6 +82,7 @@ h4
 
   .presence-cell
     height: 40px
+    padding: 0
     text-align: center
     vertical-align: middle
     width: 100px
@@ -90,8 +91,8 @@ h4
       color: #818181
 
     .was, .wasnt
-      height: 29px
       display: block
+      height: 39px
       text-align: center
 
     .was
@@ -102,11 +103,15 @@ h4
 
   .lesson-caption
     padding: 0 !important
+    vertical-align: top
 
   .lesson-info
     display: block
     padding: 4px 8px
     color: #222
+
+    &.empty
+      margin: 20px 0 0 0
 
   .lesson-time
     color: #999
@@ -207,6 +212,7 @@ h4
   background: #f2f2f2 image-url('presence/scroll-up.png') no-repeat center center
   border: 1px solid #d5d5d5
   border-bottom: none
+  cursor: pointer
   height: 24px
   text-align: center
 

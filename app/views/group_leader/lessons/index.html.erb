@@ -33,6 +33,10 @@
             <% end %>
           <% else %>
             <th class='lesson-caption'>
+              <span class="lesson-info empty">
+                <%= content_tag(:span, I18n.t("lesson.time.#{index}"), :class => 'lesson-time') %>
+                <span class="lesson-discipline">нет пары</span>
+              </span>
             </th>
           <% end %>
         <% end %>
@@ -51,6 +55,7 @@
               <% end %>
             <% else %>
                 <td class='js-presence-cell presence-cell'>
+                  &dash;
                 </td>
             <% end %>
           <% end %>
