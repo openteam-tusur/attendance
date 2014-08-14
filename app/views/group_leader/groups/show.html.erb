@@ -1,6 +1,9 @@
 <%= content_for :page_title do %>
-  <%= page_title(@group.number) %>
+  <h1 class="text-center"><%= page_title(@group.number) %></h1>
 <% end %>
 
 <%= line_chart Statistic::Group.new(@group).attendance_by_date, :height => '400px', :library => { :chart => { :zoomType => 'x' } } %>
+
+<h1 class="text-center">Посещаемость студентов группы <%= @group.number %></h1>
+
 <%= bar_chart  Statistic::Group.new(@group).attendance_by_students %>
