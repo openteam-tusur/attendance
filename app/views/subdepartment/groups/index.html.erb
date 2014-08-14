@@ -1,5 +1,3 @@
-<ul class="list-inline">
-  <% @groups.each do |group| %>
-    <li><%= link_to group, subdepartment_group_path(group) %></li>
-  <% end %>
-</ul>
+<%= line_chart  Statistic::Subdepartment.new(@subdepartment).attendance_by_date %>
+<%= bar_chart   Statistic::Subdepartment.new(@subdepartment).attendance_by_groups %>
+

@@ -5,6 +5,7 @@ class Subdepartment < ActiveRecord::Base
   has_many    :memberships,     :as => :participate,          :dependent => :destroy
   has_many    :lecturers,       :through => :memberships, :source => :person, :source_type => 'Person', :class_name => 'Lecturer'
   has_many    :realizes,        :through => :lecturers
+  has_many    :presences,       :through => :groups
 
   validates_uniqueness_of :title, :scope => :abbr
   normalize_attribute :title
