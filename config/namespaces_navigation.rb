@@ -15,7 +15,9 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'curator'
-        role_item.item :groups,       I18n.t('page_title.groups.index'),        curator_groups_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        curator_groups_path do |group|
+          group.item :group,          I18n.t('page_title.groups.show', :title => @group.number), curator_group_path(@group) if @group && @group.persisted?
+        end
       end
 
       if role == 'dean'
