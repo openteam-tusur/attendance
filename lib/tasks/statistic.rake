@@ -22,4 +22,7 @@ namespace :statistic do
       Statistic::Group.new(group).calculate_attendance(presences)
     end
   end
+
+  desc 'Рассчитать всю статистику'
+  task :all => [:students, :groups]
 end
