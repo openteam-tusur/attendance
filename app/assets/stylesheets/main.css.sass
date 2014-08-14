@@ -70,7 +70,7 @@ h4
     border-left: 4px solid transparent
     border-right: 4px solid transparent
     border-top: 4px solid
-    margin: 0 0 0 2px
+    margin: 0 0 0 6px
     vertical-align: middle
 
 // Lessons -->
@@ -398,15 +398,20 @@ td
       +border-bottom-left-radius(2px)
       +border-top-left-radius(2px)
       color: #005582
+      border-right: 1px solid #dedede
 
     &.active
       +border-bottom-left-radius(2px)
       +border-top-left-radius(2px)
       border: 1px solid #dedede
-      border-right-color: #fff
+      border-right: none
+      background: #fff
 
       a
         color: #000
+
+        &:hover
+          border-right: none
 
 .tab-content
   border-top: 1px solid #dedede
