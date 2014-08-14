@@ -1,5 +1,9 @@
 <%= render 'calendar' %>
 
+<%= content_for :page_title do %>
+  <%= page_title(@group.number) %>
+<% end %>
+
 <div class="table-responsive">
   <table class="table table-condensed table-bordered table-lessons">
     <thead>

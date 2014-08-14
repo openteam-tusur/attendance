@@ -42,8 +42,8 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'group_leader'
-        role_item.item :statistics, I18n.t('page_title.groups.show', :title => current_user.leaded_groups.first),   group_leader_group_path
-        role_item.item :lessons,    I18n.t('page_title.lessons.index'),                                             group_leader_lessons_path
+        role_item.item :statistics, I18n.t('page_title.groups.title'),   group_leader_group_path
+        role_item.item :lessons,    I18n.t('page_title.lessons.title'),  group_leader_lessons_path
       end
 
       if role == 'lecturer'

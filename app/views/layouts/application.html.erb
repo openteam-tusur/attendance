@@ -14,7 +14,8 @@
       <div class='container'>
         <%= render 'breadcrumbs' %>
 
-        <h1><%= page_title %></h1>
+        <h1><%= content_for?(:page_title) ? yield(:page_title) : page_title %></h1>
+
         <%= yield %>
       </div>
     </div>
