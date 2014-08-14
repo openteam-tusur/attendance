@@ -15,7 +15,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'curator'
-        role_item.item :groups, I18n.t('page_title.groups.index'), curator_groups_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        curator_groups_path
       end
 
       if role == 'dean'
@@ -31,30 +31,30 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'education_department'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),  education_department_permissions_path do |permission|
-          permission.item :new,       I18n.t('page_title.permissions.new'),    new_education_department_miss_path
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path do |permission|
+          permission.item :new,       I18n.t('page_title.permissions.new'),     new_education_department_miss_path
         end
-        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),       education_department_misses_path do |miss|
-          miss.item :new,             I18n.t('page_title.misses.new'),         new_education_department_miss_path
-          miss.item :edit,            I18n.t('page_title.misses.edit'),        edit_education_department_miss_path(miss)
+        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        education_department_misses_path do |miss|
+          miss.item :new,             I18n.t('page_title.misses.new'),          new_education_department_miss_path
+          miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_education_department_miss_path(miss)
         end
-        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),  education_department_disruptions_path
-        role_item.item :statistics,   I18n.t('page_title.statistics.index'),   education_department_statistics_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
+        role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path
       end
 
       if role == 'group_leader'
-        role_item.item :statistics, I18n.t('page_title.groups.title'),   group_leader_group_path
-        role_item.item :lessons,    I18n.t('page_title.lessons.title'),  group_leader_lessons_path
+        role_item.item :statistics,   I18n.t('page_title.groups.title'),        group_leader_group_path
+        role_item.item :lessons,      I18n.t('page_title.lessons.title'),       group_leader_lessons_path
       end
 
       if role == 'lecturer'
-        role_item.item :disruptions, I18n.t('page_title.disruptions.index'), lecturer_disruptions_path
-        role_item.item :groups,      I18n.t('page_title.groups.index'),      lecturer_groups_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   lecturer_disruptions_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        lecturer_groups_path
       end
 
       if role == 'subdepartment'
-        role_item.item :disruptions,   I18n.t('page_title.disruptions.index'),  subdepartment_disruptions_path
-        role_item.item :statistics,    I18n.t('page_title.groups.index'),       subdepartment_groups_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   subdepartment_disruptions_path
+        role_item.item :statistics,   I18n.t('page_title.groups.index'),        subdepartment_groups_path
       end
 
       end if current_user.send("#{role}?")
