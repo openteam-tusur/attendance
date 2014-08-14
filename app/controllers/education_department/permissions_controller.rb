@@ -24,7 +24,7 @@ class EducationDepartment::PermissionsController < AuthController
 
   def create
     create!{
-      redirect_to education_department_permissions_path(:for_role => params[:for_role]) and return
+      redirect_to education_department_permissions_path(:for_role => @permission.role) and return
     }
   end
 

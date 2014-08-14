@@ -11,6 +11,10 @@ class Administrator::PermissionsController < AuthController
     }
   end
 
+  def create
+    create!{ redirect_to administrator_permissions_path(:for_role => @permission.role) and return }
+  end
+
   def destroy
     destroy!{ render :nothing => true and return }
   end

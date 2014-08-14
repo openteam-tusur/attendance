@@ -12,6 +12,12 @@ class Dean::PermissionsController < AuthController
     }
   end
 
+  def create
+    create!{
+      redirect_to dean_permissions_path(:for_role => @permission.role) and return
+    }
+  end
+
   def destroy
     destroy!{ render :nothing => true and return }
   end
