@@ -16,6 +16,12 @@ class EducationDepartment::PermissionsController < AuthController
 
   before_filter :build_context, :on => [:new, :create]
 
+  def index
+    index!{
+      @permissions = Kaminari.paginate_array(@permissions).page(params[:page]).per(10)
+    }
+  end
+
   def create
     create!{
       redirect_to education_department_permissions_path(:for_role => params[:for_role]) and return

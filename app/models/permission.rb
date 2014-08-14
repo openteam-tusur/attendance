@@ -22,6 +22,7 @@ class Permission < ActiveRecord::Base
   validates_email_format_of :email, :check_mx => true, :allow_nil => true
 
   scope :for_context, ->(context) { where(:context_type => context)}
+
   def with_user?
     self.user.present?
   end
