@@ -1,7 +1,9 @@
-<%= @group.number %>
+<%= content_for :page_title do %>
+  <h1 class="text-center"><%= page_title(@group.number) %></h1>
+<% end %>
 
-<ul>
-  <% @group.students.each do |student| %>
-    <li><%= student %></li>
-  <% end %>
-</ul>
+<%= line_chart Statistic::Group.new(@group).attendance_by_date %>
+
+<h1 class="text-center">Посещаемость студентов группы <%= @group.number %></h1>
+
+<%= bar_chart  Statistic::Group.new(@group).attendance_by_students %>
