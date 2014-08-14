@@ -1,18 +1,20 @@
-<table>
-  <thead>
-    <tr>
-      <td>№ группы</td>
-      <td>ФИО старосты</td>
-      <td>Не заполнено дней</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @groups.each do |group| %>
+<div class="table-responsive">
+  <table class="table table-condensed table-striped">
+    <thead>
       <tr>
-        <td><%= link_to group, curator_group_path(group) %></td>
-        <td><%= group.group_leader %></td>
-        <td><%= group.absent_days %></td>
+        <td>№ группы</td>
+        <td>ФИО старосты</td>
+        <td>Не заполнено дней</td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= link_to group, curator_group_path(group) %></td>
+          <td><%= group.group_leader %></td>
+          <td><%= group.absent_days %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
