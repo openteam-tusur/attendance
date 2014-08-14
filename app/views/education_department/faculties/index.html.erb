@@ -1,2 +1,8 @@
+<%= content_for :page_title do %>
+  <h1 class="text-center">Статистика посещаемости по университету</h1>
+<% end %>
+
 <%= line_chart Statistic::Whole.new.attendance_by_date %>
+
+<h1 class="text-center">Статистика посещаемости по всем группам</h1>
 <%= bar_chart  Statistic::Whole.new.attendance_by_faculties %>

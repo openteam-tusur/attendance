@@ -1,5 +1,5 @@
 <%= content_for :page_title do %>
-  <h1 class="text-center">Статистика посещаемости всех групп факультета <%= @faculty %></h1>
+  <h1 class="text-center">Статистика посещаемости факультета <%= @faculty %></h1>
 <% end %>
 
 <%= line_chart  Statistic::Faculty.new(@faculty).attendance_by_date %>

@@ -1,3 +1,8 @@
-<%= line_chart  Statistic::Subdepartment.new(@subdepartment).attendance_by_date %>
-<%= bar_chart   Statistic::Subdepartment.new(@subdepartment).attendance_by_groups %>
+<%= content_for :page_title do %>
+  <h1 class="text-center">Статистика посещаемости кафедры <%= @subdepartment %></h1>
+<% end %>
 
+<%= line_chart  Statistic::Subdepartment.new(@subdepartment).attendance_by_date %>
+
+<h1 class="text-center">Статистика посещаемости по группам кафедры <%= @faculty %></h1>
+<%= bar_chart   Statistic::Subdepartment.new(@subdepartment).attendance_by_groups %>
