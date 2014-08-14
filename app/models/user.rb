@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
     Permission.where(:email => self.email).each {|p| p.update_attribute(:user_id, self.id) }
   end
 
+  def faculty_groups
+    return if permissions.for_role(:dean).empty?
+    permissions.for_role(:dean).first.context.groups
+  end
+
   def group
     return if permissions.for_role(:group_leader).empty?
     permissions.for_role(:group_leader).first.context

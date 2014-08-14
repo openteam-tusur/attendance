@@ -29,7 +29,7 @@ SimpleNavigation::Configuration.run do |navigation|
           miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_dean_miss_path(miss)
         end
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
-        role_item.item :statistics,   I18n.t('page_title.statistics.index'),    dean_statistics_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path
       end
 
       if role == 'education_department'
@@ -45,7 +45,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'group_leader'
-        role_item.item :statistics,   I18n.t('page_title.groups.title'),        group_leader_group_path
+        role_item.item :group,        I18n.t('page_title.groups.title'),        group_leader_group_path
         role_item.item :lessons,      I18n.t('page_title.lessons.title'),       group_leader_lessons_path
       end
 
@@ -56,7 +56,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
       if role == 'subdepartment'
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   subdepartment_disruptions_path
-        role_item.item :statistics,   I18n.t('page_title.groups.index'),        subdepartment_groups_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path
       end
 
       end if current_user.send("#{role}?")

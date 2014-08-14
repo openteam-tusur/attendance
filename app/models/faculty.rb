@@ -4,6 +4,7 @@ class Faculty < ActiveRecord::Base
   has_many :lecturers,      :through => :subdepartments
   has_many :realizes,       :through => :lecturers
   has_many :groups,         :through => :subdepartments
+  has_many :presences,      :through => :groups
 
   validates_uniqueness_of :title, :scope => :abbr
   normalize_attribute :title

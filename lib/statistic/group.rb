@@ -5,7 +5,7 @@ class Statistic::Group < Statistic::Base
 
   def attendance_by_students
     res = {}
-    context.students.map do |student|
+    context.students.each do |student|
       res.merge! student.to_s => Statistic::Student.new(student).total_attendance
     end
     res

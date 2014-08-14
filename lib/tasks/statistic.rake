@@ -23,6 +23,18 @@ namespace :statistic do
     end
   end
 
+  desc 'Подсчет статистки для факультетов'
+  task :faculties => :environment do
+    Faculty.actual.each do |faculty|
+      presences = faculty.presences
+        .joins(:lesson   => :realizes)
+        .where(:lessons  => { :deleted_at => nil })
+        .where(:realizes => { :state => 'was' })
+        .where.not(:presences => { :state => nil })
+      Statistic::Faculty.new(faculty).calculate_attendance(presences)
+    end
+  end
+
   desc 'Рассчитать всю статистику'
-  task :all => [:students, :groups]
+  task :all => [:students, :groups, :faculties]
 end
