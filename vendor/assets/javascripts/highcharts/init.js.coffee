@@ -1,4 +1,7 @@
 Highcharts.setOptions
+  chart:
+    zoomType: 'x'
+
   yAxis:
     max: 100
     labels:
