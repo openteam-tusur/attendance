@@ -1,0 +1,5 @@
+<% if current_page.last? %>
+  <%= content_tag :span, raw(t 'views.pagination.next'), :class => 'next' %>
+<% else %>
+  <%= link_to raw(t 'views.pagination.next'), url, :rel => 'next', :remote => remote, :class => 'next' %>
+<% end %>
