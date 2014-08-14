@@ -12,6 +12,7 @@ group :default do
   gem 'inherited_resources'
   gem 'jquery-rails'
   gem 'jquery-ui-rails'
+  gem 'kaminari'
   gem 'openteam-commons'
   gem 'pg'
   gem 'progress_bar'
