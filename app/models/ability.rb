@@ -26,7 +26,7 @@ class Ability
 
     if roles.include?('education_department') && namespace == :education_department
       can :read,   Statistic
-      can :manage, Permission, :context_type => ['Faculty', 'Subdepartment']
+      can :manage, Permission, :context_type => ['Faculty','Subdepartment']
       can :read,   Disruption
       can :manage, Miss,       :missing_type => ['Lecturer']
       can :read,   Lecturer
