@@ -47,6 +47,16 @@ namespace :statistic do
     end
   end
 
+  desc 'Подсчет статистки для университета'
+  task :whole => :environment do
+    presences = Presence
+        .joins(:lesson   => :realizes)
+        .where(:lessons  => { :deleted_at => nil })
+        .where(:realizes => { :state => 'was' })
+        .where.not(:presences => { :state => nil })
+    Statistic::Whole.new.calculate_attendance(presences)
+  end
+
   desc 'Рассчитать всю статистику'
-  task :all => [:students, :groups, :subdepartments, :faculties]
+  task :all => [:students, :groups, :subdepartments, :faculties, :whole]
 end
