@@ -29,6 +29,10 @@ class Lesson < ActiveRecord::Base
     realizes.select(:state).first.state == 'was'
   end
 
+  def actual?
+    deleted_at.nil?
+  end
+
   def lesson_time
     LessonTime.new(self.order_number, self.date_on).lesson_time
   end
