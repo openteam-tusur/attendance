@@ -11,7 +11,10 @@
       <% @groups.each do |group| %>
         <tr>
           <td><%= link_to group, curator_group_path(group) %></td>
-          <td><%= group.group_leader %></td>
+          <td>
+            <%= group.group_leader %>
+            <%= mail_to group.group_leader.try(:email), group.group_leader.try(:email) %>
+          </td>
           <td><%= group.absent_days %></td>
         </tr>
       <% end %>
