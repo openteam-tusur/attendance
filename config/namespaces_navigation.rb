@@ -4,6 +4,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
     Permission.available_roles.each do |role|
       primary.item role.to_sym, I18n.t("role_names.#{role}"), [role.to_sym, :root] do |role_item|
+      primary.dom_class = 'dropdown-menus'
 
       if role == 'administrator'
         role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path do |permission|

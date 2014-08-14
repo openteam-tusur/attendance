@@ -63,6 +63,16 @@ h4
   vertical-align: top
   white-space: nowrap
 
+.dropdown-menus > .dropdown > a
+  &:after
+    +inline-block
+    content: ''
+    border-left: 4px solid transparent
+    border-right: 4px solid transparent
+    border-top: 4px solid
+    margin: 0 0 0 2px
+    vertical-align: middle
+
 // Lessons -->
 .table-lessons
   width: 900px
@@ -384,8 +394,6 @@ td
     margin: 0 -1px 0 0
 
   li
-    margin: 3px 0
-
     a:hover
       +border-bottom-left-radius(2px)
       +border-top-left-radius(2px)
