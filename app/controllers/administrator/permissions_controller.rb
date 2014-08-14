@@ -5,6 +5,12 @@ class Administrator::PermissionsController < AuthController
 
   before_filter :build_context, :on => [:new, :create]
 
+  def index
+    index!{
+      @permissions = Kaminari.paginate_array(@permissions).page(params[:page]).per(10)
+    }
+  end
+
   def destroy
     destroy!{ render :nothing => true and return }
   end

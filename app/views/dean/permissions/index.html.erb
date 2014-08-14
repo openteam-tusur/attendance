@@ -15,6 +15,7 @@
     <ul class="list ajaxed">
       <%= render @permissions %>
     </ul>
+    <%= paginate @permissions %>
   <% else %>
     <ul class="list">
       <li class="empty">Нет ни одной роли</li>
