@@ -7,7 +7,7 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.dom_class = 'dropdown-menus'
 
       if role == 'administrator'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path do |permission|
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path(:for_role => (current_namespace == :administrator && params[:for_role]) || :administrator) do |permission|
           permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
         end
         role_item.item :sync,         I18n.t('page_title.syncs.index'),         administrator_syncs_path
@@ -21,7 +21,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'dean'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path do |permission|
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path(:for_role => (current_namespace == :dean && params[:for_role]) || :group_leader) do |permission|
           permission.item :new,       I18n.t('page_title.permissions.new'),     new_dean_permission_path
         end
         role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        dean_misses_path do |miss|
@@ -33,7 +33,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'education_department'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path do |permission|
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(:for_role => (current_namespace == :education_department && params[:for_role]) || :dean) do |permission|
           permission.item :new,       I18n.t('page_title.permissions.new'),     new_education_department_miss_path
         end
         role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        education_department_misses_path do |miss|
