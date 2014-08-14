@@ -1,3 +1,5 @@
-<% @groups.each do |group| %>
-  <%= link_to group, subdepartment_group_path(group) %>
-<% end %>
+<ul class="list-inline">
+  <% @groups.each do |group| %>
+    <li><%= link_to group, subdepartment_group_path(group) %></li>
+  <% end %>
+</ul>
