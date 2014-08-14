@@ -127,3 +127,8 @@ ru:
       '6': '18:30 - 20:05'
       '7': '20:15 - 21:50'
 
+  views:
+    pagination:
+      next: '&gt;'
+      previous: '&lt;'
+      truncate: ...
