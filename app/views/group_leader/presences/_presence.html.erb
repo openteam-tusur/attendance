@@ -1,1 +1,5 @@
-<%= link_to presence, change_group_leader_lesson_presence_path(lesson, presence), :remote => true, :class => "#{presence.state}" %>
+<%= link_to presence,
+            change_group_leader_lesson_presence_path(lesson, presence),
+            :remote => true,
+            :title => 'Изменить',
+            :class => "#{presence.state}" %>
