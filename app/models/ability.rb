@@ -20,7 +20,7 @@ class Ability
       can :read,   Disruption
       can :manage, Miss,       :missing_type => ['Student']
       can :manage, Permission, :context_type => ['Group']
-      can :read,   Statistic
+      can :read,   Group
       can :read,   Student
     end
 

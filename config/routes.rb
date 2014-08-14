@@ -29,9 +29,9 @@ Attendance::Application.routes.draw do
     resources :disruptions, :only => [:index]
     resources :misses, :except => [:show]
     resources :permissions
-    resources :statistics
+    resources :groups,      :only => [:index, :show]
     get 'students' => 'students#index'
-    root 'statistics#index'
+    root 'groups#index'
   end
 
   namespace :education_department do
@@ -40,7 +40,7 @@ Attendance::Application.routes.draw do
     resources :faculties,   :only => [:index, :show]
     resources :misses, :except => [:show]
     get 'lecturers' => 'lecturers#index'
-    root 'statistics#index'
+    root 'faculties#index'
   end
 
   namespace :group_leader do
