@@ -1,21 +1,3 @@
 <%= @group.number %>
-
-<%= line_chart @group
-  .presences
-  .joins(:lesson => :realizes)
-  .where(:lessons => { :deleted_at => nil})
-  .where(:realizes => { :state => 'was'})
-  .where.not(:presences => { :state => nil})
-  .group_by{|p| p.lesson.date_on }.map{|k,v| [k, v.select{|p| p.state == 'was'}.count*100.0/v.count]}, :height => '400px', :library => { :chart => { :zoomType => 'x'}} %>
-
-<%= bar_chart  @group.students.actual.map{|s| [s.to_s, s.presences
-  .joins(:lesson => :realizes)
-  .where(:presences => {:state => 'was' })
-  .where(:lessons => { :deleted_at => nil })
-  .where(:realizes => { :state => 'was' })
-  .count*100.0/s.presences
-  .joins(:lesson => :realizes)
-  .where.not(:presences => {:state => nil })
-  .where(:lessons => { :deleted_at => nil })
-  .where(:realizes => { :state => 'was' })
-  .count]} %>
+<%= line_chart Statistic::Group.new(@group).attendance_by_date, :height => '400px', :library => { :chart => { :zoomType => 'x' } } %>
+<%= bar_chart  Statistic::Group.new(@group).attendance_by_students %>

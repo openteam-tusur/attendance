@@ -26,6 +26,10 @@ class Student < Person
     super(:only => :id).merge(:label => info, :value => info)
   end
 
+  def actual?
+    deleted_at.nil?
+  end
+
   def actual_group
     groups.where(:memberships => { :deleted_at => nil }).first
   end

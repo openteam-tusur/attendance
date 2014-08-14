@@ -13,7 +13,7 @@ class Realize < ActiveRecord::Base
   end
 
   def missed_by_cause?
-    self.lecturer.misses.by_date(self.lesson.lesson_time).any?
+    lecturer.misses.by_date(lesson.lesson_time).any?
   end
 
   private

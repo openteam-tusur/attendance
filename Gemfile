@@ -16,6 +16,7 @@ group :default do
   gem 'pg'
   gem 'progress_bar'
   gem 'rails',                  '4.0.8'
+  gem 'rails-observers'
   gem 'redis',                  '= 3.0.7'
   gem 'redis-rails'
   gem 'rest-client'

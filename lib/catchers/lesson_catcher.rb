@@ -38,8 +38,7 @@ class LessonCatcher
             raise "Не найдена группа #{group_number}"
           end
 
-          Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date).tap do |l|
-            l.group        = group
+          Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date, :group_id => group.id).tap do |l|
             l.classroom    = lesson['classroom']
             l.kind         = lesson['kind']
             l.order_number = lesson['order_number']
