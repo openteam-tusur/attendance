@@ -26,10 +26,11 @@ Attendance::Application.routes.draw do
   end
 
   namespace :dean do
-    resources :disruptions, :only => [:index]
-    resources :misses, :except => [:show]
+    resources :disruptions,   :only => [:index]
+    resources :misses,        :except => [:show]
     resources :permissions
-    resources :groups,      :only => [:index, :show]
+    resources :groups,        :only => [:index, :show]
+    resources :group_leaders, :only => [:index]
     get 'students' => 'students#index'
     root 'groups#index'
   end

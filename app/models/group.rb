@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   has_many   :students,     -> { order('surname') }, :through => :memberships, :source => :person, :source_type => 'Person', :class_name => 'Student'
   has_many   :lessons,      :dependent => :destroy
   has_many   :presences,    :through => :lessons
+  has_many   :group_leaders, -> { where(:permissions => { :role => :group_leader }) }, :through => :permissions, :source => :user
 
   validates_presence_of :number
   normalize_attribute :number
@@ -20,6 +21,6 @@ class Group < ActiveRecord::Base
   end
 
   def absent_days
-    lessons.unfilled.by_semester.map(&:date_on).uniq.count
+    lessons.actual.realized.unfilled.by_semester.map(&:date_on).uniq.count
   end
 end
