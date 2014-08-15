@@ -3,6 +3,7 @@
                     :wrapper => :horizontal_form do |f| %>
 
   <%= f.input :name, :input_html => { :class => 'students_autocomplete', :value => @miss.missing.try(:info)}, :label => 'ФИО' %>
+  <%= content_tag :div, f.error(:missing_id), :class => :error %>
   <%= f.input :missing_id, :as => :hidden %>
 
   <%= f.input :starts_at,
@@ -16,6 +17,7 @@
               :wrapper_html => { :class => 'end-miss' } %>
 
   <%= f.input :note %>
+  <%= content_tag :div, f.error(:dates_in_wrong_order), :class => :error %>
 
   <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
   <%= link_to 'Отмена', dean_misses_path, :class => 'btn btn-default btn-sm' %>
