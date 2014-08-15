@@ -7,6 +7,7 @@ class GroupLeader::RealizesController < AuthController
 
   def change
     @lesson.realizes.change_state
+    @lesson.presences.update_all(:state => nil)
     redirect_to group_leader_lessons_url(:by_date => @lesson.date_on)
   end
 
