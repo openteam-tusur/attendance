@@ -1,0 +1,1 @@
+require 'openteam/capistrano/deploy'
