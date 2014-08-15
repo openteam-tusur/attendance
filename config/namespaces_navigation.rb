@@ -29,6 +29,7 @@ SimpleNavigation::Configuration.run do |navigation|
           miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_dean_miss_path(miss)
         end
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
+        role_item.item :group_leaders,I18n.t('page_title.group_leaders.index'), dean_group_leaders_path
         role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path
       end
 

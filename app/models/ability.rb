@@ -22,6 +22,7 @@ class Ability
       can :manage, Permission, :context_type => ['Group']
       can :read,   Group
       can :read,   Student
+      can :read,   GroupLeader
     end
 
     if roles.include?('education_department') && namespace == :education_department
