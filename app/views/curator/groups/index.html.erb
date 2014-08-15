@@ -13,7 +13,7 @@
           <td><%= link_to group, curator_group_path(group) %></td>
           <td>
             <%= group.group_leader %>
-            <%= mail_to group.group_leader.try(:email), group.group_leader.try(:email) %>
+            <%= mail_to group.group_leader.try(:email) %>
           </td>
           <td><%= group.absent_days %></td>
         </tr>
