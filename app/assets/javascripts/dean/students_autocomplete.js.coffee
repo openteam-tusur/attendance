@@ -1,5 +1,4 @@
 $ ->
-  console.log 'init'
   $('.students_autocomplete').autocomplete
     source: '/dean/students'
     minLength: 2
