@@ -5,7 +5,9 @@ class Student < Person
   has_many :presences,   :dependent => :destroy
   has_many :lessons,     :through => :presences
 
-  has_many :misses,         :as => :missing, :dependent => :destroy
+
+
+  has_many :misses,      -> { where(:missing_type => 'Student') }, :class_name => 'Miss', :foreign_key => :missing_id, :dependent => :destroy
 
   before_create :set_secure_id
 
