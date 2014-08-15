@@ -15,7 +15,7 @@ class StudentCatcher
 
     import
 
-    #delete_marked_students
+    delete_marked_students
   end
 
   private
