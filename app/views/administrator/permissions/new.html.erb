@@ -1,3 +1,7 @@
+<%= content_for :page_title do %>
+  <h1>Добавление права доступа &laquo;<%= @permission.role_text %>&raquo;</h1>
+<% end %>
+
 <%= simple_form_for [:administrator, @permission],
                     :url => administrator_permissions_path(@permission, :for_role => params[:for_role]),
                     :html => { :class => 'form-horizontal form-permission' },

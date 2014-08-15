@@ -1,3 +1,7 @@
+<%= content_for :page_title do %>
+  <h1>Управление правами доступа факультета <%= current_user.faculties.first %></h1>
+<% end %>
+
 <div class="tab-sidebar">
   <ul class='nav'>
     <% Permission.available_roles_for(:dean).each do |role| %>

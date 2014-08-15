@@ -1,1 +1,5 @@
+<%= content_for :page_title do %>
+  <h1>Сорванные преподавателями занятия на кафедре <%= current_user.subdepartments.first %></h1>
+<% end %>
+
 <%= render :partial => 'disruptions/list' %>
