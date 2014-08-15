@@ -38,7 +38,7 @@ class Administrator::PermissionsController < AuthController
           @context_type = 'Group'
           @context_ids  = Group.order('number')
         when 'lecturer'
-          @context_type = 'Lecturer'
+          @context_type = 'Person'
           @context_ids  = Lecturer.order('surname')
         when 'subdepartment'
           @context_type = 'Subdepartment'
