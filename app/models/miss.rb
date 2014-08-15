@@ -7,8 +7,9 @@ class Miss < ActiveRecord::Base
   validates_presence_of :missing_id, :message => 'ФИО не может быть пустым'
   validate :dates_order, :unless => 'starts_at.nil?' && 'ends_at.nil?'
 
-  scope :for_missing, ->(type) { where(:missing_type => type) }
-  scope :by_date,     ->(date) { where('starts_at <= :date and ends_at >= :date', :date => date) }
+  scope :for_missing,  ->(type) { where(:missing_type => type) }
+  scope :by_date,      ->(date) { where('starts_at <= :date and ends_at >= :date', :date => date) }
+  scope :ordered,      ->(_)    { order('created_at') }
 
   def absent_period
     "с #{I18n.l(self.starts_at)} по #{I18n.l(self.ends_at)}"
