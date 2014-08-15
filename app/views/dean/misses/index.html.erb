@@ -1,3 +1,7 @@
+<%= content_for :page_title do %>
+  <h1>Уважительные причины пропуска занятий факультета <%= current_user.faculties.first %></h1>
+<% end %>
+
 <%= link_to "Добавить уважительную причину", new_dean_miss_path, :class => 'btn btn-sm btn-primary' %>
 
 <div class="table-responsive">
