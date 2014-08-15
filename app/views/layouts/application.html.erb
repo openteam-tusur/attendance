@@ -12,8 +12,6 @@
       <%= render 'navigation' %>
 
       <div class='container'>
-        <%= render 'breadcrumbs' %>
-
         <% if content_for?(:page_title) %>
           <%= yield(:page_title) %>
         <% else %>
