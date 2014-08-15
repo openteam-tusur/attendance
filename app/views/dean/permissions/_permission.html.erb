@@ -6,6 +6,7 @@
                 dean_permission_path(permission, :for_role => permission.role),
                 :method => :delete,
                 :remote => true,
+                :data => { :confirm => t('confirm.delete') },
                 :class => 'js-delete' %>
   </span>
 
