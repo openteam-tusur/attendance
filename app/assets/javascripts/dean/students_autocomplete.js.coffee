@@ -1,6 +1,6 @@
 $ ->
   $('.students_autocomplete').autocomplete
-    source: '/dean/students'
+    source: '/dean/students/search'
     minLength: 2
     select: (event, ui) ->
       $('#miss_missing_id').val(ui.item.id)

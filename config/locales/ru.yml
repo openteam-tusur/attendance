@@ -81,6 +81,7 @@ ru:
       index:  'Поиск: %{title}'
 
     students:
+      index:  Студенты с пропусками больше 20%
       show:   'Статистика посещаемости %{title}'
 
     syncs:

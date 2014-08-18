@@ -31,6 +31,7 @@ SimpleNavigation::Configuration.run do |navigation|
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
         role_item.item :group_leaders,I18n.t('page_title.group_leaders.index'), dean_group_leaders_path
         role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path
+        role_item.item :students,     I18n.t('page_title.students.index'),      dean_students_path
       end
 
       if role == 'education_department'
