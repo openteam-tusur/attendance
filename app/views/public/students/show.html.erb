@@ -1,2 +1,28 @@
-Таблица с посещаемостью студента по семестрам
-<%= @student %>
+<%= content_for :page_title do %>
+  <h1 class="text-center">Таблица с посещаемостью студента <%= @student %></h1>
+<% end %>
+
+<%= line_chart  Statistic::Student.new(@student).attendance_by_date %>
+
+<h1 class="text-center">Сводная таблица пропусков занятий</h1>
+<div class="table-responsive">
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <td>Дисциплина</td>
+        <td>Дата</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @omissions.each do |omission| %>
+        <tr>
+          <td>
+            <%= omission.lesson.discipline.title %>
+            <%= " (#{omission.lesson.kind_abbr})" %>
+          </td>
+          <td><%= I18n.l(omission.lesson.date_on)  %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
