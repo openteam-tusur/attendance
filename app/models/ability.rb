@@ -21,7 +21,7 @@ class Ability
       can :manage, Miss,       :missing_type => ['Student']
       can :manage, Permission, :context_type => ['Group']
       can :read,   Group
-      can :read,   Student
+      can [:read, :search],   Student
       can :read,   GroupLeader
     end
 

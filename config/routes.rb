@@ -31,7 +31,9 @@ Attendance::Application.routes.draw do
     resources :permissions
     resources :groups,        :only => [:index, :show]
     resources :group_leaders, :only => [:index]
-    get 'students' => 'students#index'
+    resources :students,      :only => [:index] do
+      get 'search', :on => :collection
+    end
     root 'groups#index'
   end
 

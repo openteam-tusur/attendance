@@ -18,6 +18,10 @@ class Student < Person
     string :deleted_at
   end
 
+  def slacker?
+    Statistic::Student.new(self).total_attendance < 80
+  end
+
   def info
     "#{self.surname} #{self.name} #{actual_group.try(:number)}"
   end

@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <td>ФИО студента</td>
+      <td>Номер группы</td>
+      <td>Посещено занятий, %</td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student %></td>
+      <td><%= student.actual_group %></td>
+      <td><%= Statistic::Student.new(student).total_attendance %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
