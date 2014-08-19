@@ -1,7 +1,6 @@
 class Dean::GroupsController < AuthController
   include FilterParams
   include DateRange
-  actions :index
 
   def index
     @faculty = current_user.faculties.first

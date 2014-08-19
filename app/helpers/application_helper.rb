@@ -44,8 +44,8 @@ module ApplicationHelper
 
           f << content_tag(:form, :class => 'date-range form-inline input-group hidden', :action => '') do
             ''.tap do |form|
-              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:from] : nil, :name => 'filter[from]', :class => 'form-control input-sm datepicker')
-              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:to]   : nil, :name => 'filter[to]', :class => 'form-control input-sm rounded datepicker')
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:from] : nil, :name => 'filter[from]', :class => 'form-control input-sm datepicker', :placeholder => 'С')
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:to]   : nil, :name => 'filter[to]', :class => 'form-control input-sm rounded datepicker', :placeholder => 'По')
               form << tag(:input, :type => :submit, :value => 'Фильтровать', :class => 'btn btn-default btn-sm')
             end.html_safe
           end
