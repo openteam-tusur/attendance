@@ -2,7 +2,12 @@
   <h1 class="text-center">Статистика посещаемости факультета <%= @faculty %></h1>
 <% end %>
 
-<%= line_chart  Statistic::Faculty.new(@faculty).attendance_by_date %>
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<%= line_chart @attendance_by_date %>
 
 <h1 class="text-center">Статистика посещаемости по группам факультета <%= @faculty %></h1>
-<%= bar_chart   Statistic::Faculty.new(@faculty).attendance_by_groups %>
+
+<%= bar_chart  @attendance_by_groups %>
