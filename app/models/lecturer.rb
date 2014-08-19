@@ -7,8 +7,6 @@ class Lecturer < Person
   has_many :lessons,        :through => :realizes
   has_many :groups,         -> { uniq.order('groups.number') }, :through => :lessons
 
-  has_many :misses,         -> { where(:missing_type => 'Lecturer') }, :class_name => 'Miss', :foreign_key => :missing_id, :dependent => :destroy
-
   searchable :auto_index => false do
     string :info
     string :deleted_at

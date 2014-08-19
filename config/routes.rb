@@ -41,8 +41,6 @@ Attendance::Application.routes.draw do
     resources :disruptions
     resources :permissions, :only => [:index, :new, :create, :destroy]
     resources :faculties,   :only => [:index, :show]
-    resources :misses, :except => [:show]
-    get 'lecturers' => 'lecturers#index'
     root 'faculties#index'
   end
 
