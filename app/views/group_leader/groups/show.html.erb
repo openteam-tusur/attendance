@@ -2,7 +2,9 @@
   <h1 class="text-center"><%= page_title(@group.number) %></h1>
 <% end %>
 
-<%= date_filters %>
+<div class="filters">
+  <%= date_filters %>
+</div>
 
 <%= line_chart @attendance_by_date %>
 

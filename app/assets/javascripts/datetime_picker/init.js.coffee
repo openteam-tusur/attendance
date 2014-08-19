@@ -1,5 +1,5 @@
 $ ->
-  $('input.datetime_picker').datetimepicker
+  $('.datetime_picker').datetimepicker
     changeMonth: true
     changeYear: true
     addSliderAccess: true
@@ -7,3 +7,6 @@ $ ->
       isRTL: false
       touchonly: false
 
+  $('.datepicker').datepicker
+    changeMonth: false
+    changeYear: false

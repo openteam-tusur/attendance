@@ -34,6 +34,7 @@ ru:
     all:     Всё
     from_semester_begin: С начала семестра
     last_week:           Прошлая неделя
+    date_range:          Вручную
 
   site: Электронный журнал посещаемости ТУСУР
 
