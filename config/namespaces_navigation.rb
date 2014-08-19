@@ -35,13 +35,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'education_department'
-        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(:for_role => (current_namespace == :education_department && params[:for_role]) || :dean) do |permission|
-          permission.item :new,       I18n.t('page_title.permissions.new'),     new_education_department_miss_path
-        end
-        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        education_department_misses_path do |miss|
-          miss.item :new,             I18n.t('page_title.misses.new'),          new_education_department_miss_path
-          miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_education_department_miss_path(miss)
-        end
+        role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(:for_role => (current_namespace == :education_department && params[:for_role]) || :dean)
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
         role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path(:filter => :last_week)
       end
