@@ -1,19 +1,22 @@
-<table>
-  <thead>
-    <tr>
-      <td>ФИО студента</td>
-      <td>Номер группы</td>
-      <td>Посещено занятий, %</td>
-    </tr>
-  </thead>
-  <tbody>
-  <% @students.each do |student| %>
-    <tr>
-      <td><%= student %></td>
-      <td><%= student.actual_group %></td>
-      <td><%= Statistic::Student.new(student).total_attendance %></td>
-    </tr>
-  <% end %>
-  </tbody>
-  <%= paginate @students %>
-</table>
+<div class="table-responsive">
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <td>ФИО студента</td>
+        <td>Номер группы</td>
+        <td>Посещено занятий, %</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= student %></td>
+          <td><%= student.actual_group %></td>
+          <td><%= Statistic::Student.new(student).total_attendance(from: semester_begin, to: last_week_end) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate @students %>
