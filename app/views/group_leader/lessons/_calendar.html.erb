@@ -12,7 +12,7 @@
 
   <div class="calendar-viewport">
     <div class='calendar'>
-      <% (@date.beginning_of_year..@date.end_of_year).group_by(&:month).each do |month, days| %>
+      <% calendar_months(@date).each do |month, days| %>
         <div class="month<%= ' current' if month == @date.month %>">
           <div class="month-title">
             <%= I18n.t('date.month_names')[month] %>
