@@ -1,7 +1,7 @@
 module DateRange
   def semester_begin
-    if current_month >= 6
-      Date.new(current_year, 6, 1)
+    if current_month > 6
+      Date.new(current_year, 7, 1)
     else
       Date.new(current_year, 1, 1)
     end
