@@ -3,6 +3,6 @@ class Subdepartment::DisruptionsController < AuthController
 
   def index
     @subdepartment = current_user.subdepartments.first
-    @disruptions = @subdepartment.realizes.wasnt.with_lessons.ordered_by_lecturer.group_by(&:lecturer)
+    @disruptions = Kaminari.paginate_array(@subdepartment.realizes.wasnt.with_lessons.ordered_by_lecturer.group_by(&:lecturer)).page(params[:page]).per(10)
   end
 end
