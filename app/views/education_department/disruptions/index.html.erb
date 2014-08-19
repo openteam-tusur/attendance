@@ -8,7 +8,6 @@
         <tr>
           <td>Преподаватель / Дисциплина</td>
           <td>Дата</td>
-          <td>Уважительная причина</td>
         </tr>
       </thead>
       <tbody>
@@ -24,9 +23,6 @@
                 <%= "гр. #{realize.lesson.group}" %>
               </td>
               <td><%= I18n.l(realize.lesson.date_on) %></td>
-              <td>
-                <%= realize.missed_by_cause? ? content_tag(:span, 'Да') : content_tag(:span, 'Нет', :class => 'no') %>
-              </td>
             </tr>
           <% end %>
         <% end %>
