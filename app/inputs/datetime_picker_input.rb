@@ -1,6 +1,6 @@
 class DatetimePickerInput < SimpleForm::Inputs::StringInput
   def input_html_classes
-    super.push('datetime_picker')
+    super.push('datetime_picker string form-control')
   end
 
   def input
