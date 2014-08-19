@@ -2,8 +2,12 @@
   <h1 class="text-center"><%= page_title(@group.number) %></h1>
 <% end %>
 
-<%= line_chart Statistic::Group.new(@group).attendance_by_date %>
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<%= line_chart @attendance_by_date %>
 
 <h1 class="text-center">Посещаемость студентов группы <%= @group.number %></h1>
 
-<%= bar_chart  Statistic::Group.new(@group).attendance_by_students %>
+<%= bar_chart  @attendance_by_students %>
