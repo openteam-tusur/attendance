@@ -34,22 +34,23 @@ module ApplicationHelper
   def date_filters
     param = params.try(:[], :filter)
     ''.tap do |s|
-      s << content_tag(:hr)
-      s << content_tag(:div, :class => 'filters') do
+      s << content_tag(:div, :class => 'tabs btn-group') do
         ''.tap do |f|
           %w(all from_semester_begin last_week).each do |item|
-            f << link_to(I18n.t("filter_labels.#{item}"), params.merge(:filter => item), :class => "#{param == item ? 'current_filter' : 'stub'}")
+            f << link_to(I18n.t("filter_labels.#{item}"), params.merge(:filter => item), :class => "btn #{item} #{param == item ? 'active' : 'stub'}")
           end
-          f << content_tag(:form, :class => 'date_range_filter', :action => '') do
+
+          f << link_to(I18n.t("filter_labels.date_range"), '#', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}", :remote => true)
+
+          f << content_tag(:form, :class => 'date-range form-inline input-group hidden', :action => '') do
             ''.tap do |form|
-              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:from] : nil, :name => 'filter[from]')
-              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:to]   : nil, :name => 'filter[to]')
-              form << tag(:input, :type => :submit, :value => 'Фильтровать')
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:from] : nil, :name => 'filter[from]', :class => 'form-control input-sm datepicker')
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:to]   : nil, :name => 'filter[to]', :class => 'form-control input-sm rounded datepicker')
+              form << tag(:input, :type => :submit, :value => 'Фильтровать', :class => 'btn btn-default btn-sm')
             end.html_safe
           end
         end.html_safe
       end
-      s << content_tag(:hr)
     end.html_safe
   end
 end

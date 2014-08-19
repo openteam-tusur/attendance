@@ -13,3 +13,4 @@
 //= require tusur_header
 //= require highcharts
 //= require ajaxed_delete
+//= require filters
