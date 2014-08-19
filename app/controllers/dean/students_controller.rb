@@ -1,6 +1,8 @@
 require 'student_searcher'
 
 class Dean::StudentsController < AuthController
+  include FilterParams
+  include DateRange
   actions :index
   custom_actions :collection => :search
 

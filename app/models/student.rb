@@ -1,4 +1,6 @@
 class Student < Person
+  include DateRange
+
   has_many :memberships, :as => :person
   has_many :groups,      :through => :memberships, :source => :participate, :source_type => 'Group'
 
@@ -19,7 +21,7 @@ class Student < Person
   end
 
   def slacker?
-    Statistic::Student.new(self).total_attendance < 80
+    Statistic::Student.new(self).total_attendance(from: semester_begin, to: last_week_end) < 80
   end
 
   def info
