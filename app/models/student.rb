@@ -20,8 +20,8 @@ class Student < Person
     string :deleted_at
   end
 
-  def slacker?
-    Statistic::Student.new(self).total_attendance(from: semester_begin, to: last_week_end) < 80
+  def slacker?(from: nil, to: nil)
+    Statistic::Student.new(self).total_attendance(from: from, to: to) < 80
   end
 
   def info
