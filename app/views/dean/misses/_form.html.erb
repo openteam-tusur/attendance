@@ -7,14 +7,12 @@
   <%= f.input :missing_id, :as => :hidden %>
 
   <%= f.input :starts_at,
-              :as => :string,
-              :input_html => { :class => 'datetime_picker' },
-              :wrapper_html => { :class => 'start-miss' } %>
+              :as => :datetime_picker,
+              :wrapper_html => { :class => 'start-miss' }, :wrapper => :horizontal_datetime_picker %>
 
   <%= f.input :ends_at,
-              :as => :string,
-              :input_html => { :class => 'datetime_picker' },
-              :wrapper_html => { :class => 'end-miss' } %>
+              :as => :datetime_picker,
+              :wrapper_html => { :class => 'end-miss' }, :wrapper => :horizontal_datetime_picker %>
 
   <%= f.input :note %>
   <%= content_tag :div, f.error(:dates_in_wrong_order), :class => :error %>
