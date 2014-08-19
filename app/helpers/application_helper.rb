@@ -30,4 +30,12 @@ module ApplicationHelper
 
     classes.join(' ')
   end
+
+  def calendar_months(date)
+    if date.month > 6
+      ((date.beginning_of_year + 6.month)..date.end_of_year).group_by(&:month)
+    else
+      (date.beginning_of_year..(date.end_of_year - 6.month)).group_by(&:month)
+    end
+  end
 end
