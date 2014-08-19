@@ -6,6 +6,7 @@ class Student < Person
 
   has_many :presences,   :dependent => :destroy
   has_many :lessons,     :through => :presences
+  has_many :disciplines, -> { uniq.order('disciplines.title') }, :through => :lessons
 
   has_many :misses,      -> { where(:missing_type => 'Student') }, :class_name => 'Miss', :foreign_key => :missing_id, :dependent => :destroy
 

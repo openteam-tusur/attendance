@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
   belongs_to :subdepartment
+  has_one    :faculty, :through => :subdepartment
   has_many   :permissions,  :as => :context,          :dependent => :destroy
   has_many   :memberships,  :as => :participate,      :dependent => :destroy
   has_many   :students,     -> { order('surname') }, :through => :memberships, :source => :person, :source_type => 'Person', :class_name => 'Student'
