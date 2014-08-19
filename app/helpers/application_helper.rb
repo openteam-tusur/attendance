@@ -38,4 +38,26 @@ module ApplicationHelper
       (date.beginning_of_year..(date.end_of_year - 6.month)).group_by(&:month)
     end
   end
+
+  def date_filters
+    param = params.try(:[], :filter)
+    ''.tap do |s|
+      s << content_tag(:hr)
+      s << content_tag(:div, :class => 'filters') do
+        ''.tap do |f|
+          %w(all from_semester_begin last_week).each do |item|
+            f << link_to(I18n.t("filter_labels.#{item}"), params.merge(:filter => item), :class => "#{param == item ? 'current_filter' : 'stub'}")
+          end
+          f << content_tag(:form, :class => 'date_range_filter', :action => '') do
+            ''.tap do |form|
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:from] : nil, :name => 'filter[from]')
+              form << tag(:input, :type => :text,   :value => param.is_a?(Hash) ? param[:to]   : nil, :name => 'filter[to]')
+              form << tag(:input, :type => :submit, :value => 'Фильтровать')
+            end.html_safe
+          end
+        end.html_safe
+      end
+      s << content_tag(:hr)
+    end.html_safe
+  end
 end

@@ -3,10 +3,10 @@ class Statistic::Group < Statistic::Base
     @uniq_id ||= "group:#{context.number}"
   end
 
-  def attendance_by_students
+  def attendance_by_students(from: nil, to: nil)
     res = {}
     context.students.each do |student|
-      res.merge! student.to_s => Statistic::Student.new(student).total_attendance
+      res.merge! student.to_s => Statistic::Student.new(student).total_attendance(from: from, to: to)
     end
     res
   end

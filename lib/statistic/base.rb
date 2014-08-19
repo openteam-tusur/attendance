@@ -23,8 +23,11 @@ class Statistic::Base
     end
   end
 
-  def total_attendance
-    res = get.inject({'attendance' => 0, 'total' => 0}) do |h, (_,v)|
+  def total_attendance(from: nil, to: nil)
+    res = {'attendance' => 0, 'total' => 0}
+    get.inject(res) do |h, (k,v)|
+      date = Date.parse(k)
+      next unless date >= from && date <= to
       h['attendance'] += v['attendance'].to_i
       h['total']      += v['total'].to_i
       h
@@ -33,9 +36,10 @@ class Statistic::Base
     (res['attendance']*100.0/res['total']).round(1)
   end
 
-  def attendance_by_date
+  def attendance_by_date(from: nil, to: nil)
     get.inject({}) do |h, (k, v)|
-      h[k] = (v['attendance']*100.0/v['total']).round(1)
+      date = Date.parse(k)
+      h[k] = (v['attendance']*100.0/v['total']).round(1) if date >= from && date <= to
       h
     end
   end
