@@ -40,7 +40,7 @@ module ApplicationHelper
             f << link_to(I18n.t("filter_labels.#{item}"), params.merge(:filter => item), :class => "btn #{item} #{param == item ? 'active' : 'stub'}")
           end
 
-          f << link_to(I18n.t("filter_labels.date_range"), '#', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}", :remote => true)
+          f << link_to(I18n.t("filter_labels.date_range"), '#', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}")
 
           f << content_tag(:form, :class => 'date-range form-inline input-group hidden', :action => '') do
             ''.tap do |form|
