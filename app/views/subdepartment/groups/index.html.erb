@@ -8,5 +8,8 @@
 
 <%= line_chart  @attendance_by_date %>
 
-<h1 class="text-center">Статистика посещаемости по группам кафедры <%= @faculty %></h1>
-<%= bar_chart   @attendance_by_groups %>
+<h1 class="text-center">Статистика посещаемости по курсам <%= @subdepartment %></h1>
+<%= bar_chart   @attendance_by_course %>
+
+<h1 class="text-center">Статистика посещаемости по группам кафедры <%= @subdepartment %></h1>
+<%= bar_chart   @attendance_by_group %>

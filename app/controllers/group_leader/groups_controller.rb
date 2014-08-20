@@ -9,7 +9,8 @@ class GroupLeader::GroupsController < AuthController
 
   def show
     @group = current_user.leaded_groups.first
-    @attendance_by_date = Statistic::Group.new(@group).attendance_by_date(**filter_params)
-    @attendance_by_students = Statistic::Group.new(@group).attendance_by_students(**filter_params)
+    group_statistic = Statistic::Group.new(@group)
+    @attendance_by_date = group_statistic.attendance_by_date(**filter_params)
+    @attendance_by_students = group_statistic.attendance_by('by_student', **filter_params)
   end
 end

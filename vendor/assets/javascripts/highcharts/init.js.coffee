@@ -10,8 +10,10 @@ Highcharts.setOptions
 
   tooltip:
     formatter: ->
-      '<b>'+Highcharts.dateFormat('%e %b %Y', this.point.x)+'</b><br/>'+
-      'Посещаемость: '+Math.round(this.point.y)+'%'
+      res = ""
+      res += '<b>'+Highcharts.dateFormat('%e %b %Y', this.point.x)+'</b><br/>' if this.point.x > 100000
+      res += 'Посещаемость: '+Math.round(this.point.y)+'%'
+      res
 
   lang:
     downloadJPEG: 'Скачать JPEG',

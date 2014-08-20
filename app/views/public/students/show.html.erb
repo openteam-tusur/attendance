@@ -1,10 +1,17 @@
 <%= content_for :page_title do %>
-  <h1 class="text-center">Таблица с посещаемостью студента <%= @student %></h1>
+  <h1 class="text-center">Посещаемость студента <%= @student %></h1>
 <% end %>
 
-<%= line_chart  Statistic::Student.new(@student).attendance_by_date %>
+<div class="filters">
+  <%= date_filters %>
+</div>
 
-<h1 class="text-center">Сводная таблица пропусков занятий</h1>
+<%= line_chart  @attendance_by_date %>
+
+<h1 class="text-center">Посещаемость по дисциплинам</h1>
+<%= bar_chart   @attendance_by_discipline %>
+
+<h1 class="text-center">Пропуски занятий</h1>
 <div class="table-responsive">
   <table class="table table-condensed table-striped">
     <thead>
