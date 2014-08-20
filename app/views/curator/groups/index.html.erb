@@ -10,7 +10,7 @@
     <tbody>
       <% @groups.each do |group| %>
         <tr>
-          <td><%= link_to group, curator_group_path(group) %></td>
+          <td><%= link_to group, curator_group_path(group, :filter => :last_week) %></td>
           <td>
             <%= group.group_leader %>
             <%= mail_to group.group_leader.try(:email) %>
