@@ -1,6 +1,10 @@
 class GroupLeader::GroupsController < AuthController
   include FilterParams
   include DateRange
+
+  inherit_resources
+  load_and_authorize_resource
+
   actions :show
 
   def show

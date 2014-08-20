@@ -2,6 +2,9 @@ class Dean::MissesController < AuthController
   include FilterParams
   include DateRange
 
+  inherit_resources
+  load_and_authorize_resource
+
   actions :all, :except => :show
 
   has_scope :for_missing, :default => 'Student'

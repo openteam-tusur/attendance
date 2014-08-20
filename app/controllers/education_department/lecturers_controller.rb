@@ -1,6 +1,9 @@
 require 'lecturer_searcher'
 
 class EducationDepartment::LecturersController < AuthController
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index
 
   def index

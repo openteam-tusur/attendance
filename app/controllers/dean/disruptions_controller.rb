@@ -1,4 +1,7 @@
 class Dean::DisruptionsController < AuthController
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index
 
   def index

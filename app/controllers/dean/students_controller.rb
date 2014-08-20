@@ -3,6 +3,10 @@ require 'student_searcher'
 class Dean::StudentsController < AuthController
   include FilterParams
   include DateRange
+
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index
   custom_actions :collection => :search
 

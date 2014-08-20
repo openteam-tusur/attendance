@@ -1,6 +1,10 @@
 class Curator::GroupsController < AuthController
   include FilterParams
   include DateRange
+
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index, :show
 
   def show
