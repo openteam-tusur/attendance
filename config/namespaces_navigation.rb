@@ -24,14 +24,14 @@ SimpleNavigation::Configuration.run do |navigation|
         role_item.item :permissions,  I18n.t('page_title.permissions.index'),   dean_permissions_path(:for_role => (current_namespace == :dean && params[:for_role]) || :group_leader) do |permission|
           permission.item :new,       I18n.t('page_title.permissions.new'),     new_dean_permission_path
         end
-        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        dean_misses_path(:filter => :all) do |miss|
+        role_item.item :miss_reason,  I18n.t('page_title.misses.index'),        dean_misses_path(:filter => :last_week) do |miss|
           miss.item :new,             I18n.t('page_title.misses.new'),          new_dean_miss_path
           miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_dean_miss_path(miss)
         end
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
         role_item.item :group_leaders,I18n.t('page_title.group_leaders.index'), dean_group_leaders_path
-        role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path
-        role_item.item :students,     I18n.t('page_title.students.index'),      dean_students_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path(:filter => :last_week)
+        role_item.item :students,     I18n.t('page_title.students.index'),      dean_students_path(:filter => :last_week)
       end
 
       if role == 'education_department'
@@ -43,11 +43,11 @@ SimpleNavigation::Configuration.run do |navigation|
           miss.item :edit,            I18n.t('page_title.misses.edit'),         edit_education_department_miss_path(miss)
         end
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
-        role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path
+        role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path(:filter => :last_week)
       end
 
       if role == 'group_leader'
-        role_item.item :group,        I18n.t('page_title.groups.title'),        group_leader_group_path
+        role_item.item :group,        I18n.t('page_title.groups.title'),        group_leader_group_path(:filter => :last_week)
         role_item.item :lessons,      I18n.t('page_title.lessons.title'),       group_leader_lessons_path
       end
 
@@ -58,7 +58,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
       if role == 'subdepartment'
         role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   subdepartment_disruptions_path
-        role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path
+        role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path(:filter => :last_week)
       end
 
       end if current_user.send("#{role}?")
