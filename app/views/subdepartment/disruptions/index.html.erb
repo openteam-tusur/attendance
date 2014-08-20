@@ -2,4 +2,48 @@
   <h1>Сорванные преподавателями занятия на кафедре <%= current_user.subdepartments.first %></h1>
 <% end %>
 
-<%= render :partial => 'disruptions/list' %>
+<div class="table-responsive">
+  <table class="table table-condensed table-disruptions">
+    <thead>
+      <tr>
+        <td>Преподаватель / Дисциплина</td>
+        <td>Дата</td>
+        <td>Объяснительная зав.кафедры</td>
+        <td>Объяснительная преподавателя</td>
+        <td>Уважительная причина</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @disruptions.each do |teacher, realizes| %>
+        <tr class="teacher">
+          <td colspan="3"><%= teacher.to_s %></td>
+        </tr>
+        <% realizes.each do |realize| %>
+          <tr class="lesson">
+            <td>
+              <%= realize.lesson.discipline.title %>
+              <%= " (#{realize.lesson.kind_abbr})" %>
+            </td>
+            <td><%= I18n.l(realize.lesson.date_on) %></td>
+            <td>
+              <% if realize.subdepartment_declaration.present? %>
+                <%= realize.subdepartment_declaration.reason %>
+                <%= link_to "редактировать", edit_subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration) %>
+                <%= link_to "удалить", subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration), :method => :delete %>
+              <% else %>
+                <%= link_to "Добавить объяснительную", new_subdepartment_realize_subdepartment_declaration_path(realize) %>
+              <% end %>
+            </td>
+            <td>
+              <% if realize.lecturer_declaration.present? %>
+                <%= realize.lecturer_declaration.reason %>
+              <% else %>
+                Нет
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

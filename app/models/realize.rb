@@ -1,6 +1,10 @@
 class Realize < ActiveRecord::Base
   belongs_to :lecturer
   belongs_to :lesson
+
+  has_one :lecturer_declaration,      :class_name => 'LecturerDeclaration'
+  has_one :subdepartment_declaration, :class_name => 'SubdepartmentDeclaration'
+
   after_initialize :set_state
 
   scope :wasnt,               -> { where(:state => :wasnt) }

@@ -8,6 +8,9 @@
         <tr>
           <td>Преподаватель / Дисциплина</td>
           <td>Дата</td>
+          <td>Объяснительная зав.кафедры</td>
+          <td>Объяснительная преподавателя</td>
+          <td>Уважительная причина</td>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +26,21 @@
                 <%= "гр. #{realize.lesson.group}" %>
               </td>
               <td><%= I18n.l(realize.lesson.date_on) %></td>
+              <td>
+                <% if realize.subdepartment_declaration %>
+                  <%= realize.subdepartment_declaration.reason %>
+                <% else %>
+                  Нет
+                <% end %>
+              </td>
+              <td>
+                <% if realize.lecturer_declaration %>
+                  <%= realize.lecturer_declaration.reason %>
+                <% else %>
+                  Нет
+                <% end %>
+              </td>
+              <td></td>
             </tr>
           <% end %>
         <% end %>
