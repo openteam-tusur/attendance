@@ -24,10 +24,10 @@
         <ul class="dropdown-menu">
           <% current_user.get_menu.each do |title, link| %>
             <% if link.present? %>
-              <li><%= link_to title, link %></li>
-            <% else %>
-              <li class='divider'></li>
-            <% end %>
+              <li><%= link_to title, link %></li>
+            <% else %>
+              <li class='divider'></li>
+            <% end %>
           <% end %>
         </ul>
       </li>
