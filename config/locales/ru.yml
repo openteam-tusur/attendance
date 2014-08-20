@@ -17,6 +17,9 @@ ru:
         ends_at: По
         note: Причина
 
+      declaration:
+        reason: Причина
+
     errors:
       models:
         permission:
@@ -97,6 +100,14 @@ ru:
 
     unfilled:
       index:  Незаполненные дни
+
+    lecturer_declarations:
+      new:  Добавить объяснительную
+      edit: Редактировать объяснительную
+
+    subdepartment_declarations:
+      new:  Добавить объяснительную
+      edit: Редактировать объяснительную
 
   role_names:
     administrator:         Администратор

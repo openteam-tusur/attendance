@@ -43,11 +43,17 @@ class Ability
     if roles.include?('lecturer') && namespace == :lecturer
       can :read,   Disruption
       can :read,   Group
+      can :manage, LecturerDeclaration do |lecturer_declaration|
+        lecturer_declaration.realize.lecturer == user.lecturers.first
+      end
     end
 
     if roles.include?('subdepartment') && namespace == :subdepartment
       can :read,   Disruption
       can :read,   Group
+      can :manage, SubdepartmentDeclaration do |subdepartment_declaration|
+        subdepartment_declaration.realize.lecturer.subdepartments.include?(user.subdepartments.first)
+      end
     end
   end
 end

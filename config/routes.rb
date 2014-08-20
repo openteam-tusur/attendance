@@ -63,12 +63,18 @@ Attendance::Application.routes.draw do
   namespace :lecturer do
     resources :disruptions
     resources :groups
+    resources :realizes, :only => [] do
+      resources :lecturer_declarations, :except => [:index, :show]
+    end
     root 'groups#index'
   end
 
   namespace :subdepartment do
     resources :disruptions
     resources :groups
+    resources :realizes, :only => [] do
+      resources :subdepartment_declarations, :except => [:index, :show]
+    end
     root 'disruptions#index'
   end
 end
