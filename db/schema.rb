@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723084129) do
+ActiveRecord::Schema.define(version: 20140819085230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "declarations", force: true do |t|
+    t.integer  "realize_id"
+    t.integer  "declarator_id"
+    t.string   "declarator_type"
+    t.text     "reason"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "declarations", ["declarator_id", "declarator_type"], name: "index_declarations_on_declarator_id_and_declarator_type", using: :btree
+  add_index "declarations", ["realize_id"], name: "index_declarations_on_realize_id", using: :btree
 
   create_table "disciplines", force: true do |t|
     t.string   "abbr"
