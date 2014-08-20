@@ -1,7 +1,6 @@
 module FilterParams
   extend ActiveSupport::Concern
 
-  private
   def filter_params
     case params[:filter]
     when 'all'

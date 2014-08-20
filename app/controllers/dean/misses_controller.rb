@@ -1,8 +1,15 @@
 class Dean::MissesController < AuthController
+  include FilterParams
+  include DateRange
+
   actions :all, :except => :show
 
   has_scope :for_missing, :default => 'Student'
   has_scope :ordered, :default => 1, :only => :index
+
+  has_scope :between_dates, :default => 1, :only => :index do |controller, scope|
+    scope.between_dates(controller.filter_params[:from], controller.filter_params[:to])
+  end
 
   def index
     index!{
