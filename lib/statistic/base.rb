@@ -1,80 +1,91 @@
 class Statistic::Base
   attr_accessor :context, :presences
 
-  def self.flush
-    new.flush
-  end
-
-  def initialize(context=nil)
+  def initialize(context=nil, presences=nil)
     self.context = context
-  end
-
-  def calculate_attendance(presences)
-    clear
     self.presences = presences
+  end
 
+  def process
+    pb = ProgressBar.new(presences.count)
     presences.each do |presence|
-      if presence.state == 'was' || presence.missed_by_cause?
-        incr_attendance(presence.lesson.date_on)
-        incr_total(presence.lesson.date_on)
-      elsif presence.state == 'wasnt'
-        incr_total(presence.lesson.date_on)
+      student       = presence.student
+      group         = presence.group
+      subdepartment = group.subdepartment
+      faculty       = subdepartment.faculty
+      lesson        = presence.lesson
+      date_on       = lesson.date_on
+
+      Statistic::Student.new(student, nil).calculate_attendance(presence, date_on)
+      Statistic::Group.new(group, nil).calculate_attendance(presence, date_on)
+      Statistic::Subdepartment.new(subdepartment, nil).calculate_attendance(presence, date_on)
+      Statistic::Faculty.new(faculty, nil).calculate_attendance(presence, date_on)
+      lesson.lecturers.each do |lecturer|
+        Statistic::Lecturer.new(lecturer, nil).calculate_attendance(presence, date_on)
       end
+      Statistic::University.new(nil, nil).calculate_attendance(presence, date_on)
+      pb.increment!
     end
   end
 
-  def total_attendance(from: nil, to: nil)
-    res = {'attendance' => 0, 'total' => 0}
-    get.inject(res) do |h, (k,v)|
-      date = Date.parse(k)
-      next unless date >= from && date <= to
-      h['attendance'] += v['attendance'].to_i
-      h['total']      += v['total'].to_i
-      h
+  def calculate_attendance(presence, date_on)
+    if presence.state == 'was' || presence.missed_by_cause?
+      incr_attendance(presence, date_on)
+      incr_total(presence, date_on)
+    elsif presence.state == 'wasnt'
+      incr_total(presence, date_on)
     end
+  end
 
-    (res['attendance']*100.0/res['total']).round(1)
+  def incr(kind, key)
+    connection.hincrby("#{namespace}:#{uniq_id}:#{kind}", "#{key}", 1)
   end
 
   def attendance_by_date(from: nil, to: nil)
-    get.inject({}) do |h, (k, v)|
+    get('by_date').inject({}) do |h, (k, v)|
       date = Date.parse(k)
-      h[k] = (v['attendance']*100.0/v['total']).round(1) if date >= from && date <= to
+      h[k] = (v['attendance'].to_i*100.0/v['total']).round(1) if date >= from && date <= to
       h
     end
   end
 
-  def incr_attendance(date_on)
-    connection.hincrby("#{namespace}:#{uniq_id}", "#{date_on}:attendance", 1)
+  def attendance_by(kind, from: nil, to: nil)
+    get(kind).inject({}) do |h, (k, v)|
+      res = {'attendance' => 0, 'total' => 0}
+      v.inject(res) do |hash, (d, a)|
+        date = Date.parse(d)
+        next unless date >= from && date <= to
+        hash['attendance'] += a['attendance'].to_i
+        hash['total']      += a['total'].to_i
+        hash
+      end
+      h[k] = (res['attendance'].to_i*100.0/res['total']).round(1)
+      h
+    end
   end
 
-  def incr_total(date_on)
-    connection.hincrby("#{namespace}:#{uniq_id}", "#{date_on}:total", 1)
-  end
+  private
 
-  protected
-
-  def get
+  def get(kind)
     res = {}
 
-    get_all.each do |k, v|
-      date, kind = k.split(':')
-      res[date]  ||= {}
-      res[date][kind] = v.to_i
+    get_all(kind).each do |k, v|
+      key1, key2, key3 = k.split(':')
+      res[key1]  ||= {}
+      if key3
+        res[key1][key2] ||= {}
+        res[key1][key2][key3] = v.to_i
+      else
+        res[key1][key2] = v.to_i
+      end
     end
 
     res
   end
 
-  def get_all
-    connection.hgetall("#{namespace}:#{uniq_id}")
+  def get_all(kind)
+    connection.hgetall("#{namespace}:#{uniq_id}:#{kind}")
   end
-
-  def clear
-    connection.del("#{namespace}:#{uniq_id}")
-  end
-
-  private
 
   def connection
     @connection ||= Redis.new(Settings['redis'])

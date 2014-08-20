@@ -1,5 +1,12 @@
-<ul>
-  <% @groups.each do |group| %>
-    <li><%= link_to "#{group} (#{group.group_leader})", lecturer_group_path(group) %></li>
-  <% end %>
-</ul>
+<%= content_for :page_title do %>
+  <h1 class="text-center">Статистика посещаемости по группам</h1>
+<% end %>
+
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<%= bar_chart  @attendance_by_group %>
+
+<h1 class="text-center">Статистика посещаемости по дисциплинам</h1>
+<%= bar_chart  @attendance_by_discipline %>

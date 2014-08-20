@@ -8,8 +8,11 @@ class Subdepartment::GroupsController < AuthController
   def index
     @subdepartment = current_user.subdepartments.first
     @groups        = @subdepartment.groups
-    @attendance_by_date = Statistic::Subdepartment.new(@subdepartment).attendance_by_date(**filter_params)
-    @attendance_by_groups = Statistic::Subdepartment.new(@subdepartment).attendance_by_groups(**filter_params)
+    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment)
+
+    @attendance_by_date = subdepartment_statistic.attendance_by_date(**filter_params)
+    @attendance_by_group = subdepartment_statistic.attendance_by('by_group', **filter_params)
+    @attendance_by_course = subdepartment_statistic.attendance_by('by_course', **filter_params)
   end
 
   def show
