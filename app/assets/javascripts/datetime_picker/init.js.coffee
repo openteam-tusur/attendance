@@ -2,7 +2,7 @@ $ ->
   $('input.datetime_picker').datetimepicker
     changeMonth: true
     changeYear: true
-    addSliderAccess: true
+    addSliderAccess: false
     sliderAccessArgs:
       isRTL: false
       touchonly: false

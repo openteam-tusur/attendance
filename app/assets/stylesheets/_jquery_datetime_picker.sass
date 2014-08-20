@@ -1,3 +1,52 @@
+.ui-datepicker
+  font-size: 13px
+
+.ui-datepicker-header
+  background: #f5f5f5
+  border: none
+
+.ui-datepicker-calendar
+  th
+    font-weight: normal !important
+
+  td
+    width: 35px
+
+  .ui-state-default
+    +border-radius(4px)
+    background: #fff
+    border: none
+    text-align: center
+
+    &:hover
+      background: #1c88c6
+      color: #fff
+
+  .ui-state-active
+    background: #1c88c6
+    color: #fff
+
+  .ui-datepicker-today
+    .ui-state-default
+      background: #eee
+      color: #222
+
+      &:hover
+        background: #1c88c6
+        color: #fff
+
+.ui-datepicker-prev, .ui-datepicker-next
+  top: 2px !important
+
+  &:hover
+    border: none
+
+.ui-datepicker-prev
+  left: 2px !important
+
+.ui-datepicker-next
+  right: 2px !important
+
 .ui-timepicker-div
   .ui-widget-header
     margin-bottom: 8px
