@@ -41,6 +41,15 @@
                 Нет
               <% end %>
             </td>
+            <td>
+              <% if realize.approved.nil? %>
+                -
+              <% elsif realize.approved %>
+                Да
+              <% else %>
+                Нет
+              <% end %>
+            </td>
           </tr>
         <% end %>
       <% end %>
