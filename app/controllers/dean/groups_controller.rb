@@ -2,6 +2,9 @@ class Dean::GroupsController < AuthController
   include FilterParams
   include DateRange
 
+  inherit_resources
+  load_and_authorize_resource
+
   def index
     @faculty = current_user.faculties.first
     @groups  = current_user.faculty_groups

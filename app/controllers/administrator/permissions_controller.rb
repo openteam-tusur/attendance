@@ -1,4 +1,7 @@
 class Administrator::PermissionsController < AuthController
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index, :new, :create, :destroy
 
   has_scope :for_role, :default => 'administrator'

@@ -2,6 +2,9 @@ class Subdepartment::GroupsController < AuthController
   include FilterParams
   include DateRange
 
+  inherit_resources
+  load_and_authorize_resource
+
   def index
     @subdepartment = current_user.subdepartments.first
     @groups        = @subdepartment.groups

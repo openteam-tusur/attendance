@@ -1,7 +1,5 @@
 class AuthController < ApplicationController
   include ApplicationHelper
-  inherit_resources
-  load_and_authorize_resource
   before_filter        :redirect_to_namespace
 
   rescue_from CanCan::AccessDenied do |exception|

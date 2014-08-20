@@ -1,6 +1,9 @@
 class GroupLeader::RealizesController < AuthController
   include CacheBuster
 
+  inherit_resources
+  load_and_authorize_resource
+
   custom_actions :collection => :change
 
   before_filter :find_lesson

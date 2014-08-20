@@ -1,4 +1,7 @@
 class EducationDepartment::PermissionsController < AuthController
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index, :new, :create, :destroy
 
   has_scope :for_context, :default => 1 do |controller, scope|

@@ -1,6 +1,9 @@
 class GroupLeader::LessonsController < AuthController
   include DateRange
 
+  inherit_resources
+  load_and_authorize_resource
+
   actions :index
 
   def index

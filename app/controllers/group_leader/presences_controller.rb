@@ -1,6 +1,9 @@
 class GroupLeader::PresencesController < AuthController
   include CacheBuster
 
+  inherit_resources
+  load_and_authorize_resource
+
   custom_actions :resource => :change, :collection => [:check_all, :uncheck_all]
 
   before_filter :find_lesson
