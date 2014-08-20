@@ -41,6 +41,11 @@ Attendance::Application.routes.draw do
     resources :disruptions
     resources :permissions, :only => [:index, :new, :create, :destroy]
     resources :faculties,   :only => [:index, :show]
+    resources :realizes,    :only => [] do
+      get 'accept', :on => :member
+      get 'refuse', :on => :member
+      get 'change', :on => :member
+    end
     root 'faculties#index'
   end
 
