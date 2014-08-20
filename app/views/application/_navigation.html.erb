@@ -10,26 +10,32 @@
 <% content_for :tusur_header_auth_block do %>
   <ul class='nav navbar-nav navbar-right auth_block'>
     <% if current_user %>
-      <li class='notification_icon'>
-        <%= link_to "#{Settings['profile.url']}notifications", :class => 'notifications', :title => 'Уведомления' do %>
-          <span class='counter'><%= current_user.get_notifications > 0 ? "+#{current_user.get_notifications}" : '' %></span>
-          <%= image_tag image_url('mail.png'), :width => 16, :height => 16 %>
-        <% end %>
-      </li>
+      <% begin %>
+        <li class='notification_icon'>
+          <%= link_to "#{Settings['profile.url']}notifications", :class => 'notifications', :title => 'Уведомления' do %>
+            <span class='counter'><%= current_user.get_notifications > 0 ? "+#{current_user.get_notifications}" : '' %></span>
+            <%= image_tag image_url('mail.png'), :width => 16, :height => 16 %>
+          <% end %>
+        </li>
+      <% rescue %>
+      <% end %>
       <li class="dropdown">
         <div class="dropdown-toggle login" data-toggle='dropdown'>
           <span class='current_user'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.name %></span>
           <b class='caret'></b>
         </div>
-        <ul class="dropdown-menu">
-          <% current_user.get_menu.each do |title, link| %>
-            <% if link.present? %>
-              <li><%= link_to title, link %></li>
-            <% else %>
-              <li class='divider'></li>
+        <% begin %>
+          <ul class="dropdown-menu">
+            <% current_user.get_menu.each do |title, link| %>
+              <% if link.present? %>
+                <li><%= link_to title, link %></li>
+              <% else %>
+                <li class='divider'></li>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
+          </ul>
+        <% rescue %>
+        <% end %>
       </li>
     <% else %>
       <li class='sign_in'>
