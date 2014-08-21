@@ -5,27 +5,39 @@
         <td>Преподаватель / Дисциплина</td>
         <td>Дата</td>
         <td>Объяснительная</td>
+        <td></td>
         <td>Уважительная причина</td>
       </tr>
     </thead>
     <tbody>
       <% @disruptions.each do |realize| %>
         <tr>
-          <td>
+          <td class="discipline truncated">
             <%= realize.lesson.discipline.title %>
             <%= " (#{realize.lesson.kind_abbr})" %>
           </td>
-          <td><%= I18n.l(realize.lesson.date_on) %></td>
-          <td>
-            <% if realize.lecturer_declaration.present? %>
+          <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
+
+          <% if realize.lecturer_declaration.present? %>
+            <td class="declaration truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
               <%= realize.lecturer_declaration.reason %>
-              <%= link_to "редактировать", edit_lecturer_realize_lecturer_declaration_path(realize, realize.lecturer_declaration) %>
-              <%= link_to "удалить", lecturer_realize_lecturer_declaration_path(realize, realize.lecturer_declaration), :method => :delete %>
-            <% else %>
-              <%= link_to "Добавить объяснительную", new_lecturer_realize_lecturer_declaration_path(realize) %>
-            <% end %>
-          </td>
-          <td>
+            </td>
+
+            <td class="actions">
+              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
+                          edit_lecturer_realize_lecturer_declaration_path(realize, realize.lecturer_declaration) %>
+
+              <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                          lecturer_realize_lecturer_declaration_path(realize, realize.lecturer_declaration),
+                          :method => :delete %>
+            </td>
+          <% else %>
+            <td colspan="2">
+              <%= link_to "Добавить объяснительную", new_lecturer_realize_lecturer_declaration_path(realize), :class => 'btn btn-default btn-xs btn-declaration' %>
+            </td>
+          <% end %>
+
+          <td class="status">
             <% if realize.approved.nil? %>
               -
             <% elsif realize.approved %>

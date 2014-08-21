@@ -14,3 +14,4 @@
 //= require highcharts
 //= require ajaxed_delete
 //= require filters
+//= require popover
