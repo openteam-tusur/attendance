@@ -1,8 +1,8 @@
 class Permission < ActiveRecord::Base
-  sso_auth_permission :roles => %W(administrator curator dean education_department group_leader lecturer subdepartment)
+  sso_auth_permission :roles => %W(administrator curator dean education_department group_leader lecturer subdepartment student)
 
-  after_save  :notify_about_add, :if => :user_changed?
-  after_destroy :notify_about_delete, :if => :with_user?
+  after_save  :notify_about_add, :if => :user_changed? && :notifiable?
+  after_destroy :notify_about_delete, :if => :with_user? && :notifiable?
 
   normalize_attribute     :email
   validates_presence_of   :user_id, :if => 'email.nil?'
@@ -23,6 +23,29 @@ class Permission < ActiveRecord::Base
 
   scope :for_context, ->(context) { where(:context_type => context)}
 
+  def self.available_roles_for(role_name)
+    case role_name
+      when :dean
+        [:group_leader, :curator]
+      when :education_department
+        [:dean, :subdepartment]
+    end
+  end
+
+  def role_text
+    I18n.t("role_names.#{role}")
+  end
+
+  def to_s
+    [user || email, role_text, context].join(', ')
+  end
+
+  private
+
+  def notifiable?
+    !['student'].include?(self.role)
+  end
+
   def with_user?
     self.user.present?
   end
@@ -41,22 +64,5 @@ class Permission < ActiveRecord::Base
     redis = Redis.new(:url => Settings['messaging.url'])
     index = redis.incr("profile:attendance:add_permission:index")
     redis.set "profile:attendance:add_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
-  end
-
-  def self.available_roles_for(role_name)
-    case role_name
-      when :dean
-        [:group_leader, :curator]
-      when :education_department
-        [:dean, :subdepartment]
-    end
-  end
-
-  def role_text
-    I18n.t("role_names.#{role}")
-  end
-
-  def to_s
-    [user || email, role_text, context].join(', ')
   end
 end
