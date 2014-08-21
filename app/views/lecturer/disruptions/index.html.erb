@@ -18,7 +18,7 @@
           <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
 
           <% if realize.lecturer_declaration.present? %>
-            <td class="declaration truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+            <td class="declaration truncated btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
               <%= realize.lecturer_declaration.reason %>
             </td>
 
