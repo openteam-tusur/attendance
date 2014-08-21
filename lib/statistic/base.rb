@@ -8,11 +8,11 @@ class Statistic::Base
 
   def process
     pb = ProgressBar.new(presences.count)
-    presences.each do |presence|
+    presences.find_each do |presence|
       student       = presence.student
-      group         = presence.group
-      subdepartment = group.subdepartment
-      faculty       = subdepartment.faculty
+      group         = presence.lesson.group
+      subdepartment = presence.lesson.group.subdepartment
+      faculty       = presence.lesson.group.subdepartment.faculty
       lesson        = presence.lesson
       date_on       = lesson.date_on
 
