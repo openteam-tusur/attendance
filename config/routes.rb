@@ -82,4 +82,8 @@ Attendance::Application.routes.draw do
     end
     root 'disruptions#index'
   end
+
+  namespace :student do
+    root 'students#show'
+  end
 end
