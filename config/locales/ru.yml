@@ -117,6 +117,7 @@ ru:
     group_leader:          Староста группы
     lecturer:              Преподаватель
     subdepartment:         Кафедра
+    student:               Студент
 
   lesson:
     kind:

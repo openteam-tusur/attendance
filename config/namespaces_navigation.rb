@@ -55,6 +55,10 @@ SimpleNavigation::Configuration.run do |navigation|
         role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path(:filter => :last_week)
       end
 
+      if role == 'student'
+        role_item.item :my_statistic, 'Моя статистика',                         student_path(current_user.students.first.secure_id)
+      end
+
       end if current_user.send("#{role}?")
     end if user_signed_in?
   end
