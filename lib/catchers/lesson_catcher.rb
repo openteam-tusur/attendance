@@ -72,7 +72,7 @@ class LessonCatcher
     end
 
     def import_discipline(title, abbr)
-      Discipline.find_or_create_by(:title => title, :abbr => abbr)
+      Discipline.find_or_create_by(:title => title.squish, :abbr => abbr.squish)
     end
 
     def mark_lessons_deleted_at(date)
