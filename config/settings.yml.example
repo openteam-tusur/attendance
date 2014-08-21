@@ -1,5 +1,5 @@
 app:
-  domain:    .domain                             #delete the line in development
+  domain:    .domain                             # delete the line in development
   secret:    SECRET
   from:      mail@mail.ma
   host:      hostname
@@ -14,7 +14,10 @@ postmark:
   api_key:   123456
 
 redis:
-  url:       redis://redis.example.com:7372/12
+  url:       redis://redis.example.com:6379/12
+
+statistic:
+  url:       redis://127.0.0.1:6379/1            # redis server for statistics
 
 session_store:
   url:       redis://host:6379/0/sessions

@@ -7,7 +7,7 @@ namespace :statistic do
         .where(:realizes => { :state => 'was' })
         .where.not(:presences => { :state => nil })
 
-    connection = Redis.new(Settings['redis'])
+    connection = Redis.new(:url => Settings['statistic.url'])
     Statistic::Base.new(nil, presences, connection).process
   end
 end
