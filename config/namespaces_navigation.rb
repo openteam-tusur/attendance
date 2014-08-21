@@ -46,7 +46,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       if role == 'lecturer'
-        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   lecturer_disruptions_path
+        role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   lecturer_disruptions_path(:filter => :last_week)
         role_item.item :groups,       I18n.t('page_title.groups.index'),        lecturer_groups_path
       end
 
