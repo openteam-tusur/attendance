@@ -15,25 +15,39 @@ class Statistic::Base
       faculty       = presence.lesson.group.subdepartment.faculty
       lesson        = presence.lesson
       date_on       = lesson.date_on
+      lecturers     = presence.lesson.realizes.map(&:lecturer).flatten
 
-      Statistic::Student.new(student, nil).calculate_attendance(presence, date_on)
-      Statistic::Group.new(group, nil).calculate_attendance(presence, date_on)
-      Statistic::Subdepartment.new(subdepartment, nil).calculate_attendance(presence, date_on)
-      Statistic::Faculty.new(faculty, nil).calculate_attendance(presence, date_on)
-      lesson.lecturers.each do |lecturer|
-        Statistic::Lecturer.new(lecturer, nil).calculate_attendance(presence, date_on)
+      statistic_student       = Statistic::Student.new(student, nil)
+      statistic_group         = Statistic::Group.new(group, nil)
+      statistic_subdepartment = Statistic::Subdepartment.new(subdepartment, nil)
+      statistic_faculty       = Statistic::Faculty.new(faculty, nil)
+      statistic_university    = Statistic::University.new(nil, nil)
+      statistic_lecturers = []
+      lecturers.each do |lecturer|
+        statistic_lecturers << Statistic::Lecturer.new(lecturer, nil)
       end
-      Statistic::University.new(nil, nil).calculate_attendance(presence, date_on)
-      pb.increment!
-    end
-  end
 
-  def calculate_attendance(presence, date_on)
-    if presence.state == 'was' || presence.missed_by_cause?
-      incr_attendance(presence, date_on)
-      incr_total(presence, date_on)
-    elsif presence.state == 'wasnt'
-      incr_total(presence, date_on)
+      if presence.state == 'was' || presence.student.misses.select{|m| m.starts_at <= date_on && m.ends_at >= date_on }.count > 0
+        statistic_student.incr_attendance(presence, date_on)
+        statistic_group.incr_attendance(presence, date_on)
+        statistic_subdepartment.incr_attendance(presence, date_on)
+        statistic_faculty.incr_attendance(presence, date_on)
+        statistic_lecturers.each do |l|
+          l.incr_attendance(presence, date_on)
+        end
+        statistic_university.incr_attendance(presence, date_on)
+      end
+
+      statistic_student.incr_total(presence, date_on)
+      statistic_group.incr_total(presence, date_on)
+      statistic_subdepartment.incr_total(presence, date_on)
+      statistic_faculty.incr_total(presence, date_on)
+      statistic_lecturers.each do |l|
+        l.incr_total(presence, date_on)
+      end
+      statistic_university.incr_total(presence, date_on)
+
+      pb.increment!
     end
   end
 
