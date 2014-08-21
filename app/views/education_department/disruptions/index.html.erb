@@ -3,7 +3,7 @@
   <h4><%= faculty.title %></h4>
 
   <div class="table-responsive">
-    <table class="table table-condensed table-disruptions">
+    <table class="table table-condensed table-disruptions education-department">
       <thead>
         <tr>
           <td>Преподаватель / Дисциплина</td>
@@ -20,30 +20,37 @@
           </tr>
           <% realizes.each do |realize| %>
             <tr class="lesson">
-              <td>
+              <td class="discipline truncated">
                 <%= realize.lesson.discipline.title %>
                 <%= " (#{realize.lesson.kind_abbr})," %>
                 <%= "гр. #{realize.lesson.group}" %>
               </td>
-              <td><%= I18n.l(realize.lesson.date_on) %></td>
-              <td>
-                <% if realize.subdepartment_declaration %>
-                  <%= realize.subdepartment_declaration.reason %>
-                <% else %>
-                  Нет
-                <% end %>
-              </td>
-              <td>
-                <% if realize.lecturer_declaration %>
-                  <%= realize.lecturer_declaration.reason %>
-                <% else %>
-                  Нет
-                <% end %>
-              </td>
-              <td>
+              <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
+
+              <% if realize.subdepartment_declaration %>
+                <td>
+                  <span class="btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
+                    Посмотреть
+                  </span>
+                </td>
+              <% else %>
+                <td>Нет</td>
+              <% end %>
+
+              <% if realize.lecturer_declaration %>
+                <td>
+                  <span class="btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+                    Посмотреть
+                  </span>
+                </td>
+              <% else %>
+                <td>Нет</td>
+              <% end %>
+
+              <td class="status">
                 <% if realize.approved.nil? %>
-                  <%= link_to "Да", accept_education_department_realize_path(realize) %>
-                  <%= link_to "Нет", refuse_education_department_realize_path(realize) %>
+                  <%= link_to "Да", accept_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-accept' %>
+                  <%= link_to "Нет", refuse_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-refuse' %>
                 <% elsif realize.approved %>
                   Да <%= link_to "изменить", change_education_department_realize_path(realize) %>
                 <% else %>
