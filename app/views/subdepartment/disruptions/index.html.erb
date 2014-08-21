@@ -3,13 +3,13 @@
 <% end %>
 
 <div class="table-responsive">
-  <table class="table table-condensed table-disruptions">
+  <table class="table table-condensed table-disruptions subdepartment">
     <thead>
       <tr>
         <td>Преподаватель / Дисциплина</td>
         <td>Дата</td>
         <td>Объяснительная зав.кафедры</td>
-        <td>Объяснительная преподавателя</td>
+        <td colspan="2">Объяснительная преподавателя</td>
         <td>Уважительная причина</td>
       </tr>
     </thead>
@@ -20,28 +20,41 @@
         </tr>
         <% realizes.each do |realize| %>
           <tr class="lesson">
-            <td>
+            <td class="discipline truncated">
               <%= realize.lesson.discipline.title %>
               <%= " (#{realize.lesson.kind_abbr})" %>
             </td>
-            <td><%= I18n.l(realize.lesson.date_on) %></td>
-            <td>
-              <% if realize.subdepartment_declaration.present? %>
+            <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
+
+            <% if realize.subdepartment_declaration.present? %>
+              <td class="declaration truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
                 <%= realize.subdepartment_declaration.reason %>
-                <%= link_to "редактировать", edit_subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration) %>
-                <%= link_to "удалить", subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration), :method => :delete %>
-              <% else %>
-                <%= link_to "Добавить объяснительную", new_subdepartment_realize_subdepartment_declaration_path(realize) %>
-              <% end %>
-            </td>
-            <td>
-              <% if realize.lecturer_declaration.present? %>
+              </td>
+
+              <td class="actions">
+                <%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
+                            edit_subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration) %>
+
+                <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                            subdepartment_realize_subdepartment_declaration_path(realize, realize.subdepartment_declaration), :method => :delete %>
+              </td>
+            <% else %>
+              <td colspan="2">
+                <%= link_to "Добавить объяснительную", new_subdepartment_realize_subdepartment_declaration_path(realize), :class => 'btn btn-default btn-xs btn-declaration' %>
+              </td>
+            <% end %>
+
+            <% if realize.lecturer_declaration.present? %>
+              <td class="declaration truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
                 <%= realize.lecturer_declaration.reason %>
-              <% else %>
+              </td>
+            <% else %>
+              <td>
                 Нет
-              <% end %>
-            </td>
-            <td>
+              </td>
+            <% end %>
+
+            <td class="status">
               <% if realize.approved.nil? %>
                 -
               <% elsif realize.approved %>
