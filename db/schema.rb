@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820090528) do
+ActiveRecord::Schema.define(version: 20140821025705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20140820090528) do
     t.datetime "updated_at"
   end
 
+  add_index "lessons", ["deleted_at"], name: "index_lessons_on_deleted_at", where: "(deleted_at IS NULL)", using: :btree
   add_index "lessons", ["discipline_id"], name: "index_lessons_on_discipline_id", using: :btree
   add_index "lessons", ["group_id"], name: "index_lessons_on_group_id", using: :btree
 
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(version: 20140820090528) do
   end
 
   add_index "presences", ["lesson_id"], name: "index_presences_on_lesson_id", using: :btree
+  add_index "presences", ["state"], name: "index_presences_on_state", where: "(state IS NOT NULL)", using: :btree
   add_index "presences", ["student_id"], name: "index_presences_on_student_id", using: :btree
 
   create_table "realizes", force: true do |t|
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 20140820090528) do
 
   add_index "realizes", ["lecturer_id"], name: "index_realizes_on_lecturer_id", using: :btree
   add_index "realizes", ["lesson_id"], name: "index_realizes_on_lesson_id", using: :btree
+  add_index "realizes", ["state"], name: "index_realizes_on_state", where: "((state)::text = 'was'::text)", using: :btree
 
   create_table "subdepartments", force: true do |t|
     t.string   "title"

@@ -12,7 +12,7 @@ class Presence < ActiveRecord::Base
   end
 
   def missed_by_cause?
-    student.misses.by_date(lesson.lesson_time).any?
+    student.misses.by_date(lesson.lesson_time).count > 0
   end
 
   def to_s

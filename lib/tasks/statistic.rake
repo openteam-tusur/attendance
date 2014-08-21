@@ -1,7 +1,7 @@
 namespace :statistic do
   desc 'Рассчитать всю статистику'
   task :calculate => :environment do
-    presences = Presence.includes(:student, :lesson => [:discipline, :group => [:faculty, :subdepartment]])
+    presences = Presence.includes(:student => [:misses], :lesson => [:discipline, :group => [:faculty, :subdepartment], :realizes => [:lecturer]])
         .joins(:lesson   => :realizes)
         .where(:lessons  => { :deleted_at => nil })
         .where(:realizes => { :state => 'was' })

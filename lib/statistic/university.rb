@@ -4,16 +4,20 @@ class Statistic::University < Statistic::Base
   end
 
   def incr_attendance(presence, date_on)
-    incr('by_date',  "#{date_on}:attendance")
-    incr('by_course',"#{presence.lesson.group.course}:#{date_on}:attendance")
-    incr('by_faculty', "#{presence.lesson.group.subdepartment.faculty.abbr}:#{date_on}:attendance")
-    incr('by_subdepartment', "#{presence.lesson.group.subdepartment.abbr}:#{date_on}:attendance")
+    connection.pipelined do
+      connection.hincrby("#{namespace}:#{uniq_id}:by_date",    "#{date_on}:attendance", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_course",  "#{presence.lesson.group.course}:#{date_on}:attendance", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_faculty", "#{presence.lesson.group.subdepartment.faculty.abbr}:#{date_on}:attendance", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_subdepartment",   "#{presence.lesson.group.subdepartment.abbr}:#{date_on}:attendance", 1)
+    end
   end
 
   def incr_total(presence, date_on)
-    incr('by_date',  "#{date_on}:total")
-    incr('by_course',"#{presence.lesson.group.course}:#{date_on}:total")
-    incr('by_faculty', "#{presence.lesson.group.subdepartment.faculty.abbr}:#{date_on}:total")
-    incr('by_subdepartment', "#{presence.lesson.group.subdepartment.abbr}:#{date_on}:total")
+    connection.pipelined do
+      connection.hincrby("#{namespace}:#{uniq_id}:by_date",    "#{date_on}:total", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_course",  "#{presence.lesson.group.course}:#{date_on}:total", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_faculty", "#{presence.lesson.group.subdepartment.faculty.abbr}:#{date_on}:total", 1)
+      connection.hincrby("#{namespace}:#{uniq_id}:by_subdepartment",   "#{presence.lesson.group.subdepartment.abbr}:#{date_on}:total", 1)
+    end
   end
 end
