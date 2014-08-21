@@ -105,6 +105,7 @@ GEM
     hike (1.2.3)
     hirb (0.7.2)
     i18n (0.6.11)
+    ice_cube (0.12.0)
     inherited_resources (1.5.0)
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0)
@@ -205,7 +206,7 @@ GEM
     redis-activesupport (4.0.0)
       activesupport (~> 4)
       redis-store (~> 1.1.0)
-    redis-namespace (1.5.0)
+    redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     redis-rack (1.5.0)
       rack (~> 1.5)
@@ -232,12 +233,16 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0.0)
-    sidekiq (3.2.1)
+    sidekiq (3.2.2)
       celluloid (>= 0.15.2)
       connection_pool (>= 2.0.0)
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
+    sidetiq (0.6.1)
+      celluloid (>= 0.14.1)
+      ice_cube (~> 0.12.0)
+      sidekiq (>= 2.16.0)
     simple-navigation (3.13.0)
       activesupport (>= 2.3.2)
     simple_form (3.1.0.rc2)
@@ -337,6 +342,7 @@ DEPENDENCIES
   russian
   sass-rails (~> 4.0.2)
   sidekiq
+  sidetiq
   simple-navigation
   simple_form (~> 3.1.0.rc2)
   sinatra (>= 1.3.0)
