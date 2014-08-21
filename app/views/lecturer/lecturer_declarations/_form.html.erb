@@ -1,8 +1,8 @@
 <%= simple_form_for [:lecturer, @realize, @lecturer_declaration],
-                    :html => { :class => 'form-horizontal form-declaration' },
+                    :html => { :class => 'form-horizontal form-declaration js-validation' },
                     :wrapper => :horizontal_form do |f| %>
 
   <%= f.input :reason %>
-  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
+  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm disabled js-submit', :disabled => true %>
   <%= link_to 'Отмена', lecturer_disruptions_path, :class => 'btn btn-default btn-sm' %>
 <% end %>

@@ -15,3 +15,4 @@
 //= require ajaxed_delete
 //= require filters
 //= require popover
+//= require validations
