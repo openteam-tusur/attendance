@@ -11,6 +11,7 @@ class Realize < ActiveRecord::Base
   scope :ordered_by_lecturer, -> { joins(:lecturer).joins(:lesson).order('people.surname, lessons.date_on desc')}
   scope :ordered_by_lesson,   -> { joins(:lesson).order('lessons.date_on desc') }
   scope :with_lessons,        -> { includes(:lesson) }
+  scope :between_dates,       -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
   def to_s
     I18n.t("states.realizes.#{state}")

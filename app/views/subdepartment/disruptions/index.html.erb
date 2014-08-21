@@ -2,6 +2,10 @@
   <h1>Сорванные преподавателями занятия на кафедре <%= current_user.subdepartments.first %></h1>
 <% end %>
 
+<div class="filters">
+  <%= date_filters %>
+</div>
+
 <div class="table-responsive">
   <table class="table table-condensed table-disruptions subdepartment">
     <thead>
