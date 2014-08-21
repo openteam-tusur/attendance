@@ -1,4 +1,8 @@
-<%= simple_form_for [:subdepartment, @realize, @subdepartment_declaration] do |f| %>
+<%= simple_form_for [:subdepartment, @realize, @subdepartment_declaration],
+                    :html => { :class => 'form-horizontal form-declaration' },
+                    :wrapper => :horizontal_form do |f| %>
+
   <%= f.input :reason %>
-  <%= f.submit 'Сохранить' %>
+  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
+  <%= link_to 'Отмена', subdepartment_disruptions_path, :class => 'btn btn-default btn-sm' %>
 <% end %>
