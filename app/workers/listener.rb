@@ -23,9 +23,13 @@ class Listener
       when /:sso:signin:/
         create_user_by(json)
       when /:profile:add_student:/
-        add_student_permission(json)
+        add_permission('student', json)
       when /:profile:del_student:/
-        del_student_permission(json)
+        del_permission('student', json)
+      when /:timetable:add_permission/
+        add_permission('lecturer', json)
+      when /:timetable:del_permission/
+        del_permission('lecturer', json)
       end
 
       redis.del(key)
@@ -41,19 +45,44 @@ class Listener
     end
   end
 
-  def add_student_permission(json)
-    user = User.find_by(:uid => json['uid'])
-    student = Student.find_by(:contingent_id => json['contingent_id'])
+  def add_permission(context, json)
+    user = find_user(json['uid'])
+    person = send("find_#{context}", json[remote_key(context)])
+
     begin
-      user.permissions.find_or_create_by(:role => :student, :context_id => student.id, :context_type => 'Person')
+      user.permissions.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person')
     rescue ActiveRecord::RecordNotUnique
-    end if user && student
+    end if user && person
   end
 
-  def del_student_permission(json)
-    user = User.find_by(:uid => json['uid'])
-    student = Student.find_by(:contingent_id => json['contingent_id'])
-    permission = user.permissions.find_by(:role => :student, :context_id => student.id, :context_type => 'Person') if user && student
+  def del_permission(context, json)
+    user = find_user(json['uid'])
+    person = send("find_#{context}", json[remote_key(context)])
+
+    permission = user.permissions.find_by(:role => context, :context_id => person.id, :context_type => 'Person') if user && person
     permission.destroy if permission
+  end
+
+  def remote_key(context)
+    case context
+    when 'student'
+      'contingent_id'
+    when 'lecturer'
+      'directory_id'
+    end
+  end
+
+  def find_user(uid)
+    User.find_by(:uid => uid)
+  end
+
+  def find_lecturer(directory_id)
+    return nil unless directory_id.present?
+    Lecturer.find_by(:directory_id => directory_id)
+  end
+
+  def find_student(contingent_id)
+    return nil unless contingent_id.present?
+    Student.find_by(:contingent_id => contingent_id)
   end
 end
