@@ -13,6 +13,14 @@ class Realize < ActiveRecord::Base
   scope :with_lessons,        -> { includes(:lesson) }
   scope :between_dates,       -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
+  searchable do
+    string(:lecturer) { self.lecturer.to_s }
+    string :state
+    boolean :approved
+    time(:lesson_date) { self.lesson.date_on }
+    string(:faculty) { self.lecturer.subdepartments.first.faculty.abbr }
+  end
+
   def to_s
     I18n.t("states.realizes.#{state}")
   end
