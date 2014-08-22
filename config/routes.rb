@@ -10,6 +10,7 @@ Attendance::Application.routes.draw do
   scope :module => :public do
     get '/search' => 'search#index'
     get '/students/:id' => 'students#show', :as => :student
+    get '/user_attendances/:id' => 'user_attendances#show'
     root :to => 'main_page#index'
   end
 
