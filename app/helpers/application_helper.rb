@@ -37,7 +37,9 @@ module ApplicationHelper
       s << content_tag(:div, :class => 'tabs btn-group') do
         ''.tap do |f|
           %w(all from_semester_begin last_week).each do |item|
-            f << link_to(I18n.t("filter_labels.#{item}"), params.merge(:filter => item), :class => "btn #{item} #{param == item ? 'active' : 'stub'}")
+            f << link_to(I18n.t("filter_labels.#{item}"),
+                         params.merge(:filter => item),
+                         :class => "btn #{item} #{param == item || param == nil && item == 'last_week' ? 'active' : 'stub'}")
           end
 
           f << link_to(I18n.t("filter_labels.date_range"), '#', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}")
