@@ -15,7 +15,7 @@ class GroupedRealizes
   private
 
   def by_lecturer
-    @by_faculty ||= @realizes.group_by(&:lecturer)
+    @by_lecturer ||= @realizes.group_by(&:lecturer)
   end
 
   def faculty_hash
