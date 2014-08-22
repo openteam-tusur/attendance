@@ -18,9 +18,10 @@ class Statistic::Reader < Statistic::Base
       res = {'attendance' => 0, 'total' => 0}
       v.inject(res) do |hash, (d, a)|
         date = Date.parse(d)
-        next unless date >= from && date <= to
-        hash['attendance'] += a['attendance'].to_i
-        hash['total']      += a['total'].to_i
+        if date >= from && date <= to
+          hash['attendance'] += a['attendance'].to_i
+          hash['total']      += a['total'].to_i
+        end
         hash
       end
       h[k] = (res['attendance'].to_i*100.0/res['total']).round(1)
