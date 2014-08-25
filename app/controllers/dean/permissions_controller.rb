@@ -11,7 +11,8 @@ class Dean::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions).page(params[:page])
+      groups_ids = current_user.faculty_groups.map(&:id)
+      @permissions = Kaminari.paginate_array(@permissions.where(:context_id => groups_ids)).page(params[:page])
     }
   end
 
