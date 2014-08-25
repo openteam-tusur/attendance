@@ -1,9 +1,14 @@
+<%= link_to "Все", education_department_disruptions_path, :class => 'dates_all' %>
+<%= link_to "Прошлая неделя", education_department_disruptions_path, :class => 'dates_last_week' %>
+<%= link_to "С начала семестра", education_department_disruptions_path, :class => 'dates_from_semester_begin' %>
+<%= link_to "Уточнить даты", education_department_disruptions_path, :class => 'dates_manual' %>
+
 <%= simple_form_for :filter,
                     :url => education_department_disruptions_path,
                     :html => { :class => 'form-inline', :method => :get },
                     :wrapper => :inline_form do |f| %>
 
-                    <%= link_to 'Все', education_department_disruptions_path(params.merge(:filter => :all)) %>
+                    <%= f.input :dates, :as => :hidden %>
 
                     <%= f.input :from, :input_html => { :value => @filter_params[:from] } %>
                     <%= f.input :to, :input_html => { :value => @filter_params[:to] } %>
