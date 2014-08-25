@@ -7,6 +7,10 @@ class Realize < ActiveRecord::Base
 
   after_initialize :set_state
 
+  extend Enumerize
+
+  enumerize :approved, :in => [:yes, :no, :unfilled], :default => :unfilled, :predicates => true
+
   scope :wasnt,               -> { where(:state => :wasnt) }
   scope :ordered_by_lecturer, -> { joins(:lecturer).joins(:lesson).order('people.surname, lessons.date_on desc')}
   scope :ordered_by_lesson,   -> { joins(:lesson).order('lessons.date_on desc') }
@@ -15,7 +19,7 @@ class Realize < ActiveRecord::Base
 
   searchable do
     string :state
-    boolean :approved
+    string :approved
     string(:lecturer) { self.lecturer.to_s }
     string(:faculty) { self.lecturer.actual_subdepartment.faculty.abbr }
     string(:subdepartment_id) { self.lecturer.actual_subdepartment.id }

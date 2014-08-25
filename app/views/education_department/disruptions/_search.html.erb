@@ -1,6 +1,6 @@
 <%= form_tag education_department_disruptions_path, :method => :get do %>
   <%= search_field_tag :name, params[:name] %>
   <%= select_tag :faculty, options_from_collection_for_select(@faculties, "abbr", "abbr", params[:faculty]), :include_blank => true %>
-  <%= select_tag :approved, options_for_select([['да', 1], ['нет', 0]], params[:approved]), :include_blank => true %>
+  <%= select_tag :approved, options_for_select([['да', :yes], ['нет', :no], ['неотмеченные', :unfilled]], params[:approved]), :include_blank => true %>
   <%= submit_tag 'Искать' %>
 <% end %>

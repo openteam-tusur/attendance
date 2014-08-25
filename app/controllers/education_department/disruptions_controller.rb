@@ -12,7 +12,7 @@ class EducationDepartment::DisruptionsController < AuthController
       with(:lecturer).starting_with(params[:name]) if params[:name].present?
       with(:lesson_date).between(filter_params[:from]..filter_params[:to])
       with :faculty, params[:faculty] if params[:faculty].present?
-      with :approved, params[:approved] == 1 ? true : false unless params[:approved].nil?
+      with(:approved, params[:approved]) if params[:approved].present?
       with :state, :wasnt
 
       order_by(:lesson_date)
