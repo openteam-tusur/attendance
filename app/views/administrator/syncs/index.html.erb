@@ -1,4 +1,9 @@
 <ul class="list">
-  <%= render @syncs %>
-  <%= paginate @syncs %>
+  <% if @syncs.any? %>
+    <%= render @syncs %>
+  <% else %>
+    <li class="list-item empty"><%= I18n.t("empty.#{controller_name}") %></li>
+  <% end %>
 </ul>
+
+<%= paginate @syncs %>
