@@ -212,7 +212,7 @@ textarea.form-control
   .calendar-legend
     margin: 15px 0
 
-    .empty, .filled, .weekend
+    .blank, .filled, .weekend
       line-height: 18px
       position: relative
       padding: 0 0 0 15px
@@ -221,11 +221,12 @@ textarea.form-control
         content: ''
         display: block
         height: 6px
+        left: 4px
         position: absolute
-        top: 3px
+        top: 4px
         width: 6px
 
-    .empty
+    .blank
       color: #005bac
 
       &:before
@@ -315,7 +316,7 @@ textarea.form-control
             position: absolute
             width: 5px
 
-        &.empty
+        &.blank
           border-color: #fff
 
         &.current
