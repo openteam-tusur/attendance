@@ -8,8 +8,7 @@ class Realize < ActiveRecord::Base
   after_initialize :set_state
 
   extend Enumerize
-
-  enumerize :approved, :in => [:yes, :no, :unfilled], :default => :unfilled, :predicates => true
+  enumerize :approved, :in => [:reasonable, :unreasonable, :unfilled], :default => :unfilled, :predicates => true
 
   scope :wasnt,               -> { where(:state => :wasnt) }
   scope :ordered_by_lecturer, -> { joins(:lecturer).joins(:lesson).order('people.surname, lessons.date_on desc')}

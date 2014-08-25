@@ -6,21 +6,36 @@ class EducationDepartment::DisruptionsController < AuthController
   inherit_resources
   load_and_authorize_resource
 
-  def index
-    @faculties = Faculty.all
-    @disruptions = Realize.search do
-      with(:lecturer).starting_with(params[:name]) if params[:name].present?
-      with(:lesson_date).between(filter_params[:from]..filter_params[:to])
-      with :faculty, params[:faculty] if params[:faculty].present?
-      with(:approved, params[:approved]) if params[:approved].present?
-      with :state, :wasnt
+  before_filter :set_params, :only => :index
 
-      order_by(:lesson_date)
-      group :faculty do
+  def index
+    @filter_params = filter_params
+
+    @faculties = Faculty.all
+
+    @disruptions = Realize.search do |s|
+      s.with(:lecturer).starting_with(@name) if @name.present?
+      s.with(:lesson_date).between(filter_params[:from]..filter_params[:to])
+      s.with :faculty, @faculty if @faculty.present?
+      s.with :approved, @approved if @approved.present?
+      s.with :state, :wasnt
+
+      s.order_by(:lesson_date)
+      s.group :faculty do
         limit 10000
       end
 
-      paginate :page => params[:page], :per_page => 10
+      s.paginate :page => params[:page]
     end.group(:faculty).groups
+  end
+
+  private
+
+  def set_params
+    if params[:filter]
+      @name = params[:filter][:name] if params[:filter][:name].present?
+      @faculty = params[:filter][:faculty] if params[:filter][:faculty].present?
+      @approved = params[:filter][:approved] if params[:filter][:approved].present?
+    end
   end
 end

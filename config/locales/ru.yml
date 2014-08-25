@@ -38,6 +38,7 @@ ru:
     from_semester_begin: С начала семестра
     last_week:           Прошлая неделя
     date_range:          Указать даты
+    search:              Поиск
 
   site: Электронный журнал посещаемости ТУСУР
 
@@ -175,3 +176,10 @@ ru:
       next: '&gt;'
       previous: '&lt;'
       truncate: ...
+
+  enumerize:
+    realize:
+      approved:
+        reasonable:   С уважительной причиной
+        unreasonable: Без уважительной причины
+        unfilled:     Не отмеченные
