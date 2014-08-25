@@ -1,11 +1,11 @@
 <div class="calendar-wrapper">
   <%= content_tag(:span, (l @date, :format => '%d %B %Y'), :class => 'date') %>
 
-  <div class="calendar-legend">
-    <span class="empty">Были занятия, не заполнено</span>
-    <span class="filled">Были занятия, заполнено</span>
-    <span class="weekend">Выходные и праздничные дни</span>
-  </div>
+  <ul class="calendar-legend">
+    <li class="blank">Были занятия, не заполнено</li>
+    <li class="filled">Были занятия, заполнено</li>
+    <li class="weekend">Выходные и праздничные дни</li>
+  </ul>
 
   <div class="js-scroll scroll-up">
   </div>
