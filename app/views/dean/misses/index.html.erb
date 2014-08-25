@@ -4,34 +4,40 @@
 
 <%= link_to "Добавить уважительную причину", new_dean_miss_path, :class => 'btn btn-sm btn-primary' %>
 
-<div class="filters">
-  <%= date_filters %>
-</div>
+<% if @misses.any? %>
+  <div class="filters">
+    <%= date_filters %>
+  </div>
 
-<div class="table-responsive">
-  <table class="table table-condensed table-striped">
-    <thead>
-      <tr>
-        <td>ФИО студента</td>
-        <td>Группа</td>
-        <td>Период отсутствия</td>
-        <td>Причина</td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @misses.each do |miss| %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
         <tr>
-          <td><%= miss.missing %></td>
-          <td><%= miss.missing.actual_group %></td>
-          <td><%= miss.absent_period %></td>
-          <td><%= miss.note %></td>
-          <td class="actions">
-            <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_dean_miss_path(miss) %>
-            <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, dean_miss_path(miss), :data => { :confirm => t('confirm.delete') }, :method => :delete %>
-          </td>
+          <td>ФИО студента</td>
+          <td>Группа</td>
+          <td>Период отсутствия</td>
+          <td>Причина</td>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @misses %>
-</div>
+      </thead>
+      <tbody>
+        <% @misses.each do |miss| %>
+          <tr>
+            <td><%= miss.missing %></td>
+            <td><%= miss.missing.actual_group %></td>
+            <td><%= miss.absent_period %></td>
+            <td><%= miss.note %></td>
+            <td class="actions">
+              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_dean_miss_path(miss) %>
+              <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, dean_miss_path(miss), :data => { :confirm => t('confirm.delete') }, :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @misses %>
+  </div>
+<% else %>
+  <div class="empty">
+    <%= I18n.t("empty.#{controller_name}") %>
+  </div>
+<% end %>

@@ -1,6 +1,14 @@
-<%= render :partial => 'search' %>
-<% @disruptions.each do |group| %>
-  <% next unless group.results.any? %>
-  <%= render :partial => 'disruption', :locals => { :group => group } %>
+<% if @disruptions.any? %>
+  <%= render :partial => 'search' %>
+
+  <% @disruptions.each do |group| %>
+    <% next unless group.results.any? %>
+    <%= render :partial => 'disruption', :locals => { :group => group } %>
+  <% end %>
+
+  <%= paginate @disruptions %>
+<% else %>
+  <div class="empty">
+    <%= I18n.t("empty.#{controller_name}") %>
+  </div>
 <% end %>
-<%= paginate @disruptions %>
