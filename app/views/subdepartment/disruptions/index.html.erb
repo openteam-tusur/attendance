@@ -18,11 +18,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @disruptions.each do |teacher, realizes| %>
+      <% @disruptions.each do |group| %>
         <tr class="teacher">
-          <td colspan="3"><%= teacher.to_s %></td>
+          <td colspan="3"><%= group.value %></td>
         </tr>
-        <% realizes.each do |realize| %>
+        <% group.results.each do |realize| %>
           <tr class="lesson">
             <td class="discipline truncated">
               <%= realize.lesson.discipline.title %>
@@ -72,4 +72,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @disruptions %>
 </div>
