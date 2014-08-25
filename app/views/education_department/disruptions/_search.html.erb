@@ -1,6 +1,16 @@
-<%= form_tag education_department_disruptions_path, :method => :get do %>
-  <%= search_field_tag :name, params[:name] %>
-  <%= select_tag :faculty, options_from_collection_for_select(@faculties, "abbr", "abbr", params[:faculty]), :include_blank => true %>
-  <%= select_tag :approved, options_for_select([['да', :yes], ['нет', :no], ['неотмеченные', :unfilled]], params[:approved]), :include_blank => true %>
-  <%= submit_tag 'Искать' %>
+<%= simple_form_for :filter,
+                    :url => education_department_disruptions_path,
+                    :html => { :class => 'form-inline', :method => :get },
+                    :wrapper => :inline_form do |f| %>
+
+                    <%= link_to 'Все', education_department_disruptions_path(params.merge(:filter => :all)) %>
+
+                    <%= f.input :from, :input_html => { :value => @filter_params[:from] } %>
+                    <%= f.input :to, :input_html => { :value => @filter_params[:to] } %>
+
+                    <%= f.input :name, :input_html => { :value => @name || nil }, :placeholder => 'ФИО преподавателя' %>
+                    <%= f.input :faculty, :as => :select, :collection => @faculties.map(&:abbr), :selected => @faculty, :include_blank => true %>
+                    <%= f.input :approved, :as => :select, :collection => Realize.approved.values.map(&:text), :selected => @approved, :include_blank => true %>
+
+                    <%= f.submit 'Искать', :class => 'btn btn-default btn-sm' %>
 <% end %>

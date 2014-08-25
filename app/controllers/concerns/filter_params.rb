@@ -4,7 +4,7 @@ module FilterParams
   def filter_params
     case params[:filter]
     when 'all'
-      { :from => Date.parse('2014-01-01'), :to => today}
+      { :from => Date.parse('2014-01-01'), :to => today }
 
     when 'from_semester_begin'
       { :from => semester_begin, :to => last_week_end }
