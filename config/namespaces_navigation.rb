@@ -42,13 +42,13 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'group_leader'
-          role_item.item :group,        I18n.t('page_title.groups.title'),        group_leader_group_path
+          role_item.item :group,        I18n.t('page_title.groups.index'),        group_leader_group_path
           role_item.item :lessons,      I18n.t('page_title.lessons.title'),       group_leader_lessons_path
         end
 
         if role == 'lecturer'
-          role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   lecturer_disruptions_path
-          role_item.item :groups,       I18n.t('page_title.groups.index'),        lecturer_groups_path
+          role_item.item :disruptions,  I18n.t('page_title.disruptions.personal'), lecturer_disruptions_path
+          role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path
         end
 
         if role == 'subdepartment'

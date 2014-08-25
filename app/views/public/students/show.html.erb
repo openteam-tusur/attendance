@@ -6,12 +6,13 @@
   <%= date_filters %>
 </div>
 
+<h2 class="text-center">Посещаемость по дням</h2>
 <%= line_chart  @attendance_by_date %>
 
-<h1 class="text-center">Посещаемость по дисциплинам</h1>
+<h2 class="text-center">Посещаемость по дисциплинам</h2>
 <%= bar_chart   @attendance_by_discipline %>
 
-<h1 class="text-center">Пропуски занятий</h1>
+<h2 class="text-center">Пропуски занятий</h2>
 <div class="table-responsive">
   <table class="table table-condensed table-striped">
     <thead>
