@@ -1,6 +1,9 @@
-<% if @disruptions.any? %>
+<div class="filters">
+  <%= date_filters %>
   <%= render :partial => 'search' %>
+</div>
 
+<% if @disruptions.any? %>
   <% @disruptions.each do |group| %>
     <% next unless group.results.any? %>
     <%= render :partial => 'disruption', :locals => { :group => group } %>

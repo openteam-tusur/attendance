@@ -5,7 +5,7 @@ class EducationDepartment::RealizesController < AuthController
 
   def accept
     accept!{
-      change_approved(true)
+      change_approved(:yes)
 
       redirect_to education_department_disruptions_path and return
     }
@@ -13,7 +13,7 @@ class EducationDepartment::RealizesController < AuthController
 
   def refuse
     refuse!{
-      change_approved(false)
+      change_approved(:no)
 
       redirect_to education_department_disruptions_path and return
     }
