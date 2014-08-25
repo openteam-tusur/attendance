@@ -21,7 +21,7 @@ class EducationDepartment::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions).page(params[:page]).per(10)
+      @permissions = Kaminari.paginate_array(@permissions).page(params[:page])
     }
   end
 

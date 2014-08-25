@@ -14,7 +14,7 @@ class Dean::StudentsController < AuthController
 
   def index
     index!{
-      @students = Kaminari.paginate_array(@faculty.students.select {|s| s.slacker?(**filter_params)}).page(params[:page]).per(10)
+      @students = Kaminari.paginate_array(@faculty.students.select {|s| s.slacker?(**filter_params)}).page(params[:page])
       @params = filter_params
     }
   end

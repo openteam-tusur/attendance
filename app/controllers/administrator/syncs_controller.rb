@@ -5,7 +5,7 @@ class Administrator::SyncsController < AuthController
   actions :index
 
   def index
-    index!{ @syncs = Kaminari.paginate_array(@syncs).page(params[:page]).per(10) }
+    index!{ @syncs = Kaminari.paginate_array(@syncs).page(params[:page]) }
   end
 
   has_scope :by_created_at, :default => 1 do |controller, scope, _|

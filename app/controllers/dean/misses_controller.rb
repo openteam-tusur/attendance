@@ -16,7 +16,7 @@ class Dean::MissesController < AuthController
 
   def index
     index!{
-      @misses = Kaminari.paginate_array(@misses).page(params[:page]).per(10)
+      @misses = Kaminari.paginate_array(@misses).page(params[:page])
     }
   end
 
