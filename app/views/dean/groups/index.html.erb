@@ -6,12 +6,14 @@
   <%= date_filters %>
 </div>
 
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_date') %></h2>
+
 <%= line_chart @attendance_by_date %>
 
-<h1 class="text-center">Статистика посещаемости по курсам факультета <%= @faculty %></h1>
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_course') %></h2>
 
 <%= bar_chart  @attendance_by_course %>
 
-<h1 class="text-center">Статистика посещаемости по группам факультета <%= @faculty %></h1>
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_group') %></h2>
 
 <%= bar_chart  @attendance_by_group %>

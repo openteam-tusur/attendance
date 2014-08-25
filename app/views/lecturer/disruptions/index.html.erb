@@ -1,3 +1,7 @@
+<%= content_for :page_title do %>
+  <h1 class="text-center"><%= I18n.t('page_title.disruptions.personal') %></h1>
+<% end %>
+
 <div class="filters">
   <%= date_filters %>
 </div>
@@ -6,7 +10,7 @@
   <table class="table table-condensed table-disruptions">
     <thead>
       <tr>
-        <td>Преподаватель / Дисциплина</td>
+        <td>Дисциплина</td>
         <td>Дата</td>
         <td colspan="2">Объяснительная</td>
         <td>Уважительная причина</td>
