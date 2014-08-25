@@ -1,6 +1,6 @@
 require 'grouped_realizes'
 class EducationDepartment::DisruptionsController < AuthController
-  include FilterParams
+  include DisruptionFilterParams
   include DateRange
 
   inherit_resources
