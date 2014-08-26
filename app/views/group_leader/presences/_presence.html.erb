@@ -1,5 +1,9 @@
-<%= link_to presence,
-            change_group_leader_lesson_presence_path(lesson, presence),
-            :remote => true,
-            :title => 'Изменить',
-            :class => "#{presence.state}" %>
+<% if lesson.realizes.first.state == 'was' %>
+  <%= link_to presence,
+              change_group_leader_lesson_presence_path(lesson, presence),
+              :remote => true,
+              :title => 'Изменить',
+              :class => "#{presence.state}" %>
+<% else %>
+  -
+<% end %>
