@@ -47,7 +47,10 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'lecturer'
-          role_item.item :disruptions,  I18n.t('page_title.disruptions.personal'), lecturer_disruptions_path
+          role_item.item :disruptions,  I18n.t('page_title.disruptions.personal'), lecturer_disruptions_path do |disruption|
+            disruption.item :new_lecturer_declaration, I18n.t('page_title.lecturer_declaration.new'), new_lecturer_realize_lecturer_declaration_path(@realize) if @realize.present?
+            disruption.item :edit_lecturer_declaration, I18n.t('page_title.lecturer_declaration.edit'), edit_lecturer_realize_lecturer_declaration_path(@realize, @lecturer_declaration) if @realize.present? && @lecturer_declaration.persisted?
+          end
           role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path
         end
 
