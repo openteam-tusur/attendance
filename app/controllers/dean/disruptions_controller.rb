@@ -1,4 +1,7 @@
 class Dean::DisruptionsController < AuthController
+  include FilterParams
+  include DateRange
+
   inherit_resources
   load_and_authorize_resource
 
@@ -6,6 +9,6 @@ class Dean::DisruptionsController < AuthController
 
   def index
     @faculty = current_user.faculties.first
-    @disruptions = @faculty.realizes.wasnt.with_lessons.ordered_by_lecturer.group_by(&:lecturer)
+    @disruptions = @faculty.realizes.wasnt.between_dates(*filter_params.values).with_lessons.ordered_by_lecturer.group_by(&:lecturer)
   end
 end
