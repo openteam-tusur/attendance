@@ -171,6 +171,12 @@ ru:
       '6': '18:30 - 20:05'
       '7': '20:15 - 21:50'
 
+  realize:
+    approved:
+      unfilled: '-'
+      reasonable: Да
+      unreasonable: Нет
+
   views:
     pagination:
       next: '&gt;'
