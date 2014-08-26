@@ -12,5 +12,5 @@
 //= require ajaxed_delete
 //= require filters
 //= require popover
-//= require validations
 //= require disruption_status
+//= require modal

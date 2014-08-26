@@ -7,18 +7,25 @@ class Subdepartment::SubdepartmentDeclarationsController < AuthController
 
   before_filter :find_realize, :only => [:new, :edit]
 
+  layout false
+  respond_to :js, :only => [:new, :create, :update]
+
   def create
     create!{
-      redirect_to subdepartment_disruptions_path and return
+      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
     }
   end
 
   def update
-    update!{ redirect_to subdepartment_disruptions_path and return }
+    update!{
+      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+    }
   end
 
   def destroy
-    destroy!{ redirect_to subdepartment_disruptions_path and return }
+    destroy!{
+      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+    }
   end
 
   private
