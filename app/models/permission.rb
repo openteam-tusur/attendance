@@ -1,8 +1,8 @@
 class Permission < ActiveRecord::Base
   sso_auth_permission :roles => %W(administrator curator dean education_department group_leader lecturer subdepartment student)
 
-  after_save  :notify_about_add, :if => :user_changed? && :notifiable?
-  after_destroy :notify_about_delete, :if => :with_user? && :notifiable?
+  after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
+  after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
 
   normalize_attribute     :email
   validates_presence_of   :user_id, :if => 'email.nil?'
@@ -47,7 +47,7 @@ class Permission < ActiveRecord::Base
   end
 
   def with_user?
-    self.user.present?
+    self.user
   end
 
   def user_changed?
