@@ -5,6 +5,8 @@
         <tr>
           <td>Преподаватель / Дисциплина</td>
           <td>Дата</td>
+          <td>Объяснительная зав.кафедры</td>
+          <td>Объяснительная преподавателя</td>
           <td>Уважительная причина</td>
         </tr>
       </thead>
@@ -19,6 +21,22 @@
               <%= " (#{realize.lesson.kind_abbr})" %>
             </td>
             <td><%= I18n.l(realize.lesson.date_on) %></td>
+            <% if realize.subdepartment_declaration.present? %>
+              <td class="declaration truncated btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
+                <%= realize.subdepartment_declaration.reason %>
+              </td>
+
+            <% else %>
+              <td>Нет</td>
+            <% end %>
+
+            <% if realize.lecturer_declaration.present? %>
+              <td class="declaration truncated btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+                <%= realize.lecturer_declaration.reason %>
+              </td>
+            <% else %>
+              <td>Нет</td>
+            <% end %>
             <td class="status">
               <% if realize.unfilled? %>
                 -
