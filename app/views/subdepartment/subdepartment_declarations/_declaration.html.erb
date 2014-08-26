@@ -1,0 +1,42 @@
+<% if subdepartment_declaration.present? %>
+  <td class="declaration">
+    <div class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= subdepartment_declaration.reason %>">
+      <%= subdepartment_declaration.reason %>
+    </div>
+  </td>
+
+  <td class="actions">
+    <%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
+                edit_subdepartment_realize_subdepartment_declaration_path(subdepartment_declaration.realize, subdepartment_declaration),
+                :class => 'js-modal',
+                :remote => true,
+                :data => { :toggle => 'modal', :target => '.modal' } %>
+
+    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                subdepartment_realize_subdepartment_declaration_path(subdepartment_declaration.realize, subdepartment_declaration),
+                :class => 'js-delete',
+                :remote => true,
+                :method => :delete %>
+  </td>
+<% else %>
+  <td class="declaration">
+    <%= link_to 'Добавить объяснительную',
+                new_subdepartment_realize_subdepartment_declaration_path(realize),
+                :class => 'btn btn-default btn-xs btn-declaration js-modal',
+                :remote => true,
+                :data => { :toggle => 'modal', :target => '.modal' } %>
+  </td>
+  <td></td>
+<% end %>
+
+<% if realize.lecturer_declaration.present? %>
+  <td class="declaration">
+    <div class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+      <%= realize.lecturer_declaration.reason %>
+    </div>
+  </td>
+<% else %>
+  <td>
+    Нет
+  </td>
+<% end %>

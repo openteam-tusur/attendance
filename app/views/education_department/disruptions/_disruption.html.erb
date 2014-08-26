@@ -26,16 +26,16 @@
             <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
 
             <% if realize.subdepartment_declaration %>
-              <td class="btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
-                Посмотреть
+              <td class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
+                <%= realize.subdepartment_declaration.reason %>
               </td>
             <% else %>
               <td>Нет</td>
             <% end %>
 
             <% if realize.lecturer_declaration %>
-              <td class="btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
-                Посмотреть
+              <td class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+                <%= realize.lecturer_declaration.reason %>
               </td>
             <% else %>
               <td>Нет</td>
