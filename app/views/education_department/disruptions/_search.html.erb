@@ -21,5 +21,6 @@
                       <%= f.input :approved, :as => :select, :collection => Realize.approved.values.map(&:text), :selected => @approved, :include_blank => true %>
 
                       <%= f.submit 'Искать', :class => 'btn btn-default btn-sm' %>
+                      <%= link_to 'Очистить', '#', :class => 'btn-link js-drop-filter' %>
   <% end %>
 </div>

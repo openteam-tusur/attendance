@@ -28,6 +28,9 @@ $ ->
     input_dates.val(param)
     form.submit()
 
+  $('.js-drop-filter').on 'click', ->
+    $(':input', form).not(':button, :submit, :reset, :hidden').val('')
+
   handle_select_current = ->
     return unless form.length
 
