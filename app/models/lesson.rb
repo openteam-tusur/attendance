@@ -12,6 +12,7 @@ class Lesson < ActiveRecord::Base
     def change_state
       new_state = proxy_association.owner.realized? ? :wasnt : :was
       self.update_all(:state => new_state)
+      self.index
     end
   end
 
