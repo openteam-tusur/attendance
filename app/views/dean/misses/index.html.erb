@@ -4,11 +4,11 @@
 
 <%= link_to "Добавить уважительную причину", new_dean_miss_path, :class => 'btn btn-sm btn-primary' %>
 
-<% if @misses.any? %>
-  <div class="filters">
-    <%= date_filters %>
-  </div>
+<div class="filters">
+  <%= date_filters %>
+</div>
 
+<% if @misses.any? %>
   <div class="table-responsive">
     <table class="table table-condensed table-striped">
       <thead>

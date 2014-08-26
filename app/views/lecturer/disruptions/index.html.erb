@@ -2,11 +2,11 @@
   <h1 class="text-center"><%= I18n.t('page_title.disruptions.personal') %></h1>
 <% end %>
 
-<% if @disruptions.any? %>
-  <div class="filters">
-    <%= date_filters %>
-  </div>
+<div class="filters">
+  <%= date_filters %>
+</div>
 
+<% if @disruptions.any? %>
   <div class="table-responsive">
     <table class="table table-condensed table-disruptions">
       <thead>
