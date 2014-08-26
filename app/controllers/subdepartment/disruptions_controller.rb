@@ -16,7 +16,7 @@ class Subdepartment::DisruptionsController < AuthController
       s.with(:subdepartment_id, @subdepartment.id)
       s.with :state, :wasnt
 
-      s.order_by(:lesson_date)
+      s.order_by(:lesson_date, :desc)
       s.group(:lecturer) { limit 10000 }
 
       s.paginate :page => params[:page], :per_page => 10
