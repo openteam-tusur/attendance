@@ -1,5 +1,5 @@
 class Chart
-  constructor: (id, @data) ->
+  constructor: (id) ->
     @id = "##{id}"
     @render()
 
@@ -71,10 +71,15 @@ class @LineChart extends Chart
         data: formatted_data
       }]
 
-    super(id, data)
+    super(id)
 
 class @BarChart extends Chart
   constructor: (id, data) ->
+    formatted_data = []
+
+    for k,v of data
+      formatted_data.push { name: v[0], url: v[1].url, y: v[1].value }
+
     @options =
       chart:
         type: 'bar'
@@ -82,9 +87,17 @@ class @BarChart extends Chart
       xAxis:
         categories: []
 
+      plotOptions:
+        series:
+          cursor: 'pointer'
+          point:
+            events:
+              click: (e) ->
+                location.href = this.options.url if this.options.url
+
       series: [{
         showInLegend: false
-        data: data
+        data: formatted_data
       }]
 
-    super(id, data)
+    super(id)
