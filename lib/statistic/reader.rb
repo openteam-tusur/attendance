@@ -26,7 +26,7 @@ class Statistic::Reader < Statistic::Base
       end
       h[k] = (res['attendance'].to_i*100.0/res['total']).round(1)
       h
-    end
+    end.sort
   end
 
   private
