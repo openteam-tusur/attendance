@@ -10,7 +10,7 @@ class Dean::GroupsController < AuthController
     @groups  = current_user.faculty_groups
     faculty_statistic = Statistic::Faculty.new(@faculty)
     @attendance_by_date = faculty_statistic.attendance_by_date(**filter_params)
-    @attendance_by_group = faculty_statistic.attendance_by('by_group', **filter_params)
-    @attendance_by_course = faculty_statistic.attendance_by('by_course', **filter_params)
+    @attendance_by_group = faculty_statistic.attendance_by('groups', **filter_params)
+    @attendance_by_course = faculty_statistic.attendance_by('courses', **filter_params)
   end
 end

@@ -24,7 +24,9 @@ class Statistic::Reader < Statistic::Base
         end
         hash
       end
-      h[k] = (res['attendance'].to_i*100.0/res['total']).round(1)
+      opts = { :value => (res['attendance'].to_i*100.0/res['total']).round(1) }
+      opts.merge! :url => "/#{route_namespace}/#{kind}/#{k}" if route_namespace
+      h[k] = opts
       h
     end.sort
   end
