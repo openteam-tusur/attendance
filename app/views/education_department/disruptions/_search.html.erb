@@ -18,7 +18,7 @@
 
                       <%= f.input :name, :input_html => { :value => @name || nil }, :placeholder => 'ФИО преподавателя' %>
                       <%= f.input :faculty, :as => :select, :collection => @faculties.map(&:abbr), :selected => @faculty, :include_blank => true %>
-                      <%= f.input :approved, :as => :select, :collection => Realize.approved.values.map(&:text), :selected => @approved, :include_blank => true %>
+                      <%= f.input :approved, :as => :select, :collection => Realize.approved.options, :selected => @approved, :include_blank => true %>
 
                       <%= f.submit 'Искать', :class => 'btn btn-default btn-sm' %>
                       <%= link_to 'Очистить', '#', :class => 'btn-link js-drop-filter' %>
