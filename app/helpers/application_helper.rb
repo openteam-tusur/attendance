@@ -55,4 +55,29 @@ module ApplicationHelper
       end
     end.html_safe
   end
+
+  def render_chart(kind, data)
+    chart_id = "chart-#{incr_counter}"
+    javascript_tag do
+      res = ''
+      res += "new #{kind.capitalize}Chart('#{chart_id}', #{data.to_json});"
+      res.html_safe
+    end +
+    content_tag(:div, '', :class => 'chart_wrapper', :id => chart_id)
+  end
+
+  def line_chart(data)
+    render_chart('line', data)
+  end
+
+  def bar_chart(data)
+    render_chart('bar', data)
+  end
+
+  private
+
+  def incr_counter
+    @chart_counter ||= 0
+    @chart_counter += 1
+  end
 end
