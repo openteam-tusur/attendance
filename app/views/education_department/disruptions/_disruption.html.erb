@@ -42,14 +42,16 @@
             <% end %>
 
             <td class="status">
-              <% if realize.unfilled? %>
-                <%= link_to "Да", accept_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-accept', :remote => true %>
-                <%= link_to "Нет", refuse_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-refuse', :remote => true %>
-              <% elsif realize.approved %>
-                Да <%= link_to "изменить", change_education_department_realize_path(realize), :remote => true %>
-              <% else %>
-                Нет <%= link_to "изменить", change_education_department_realize_path(realize), :remote => true %>
-              <% end %>
+              <span class="realize">
+                <% if realize.unfilled? %>
+                  <%= link_to "Да", accept_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-accept', :remote => true %>
+                  <%= link_to "Нет", refuse_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-refuse', :remote => true %>
+                <% elsif realize.approved %>
+                  Да <%= link_to "изменить", change_education_department_realize_path(realize), :remote => true %>
+                <% else %>
+                  Нет <%= link_to "изменить", change_education_department_realize_path(realize), :remote => true %>
+                <% end %>
+              </span>
             </td>
           </tr>
         <% end %>

@@ -13,3 +13,4 @@
 //= require filters
 //= require popover
 //= require validations
+//= require disruption_status

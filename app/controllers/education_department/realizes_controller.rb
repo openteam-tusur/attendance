@@ -7,7 +7,9 @@ class EducationDepartment::RealizesController < AuthController
     accept!{
       change_approved(:reasonable)
 
-      redirect_to education_department_disruptions_path and return
+      render :partial => 'education_department/realizes/realize' and return
+
+      #redirect_to education_department_disruptions_path and return
     }
   end
 
@@ -15,7 +17,9 @@ class EducationDepartment::RealizesController < AuthController
     refuse!{
       change_approved(:unreasonable)
 
-      redirect_to education_department_disruptions_path and return
+      render :partial => 'education_department/realizes/realize' and return
+
+      #redirect_to education_department_disruptions_path and return
     }
   end
 
@@ -23,7 +27,9 @@ class EducationDepartment::RealizesController < AuthController
     change!{
       change_approved(:unfilled)
 
-      redirect_to education_department_disruptions_path and return
+      render :partial => 'education_department/realizes/realize' and return
+
+      #redirect_to education_department_disruptions_path and return
     }
   end
 
