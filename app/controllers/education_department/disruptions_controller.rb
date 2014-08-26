@@ -20,7 +20,7 @@ class EducationDepartment::DisruptionsController < AuthController
       s.with :approved, @approved if @approved.present?
       s.with :state, :wasnt
 
-      s.order_by(:lesson_date)
+      s.order_by(:lesson_date, :desc)
       s.group :faculty do
         limit 10000
       end
