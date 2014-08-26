@@ -1,4 +1,6 @@
 $ ->
+  # Statistic filters
+
   btn = $('.js-date-range')
   date_filter = $('.date-range', '.tabs')
 
@@ -13,3 +15,23 @@ $ ->
     handle_date_range()
 
     date_filter.addClass('animated bounceInLeft')
+
+  # Disruptions filters
+
+  filter_btn  = $('.js-btn-filter')
+  input_dates = $('#filter_dates')
+  form        = $('.disruptions-form')
+
+  filter_btn.on 'click', ->
+    param = $(this).data('filter')
+
+    input_dates.val(param)
+    form.submit()
+
+  handle_select_current = ->
+    if $('#filter_name').val().length || $('#filter_faculty').val().length || $('#filter_approved').val().length
+      form.toggleClass('hidden')
+      btn.addClass('active')
+
+  handle_select_current()
+

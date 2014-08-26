@@ -20,7 +20,7 @@
             </td>
             <td><%= I18n.l(realize.lesson.date_on) %></td>
             <td class="status">
-              <% if realize.approved.nil? %>
+              <% if realize.unfilled? %>
                 -
               <% elsif realize.approved %>
                 Да
