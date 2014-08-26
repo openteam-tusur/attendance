@@ -3,6 +3,9 @@ module DisruptionFilterParams
 
   def filter_params
     dates_filter = params[:filter]
+
+    puts dates_filter
+
     if dates_filter
       if dates_filter[:dates].present?
         case dates_filter[:dates]
