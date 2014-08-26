@@ -40,8 +40,6 @@ class Permission < ActiveRecord::Base
     [user || email, role_text, context].join(', ')
   end
 
-  private
-
   def notifiable?
     !['student'].include?(self.role)
   end
@@ -53,6 +51,8 @@ class Permission < ActiveRecord::Base
   def user_changed?
     self.user_id_changed?
   end
+
+  private
 
   def notify_about_delete
     redis = Redis.new(:url => Settings['messaging.url'])
