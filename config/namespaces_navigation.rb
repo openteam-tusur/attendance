@@ -47,15 +47,22 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'lecturer'
-          role_item.item :disruptions,  I18n.t('page_title.disruptions.personal'), lecturer_disruptions_path do |disruption|
-            disruption.item :new_lecturer_declaration, I18n.t('page_title.lecturer_declaration.new'), new_lecturer_realize_lecturer_declaration_path(@realize) if @realize.present?
-            disruption.item :edit_lecturer_declaration, I18n.t('page_title.lecturer_declaration.edit'), edit_lecturer_realize_lecturer_declaration_path(@realize, @lecturer_declaration) if @realize.present? && @lecturer_declaration.persisted?
+          role_item.item :lecturer_disruptions,  I18n.t('page_title.disruptions.personal'), lecturer_disruptions_path do |lecturer_disruption|
+            if @lecturer_declaration.present?
+              lecturer_disruption.item :new_lecturer_declaration, I18n.t('page_title.lecturer_declaration.new'), new_lecturer_realize_lecturer_declaration_path(@realize) if @realize.present?
+              lecturer_disruption.item :edit_lecturer_declaration, I18n.t('page_title.lecturer_declaration.edit'), edit_lecturer_realize_lecturer_declaration_path(@realize, @lecturer_declaration) if @realize.present? && @lecturer_declaration.persisted?
+            end
           end
           role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path
         end
 
         if role == 'subdepartment'
-          role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   subdepartment_disruptions_path
+          role_item.item :subdepartment_disruptions,  I18n.t('page_title.disruptions.index'),   subdepartment_disruptions_path do |subdepartment_disruption|
+            if @subdepartment_declaration.present?
+              subdepartment_disruption.item :new_subdepartment_declaration, I18n.t('page_title.subdepartment_declaration.new'), new_subdepartment_realize_subdepartment_declaration_path(@realize) if @realize.present?
+              subdepartment_disruption.item :edit_subdepartment_declaration, I18n.t('page_title._declaration.edit'), edit_subdepartment_realize_subdepartment_declaration_path(@realize, @subdepartment_declaration) if @subdepartment_declaration.persisted? && @realize.present?
+            end
+          end
           role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path
         end
 
