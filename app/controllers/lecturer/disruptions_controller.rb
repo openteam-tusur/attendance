@@ -7,6 +7,6 @@ class Lecturer::DisruptionsController < AuthController
 
   def index
     @lecturer = current_user.lecturers.first
-    @disruptions = Kaminari.paginate_array(@lecturer.realizes.wasnt.between_dates(*filter_params.values)).page(params[:page])
+    @disruptions = Kaminari.paginate_array(@lecturer.realizes.wasnt.between_dates(*filter_params.values).ordered_by_lesson).page(params[:page])
   end
 end
