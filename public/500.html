@@ -1,57 +1,95 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>We're sorry, but something went wrong (500)</title>
-  <style>
-  body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-  }
+<html lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Внутренняя ошибка сервера — Ошибка 500</title>
+    <link href="/assets/application.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="/assets/application.js"></script>
+  </head>
 
-  div.dialog {
-    width: 25em;
-    margin: 4em auto 0 auto;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 4em 0 4em;
-  }
+  <body class="error-page" role="document">
+    <div class="tusur_header_wrapper">
+      <div class="navbar navbar-inverse navbar-fixed-top navbar-desktop" role="navigation" id="menu_first">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/"></a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сайты ТУСУР<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tusur.ru/">Официальный информационный портал университета</a></li>
+                  <li><a href="http://09.tusur.ru/">Телефонный справочник</a></li>
+                  <li><a href="http://abiturient.tusur.ru/">Абитуриентам</a></li>
+                  <li><a href="http://edu.tusur.ru/">Научно-образовательный портал</a></li>
+                  <li><a href="http://timetable.tusur.ru/">Электронное расписание</a></li>
+                  <li><a href="http://attendance.tusur.ru/">Журнал посещаемости</a></li>
+                  <li><a href="http://re.tusur.ru/">Газета «Радиоэлектроник»</a></li>
+                </ul>
+              </li>
+            </ul>
 
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+          </div>
+        </div>
+      </div>
 
-  body > p {
-    width: 33em;
-    margin: 0 auto 1em;
-    padding: 1em 0;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow:0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
+      <div class="navbar navbar-inverse navbar-fixed-top navbar-mobile" role="navigation" id="menu_mobile">
+        <div class="container">
 
-<body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-  </div>
-  <p>If you are the application owner check the logs for more information.</p>
-</body>
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle mobile-toggler" data-toggle="collapse" data-target="#site-menu">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"></a>
+          </div>
+
+          <div class="navbar-collapse collapse" id="site-menu">
+            <div class="mobile_menu">
+              <ul class="nav nav-pills first-menu-part col-xs-12 col-sm-4 col-lg-9 col-md-8 hidden-xs"><li><a href="/ru/pochemu-tusur/">Почему ТУСУР?</a></li><li><a href="/ru/napravleniya-podgotovki/ochnaya-forma-obucheniya/">Направления подготовки</a></li><li><a href="/ru/kak-postupit/ochnaya-forma-obucheniya/">Как поступить</a></li><li><a href="/ru/kontakty/">Контакты</a></li><li><a href="/ru/ofitsialnye-dokumenty/">Официальные документы</a></li></ul>
+              <ul class="nav nav-pills first-menu-part col-xs-12 col-sm-4 col-lg-9 col-md-8 hidden-sm hidden-md hidden-lg"><li class="col-xs-12"><a href="/ru/pochemu-tusur/">Почему ТУСУР?</a></li><li class="col-xs-12"><a href="/ru/napravleniya-podgotovki/ochnaya-forma-obucheniya/">Направления подготовки</a></li><li class="col-xs-12"><a href="/ru/kak-postupit/ochnaya-forma-obucheniya/">Как поступить</a></li><li class="col-xs-12"><a href="/ru/kontakty/">Контакты</a></li><li class="col-xs-12"><a href="/ru/ofitsialnye-dokumenty/">Официальные документы</a></li></ul>
+
+              <form class="navbar-form navbar-right search col-xs-12" role="form" action="/ru/search" method="get">
+                <div class="form-group">
+                  <input type="text" placeholder="Поиск" class="form-control" name="parts_params[search][q]" value="">
+                </div>
+                <div class="form-group">
+                  <a href="/" class="glyphicon glyphicon-search"></a>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container" role="main">
+      <div class="error">
+        <div class="error-image error-500"></div>
+
+        <div class="error-text">
+          <p>
+            На сервере произошла внутренняя ошибка и сервер не смог обработать Ваш запрос
+          </p>
+
+          <p>
+            Не стоит беспокоиться &ndash; служба поддержки уже получила сообщение об ошибке и в ближайшее время устранит причину.
+          </p>
+
+          <p>
+            <a href="/">На главную страницу</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
 </html>
