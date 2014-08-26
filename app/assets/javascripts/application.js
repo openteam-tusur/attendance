@@ -9,6 +9,7 @@
 //= require bootstrap
 //= require tusur_header
 //= require highcharts
+//= require commons/chart
 //= require ajaxed_delete
 //= require filters
 //= require popover
