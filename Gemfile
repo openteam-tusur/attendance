@@ -13,6 +13,7 @@ group :default do
   gem 'jquery-rails'
   gem 'jquery-ui-rails'
   gem 'kaminari'
+  gem 'non-stupid-digest-assets'
   gem 'openteam-commons'
   gem 'pg'
   gem 'progress_bar'
