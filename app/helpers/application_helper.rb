@@ -74,6 +74,10 @@ module ApplicationHelper
     render_chart('bar', data)
   end
 
+  def link_to_back
+    link_to I18n.t('filter_labels.back').html_safe, polymorphic_path([current_namespace, controller_name.to_sym], :filter => params[:filter]), :class => 'back-link'
+  end
+
   private
 
   def incr_counter
