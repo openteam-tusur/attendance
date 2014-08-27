@@ -31,14 +31,14 @@ SimpleNavigation::Configuration.run do |navigation|
           end
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
           role_item.item :group_leaders,I18n.t('page_title.group_leaders.index'), dean_group_leaders_path
-          role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path
+          role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path, :highlights_on => /^\/dean\/groups|\/dean\/courses|\/dean\/subdepartments/
           role_item.item :students,     I18n.t('page_title.students.index'),      dean_students_path
         end
 
         if role == 'education_department'
           role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(:for_role => (current_namespace == :education_department && params[:for_role]) || :dean)
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
-          role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path
+          role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, :highlights_on => /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/subdepartments/
         end
 
         if role == 'group_leader'
@@ -53,7 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
               lecturer_disruption.item :edit_lecturer_declaration, I18n.t('page_title.lecturer_declaration.edit'), edit_lecturer_realize_lecturer_declaration_path(@realize, @lecturer_declaration) if @realize.present? && @lecturer_declaration.persisted?
             end
           end
-          role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path
+          role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path, :highlights_on => /^\/lecturer\/groups|\/lecturer\/disciplines/
         end
 
         if role == 'subdepartment'
@@ -63,7 +63,7 @@ SimpleNavigation::Configuration.run do |navigation|
               subdepartment_disruption.item :edit_subdepartment_declaration, I18n.t('page_title._declaration.edit'), edit_subdepartment_realize_subdepartment_declaration_path(@realize, @subdepartment_declaration) if @subdepartment_declaration.persisted? && @realize.present?
             end
           end
-          role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path
+          role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path, :highlights_on => /^\/subdepartment\/groups|\/subdepartment\/courses/
         end
 
         if role == 'student'
