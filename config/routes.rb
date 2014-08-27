@@ -68,7 +68,8 @@ Attendance::Application.routes.draw do
 
   namespace :lecturer do
     resources :disruptions
-    resources :groups
+    resources :groups,      :only => [:index, :show]
+    resources :disciplines, :only => [:show]
     resources :realizes, :only => [] do
       resources :lecturer_declarations, :except => [:index, :show]
     end
@@ -77,7 +78,7 @@ Attendance::Application.routes.draw do
 
   namespace :subdepartment do
     resources :disruptions
-    resources :groups
+    resources :groups,   :only => [:index, :show]
     resources :realizes, :only => [] do
       resources :subdepartment_declarations, :except => [:index, :show]
     end

@@ -14,6 +14,10 @@
 
 <%= bar_chart  @attendance_by_course %>
 
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_subdepartment') %></h2>
+
+<%= bar_chart  @attendance_by_subdepartment %>
+
 <h2 class="text-center"><%= I18n.t('page_title.attendance.by_group') %></h2>
 
 <%= bar_chart  @attendance_by_group %>
