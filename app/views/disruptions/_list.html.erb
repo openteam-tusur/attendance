@@ -1,6 +1,6 @@
 <% if @disruptions.any? %>
   <div class="table-responsive">
-    <table class="table table-condensed table-disruptions">
+    <table class="table table-condensed table-disruptions dean">
       <thead>
         <tr>
           <td>Преподаватель / Дисциплина</td>
@@ -14,35 +14,40 @@
         <% @disruptions.each do |teacher, realizes| %>
           <tr class="teacher">
             <td colspan="3"><%= teacher.to_s %></td>
-        <% realizes.each do |realize| %>
-          <tr class="lesson">
-            <td>
-              <%= realize.lesson.discipline.title %>
-              <%= " (#{realize.lesson.kind_abbr})" %>
-            </td>
-            <td><%= I18n.l(realize.lesson.date_on) %></td>
-            <% if realize.subdepartment_declaration.present? %>
-              <td class="declaration truncated btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
-                <%= realize.subdepartment_declaration.reason %>
+          </tr>
+          <% realizes.each do |realize| %>
+            <tr class="lesson">
+              <td class="discipline truncated">
+                <%= realize.lesson.discipline.title %>
+                <%= " (#{realize.lesson.kind_abbr})" %>
               </td>
+              <td><%= I18n.l(realize.lesson.date_on) %></td>
+              <% if realize.subdepartment_declaration.present? %>
+                <td class="declaration">
+                  <div class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
+                    <%= realize.subdepartment_declaration.reason %>
+                  </div>
+                </td>
 
-            <% else %>
-              <td>Нет</td>
-            <% end %>
+              <% else %>
+                <td>Нет</td>
+              <% end %>
 
-            <% if realize.lecturer_declaration.present? %>
-              <td class="declaration truncated btn-link js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
-                <%= realize.lecturer_declaration.reason %>
+              <% if realize.lecturer_declaration.present? %>
+                <td class="declaration">
+                  <div class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+                    <%= realize.lecturer_declaration.reason %>
+                  </div>
+                </td>
+              <% else %>
+                <td>Нет</td>
+              <% end %>
+              <td class="status">
+                <%= I18n.t("realize.approved.#{realize.approved}") %>
               </td>
-            <% else %>
-              <td>Нет</td>
+              </tr>
             <% end %>
-            <td class="status">
-              <%= I18n.t("realize.approved.#{realize.approved}") %>
-            </td>
-            </tr>
           <% end %>
-        <% end %>
       </tbody>
     </table>
   </div>
