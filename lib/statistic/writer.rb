@@ -35,6 +35,7 @@ class Statistic::Writer < Statistic::Base
       incr("faculty:#{item['faculty']}:by_date",                "#{item['date_on']}:#{kind}")
       incr("faculty:#{item['faculty']}:groups",                 "#{item['group']}:#{item['date_on']}:#{kind}")
       incr("faculty:#{item['faculty']}:courses",                "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:subdepartments",         "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
 
       item['lecturers'].split(', ').map{|s| s.match(/([[:alpha:]]+\s?)+/).to_s}.each do |lecturer|
         incr("lecturer:#{lecturer}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")

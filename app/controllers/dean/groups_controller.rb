@@ -12,5 +12,6 @@ class Dean::GroupsController < AuthController
     @attendance_by_date = faculty_statistic.attendance_by_date(**filter_params)
     @attendance_by_group = faculty_statistic.attendance_by('groups', **filter_params)
     @attendance_by_course = faculty_statistic.attendance_by('courses', **filter_params)
+    @attendance_by_subdepartment = faculty_statistic.attendance_by('subdepartments', **filter_params)
   end
 end

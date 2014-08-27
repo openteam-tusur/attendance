@@ -93,7 +93,7 @@ class @BarChart extends Chart
           point:
             events:
               click: (e) ->
-                location.href = this.options.url if this.options.url
+                location.href = "#{this.options.url}#{location.search}" if this.options.url
 
       series: [{
         showInLegend: false
