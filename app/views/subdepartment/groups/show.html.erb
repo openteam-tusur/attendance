@@ -1,5 +1,8 @@
 <%= content_for :page_title do %>
-  <h1 class="text-center">Статистика посещаемости группы <%= @group %></h1>
+  <h1 class="text-center">
+    <%= link_to_back %>
+    Статистика посещаемости группы <%= @group %>
+  </h1>
 <% end %>
 
 <div class="filters">

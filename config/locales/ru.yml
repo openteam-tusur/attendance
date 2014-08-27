@@ -34,7 +34,8 @@ ru:
     delete:  Уверены, что хотите выполнить это действие?
 
   filter_labels:
-    all:     Всё
+    all:                 Всё
+    back:                '&larr; Назад'
     from_semester_begin: С начала семестра
     last_week:           Прошлая неделя
     date_range:          Указать даты
