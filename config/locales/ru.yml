@@ -62,6 +62,9 @@ ru:
       by_subdepartment: Посещаемость по кафедрам
       by_discipline:    Посещаемость по дисциплинам
 
+    courses:
+      show:             Посещаемость курса
+
     dashboard:
       index:  Главная страница
 

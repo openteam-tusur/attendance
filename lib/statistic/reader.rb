@@ -31,6 +31,14 @@ class Statistic::Reader < Statistic::Base
     end.sort
   end
 
+  def attendance_by_date_of_kind(kind, id, from: nil, to: nil)
+    get(kind)[id].inject({}) do |h, (k, v)|
+      date = Date.parse(k)
+      h[k] = (v['attendance'].to_i*100.0/v['total']).round(1) if date >= from && date <= to
+      h
+    end
+  end
+
   private
 
   def get(kind)
