@@ -25,7 +25,7 @@
           </tr>
           <% group.results.each do |realize| %>
             <tr class="lesson">
-              <%= render :partial => 'subdepartment/subdepartment_declarations/lesson', :locals => { :realize => realize } %>
+              <%= render :partial => 'lesson', :locals => { :realize => realize } %>
             </tr>
           <% end %>
         <% end %>

@@ -7,18 +7,25 @@ class Lecturer::LecturerDeclarationsController < AuthController
 
   before_filter :find_realize, :only => [:new, :edit]
 
+  layout false
+  respond_to :js, :only => [:new, :create, :update]
+
   def create
     create!{
-      redirect_to lecturer_disruptions_path and return
+      render :partial => 'lecturer/disruptions/lesson', :locals => { :realize => @lecturer_declaration.realize } and return
     }
   end
 
   def update
-    update!{ redirect_to lecturer_disruptions_path and return }
+    update!{
+      render :partial => 'lecturer/disruptions/lesson', :locals => { :realize => @lecturer_declaration.realize } and return
+    }
   end
 
   def destroy
-    destroy!{ redirect_to lecturer_disruptions_path and return }
+    destroy!{
+      render :partial => 'lecturer/disruptions/lesson', :locals => { :realize => @lecturer_declaration.realize } and return
+    }
   end
 
   private

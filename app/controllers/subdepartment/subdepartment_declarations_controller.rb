@@ -12,19 +12,19 @@ class Subdepartment::SubdepartmentDeclarationsController < AuthController
 
   def create
     create!{
-      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+      render :partial => 'subdepartment/disruptions/lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
     }
   end
 
   def update
     update!{
-      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+      render :partial => 'subdepartment/disruptions/lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
     }
   end
 
   def destroy
     destroy!{
-      render :partial => 'lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+      render :partial => 'subdepartment/disruptions/lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
     }
   end
 
