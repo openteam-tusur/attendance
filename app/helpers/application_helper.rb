@@ -75,7 +75,22 @@ module ApplicationHelper
   end
 
   def link_to_back
-    link_to I18n.t('filter_labels.back').html_safe, polymorphic_path([current_namespace, controller_name.to_sym], :filter => params[:filter]), :class => 'back-link'
+    base_controller = case current_namespace
+      when :curator
+        :groups
+      when :dean
+        :groups
+      when :education_department
+        :faculties
+      when :group_leader
+        :group
+      when :lecturer
+        :groups
+      when :subdepartment
+        :groups
+    end
+
+    link_to I18n.t('filter_labels.back').html_safe, polymorphic_path([current_namespace, base_controller], :filter => params[:filter]), :class => 'back-link'
   end
 
   private
