@@ -13,8 +13,8 @@ $ ->
 
   btn.on 'click', ->
     handle_date_range()
-
     date_filter.addClass('animated bounceInLeft')
+    false
 
   # Disruptions filters
 

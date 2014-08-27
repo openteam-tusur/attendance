@@ -42,7 +42,7 @@ module ApplicationHelper
                          :class => "btn #{item} #{param == item || param == nil && item == 'last_week' ? 'active' : 'stub'}")
           end
 
-          f << link_to(I18n.t("filter_labels.date_range"), '#', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}")
+          f << link_to(I18n.t("filter_labels.date_range"), '', :class => "btn js-date-range rounded #{param.is_a?(Hash) ? 'active' : 'stub'}")
 
           f << content_tag(:form, :class => 'date-range form-inline input-group hidden', :action => '') do
             ''.tap do |form|
