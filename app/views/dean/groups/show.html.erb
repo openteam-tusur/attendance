@@ -1,5 +1,8 @@
 <%= content_for :page_title do %>
-  <h1 class="text-center"><%= page_title(@group.number) %></h1>
+  <h1 class="text-center">
+    <%= link_to_back %>
+    <%= page_title(@group.number) %>
+  </h1>
 <% end %>
 
 <div class="filters">
