@@ -68,7 +68,7 @@ class @LineChart extends Chart
 
       series: [{
         showInLegend: false
-        data: formatted_data
+        data: formatted_data.sort()
       }]
 
     super(id)
