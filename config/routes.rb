@@ -79,6 +79,7 @@ Attendance::Application.routes.draw do
   namespace :subdepartment do
     resources :disruptions
     resources :groups,   :only => [:index, :show]
+    resources :courses,  :only => [:show]
     resources :realizes, :only => [] do
       resources :subdepartment_declarations, :except => [:index, :show]
     end

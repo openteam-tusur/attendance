@@ -13,6 +13,7 @@ class Group < ActiveRecord::Base
 
   scope :actual,      -> { where(:deleted_at => nil) }
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
+  scope :by_course,   -> (c) { where(:course => c) }
 
   alias_attribute :to_s, :number
 
