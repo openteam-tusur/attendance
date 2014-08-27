@@ -1,0 +1,14 @@
+<%= content_for :page_title do %>
+  <h1 class="text-center">Статистика посещаемости групп <%= @course %> курса факультета <%= @faculty %></h1>
+<% end %>
+
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_date') %></h2>
+<%= line_chart  @attendance_by_date %>
+
+<h2 class="text-center"><%= I18n.t('page_title.attendance.by_group') %></h2>
+<%= bar_chart   @attendance_by_group %>
+
