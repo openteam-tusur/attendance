@@ -43,12 +43,21 @@ Attendance::Application.routes.draw do
   namespace :education_department do
     resources :disruptions
     resources :permissions, :only => [:index, :new, :create, :destroy]
-    resources :faculties,   :only => [:index, :show]
     resources :realizes,    :only => [] do
       get 'accept', :on => :member
       get 'refuse', :on => :member
       get 'change', :on => :member
     end
+
+    #statistic
+    resources   :groups,    :only => [:show]
+    resources   :courses,   :only => [:show] do
+      resources :faculties, :only => [:show]
+    end
+    resources   :faculties, :only => [:index, :show] do
+      resources :courses,   :only => [:show]
+    end
+
     root 'faculties#index'
   end
 

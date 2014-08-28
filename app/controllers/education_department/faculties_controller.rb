@@ -5,11 +5,29 @@ class EducationDepartment::FacultiesController < AuthController
   inherit_resources
   load_and_authorize_resource
 
+  defaults :finder => :find_by_abbr
+
   def index
-    university_statistic = Statistic::University.new(nil)
-    @attendance_by_date = university_statistic.attendance_by_date(**filter_params)
-    @attendance_by_course = university_statistic.attendance_by('courses', **filter_params)
-    @attendance_by_faculty = university_statistic.attendance_by('faculties', **filter_params)
-    @attendance_by_subdepartment = university_statistic.attendance_by('subdepartments', **filter_params)
+    @charts = {}
+    university_statistic = Statistic::University.new(nil, current_namespace)
+    @charts['attendance_by_dates.line']          = university_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_courses.bar']         = university_statistic.attendance_by('courses', **filter_params)
+    @charts['attendance_by_faculties.bar']       = university_statistic.attendance_by('faculties', **filter_params)
+  end
+
+  def show
+    @faculty = Faculty.actual.find_by(:abbr => params[:id])
+    @charts = {}
+
+    if params[:course_id]
+      @course = params[:course_id]
+      faculty_groups = @faculty.groups.actual.by_course(@course).pluck(:number)
+      @charts['attendance_by_dates.line'] = Statistic::Faculty.new(@faculty, nil).attendance_by_date_of_kind('groups', faculty_groups, **filter_params)
+      @charts['attendance_by_groups.bar'] = Statistic::Faculty.new(@faculty, current_namespace).attendance_by('groups', **filter_params).select{ |k,v| faculty_groups.include?(k) }
+    else
+      faculty_statistic = Statistic::Faculty.new(@faculty, "#{current_namespace}/faculties/#{@faculty.abbr}")
+      @charts['attendance_by_dates.line']         = faculty_statistic.attendance_by_date(**filter_params)
+      @charts['attendance_by_courses.bar']        = faculty_statistic.attendance_by('courses', **filter_params)
+    end
   end
 end

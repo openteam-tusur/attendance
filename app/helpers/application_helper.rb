@@ -56,6 +56,18 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def charts
+    res = content_tag(:div, date_filters, :class => 'filters')
+
+    (@charts || []).each do |kind, data|
+      kind, chart_type = kind.split('.')
+      res += content_tag(:h2, I18n.t("page_title.#{kind}"), :class => 'text-center')
+      res += render_chart(chart_type, data)
+    end
+
+    res
+  end
+
   def render_chart(kind, data)
     chart_id = "chart-#{incr_counter}"
     javascript_tag do

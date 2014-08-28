@@ -17,7 +17,7 @@
           <tr>
             <td><%= student %></td>
             <td><%= student.actual_group %></td>
-            <td><%= Statistic::Student.new(student).total_attendance(from: @params[:from], to: @params[:to]) %></td>
+            <td><%= student.total_attendance(@params[:from], @params[:to]) %></td>
           </tr>
         <% end %>
       </tbody>
