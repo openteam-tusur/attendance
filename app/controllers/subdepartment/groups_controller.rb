@@ -8,21 +8,22 @@ class Subdepartment::GroupsController < AuthController
   defaults :finder => :find_by_number
 
   def index
-    @subdepartment = current_user.subdepartments.first
-    @groups        = @subdepartment.groups
-    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment)
+    @charts = {}
+    @subdepartment = current_user.subdepartments.actual.first
+    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment, current_namespace)
 
-    @attendance_by_date = subdepartment_statistic.attendance_by_date(**filter_params)
-    @attendance_by_group = subdepartment_statistic.attendance_by('groups', **filter_params)
-    @attendance_by_course = subdepartment_statistic.attendance_by('courses', **filter_params)
+    @charts['attendance_by_dates.line']  = subdepartment_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_courses.bar'] = subdepartment_statistic.attendance_by('courses', **filter_params)
+    @charts['attendance_by_groups.bar']  = subdepartment_statistic.attendance_by('groups', **filter_params)
   end
 
   def show
-    @subdepartment = current_user.subdepartments.first
-    @group = @subdepartment.groups.find_by(:number => params[:id])
-    group_statistic = Statistic::Group.new(@group)
+    @charts = {}
+    @subdepartment = current_user.subdepartments.actual.first
+    @group = @subdepartment.groups.actual.find_by(:number => params[:id])
+    group_statistic = Statistic::Group.new(@group, nil)
 
-    @attendance_by_date = group_statistic.attendance_by_date(**filter_params)
-    @attendance_by_students = group_statistic.attendance_by('students', **filter_params)
+    @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
 end
