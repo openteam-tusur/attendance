@@ -3,13 +3,12 @@ class Dean::CoursesController < AuthController
   include DateRange
 
   def show
-    @faculty = current_user.faculties.first
-    @course = params[:id]
+    @charts = {}
+    @faculty = current_user.faculties.actual.first
+    @course  = params[:id]
 
-    course_groups = @faculty.groups.actual.by_course(@course).pluck(:number)
-
-    faculty_statistic = Statistic::Faculty.new(@faculty)
-    @attendance_by_date = faculty_statistic.attendance_by_date_of_kind('courses', @course, **filter_params)
-    @attendance_by_group = faculty_statistic.attendance_by('groups', **filter_params).select{ |k,v| course_groups.include?(k) }
+    faculty_groups = @faculty.groups.actual.by_course(@course).pluck(:number)
+    @charts['attendance_by_dates.line'] = Statistic::Faculty.new(@faculty, nil).attendance_by_date_of_kind('courses', @course, **filter_params)
+    @charts['attendance_by_groups.bar'] = Statistic::Faculty.new(@faculty, current_namespace).attendance_by('groups', **filter_params).select{ |k,v| faculty_groups.include?(k) }
   end
 end

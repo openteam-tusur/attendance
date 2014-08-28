@@ -30,13 +30,20 @@ Attendance::Application.routes.draw do
     resources :disruptions,   :only => [:index]
     resources :misses,        :except => [:show]
     resources :permissions
-    resources :groups,        :only => [:index, :show]
-    resources :courses,       :only => [:show]
-    resources :subdepartments, :only => [:show]
     resources :group_leaders, :only => [:index]
     resources :students,      :only => [:index] do
       get 'search', :on => :collection
     end
+
+    #statistic
+    resources :groups,         :only => [:index, :show]
+    resources :courses,       :only => [:show]
+    resources :subdepartments, :only => [:show] do
+      resources :groups,       :only => [:show]
+      resources :courses,       :only => [:show]
+    end
+
+
     root 'groups#index'
   end
 
