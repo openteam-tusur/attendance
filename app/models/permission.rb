@@ -1,5 +1,5 @@
 class Permission < ActiveRecord::Base
-  sso_auth_permission :roles => %W(administrator education_department dean subdepartment curator lecturer group_leader student)
+  sso_auth_permission :roles => %W(administrator education_department dean subdepartment curator group_leader lecturer student)
 
   after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
   after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
