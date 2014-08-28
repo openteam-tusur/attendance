@@ -14,7 +14,7 @@ class Statistic::Redis
   end
 
   def connection
-    @connection ||= Redis.new(:url => Settings['statistic.url'])
+    @connection ||= Redis.new(:url => Settings['statistic.url'], :driver => :hiredis)
   end
 
   def namespace

@@ -8,6 +8,7 @@ group :default do
   gem 'font-awesome-sass'
   gem 'gravtastic'
   gem 'has_scope'
+  gem 'hiredis',                '~> 0.4.5'
   gem 'inherited_resources'
   gem 'jquery-rails'
   gem 'jquery-ui-rails'

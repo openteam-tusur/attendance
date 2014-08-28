@@ -68,6 +68,9 @@ ru:
     dashboard:
       index:                      Главная страница
 
+    disciplines:
+      show:                       Статистика посещаемости
+
     disruptions:
       index:                      Сорванные преподавателями занятия
       personal:                   Сорванные занятия

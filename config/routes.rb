@@ -70,7 +70,6 @@ Attendance::Application.routes.draw do
 
   namespace :group_leader do
     get '/unfilled' => 'unfilled#index'
-    resource :group,       :only => [:show]
     resources :lessons,    :only => [:index] do
       resources :presences, :only => [] do
         get 'change', :on => :member
@@ -81,16 +80,25 @@ Attendance::Application.routes.draw do
         get 'change', :on => :collection
       end
     end
+
+    #statistic
+    resource :group,       :only => [:show]
+
     root 'lessons#index'
   end
 
   namespace :lecturer do
     resources :disruptions
-    resources :groups,      :only => [:index, :show]
-    resources :disciplines, :only => [:show]
     resources :realizes, :only => [] do
       resources :lecturer_declarations, :except => [:index, :show]
     end
+
+    #statistic
+    resources :groups,      :only => [:index]
+    resources :disciplines, :only => [:show] do
+      resources :groups,    :only => [:show]
+    end
+
     root 'groups#index'
   end
 
