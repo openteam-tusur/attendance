@@ -2,15 +2,7 @@
   <h1 class="text-center"><%= @student %></h1>
 <% end %>
 
-<div class="filters">
-  <%= date_filters %>
-</div>
-
-<h2 class="text-center">Посещаемость по дням</h2>
-<%= line_chart  @attendance_by_date %>
-
-<h2 class="text-center">Посещаемость по дисциплинам</h2>
-<%= bar_chart   @attendance_by_discipline %>
+<%= charts %>
 
 <h2 class="text-center">Пропуски занятий</h2>
 <div class="table-responsive">
