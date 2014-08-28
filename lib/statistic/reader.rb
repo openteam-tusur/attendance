@@ -3,7 +3,7 @@ class Statistic::Reader < Statistic::Base
 
   def initialize(context, route_namespace)
     self.context = context
-    self.route_namespace = route_namespace.to_s
+    self.route_namespace = route_namespace
   end
 
   def attendance_by_date(from: nil, to: nil)
