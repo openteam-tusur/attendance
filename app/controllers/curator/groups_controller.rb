@@ -7,14 +7,16 @@ class Curator::GroupsController < AuthController
 
   actions :index, :show
 
-  def show
-    @group = current_user.curated_groups.find(params[:id])
-    group_statistic = Statistic::Group.new(@group)
-    @attendance_by_date = group_statistic.attendance_by_date(**filter_params)
-    @attendance_by_students = group_statistic.attendance_by('students', **filter_params)
-  end
-
   def index
     @groups = current_user.curated_groups
+  end
+
+  def show
+    @charts = {}
+    @group = current_user.curated_groups.actual.find(params[:id])
+    group_statistic = Statistic::Group.new(@group, nil)
+
+    @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
 end
