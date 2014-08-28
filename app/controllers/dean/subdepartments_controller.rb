@@ -3,13 +3,14 @@ class Dean::SubdepartmentsController < AuthController
   include DateRange
 
   def show
-    @faculty = current_user.faculties.first
-    @subdepartment = @faculty.subdepartments.find_by(:abbr => params[:id])
+    @charts = {}
+    @faculty = current_user.faculties.actual.first
+    @subdepartment = @faculty.subdepartments.actual.find_by(:abbr => params[:id])
 
-    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment)
+    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment, "#{current_namespace}/subdepartments/#{@subdepartment.abbr}")
 
-    @attendance_by_date = subdepartment_statistic.attendance_by_date(**filter_params)
-    @attendance_by_group = subdepartment_statistic.attendance_by('groups', **filter_params)
-    @attendance_by_course = subdepartment_statistic.attendance_by('courses', **filter_params)
+    @charts['attendance_by_dates.line']  = subdepartment_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_courses.bar'] = subdepartment_statistic.attendance_by('courses', **filter_params)
+    @charts['attendance_by_groups.bar']  = subdepartment_statistic.attendance_by('groups', **filter_params)
   end
 end
