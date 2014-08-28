@@ -3,5 +3,5 @@ every :day, :at => '4:00am' do
 end
 
 every 6.hours do
-  rake 'statistic:all'
+  rake 'statistic:calculate'
 end
