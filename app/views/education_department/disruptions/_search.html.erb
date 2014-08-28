@@ -1,7 +1,6 @@
 <div class="tabs btn-group">
   <% param = params[:filter][:dates] if params[:filter] %>
 
-  <%= link_to "Все", '#', :data => { :filter => :all }, :class => "btn all js-btn-filter #{param == 'all' ? 'active' : 'stub' }" %>
   <%= link_to "С начала семестра", '#', :data => { :filter => :from_semester_begin }, :class => "btn from_semester_begin js-btn-filter #{param == 'from_semester_begin' ? 'active' : 'stub' }" %>
   <%= link_to "Прошлая неделя", '#', :data => { :filter => :last_week }, :class => "btn last_week js-btn-filter #{param == 'last_week' ? 'active' : 'stub' }" %>
   <%= link_to "Поиск", '#', :class => 'btn js-date-range rounded' %>
