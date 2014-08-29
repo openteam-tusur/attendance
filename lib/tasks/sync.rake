@@ -11,7 +11,7 @@ namespace :sync do
   task :structure => :environment do
     begin
       StructureCatcher.new.sync
-      Sync.create :title => "Синхронизация факультетов и кафедр <span class='success'>прошла успешно.</span> (#{Faculty.actual.where('created_at >= ?', Date.today).count + Subdepartment.actual.where('created_at >= ?', Date.today).count} новых)"
+      Sync.create :title => "Синхронизация факультетов и кафедр <span class='success'>прошла успешно.</span> (#{Faculty.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count + Subdepartment.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации факультетов и кафедр <span class='failure'>произошла ошибка:</span> \"#{e}\"", :state => :failure
     end
@@ -21,7 +21,7 @@ namespace :sync do
   task :groups => :structure do
     begin
       GroupCatcher.new.sync
-      Sync.create :title => "Синхронизация групп <span class='success'>прошла успешно.</span> (#{Group.actual.where('created_at >= ?', Date.today).count} новых)"
+      Sync.create :title => "Синхронизация групп <span class='success'>прошла успешно.</span> (#{Group.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации групп <span class='failure'>произошла ошибка:</span> \"#{e}\"", :state => :failure
     end
@@ -31,7 +31,7 @@ namespace :sync do
   task :students => :groups do
     begin
       StudentCatcher.new.sync
-      Sync.create :title => "Синхронизация студентов <span class='success'>прошла успешно.</span> (#{Student.actual.where('created_at >= ?', Date.today).count} новых)"
+      Sync.create :title => "Синхронизация студентов <span class='success'>прошла успешно.</span> (#{Student.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
     rescue Exception => e
       Sync.create :title => "При синхронизации студентов <span class='failure'>произошла ошибка:</span> \"#{e}\"", :state => :failure
     end
