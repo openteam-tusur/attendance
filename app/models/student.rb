@@ -26,7 +26,7 @@ class Student < Person
   end
 
   def total_attendance(from, to)
-    res = Statistic::Student.new(self).attendance_by_date(from: from, to: to).inject({:sum => 0, :count => 0}) { |s, (_, item)| s[:sum] += item; s[:count] += 1; s }
+    res = Statistic::Student.new(self, nil).attendance_by_date(from: from, to: to).inject({:sum => 0, :count => 0}) { |s, (_, item)| s[:sum] += item; s[:count] += 1; s }
     res[:count] > 0 ? res[:sum]/res[:count] : 0
   end
 
