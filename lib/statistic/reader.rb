@@ -7,7 +7,7 @@ class Statistic::Reader < Statistic::Base
   end
 
   def attendance_by_date(from: nil, to: nil)
-    get('by_date').inject({}) do |h, (k, v)|
+    get('dates').inject({}) do |h, (k, v)|
       date = Date.parse(k)
       h[k] = (v['attendance'].to_i*100.0/v['total']).round(1) if date >= from && date <= to
       h
