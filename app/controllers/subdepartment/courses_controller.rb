@@ -8,7 +8,7 @@ class Subdepartment::CoursesController < AuthController
     @course = params[:id]
 
     course_groups = @subdepartment.groups.actual.by_course(@course).pluck(:number)
-    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment, current_namespace)
+    subdepartment_statistic = Statistic::Subdepartment.new(@subdepartment, "#{current_namespace}/courses/#{@course}")
 
     @parent_url = subdepartment_groups_path(:filter => params[:filter])
 
