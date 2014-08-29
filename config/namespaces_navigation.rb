@@ -38,7 +38,7 @@ SimpleNavigation::Configuration.run do |navigation|
         if role == 'education_department'
           role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(:for_role => (current_namespace == :education_department && params[:for_role]) || :dean)
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
-          role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, :highlights_on => /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/subdepartments/
+          role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, :highlights_on => /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/groups/
         end
 
         if role == 'group_leader'

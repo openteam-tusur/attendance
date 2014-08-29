@@ -6,7 +6,7 @@ class EducationDepartment::GroupsController < AuthController
     @charts = {}
     @group = Group.actual.find_by(:number => params[:id])
 
-    @parent_url = education_department_faculties_path(:filter => params[:filter])
+    @parent_url = :back
 
     group_statistic = Statistic::Group.new(@group, nil)
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)

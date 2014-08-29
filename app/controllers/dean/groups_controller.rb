@@ -25,6 +25,13 @@ class Dean::GroupsController < AuthController
     @group = @faculty.groups.actual.find_by(:number => params[:id])
     group_statistic = Statistic::Group.new(@group, nil)
 
+    if params[:subdepartment_id]
+      @subdepartment = Subdepartment.actual.find_by(:abbr => params[:subdepartment_id])
+      @parent_url = dean_subdepartment_path(@subdepartment.abbr, :filter => params[:filter])
+    else
+      @parent_url = dean_groups_path(:filter => params[:filter])
+    end
+
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
