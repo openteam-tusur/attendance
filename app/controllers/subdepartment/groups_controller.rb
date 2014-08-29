@@ -23,6 +23,8 @@ class Subdepartment::GroupsController < AuthController
     @group = @subdepartment.groups.actual.find_by(:number => params[:id])
     group_statistic = Statistic::Group.new(@group, nil)
 
+    @parent_url = subdepartment_groups_path(:filter => params[:filter])
+
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
