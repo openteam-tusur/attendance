@@ -49,6 +49,7 @@ class Statistic::Writer < Statistic::Base
 
       item['lecturers'].split(', ').map{|s| s.match(/([[:alpha:]]+\s?)+/).to_s}.each do |lecturer|
         incr("lecturer:#{lecturer}:disciplines",                                      "#{item['discipline']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['discipline']}:dates",                      "#{item['date_on']}:#{kind}")
         incr("lecturer:#{lecturer}:#{item['discipline']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
         incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:dates",     "#{item['date_on']}:#{kind}")
         incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:students",  "#{item['student']}:#{item['date_on']}:#{kind}")

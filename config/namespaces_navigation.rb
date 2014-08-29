@@ -53,7 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
               lecturer_disruption.item :edit_lecturer_declaration, I18n.t('page_title.lecturer_declaration.edit'), edit_lecturer_realize_lecturer_declaration_path(@realize, @lecturer_declaration) if @realize.present? && @lecturer_declaration.persisted?
             end
           end
-          role_item.item :groups,       I18n.t('page_title.groups.index'),         lecturer_groups_path, :highlights_on => /^\/lecturer\/groups|\/lecturer\/disciplines/
+          role_item.item :disciplines,       I18n.t('page_title.groups.index'),         lecturer_disciplines_path, :highlights_on => /^\/lecturer\/groups|\/lecturer\/disciplines/
         end
 
         if role == 'subdepartment'

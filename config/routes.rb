@@ -100,12 +100,11 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resources :groups,      :only => [:index]
-    resources :disciplines, :only => [:show] do
+    resources :disciplines, :only => [:index, :show] do
       resources :groups,    :only => [:show]
     end
 
-    root 'groups#index'
+    root 'disciplines#index'
   end
 
   namespace :subdepartment do
