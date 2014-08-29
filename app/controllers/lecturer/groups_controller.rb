@@ -18,8 +18,8 @@ class Lecturer::GroupsController < AuthController
   def show
     @charts = {}
     @group = @lecturer.groups.actual.find_by(:number => params[:id])
-
     @discipline = params[:discipline_id]
+    @parent_url = lecturer_discipline_path(@discipline, :filter => params[:filter])
     @charts['attendance_by_dates.line']   = Statistic::Discipline.new("#{@group}_#{@lecturer}", nil).attendance_by_date_of_kind('disciplines', @discipline, **filter_params)
     @charts['attendance_by_students.bar'] = Statistic::Discipline.new("#{@group}_#{@discipline}_#{@lecturer}", nil).attendance_by('students', **filter_params)
   end
