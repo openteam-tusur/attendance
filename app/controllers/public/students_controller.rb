@@ -5,7 +5,7 @@ class Public::StudentsController < ApplicationController
   def show
     @charts = {}
     @student = Student.find_by(:secure_id => params[:id])
-    student_statistic = Statistic::Student.new(@student, nil)
+    student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
     @charts['attendance_by_dates.line']      = student_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_disciplines.bar'] = student_statistic.attendance_by('disciplines', **filter_params)
