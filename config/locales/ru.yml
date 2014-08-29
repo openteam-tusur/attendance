@@ -189,9 +189,11 @@ ru:
 
   views:
     pagination:
-      next: '&gt;'
+      next:     '&gt;'
       previous: '&lt;'
       truncate: ...
+      first:    '&lt;&lt;'
+      last:     '&gt;&gt;'
 
   enumerize:
     realize:
