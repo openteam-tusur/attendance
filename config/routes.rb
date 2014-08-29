@@ -88,7 +88,9 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resource :group,       :only => [:show]
+    resource :group,       :only => [:show] do
+      resources :students, :only => [:show]
+    end
 
     root 'lessons#index'
   end

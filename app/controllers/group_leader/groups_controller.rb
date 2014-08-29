@@ -10,7 +10,7 @@ class GroupLeader::GroupsController < AuthController
   def show
     @charts = {}
     @group = current_user.leaded_groups.actual.first
-    group_statistic = Statistic::Group.new(@group, nil)
+    group_statistic = Statistic::Group.new(@group, "#{current_namespace}/group")
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
