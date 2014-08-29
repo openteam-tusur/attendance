@@ -22,37 +22,37 @@ class Statistic::Writer < Statistic::Base
 
   def incr_(kind)
     redis.connection.pipelined do
-      incr("student:#{item['contingent_id']}:by_date",          "#{item['date_on']}:#{kind}")
-      incr("student:#{item['contingent_id']}:disciplines",      "#{item['discipline']}:#{item['date_on']}:#{kind}")
+      incr("student:#{item['contingent_id']}:dates",                                  "#{item['date_on']}:#{kind}")
+      incr("student:#{item['contingent_id']}:disciplines",                            "#{item['discipline']}:#{item['date_on']}:#{kind}")
 
-      incr("group:#{item['group']}:by_date",                    "#{item['date_on']}:#{kind}")
-      incr("group:#{item['group']}:students",                   "#{item['student']}:#{item['date_on']}:#{kind}")
+      incr("group:#{item['group']}:dates",                                            "#{item['date_on']}:#{kind}")
+      incr("group:#{item['group']}:students",                                         "#{item['student']}:#{item['date_on']}:#{kind}")
 
-      incr("subdepartment:#{item['subdepartment']}:by_date",    "#{item['date_on']}:#{kind}")
-      incr("subdepartment:#{item['subdepartment']}:groups",     "#{item['group']}:#{item['date_on']}:#{kind}")
-      incr("subdepartment:#{item['subdepartment']}:courses",    "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("subdepartment:#{item['subdepartment']}:dates",                            "#{item['date_on']}:#{kind}")
+      incr("subdepartment:#{item['subdepartment']}:courses",                          "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("subdepartment:#{item['subdepartment']}:#{item['course']}:groups",         "#{item['group']}:#{item['date_on']}:#{kind}")
+      incr("subdepartment:#{item['subdepartment']}:groups",                           "#{item['group']}:#{item['date_on']}:#{kind}")
 
-      incr("faculty:#{item['faculty']}:by_date",                "#{item['date_on']}:#{kind}")
-      incr("faculty:#{item['faculty']}:groups",                 "#{item['group']}:#{item['date_on']}:#{kind}")
-      incr("faculty:#{item['faculty']}:courses",                "#{item['course']}:#{item['date_on']}:#{kind}")
-      incr("faculty:#{item['faculty']}:subdepartments",         "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:dates",                                        "#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:cources",                                      "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:subdepartments",                               "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:groups",                                       "#{item['group']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:#{item['course']}:dates",                      "#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:#{item['course']}:subdepartments",             "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:#{item['course']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
 
-      incr("course:#{item['course']}:faculties",                "#{item['faculty']}:#{item['date_on']}:#{kind}")
-      incr("course:#{item['course']}:subdepartments",           "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
+      incr("university:dates",                                                        "#{item['date_on']}:#{kind}")
+      incr("university:cources",                                                      "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("university:faculties",                                                    "#{item['faculty']}:#{item['date_on']}:#{kind}")
+      incr("university:#{item['faculty']}:courses",                                   "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("university:#{item['course']}:faculties",                                  "#{item['faculty']}:#{item['date_on']}:#{kind}")
 
       item['lecturers'].split(', ').map{|s| s.match(/([[:alpha:]]+\s?)+/).to_s}.each do |lecturer|
-        incr("lecturer:#{lecturer}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
-        incr("lecturer:#{lecturer}:disciplines",                "#{item['discipline']}:#{item['date_on']}:#{kind}")
-
-        incr("discipline:#{item['discipline']}_#{lecturer}:groups", "#{item['group']}:#{item['date_on']}:#{kind}")
-        incr("discipline:#{item['group']}_#{lecturer}:disciplines", "#{item['discipline']}:#{item['date_on']}:#{kind}")
-        incr("discipline:#{item['group']}_#{item['discipline']}_#{lecturer}:students",    "#{item['student']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:disciplines",                                      "#{item['discipline']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['discipline']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:dates",     "#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:students",  "#{item['student']}:#{item['date_on']}:#{kind}")
       end
-
-      incr('university:by_date',                                "#{item['date_on']}:#{kind}")
-      incr('university:courses',                                "#{item['course']}:#{item['date_on']}:#{kind}")
-      incr('university:faculties',                              "#{item['faculty']}:#{item['date_on']}:#{kind}")
-      incr('university:subdepartments',                         "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
     end
   end
 end
