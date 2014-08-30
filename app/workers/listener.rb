@@ -53,7 +53,7 @@ class Listener
       if user
         user.permissions.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person')
       else
-        Pemission.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person', :email => json['email'])
+        Permission.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person', :email => json['email'])
       end
     rescue ActiveRecord::RecordNotUnique
     end if person
