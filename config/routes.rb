@@ -22,7 +22,9 @@ Attendance::Application.routes.draw do
   end
 
   namespace :curator do
-    resources :groups,      :only => [:index, :show]
+    resources :groups,      :only => [:index, :show] do
+      resources :students,  :only => [:show]
+    end
     root 'groups#index'
   end
 
