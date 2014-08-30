@@ -1,7 +1,7 @@
 <%= content_for :page_title do %>
   <h1 class="text-center">
     <%= link_to_back %>
-    Статистика посещаемости групп <%= @course %> курса <%= @faculty %>
+    Статистика посещаемости групп <%= @course %> курса  <%= @subdepartment ? "кафедры #{@subdepartment}" : '' %>
   </h1>
 <% end %>
 
