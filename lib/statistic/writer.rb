@@ -30,6 +30,7 @@ class Statistic::Writer < Statistic::Base
 
       incr("subdepartment:#{item['subdepartment']}:dates",                            "#{item['date_on']}:#{kind}")
       incr("subdepartment:#{item['subdepartment']}:courses",                          "#{item['course']}:#{item['date_on']}:#{kind}")
+      incr("subdepartment:#{item['subdepartment']}:#{item['course']}:dates",          "#{item['date_on']}:#{kind}")
       incr("subdepartment:#{item['subdepartment']}:#{item['course']}:groups",         "#{item['group']}:#{item['date_on']}:#{kind}")
       incr("subdepartment:#{item['subdepartment']}:groups",                           "#{item['group']}:#{item['date_on']}:#{kind}")
 
