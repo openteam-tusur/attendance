@@ -50,16 +50,24 @@ class Listener
     person = send("find_#{context}", json[remote_key(context)])
 
     begin
-      user.permissions.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person')
+      if user
+        user.permissions.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person')
+      else
+        Pemission.find_or_create_by(:role => context, :context_id => person.id, :context_type => 'Person', :email => json['email'])
+      end
     rescue ActiveRecord::RecordNotUnique
-    end if user && person
+    end if person
   end
 
   def del_permission(context, json)
     user = find_user(json['uid'])
     person = send("find_#{context}", json[remote_key(context)])
 
-    permission = user.permissions.find_by(:role => context, :context_id => person.id, :context_type => 'Person') if user && person
+    permission = if user
+                   user.permissions.find_by(:role => context, :context_id => person.id, :context_type => 'Person') if person
+                 else
+                   Permission.find_by(:role => context, :context_id => person.id, :context_type => 'Person', :email => json['email']) if person
+                 end
     permission.destroy if permission
   end
 
