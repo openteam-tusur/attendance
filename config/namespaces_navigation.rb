@@ -42,7 +42,7 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'group_leader'
-          role_item.item :group,        I18n.t('page_title.groups.index'),        group_leader_group_path
+          role_item.item :group,        I18n.t('page_title.groups.index'),        group_leader_group_path, :highlights_on => /^\/group_leader\/group/
           role_item.item :lessons,      I18n.t('page_title.lessons.title'),       group_leader_lessons_path
         end
 
