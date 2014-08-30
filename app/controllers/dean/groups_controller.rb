@@ -10,7 +10,6 @@ class Dean::GroupsController < AuthController
   def index
     @charts = {}
     @faculty = current_user.faculties.first
-    @groups  = @faculty.groups.actual
     faculty_statistic = Statistic::Faculty.new(@faculty, current_namespace)
 
     @charts['attendance_by_dates.line']          = faculty_statistic.attendance_by_date(**filter_params)

@@ -7,19 +7,13 @@ class EducationDepartment::CoursesController < AuthController
     @course = params[:id]
 
     if params[:faculty_id]
-      @faculty = Faculty.actual.find_by(:abbr => params[:faculty_id])
-
-      @parent_url = education_department_faculty_path(@faculty.abbr, :filter => params[:filter])
-
-      faculty_groups = @faculty.groups.actual.by_course(@course).pluck(:number)
-      faculty_statistic = Statistic::Faculty.new(@faculty, current_namespace)
-      @charts['attendance_by_dates.line'] = faculty_statistic.attendance_by_date_of_kind('courses', @course, **filter_params)
-      @charts['attendance_by_groups.bar'] = faculty_statistic.attendance_by('groups', **filter_params).select{ |k,v| faculty_groups.include?(k) }
+      faculty_statistic = Statistic::Faculty.new("#{params[:faculty_id]}:#{@course}", "#{current_namespace}/faculties/#{params[:faculty_id]}/courses/#{@course}")
+      @charts['attendance_by_dates.line']          = faculty_statistic.attendance_by_date(**filter_params)
+      @charts['attendance_by_groups.bar']          = faculty_statistic.attendance_by('groups', **filter_params)
     else
-      @parent_url = education_department_faculties_path(:filter => params[:filter])
-
-      @charts['attendance_by_dates.line']    = Statistic::University.new(nil, nil).attendance_by_date_of_kind('courses', @course, **filter_params)
-      @charts['attendance_by_faculties.bar'] = Statistic::Course.new(@course, "#{current_namespace}/courses/#{@course}").attendance_by('faculties', **filter_params)
+      course_statistic = Statistic::University.new("#{@course}", "#{current_namespace}/courses/#{@course}")
+      @charts['attendance_by_dates.line']          = course_statistic.attendance_by_date(**filter_params)
+      @charts['attendance_by_faculties.bar']       = course_statistic.attendance_by('faculties', **filter_params)
     end
   end
 end
