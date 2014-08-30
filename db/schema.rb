@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825042358) do
+ActiveRecord::Schema.define(version: 20140830090039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20140825042358) do
     t.datetime "updated_at"
   end
 
+  add_index "permissions", ["email", "context_id", "context_type", "role"], name: "by_email_context_role", unique: true, using: :btree
   add_index "permissions", ["user_id", "role", "context_id", "context_type"], name: "by_user_and_role_and_context", unique: true, using: :btree
 
   create_table "presences", force: true do |t|
