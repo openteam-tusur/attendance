@@ -118,9 +118,13 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resources :groups,   :only => [:index, :show]
+    resources :groups,   :only => [:index, :show] do
+      resources :students, :only => [:show]
+    end
     resources :courses,  :only => [:show] do
-      resources :groups,   :only => [:show]
+      resources :groups,   :only => [:show] do
+        resources :students, :only => [:show]
+      end
     end
 
     root 'disruptions#index'
