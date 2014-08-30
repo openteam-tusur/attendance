@@ -18,7 +18,7 @@ redis:
 
 statistic:
   url:       redis://127.0.0.1:6379/1            # redis server for statistics
-  sock:      /tmp/redis.sock
+  sock:      /tmp/redis.sock                     # connect to redis-server throught unix socket and use redis db[0]
 
 session_store:
   url:       redis://host:6379/0/sessions
