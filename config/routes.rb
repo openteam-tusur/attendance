@@ -47,7 +47,7 @@ Attendance::Application.routes.draw do
     resources :subdepartments, :only => [:show] do
       resources :groups,       :only => [:show]
       resources :courses,      :only => [:show] do
-        resources :groups,       :only => [:show]
+        resources :groups,     :only => [:show]
       end
     end
 
@@ -65,12 +65,15 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resources   :groups,    :only => [:show]
-    resources   :courses,   :only => [:show] do
-      resources :faculties, :only => [:show]
+    resources   :courses,           :only => [:show] do
+      resources :faculties,         :only => [:show] do
+        resources :groups,          :only => [:show]
+      end
     end
-    resources   :faculties, :only => [:index, :show] do
-      resources :courses,   :only => [:show]
+    resources   :faculties,         :only => [:index, :show] do
+      resources :courses,           :only => [:show] do
+        resources :groups,          :only => [:show]
+      end
     end
 
     root 'faculties#index'
