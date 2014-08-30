@@ -75,6 +75,7 @@ SimpleNavigation::Configuration.run do |navigation|
     else
       primary.item :main_page, I18n.t("page_title.main_page.index"), root_path
     end
+    primary.item :questions, 'Задать вопрос', 'http://profile.tusur.ru/conversations/new?conversation%5Buser_groups%5D%5B%5D=37', link: { target: '_blank' }
   end
 end
 
