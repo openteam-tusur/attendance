@@ -41,12 +41,16 @@ Attendance::Application.routes.draw do
     resources :groups,         :only => [:index]
     resources :courses,        :only => [:show] do
       resources :subdepartments, :only => [:show] do
-        resources :groups,     :only => [:show]
+        resources :groups,     :only => [:show] do
+          resources :students, :only => [:show]
+        end
       end
     end
     resources :subdepartments, :only => [:show] do
       resources :courses,      :only => [:show] do
-        resources :groups,     :only => [:show]
+        resources :groups,     :only => [:show] do
+          resources :students, :only => [:show]
+        end
       end
     end
 

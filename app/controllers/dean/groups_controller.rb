@@ -26,11 +26,12 @@ class Dean::GroupsController < AuthController
 
     if params.to_a[-3..-2][0][0] == 'course_id'
       @parent_url = dean_course_subdepartment_path(@course, @subdepartment, :filter => params[:filter])
+      group_statistic = Statistic::Group.new(@group, "#{current_namespace}/courses/#{@course}/subdepartments/#{@subdepartment}/groups/#{@group}")
     else
       @parent_url = dean_subdepartment_course_path(@subdepartment, @course, :filter => params[:filter])
+      group_statistic = Statistic::Group.new(@group, "#{current_namespace}/subdepartments/#{@subdepartment}/courses/#{@course}/groups/#{@group}")
     end
 
-    group_statistic = Statistic::Group.new(@group, '')
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)
   end
