@@ -22,12 +22,17 @@ class Student < Person
   end
 
   def slacker?(from: nil, to: nil)
-    total_attendance(from, to) < 80
+    v = total_attendance(from, to)
+    if v.nil?
+      return false
+    else
+     v < 80
+    end
   end
 
   def total_attendance(from, to)
     res = Statistic::Student.new(self, nil).attendance_by_date(from: from, to: to).inject({:sum => 0, :count => 0}) { |s, (_, item)| s[:sum] += item; s[:count] += 1; s }
-    res[:count] > 0 ? res[:sum]/res[:count] : 0
+    res[:count] > 0 ? res[:sum]/res[:count] : nil
   end
 
   def info
