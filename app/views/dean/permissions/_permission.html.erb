@@ -1,0 +1,14 @@
+<li class="list-item <%= cycle( "odd", "even" ) %>">
+  <%= content_tag(:span, permission, :class => 'user') %>
+
+  <span class="actions pull-right">
+    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                dean_permission_path(permission, :for_role => permission.role),
+                :method => :delete,
+                :remote => true,
+                :data => { :confirm => t('confirm.delete') },
+                :class => 'js-delete' %>
+  </span>
+
+  <%= content_tag(:span, 'роль неактивна', :class => 'role pull-right') unless permission.user %>
+</li>

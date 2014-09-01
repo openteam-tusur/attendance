@@ -1,0 +1,40 @@
+<%= content_for :page_title do %>
+  <h1>Сорванные преподавателями занятия на кафедре <%= current_user.subdepartments.first %></h1>
+<% end %>
+
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<% if @disruptions.any? %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-disruptions subdepartment">
+      <thead>
+        <tr>
+          <td>Преподаватель / Дисциплина</td>
+          <td>Дата</td>
+          <td colspan="2">Объяснительная зав.кафедры</td>
+          <td>Объяснительная преподавателя</td>
+          <td>Уважительная причина</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @disruptions.each do |group| %>
+          <tr class="teacher">
+            <td colspan="3"><%= group.value %></td>
+          </tr>
+          <% group.results.each do |realize| %>
+            <tr class="lesson">
+              <%= render :partial => 'lesson', :locals => { :realize => realize } %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @disruptions %>
+  </div>
+<% else %>
+  <div class="empty">
+    <%= I18n.t("empty.#{controller_name}") %>
+  </div>
+<% end %>

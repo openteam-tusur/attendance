@@ -1,0 +1,9 @@
+<%= content_for :page_title do %>
+  <h1>Сорванные преподавателями занятия на факультете <%= current_user.faculties.first %></h1>
+<% end %>
+
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<%= render :partial => 'disruptions/list' %>

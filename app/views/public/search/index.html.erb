@@ -1,16 +1,11 @@
-<% if @students.any? %>
+<%= render :partial => 'form' %>
+
+<% if @results.any? %>
   <ul>
-    <% @students.each do |student| %>
-      <li>
-        <%= link_to "#{student}, #{student.group}", student_path(student.secure_id) %>
-      </li>
+    <% @results.each do |student| %>
+      <li><%= link_to student, student_path(student.secure_id) %></li>
     <% end %>
   </ul>
 <% else %>
-  <% if params[:student].try(:[], :search).blank? %>
-    <div class="empty">Вы ничего не ввели, а мы ничего не нашли ;(</div>
-  <% else %>
-    <% fio, group_number = params[:student][:search].split(',').map(&:strip) %>
-    <div class="empty">Мы не смогли найти <%= fio %> ;(</div>
-  <% end %>
+  <span>Ничего не найдено</span>
 <% end %>

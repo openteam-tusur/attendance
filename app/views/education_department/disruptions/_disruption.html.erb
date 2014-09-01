@@ -1,0 +1,59 @@
+<h4><%= group.value %></h4>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-disruptions education-department">
+    <thead>
+      <tr>
+        <td>Преподаватель / Дисциплина</td>
+        <td>Дата</td>
+        <td>Объяснительная зав.кафедры</td>
+        <td>Объяснительная преподавателя</td>
+        <td>Уважительная причина</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% group.results.group_by(&:lecturer).each do |lecturer, realizes| %>
+        <tr class="teacher">
+          <td colspan="3"><%= lecturer.to_s %></td>
+        </tr>
+        <% realizes.each do |realize| %>
+          <tr class="lesson">
+            <td class="discipline truncated">
+              <%= realize.lesson.discipline.title %>
+              <%= " (#{realize.lesson.kind_abbr})," %>
+              <%= "гр. #{realize.lesson.group}" %>
+            </td>
+            <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
+
+            <% if realize.subdepartment_declaration %>
+              <td class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.subdepartment_declaration.reason %>">
+                <%= realize.subdepartment_declaration.reason %>
+              </td>
+            <% else %>
+              <td>Нет</td>
+            <% end %>
+
+            <% if realize.lecturer_declaration %>
+              <td class="truncated js-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= realize.lecturer_declaration.reason %>">
+                <%= realize.lecturer_declaration.reason %>
+              </td>
+            <% else %>
+              <td>Нет</td>
+            <% end %>
+
+            <td class="status">
+              <span class="realize">
+                <% if realize.unfilled? %>
+                  <%= link_to "Да", accept_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-accept', :remote => true %>
+                  <%= link_to "Нет", refuse_education_department_realize_path(realize), :class => 'btn btn-default btn-xs btn-refuse', :remote => true %>
+                <% elsif realize.reasonable? || realize.unreasonable? %>
+                  <%= I18n.t("realize.approved.#{realize.approved}") %> <%= link_to "изменить", change_education_department_realize_path(realize), :remote => true %>
+                <% end %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

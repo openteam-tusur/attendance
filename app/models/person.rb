@@ -1,15 +1,9 @@
-# encoding: utf-8
-
 class Person < ActiveRecord::Base
-  attr_accessible :name, :patronymic, :surname
-
-  default_scope order(:surname)
-
-  def fio
-    "#{surname} #{name} #{patronymic}".squish
-  end
+  validates_uniqueness_of :contingent_id, :directory_id, :secure_id, :allow_nil => true
+  validates_presence_of   :name, :surname
+  normalize_attributes    :name, :surname, :patronymic
 
   def to_s
-    fio
+    [surname, name, patronymic].compact.join(' ')
   end
 end

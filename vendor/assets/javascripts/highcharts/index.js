@@ -1,0 +1,4 @@
+/*
+ *= require './highcharts'
+ *= require './init'
+ */

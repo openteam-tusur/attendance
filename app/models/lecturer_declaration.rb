@@ -1,0 +1,2 @@
+class LecturerDeclaration < Declaration
+end

@@ -1,0 +1,26 @@
+<div class="tabs btn-group">
+  <% param = params[:filter][:dates] if params[:filter] %>
+
+  <%= link_to "Всё", '#', :data => { :filter => :all }, :class => "btn all js-btn-filter #{param == 'all' ? 'active' : 'stub' }" %>
+  <%= link_to "С начала семестра", '#', :data => { :filter => :from_semester_begin }, :class => "btn from_semester_begin js-btn-filter #{param == 'from_semester_begin' ? 'active' : 'stub' }" %>
+  <%= link_to "Прошлая неделя", '#', :data => { :filter => :last_week }, :class => "btn last_week js-btn-filter #{param == 'last_week' ? 'active' : 'stub' }" %>
+  <%= link_to "Поиск", '#', :class => 'btn js-date-range rounded' %>
+
+  <%= simple_form_for :filter,
+                      :url => education_department_disruptions_path,
+                      :html => { :class => 'form-inline date-range disruptions-form hidden', :method => :get },
+                      :wrapper => :inline_form do |f| %>
+
+                      <%= f.input :dates, :as => :hidden %>
+
+                      <%= f.input :from, :input_html => { :value => @filter_params[:from], :class => :datepicker } %>
+                      <%= f.input :to, :input_html => { :value => @filter_params[:to], :class => :datepicker } %>
+
+                      <%= f.input :name, :input_html => { :value => @name || nil }, :placeholder => 'ФИО преподавателя' %>
+                      <%= f.input :faculty, :as => :select, :collection => @faculties.map(&:abbr), :selected => @faculty, :include_blank => true %>
+                      <%= f.input :approved, :as => :select, :collection => Realize.approved.options, :selected => @approved, :include_blank => true %>
+
+                      <%= f.submit 'Искать', :class => 'btn btn-default btn-sm' %>
+                      <%= link_to 'Очистить', '#', :class => 'btn-link js-drop-filter' %>
+  <% end %>
+</div>
