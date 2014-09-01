@@ -4,10 +4,7 @@ class Dean::StudentsController < AuthController
   include FilterParams
   include DateRange
 
-  inherit_resources
-  #load_and_authorize_resource
-
-  custom_actions :collection => :search
+  load_and_authorize_resource
 
   before_filter :build_faculty, :only => [:index, :search, :show]
 
@@ -37,14 +34,12 @@ class Dean::StudentsController < AuthController
   end
 
   def search
-    search!{
-      @students = if params[:term].present?
-                    StudentSearcher.new(params.merge(:faculty_id => @faculty.id)).autocomplete_search.results
-                  else
-                    []
-                  end
-      render :text => @students.to_json and return
-    }
+    @students = if params[:term].present?
+                  StudentSearcher.new(params.merge(:faculty_id => @faculty.id)).autocomplete_search.results
+                else
+                  []
+                end
+    render :text => @students.to_json
   end
 
   private

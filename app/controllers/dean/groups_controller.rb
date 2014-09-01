@@ -2,10 +2,7 @@ class Dean::GroupsController < AuthController
   include FilterParams
   include DateRange
 
-  inherit_resources
-  load_and_authorize_resource
-
-  defaults :finder => :find_by_number
+  load_and_authorize_resource :find_by => :number
 
   def index
     @charts = {}
