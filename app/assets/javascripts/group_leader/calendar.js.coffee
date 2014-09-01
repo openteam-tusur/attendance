@@ -78,4 +78,4 @@ class Month
     @calendar.months[@id]
 
 $ ->
-  new Calendar($('.calendar')) if $('.calendar').lendth
+  new Calendar($('.calendar')) if $('.calendar').length
