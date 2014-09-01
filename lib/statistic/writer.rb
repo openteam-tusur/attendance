@@ -39,6 +39,7 @@ class Statistic::Writer < Statistic::Base
       incr("faculty:#{item['faculty']}:subdepartments",                               "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
       incr("faculty:#{item['faculty']}:#{item['course']}:dates",                      "#{item['date_on']}:#{kind}")
       incr("faculty:#{item['faculty']}:#{item['course']}:subdepartments",             "#{item['subdepartment']}:#{item['date_on']}:#{kind}")
+      incr("faculty:#{item['faculty']}:#{item['course']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
 
       incr("university::dates",                                                       "#{item['date_on']}:#{kind}")
       incr("university::courses",                                                     "#{item['course']}:#{item['date_on']}:#{kind}")
