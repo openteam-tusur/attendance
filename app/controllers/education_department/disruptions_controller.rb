@@ -3,7 +3,6 @@ class EducationDepartment::DisruptionsController < AuthController
   include DisruptionFilterParams
   include DateRange
 
-  inherit_resources
   load_and_authorize_resource
 
   before_filter :set_params, :only => :index

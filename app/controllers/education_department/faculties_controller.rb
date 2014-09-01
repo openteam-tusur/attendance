@@ -2,10 +2,7 @@ class EducationDepartment::FacultiesController < AuthController
   include FilterParams
   include DateRange
 
-  inherit_resources
-  load_and_authorize_resource
-
-  defaults :finder => :find_by_abbr
+  load_and_authorize_resource :find_by => :abbr
 
   def index
     @charts = {}
