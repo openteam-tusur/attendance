@@ -55,10 +55,13 @@ class LessonCatcher
               next
               #raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
-            lect = subdepartment.lecturers.find_or_create_by(:surname => lecturer['lastname'].squish,
-                                                             :name => lecturer['firstname'].squish,
-                                                             :patronymic => lecturer['middlename'].squish)
-            lect.index
+            subdepartment.lecturers.find_or_initialize_by(:surname       => lecturer['lastname'].squish,
+                                                             :name       => lecturer['firstname'].squish,
+                                                             :patronymic => lecturer['middlename'].squish).tap do |lect|
+              lect.directory_id = lecturer['directory_id'].squish
+              lect.save!
+              lect.index
+            end
 
             LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
 
