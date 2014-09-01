@@ -1,0 +1,55 @@
+<div class="calendar-wrapper">
+  <%= content_tag(:span, (l @date, :format => '%A, %d %B %Y'), :class => 'date') %>
+
+  <ul class="calendar-legend">
+    <li class="blank">Были занятия, не заполнено</li>
+    <li class="filled">Были занятия, заполнено</li>
+    <li class="weekend">Выходные и праздничные дни</li>
+  </ul>
+
+  <div class="js-scroll scroll-up">
+  </div>
+
+  <div class="calendar-viewport">
+    <div class='calendar'>
+      <% @calendar_months.each do |month, days| %>
+        <div class="month<%= ' current' if month == @date.month %>">
+          <div class="month-title">
+            <%= I18n.t('date.month_names')[month] %>
+          </div>
+
+          <div class="day-names">
+            <% I18n.t("date.abbr_day_names").rotate(1).each do |day_name| %>
+              <div class="day-name">
+                <%= day_name %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="days">
+            <% (days.first.wday-1).times do %>
+              <div class="day empty"></div>
+            <% end %>
+
+            <% days.each do |day| %>
+              <% if @lessons_groupped_by_day[day].nil? %>
+                <div class="day weekend<%= ' current' if day == @date %>">
+                  <%= day.day %>
+                </div>
+              <% else %>
+                <div class="<%= day_classes(@lessons_groupped_by_day, day) %>">
+                  <%= link_to day.day, group_leader_lessons_path(:by_date => day) %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="js-scroll scroll-down">
+  </div>
+
+</div>

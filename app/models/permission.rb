@@ -1,63 +1,68 @@
 class Permission < ActiveRecord::Base
-  include Enumerize
+  sso_auth_permission :roles => %W(administrator education_department dean subdepartment curator group_leader lecturer student)
 
-  attr_accessible :context, :role, :user_id, :context_id, :context_type, :user_uid,
-    :user_name, :user_email, :user_search, :polymorphic_context, :email
+  after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
+  after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
 
-  def self.validates_presence_of(*attr_names)
-    super attr_names - [:user]
+  normalize_attribute     :email
+  validates_presence_of   :user_id, :if => 'email.nil?'
+  validates_presence_of   :email,   :if => 'user_id.nil?'
+  validates_presence_of   :context_type, :context_id, :unless => ->{ %w(administrator education_department).include?(role) }
+  validates_uniqueness_of :role,    :scope => [:context_id, :context_type, :email, :user_id],
+                                    :message => 'У пользователя не может быть несколько одинаковых ролей'
+
+  validates_uniqueness_of :role,    :scope => [:context_type, :email, :user_id],
+                                    :message => ->(error, attributes) { "У одного пользователя не может быть несколько ролей «#{I18n.t("role_names.#{attributes[:value]}")}»"},
+                                    :if => -> (p) { ['group_leader', 'dean', 'subdepartment', 'lecturer'].include?(p.role) }
+
+  validates_uniqueness_of :role,    :scope => [:context_id, :context_type],
+                                    :message => ->(error, attributes) { "У группы не может быть несколько ролей «#{I18n.t("role_names.#{attributes[:value]}")}»" },
+                                    :if => -> (p) { ['group_leader', 'curator'].include?(p.role) }
+
+  validates_email_format_of :email, :check_mx => true, :allow_nil => true
+
+  scope :for_context, ->(context) { where(:context_type => context)}
+
+  def self.available_roles_for(role_name)
+    case role_name
+      when :dean
+        [:group_leader, :curator]
+      when :education_department
+        [:dean, :subdepartment]
+    end
   end
 
-  def self.available_roles
-    %w[administrator manager group_leader study_department_worker faculty_worker]
-  end
-
-  belongs_to :context, :polymorphic => true
-  belongs_to :user
-
-  validates_presence_of :email, :context_id, :context_type, :role
-  validates_inclusion_of  :role, :in => available_roles + available_roles.map(&:to_sym)
-  validates_uniqueness_of :role, :scope => [:email, :context_id, :context_type]
-  validates_email_format_of :email
-  normalize_attribute :email do |value|
-    value.present? ? value.downcase : value
-  end
-
-  scope :for_role,    ->(role)    { where :role => role }
-  scope :for_context, ->(context) { where :context_id => context.try(:id), :context_type => context.try(:class) }
-
-  enumerize :role, :in => %w[administrator manager group_leader study_department_worker faculty_worker]
-
-  scope :group_leaders, -> { joins(:user).where(:permissions => {:role => :group_leader}).order('ascii(users.last_name)') }
-  scope :faculty_workers, -> { where(:role => :faculty_worker) }
-
-  after_create :send_invitation
-
-  def self.activate_for_user(user)
-    where(:email => user.email).update_all :user_id => user.id
+  def role_text
+    I18n.t("role_names.#{role}")
   end
 
   def to_s
-    user ? "#{user.last_name} #{user.first_name} (#{email})" : email
+    [user || email, role_text, context].join(', ')
+  end
+
+  def notifiable?
+    !['student'].include?(self.role)
+  end
+
+  def with_user?
+    self.user
+  end
+
+  def user_changed?
+    self.user_id_changed?
   end
 
   private
 
-  def send_invitation
-    PermissionMailer.delay.invitation_email(self)
+  def notify_about_delete
+    redis = Redis.new(:url => Settings['messaging.url'])
+    index = redis.incr("profile:attendance:del_permission:index")
+    redis.set "profile:attendance:del_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
+  end
+
+  def notify_about_add
+    redis = Redis.new(:url => Settings['messaging.url'])
+    index = redis.incr("profile:attendance:add_permission:index")
+    redis.set "profile:attendance:add_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
   end
 end
-
-# == Schema Information
-#
-# Table name: permissions
-#
-#  id           :integer          not null, primary key
-#  user_id      :integer
-#  context_id   :integer
-#  context_type :string(255)
-#  role         :string(255)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#
-

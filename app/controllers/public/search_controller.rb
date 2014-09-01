@@ -1,16 +1,16 @@
+require 'student_searcher'
 class Public::SearchController < ApplicationController
+  include ApplicationHelper
+
   def index
+    page_title(params[:q])
 
-    surname, name, group_number = params[:student].try(:[], :search).to_s.split(/[^[:alnum:]-]+/)
+    @results = if params[:q].present?
+                 StudentSearcher.new(params).search.results
+               else
+                 []
+               end
 
-    group_number="non existent group" unless surname.presence && name.presence && group_number.presence
-
-    @search = Student.search do
-      keywords surname, :fields => :surname
-      keywords name, :fields => :name
-      keywords group_number, :fields => :group_number
-    end
-
-    @students = @search.results
+    redirect_to student_path(@results.first.secure_id) if @results.one?
   end
 end

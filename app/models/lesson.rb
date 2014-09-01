@@ -1,40 +1,48 @@
-# encoding: utf-8
+require 'lesson_time'
 
 class Lesson < ActiveRecord::Base
-  include Enumerize
+  extend DateRange
 
-  attr_accessible :classroom, :date_on, :kind, :order_number, :timetable_id, :presences_attributes, :group_id, :state
-
-  belongs_to :discipline
   belongs_to :group
-  has_many :realizes, :dependent => :destroy
-  has_many :presences, :dependent => :destroy
-  has_many :lecturers, :through => :realizes
+  belongs_to :discipline
+  has_many   :presences,  :dependent  => :destroy
+  has_many   :students,   :through    => :presences
 
-  enumerize :kind, :in => [:lecture, :practice, :laboratory, :research, :design]
-  enumerize :state, :in => [:took_place, :wasnt_took_place], :default => :took_place, predicates: true
-
-  default_scope order(:order_number)
-
-  default_value_for :state, :took_place
-
-  scope :by_date, ->(date){ where(:date_on => Time.zone.parse(date).to_date) }
-  scope :took_place, where(:state => :took_place)
-  scope :from_last_week, ->{ took_place.where('lessons.date_on >= ? and lessons.date_on <= ?', Presence.last_week_begin, Presence.last_week_end) }
-  scope :from_semester_begin, ->{ took_place.where('lessons.date_on >= ?', Presence.semester_begin) }
-
-  accepts_nested_attributes_for :presences
-
-  def switch_state
-    self.update_attributes! :state => opposite_state
-    self.presences.update_all(:kind => :not_marked)
+  has_many   :realizes,   :dependent  => :destroy do
+    def change_state
+      new_state = proxy_association.owner.realized? ? :wasnt : :was
+      self.update_all(:state => new_state)
+      self.index
+    end
   end
 
-  def state_texts
-    Hash[Lesson.enumerized_attributes[:state].options].invert
+  has_many   :lecturers,  :through    => :realizes
+
+  scope :by_date,     ->(date) { where(:date_on => date) }
+  scope :actual,      ->       { where(:deleted_at => nil) }
+  scope :not_actual,  ->       { where.not(:deleted_at => nil) }
+  scope :unfilled,    ->       { joins(:presences).where(:presences => { :state => nil }).uniq }
+  scope :filled,      ->       { joins(:presences).where.not(:presences => { :state => nil }).uniq }
+  scope :by_semester, ->       { where('date_on > :start_at and date_on < :end_at', :start_at => semester_begin, :end_at => semester_end)}
+  scope :realized,    ->       { joins(:realizes).where(:realizes => { :state => :was }).uniq }
+
+  def realized?
+    realizes.select(:state).first.state == 'was'
   end
 
-  def opposite_state
-    (self.class.state.values - [self.state]).first
+  def actual?
+    deleted_at.nil?
+  end
+
+  def lesson_time
+    LessonTime.new(self.order_number, self.date_on).lesson_time
+  end
+
+  def lesson_lecturers
+    lecturers.map(&:short_name).join(', ')
+  end
+
+  def kind_abbr
+    I18n.t("lesson.kind.#{kind}.abbr")
   end
 end

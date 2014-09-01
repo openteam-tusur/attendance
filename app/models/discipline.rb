@@ -1,9 +1,11 @@
-# encoding: utf-8
-
 class Discipline < ActiveRecord::Base
-  attr_accessible :abbr, :title
+  has_many :permissions, :as => :context, :dependent => :destroy
+  has_many :lessons,     :dependent => :destroy
+  has_many :groups,      -> { uniq.order('groups.number') }, :through => :lessons
+  has_many :lecturers,   -> { uniq.order('people.surname') }, :through => :lessons
 
-  has_many :lessons, :dependent => :destroy
+  validates_uniqueness_of :title, :scope => [:abbr]
+  normalize_attributes :title, :abbr
 
   def to_s
     title

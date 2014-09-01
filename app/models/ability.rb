@@ -1,49 +1,60 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, namespace)
     return unless user
 
-    can :manage, :application do
-      user.permissions.any?
+    roles = user.permissions.pluck(:role).uniq
+
+    if roles.include?('administrator') && namespace == :administrator
+      can :manage,  Permission
+      can :read,    Sync
+      can :read,    :sidekiq
     end
 
-    can :manage, :all if user.manager? || user.administrator?
-
-    can :read, :university_statistics if user.study_department_worker?
-
-    can :read, Faculty do |faculty|
-      user.faculty_worker_of?(faculty)
+    if roles.include?('curator') && namespace == :curator
+      can :manage, Group
     end
 
-    can :read, Group do |group|
-      can? :read, group.faculty
+    if roles.include?('dean') && namespace == :dean
+      can :read,   Disruption
+      can :manage, Miss,       :missing_type => ['Student']
+      can :manage, Permission, :context_type => ['Group']
+      can :read,   Group
+      can [:read, :search],   Student
+      can :read,   GroupLeader
     end
 
-    can :manage, Presence do |presence|
-      can? :read, presence.group
+    if roles.include?('education_department') && namespace == :education_department
+      can :read,   Faculty
+      can :manage, Permission, :context_type => ['Faculty', 'Subdepartment']
+      can :read,   Disruption
+      can :manage, Miss,       :missing_type => ['Lecturer']
+      can :read,   Lecturer
+      can [:accept, :refuse, :change], Realize
     end
 
-    can [:read, :switch_state], Lesson do |lesson|
-      can? :read, lesson.group
+    if roles.include?('group_leader') && namespace == :group_leader
+      can :manage, Lesson
+      can :read,   Group
+      can [:change, :check_all, :uncheck_all], Presence
+      can :change, Realize
     end
 
-    can :manage, Presence do |presence|
-      user.group_leader_of?(presence.group)
+    if roles.include?('lecturer') && namespace == :lecturer
+      can :read,   Disruption
+      can :read,   Group
+      can :manage, LecturerDeclaration do |lecturer_declaration|
+        lecturer_declaration.realize.lecturer == user.lecturers.first
+      end
     end
 
-    can [:read, :switch_state], Lesson do |lesson|
-      user.group_leader_of?(lesson.group)
-    end
-
-    can :read_statistics, :faculties if (user.study_department_worker? || user.faculty_worker?)
-
-    can :read_statistics, Faculty do |faculty|
-      user.faculty_worker_of?(faculty)
-    end
-
-    can :manage_group_leader_permissions, Faculty do |faculty|
-      user.faculty_worker_of?(faculty)
+    if roles.include?('subdepartment') && namespace == :subdepartment
+      can :read,   Disruption
+      can :read,   Group
+      can :manage, SubdepartmentDeclaration do |subdepartment_declaration|
+        subdepartment_declaration.realize.lecturer.subdepartments.include?(user.subdepartments.first)
+      end
     end
   end
 end

@@ -1,0 +1,27 @@
+<% if @groups.any? %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <td>№ группы</td>
+          <td>ФИО старосты</td>
+          <td>Не заполнено дней (с начала семестра до предыдущей недели)</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @groups.each do |group| %>
+          <tr>
+            <td><%= link_to group, curator_group_path(group, :filter => :last_week) %></td>
+            <td>
+              <%= group.group_leader %>
+              <%= mail_to group.group_leader.try(:email) %>
+            </td>
+            <td><%= group.absent_days %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <%= I18n.t("empty.#{controller_name}") %>
+<% end %>

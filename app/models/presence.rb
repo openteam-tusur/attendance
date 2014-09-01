@@ -1,49 +1,21 @@
-# encoding: utf-8
-
 class Presence < ActiveRecord::Base
-  include Enumerize
-
-  attr_accessible :kind, :lesson_id, :student_id
-
-  belongs_to :lesson
   belongs_to :student
-  has_one :group, :through => :student
-  has_one :faculty, :through => :group
+  belongs_to :lesson
+  has_one :group, :through => :lesson
 
-  before_save :set_date_on
+  scope :by_student,    -> (student)            { find_by(:student_id => student.id) }
+  scope :by_state,      -> (state)              { where(:state => state) }
+  scope :between_dates, -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
-  enumerize :kind, :in => [:not_marked, :valid_excuse, :was, :wasnt], :default => :not_marked, :predicates => true
+  def change_state
+    state.nil? ? self.state = 'was' : state == 'was' ? self.state = 'wasnt' : self.state = 'was'
+  end
 
-  scope :with_active_students,                joins(:student).where('people.active = ?', true)
-  scope :was,                                 where(:presences => { :kind => [:was, :valid_excuse] })
-  scope :took_place,                          joins(:lesson).where("lessons.state = 'took_place'")
-  scope :by_period,           ->(from, to) {  took_place.with_active_students.where('presences.date_on >= ? and presences.date_on <= ?', from, to) }
-  scope :from_last_week,      ->{             by_period(Presence.last_week_begin, Presence.last_week_end) }
-  scope :from_semester_begin, ->{             by_period(Presence.semester_begin, Date.today) }
+  def missed_by_cause?
+    student.misses.by_date(lesson.lesson_time).count > 0
+  end
 
   def to_s
-    kind_text
+    I18n.t("states.presences.#{state || :empty}")
   end
-
-  def self.last_week_begin
-    (Time.zone.today - 1.week).beginning_of_week
-  end
-
-  def self.last_week_end
-    last_week_begin.end_of_week
-  end
-
-  def self.semester_begin
-    today = Time.zone.today
-    if today.month >= 8 && today.month <= 12
-      return Time.zone.parse("#{today.year}-09-01").to_date
-    elsif today.month >= 1 && today.month <= 7
-      return Time.zone.parse("#{today.year}-02-10").to_date
-    end
-  end
-
-  private
-    def set_date_on
-      self.date_on = self.lesson.date_on
-    end
 end

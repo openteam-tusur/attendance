@@ -1,19 +1,31 @@
-# encoding: utf-8
-
 class Lecturer < Person
-  has_many :realizes
-  has_many :lessons, :through => :realizes
-  has_many :groups, :through => :lessons
+  has_many :lecturer_declarations, :as => :declarator, :dependent => :destroy
+  has_many :memberships,           :as => :person
+  has_many :subdepartments,        :through => :memberships, :source => :participate, :source_type => 'Subdepartment'
+  has_many :permissions,           :as => :context
 
-  def to_s
-    res = []
-    res << surname
-    res << "#{name[0]}." if name?
-    res << "#{patronymic[0]}." if patronymic?
-    res.join(' ')
+  has_many :realizes,       :dependent => :destroy
+  has_many :lessons,        :through => :realizes
+  has_many :groups,         -> { uniq.order('groups.number') }, :through => :lessons
+
+  searchable :auto_index => false do
+    string :info
+    string :deleted_at
   end
 
-  def losed_lessons(faculty)
-    lessons.joins(:group).where("lessons.state = 'wasnt_took_place' AND groups.faculty_id = ? AND lessons.date_on BETWEEN ? AND ?", faculty.id, Presence.last_week_begin, Presence.last_week_end)
+  def info
+    "#{self.to_s} #{actual_subdepartment.abbr}"
+  end
+
+  def short_name
+    "#{surname} #{name.first}. #{patronymic.first}."
+  end
+
+  def actual_subdepartment
+    subdepartments.where(:memberships => { :deleted_at => nil }).first
+  end
+
+  def as_json(options)
+    super(:only => :id).merge(:label => info, :value => info)
   end
 end

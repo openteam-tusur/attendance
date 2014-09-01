@@ -1,54 +1,57 @@
-# encoding: utf-8
-
 class Student < Person
-  attr_accessible :contingent_id, :active
-  attr_accessor :lose_count
+  include DateRange
 
-  belongs_to :group
-  has_many :presences
-  has_many :lessons, :through => :group
+  has_many :memberships, :as => :person
+  has_many :groups,      :through => :memberships, :source => :participate, :source_type => 'Group'
 
-  default_value_for :active, true
+  has_many :presences,   :dependent => :destroy
+  has_many :lessons,     :through => :presences
+  has_many :disciplines, -> { uniq.order('disciplines.title') }, :through => :lessons
 
-  default_scope where(:active => true)
+  has_many :misses,      -> { where(:missing_type => 'Student') }, :class_name => 'Miss', :foreign_key => :missing_id, :dependent => :destroy
 
-  delegate :from_last_week, :to => :presences, :prefix => true
-  delegate :from_semester_begin, :to => :presences, :prefix => true
-  delegate :number, :to => :group, :prefix => true
+  before_create :set_secure_id
 
-  before_save :set_secure_id
+  scope :actual,      -> { where(:deleted_at => nil) }
+  scope :not_actual,  -> { where.not(:deleted_at => nil) }
 
-  searchable do
-    text :surname
-    text :name
-    text :group_number
+  searchable :auto_index => false do
+    string(:info)
+    integer(:faculty_id) { actual_group.subdepartment.faculty_id }
+    string :deleted_at
   end
 
-  def attendance_on(lesson)
-    presences.where(:lesson_id => lesson.id).first
+  def slacker?(from: nil, to: nil)
+    v = total_attendance(from, to)
+    if v.nil?
+      return false
+    else
+     v < 80
+    end
   end
 
-  def attendance_on?(lesson)
-    attendance_on(lesson).nil? ? false : (attendance_on(lesson).was? || attendance_on(lesson).valid_excuse?)
+  def total_attendance(from, to)
+    res = Statistic::Student.new(self, nil).attendance_by_date(from: from, to: to).inject({:sum => 0, :count => 0}) { |s, (_, item)| s[:sum] += item; s[:count] += 1; s }
+    res[:count] > 0 ? res[:sum]/res[:count] : nil
   end
 
-  def attendanced_from_last_week
-    presences_from_last_week.was
+  def info
+    "#{self.surname} #{self.name} #{actual_group.try(:number)}"
   end
 
-  def average_attendance_from_last_week
-    @average_attendance_from_last_week ||= "%.1f%" % (presences_from_last_week.count.zero? ? 0 : attendanced_from_last_week.count*100/presences_from_last_week.count.to_f)
+  def as_json(options)
+    super(:only => :id).merge(:label => info, :value => info)
   end
 
-  def attendanced_from_semester_begin
-    presences_from_semester_begin.was
+  def actual?
+    deleted_at.nil?
   end
 
-  def average_attendance_from_semester_begin
-    @average_attendance_from_semester_begin ||= "%.1f%" % (presences_from_semester_begin.count.zero? ? 0 : attendanced_from_semester_begin.count*100/presences_from_semester_begin.count.to_f)
+  def actual_group
+    groups.where(:memberships => { :deleted_at => nil }).first
   end
 
   def set_secure_id
-    self.secure_id = Digest::MD5.hexdigest("#{self.fio}#{self.group_number}")
+    self.secure_id = Digest::MD5.hexdigest("#{self.to_s}#{self.contingent_id}")
   end
 end

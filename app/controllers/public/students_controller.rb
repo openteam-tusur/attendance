@@ -1,7 +1,15 @@
 class Public::StudentsController < ApplicationController
-  inherit_resources
+  include FilterParams
+  include DateRange
 
-  defaults :finder => :find_by_secure_id!
+  def show
+    @charts = {}
+    @student = Student.find_by(:secure_id => params[:id])
+    student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
-  actions :show
+    @charts['attendance_by_dates.line']      = student_statistic.attendance_by_date(**filter_params)
+    @charts['attendance_by_disciplines.bar'] = student_statistic.attendance_by('disciplines', **filter_params)
+
+    @omissions = @student.presences.by_state(:wasnt).between_dates(*filter_params.values)
+  end
 end

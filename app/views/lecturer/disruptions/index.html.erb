@@ -1,0 +1,34 @@
+<%= content_for :page_title do %>
+  <h1 class="text-center"><%= I18n.t('page_title.disruptions.personal') %></h1>
+<% end %>
+
+<div class="filters">
+  <%= date_filters %>
+</div>
+
+<% if @disruptions.any? %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-disruptions lecturer">
+      <thead>
+        <tr>
+          <td>Дисциплина</td>
+          <td>Дата</td>
+          <td colspan="2">Объяснительная</td>
+          <td>Уважительная причина</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @disruptions.each do |realize| %>
+          <tr class="lesson">
+            <%= render :partial => 'lesson', :locals => { :realize => realize } %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @disruptions %>
+  </div>
+<% else %>
+  <div class="empty">
+    <%= I18n.t("empty.#{controller_name}") %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+<div id="search_form">
+  <%= form_tag search_path, :method => :get, :class => 'form-inline' do %>
+    <div class="search-input col-sm-11 form-group">
+      <%= search_field_tag :q, params[:q], :placeholder => 'Поиск студента', :class => 'form-control search' %>
+    </div>
+
+    <div class="action col-sm-1">
+      <%= submit_tag "Найти", :class => 'btn btn-primary btn-sm btn-block' %>
+    </div>
+
+  <% end %>
+</div>
+<span class="help-block">Например: Иванов Иван 777</span>

@@ -1,73 +1,204 @@
 ru:
-  are_you_sure:     Вы уверены в том, что собираетесь сделать?
-  site_title:       Журнал посещаемости ТУСУР
+  activemodel:
+    errors:
+      messages:
+        email_address_not_routable: такого адреса не существует
+        invalid_email_address:      неверный адрес электронной почты
 
   activerecord:
     attributes:
-      discipline:
-        abbr:  Аббревиатура
-        title: Название дисциплины
+      permission:
+        context_id: Контекст
+        email:      E-mail
+        user_id:    ФИО
 
-      faculty:
-        abbr:  Аббревиатура
-        title: Название факультета
+      miss:
+        starts_at: С
+        ends_at: По
+        note: Причина
 
-      group:
-        course: Номер курса
-        number: Номер группы
+      declaration:
+        reason: Причина
 
-      lesson:
-        classroom:    Учебная аудитория
-        date_on:      Дата занятия
-        kind:         Тип занятия
-        order_number: Порядковый номер занятия
-        state:        Статус занятия
+    errors:
+      models:
+        permission:
+          attributes:
+            user_id:
+              blank: не может быть пустым, если вы не указали электронную почту
+            email:
+              blank: не может быть пустым, если вы не выбрали пользователя
 
-      person: &human
-        name:       Имя
-        surname:    Фамилия
-        patronymic: Отчество
+  confirm:
+    realize: Вы абсолютно уверены в этом? Ваше действие повлечет за собой информирование заинтересованых лиц.
+    delete:  Уверены, что хотите выполнить это действие?
 
-      presence:
-        kind: Присутствие на занятии
+  filter_labels:
+    all:                 Всё
+    back:                '&larr; Назад'
+    from_semester_begin: С начала семестра
+    last_week:           Прошлая неделя
+    date_range:          Указать даты
+    search:              Поиск
 
-      lecturer:
-        <<: *human
+  site: Журнал посещаемости ТУСУР
 
-      student:
-        <<: *human
+  states:
+    presences:
+      empty: не отмечено
+      was:   ''
+      wasnt: ''
 
-    models:
-      discipline: Дисциплина
-      faculty:    Факультет
-      group:      Группа
-      lecturer:   Преподаватель
-      lesson:     Занятие
-      person:     Человек
-      presence:   Присутствие
-      student:    Студент
+    realizes:
+      was:   состоялось
+      wasnt: не состоялось
+
+  page_title:
+    attendance_by_courses:        Посещаемость по курсам
+    attendance_by_dates:          Посещаемость по дням
+    attendance_by_groups:         Посещаемость по группам
+    attendance_by_students:       Посещаемость студентов
+    attendance_by_faculties:      Посещаемость по факультетам
+    attendance_by_subdepartments: Посещаемость по кафедрам
+    attendance_by_disciplines:    Посещаемость по дисциплинам
+
+    courses:
+      show:                       Статистика посещаемости
+
+    dashboard:
+      index:                      Главная страница
+
+    disciplines:
+      index:                       Статистика посещаемости
+      show:                        Статистика посещаемости
+
+    disruptions:
+      index:                      Сорванные преподавателями занятия
+      personal:                   Сорванные занятия
+
+    faculties:
+      index:                      Статистика посещаемости
+      show:                       'Статистика посещаемости %{title}'
+
+    groups:
+      index:                      Статистика посещаемости
+      show:                       'Статистика посещаемости группы %{title}'
+
+    group_leaders:
+      index:                      Старосты незаполнившие журнал
+
+    lessons:
+      title:                      Заполнение журнала посещаемости
+      index:                      'Заполнение журнала посещаемости группы %{title}'
+
+    main_page:
+      index:                      Главная страница
+
+    misses:
+      index:                      Уважительные причины пропуска занятий
+      new:                        Добавить уважительную причину
+      create:                     Добавить уважительную причину
+      update:                     Добавить уважительную причину
+      edit:                       Изменить уважительную причину
+
+    permissions:
+      index:                      Управление правами
+      new:                        Добавление права доступа
+      create:                     Добавление права доступа
+
+    search:
+      index:                      'Поиск: %{title}'
+
+    students:
+      index:                      Студенты с пропусками больше 20%
+      show:                       'Статистика посещаемости %{title}'
+
+    subdepartments:
+      show:                       Посещаемость кафедры
+
+    syncs:
+      index:                      Журнал синхронизации
+
+    unfilled:
+      index:                      Незаполненные дни
+
+    lecturer_declarations:
+      new:                        Добавить объяснительную
+      edit:                       Редактировать объяснительную
+
+    subdepartment_declarations:
+      new:                        Добавить объяснительную
+      edit:                       Редактировать объяснительную
+
+  empty:
+    disruptions:                  Нет сорванных занятий
+    group_leaders:                Нет старост незаполнивших журнал посещаемости
+    groups:                       Нет групп
+    misses:                       Нет уважительных причин пропуска занятий
+    permissions:                  Нет ни одной роли
+    students:                     Нет студентов пропускающих более 20% занятий
+    syncs:                        В журнале синхронизации еще нет записей
+
+  role_names:
+    administrator:         Администратор
+    curator:               Куратор группы
+    dean:                  Деканат
+    education_department:  Учебное управление
+    group_leader:          Староста группы
+    lecturer:              Преподаватель
+    subdepartment:         Кафедра
+    student:               Студент
+
+  lesson:
+    kind:
+      lecture:
+        abbr: Лк
+        name: Лекция
+      practice:
+        abbr: Практ.
+        name: Практика
+      laboratory:
+        abbr: Лаб. раб.
+        name: Лабораторная работа
+      research:
+        abbr: Курс. работа
+        name: Курсовая работа
+      design:
+        abbr: Курс. проект
+        name: Курсовое проектирование
+      test:
+        abbr: Зачет
+        name: Зачет
+      exam:
+        abbr: Экзамен
+        name: Экзамен
+
+    time:
+      '1': '08:50 - 10:25'
+      '2': '10:40 - 12:15'
+      '3': '13:15 - 14:50'
+      '4': '15:00 - 16:35'
+      '5': '16:45 - 18:20'
+      '6': '18:30 - 20:05'
+      '7': '20:15 - 21:50'
+
+  realize:
+    approved:
+      unfilled: '-'
+      reasonable: Да
+      unreasonable: Нет
+
+  views:
+    pagination:
+      next:     '&gt;'
+      previous: '&lt;'
+      truncate: ...
+      first:    '&lt;&lt;'
+      last:     '&gt;&gt;'
 
   enumerize:
-    lesson:
-      state:
-        took_place:       состоялось
-        wasnt_took_place: не состоялось
-
-      kind:
-        design:     Курс. проек.
-        laboratory: Лаб.раб.
-        lecture:    Лекция
-        practice:   Практика
-        research:   Курс. раб.
-
-    presence:
-      kind:
-        not_marked:   не отмечен
-        valid_excuse: ув.причина
-        was:          был
-        wasnt:        не был
-
-  simple_form:
-    hints:
-      student:
-        search: 'Например: Иванов Иван 777'
+    realize:
+      approved:
+        reasonable:   С уважительной причиной
+        unreasonable: Без уважительной причины
+        unfilled:     Не отмеченные

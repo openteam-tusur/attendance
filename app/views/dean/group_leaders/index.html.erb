@@ -1,0 +1,27 @@
+<%= content_for :page_title do %>
+  <h1>Старосты незаполнившие журнал на факультете <%= current_user.faculties.first %></h1>
+<% end %>
+
+<% if @group_leaders.any? %>
+  <div class="table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <td>№ группы</td>
+          <td>ФИО старосты</td>
+          <td>Не заполнено дней (с начала семестра до предыдущей недели)</td>
+        </tr>
+      </thead>
+      <% @group_leaders.each do |(group_number, group_leader, count)| %>
+        <tr>
+          <td><%= group_number %></td>
+          <td><%= group_leader %> <%= mail_to group_leader.email %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= paginate @group_leaders %>
+  </div>
+<% else %>
+  <%= I18n.t("empty.#{controller_name}") %>
+<% end %>
