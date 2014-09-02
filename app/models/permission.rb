@@ -4,7 +4,10 @@ class Permission < ActiveRecord::Base
   after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
   after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
 
-  normalize_attribute     :email
+  normalize_attribute :email do |value|
+    value.present? ? value.downcase : value
+  end
+
   validates_presence_of   :user_id, :if => 'email.nil?'
   validates_presence_of   :email,   :if => 'user_id.nil?'
   validates_presence_of   :context_type, :context_id, :unless => ->{ %w(administrator education_department).include?(role) }
