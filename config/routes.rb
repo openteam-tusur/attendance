@@ -138,4 +138,6 @@ Attendance::Application.routes.draw do
   namespace :student do
     root 'students#show'
   end
+
+  mount API => '/'
 end

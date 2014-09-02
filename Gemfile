@@ -6,6 +6,7 @@ group :default do
   gem 'compass-rails'
   gem 'enumerize'
   gem 'font-awesome-sass'
+  gem 'grape'
   gem 'gravtastic'
   gem 'has_scope'
   gem 'hiredis',                '~> 0.4.5'
