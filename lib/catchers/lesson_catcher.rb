@@ -58,7 +58,7 @@ class LessonCatcher
             subdepartment.lecturers.find_or_initialize_by(:surname    => lecturer['lastname'].squish,
                                                           :name       => lecturer['firstname'].squish,
                                                           :patronymic => lecturer['middlename'].squish).tap do |lect|
-              lect.directory_id = lecturer['directory_id']
+              #lect.directory_id = lecturer['directory_id']
               lect.save!
               LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
               Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
