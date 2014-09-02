@@ -4,7 +4,8 @@ class Dean::StudentsController < AuthController
   include FilterParams
   include DateRange
 
-  load_and_authorize_resource
+  inherit_resources
+  authorize_resource
 
   before_filter :build_faculty, :only => [:index, :search, :show]
 
