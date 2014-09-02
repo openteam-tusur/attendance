@@ -5,7 +5,7 @@ class Permission < ActiveRecord::Base
   after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
 
   normalize_attribute :email do |value|
-    value.present? ? value.downcase : value
+    value.presence.present? ? value.downcase : value
   end
 
   validates_presence_of   :user_id, :if => 'email.nil?'
