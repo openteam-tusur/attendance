@@ -52,13 +52,15 @@ class LessonCatcher
             begin
               subdepartment = Subdepartment.find_by!(:abbr => lecturer['subdepartment'])
             rescue ActiveRecord::RecordNotFound
-              next
-              #raise "Не найдена кафедра #{lecturer['subdepartment']}"
+              raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
-            lect = subdepartment.lecturers.find_or_create_by(:surname => lecturer['lastname'].squish,
-                                                             :name => lecturer['firstname'].squish,
-                                                             :patronymic => lecturer['middlename'].squish)
-            lect.index
+            lect = subdepartment.lecturers.find_or_initialize_by(:surname => lecturer['lastname'].squish,
+                                                                 :name => lecturer['firstname'].squish,
+                                                                 :patronymic => lecturer['middlename'].squish)
+            lect.directory_id = lecturer['directory_id']
+            lect.subdepartments << subdepartment unless lect.subdepartments.include?(subdepartment)
+            lect.save!
+            lect.reload.index
 
             LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
 
