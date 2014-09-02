@@ -58,7 +58,7 @@ class LessonCatcher
             subdepartment.lecturers.find_or_initialize_by(:surname       => lecturer['lastname'].squish,
                                                              :name       => lecturer['firstname'].squish,
                                                              :patronymic => lecturer['middlename'].squish).tap do |lect|
-              lect.directory_id = lecturer['directory_id'].squish
+              lect.directory_id = lecturer['directory_id']
               lect.save!
               lect.index
             end
