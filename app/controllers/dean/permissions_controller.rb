@@ -4,15 +4,27 @@ class Dean::PermissionsController < AuthController
 
   actions :index, :new, :create, :destroy
 
-  has_scope :for_context, :default => 'Group'
-  has_scope :for_role,    :default => ['group_leader', 'curator']
+  has_scope :for_context, :default => 1 do |controller, scope|
+    case controller.params[:for_role]
+    when 'group_leader'
+      scope.for_context('Group')
+    when'curator'
+      scope.for_context('Group')
+    when 'subdepartment'
+      scope.for_context('Subdepartment')
+    else
+      scope.for_context(['Group', 'Subdepartment'])
+    end
 
-  before_filter :build_context, :on => [:new, :create]
+  end
+
+  has_scope :for_role,    :default => ['group_leader', 'curator', 'subdepartment']
+
+  before_filter :build_context, :on => [:new, :create, :index]
 
   def index
     index!{
-      groups_ids = current_user.faculty_groups.map(&:id)
-      @permissions = Kaminari.paginate_array(@permissions.where(:context_id => groups_ids)).page(params[:page])
+      @permissions = Kaminari.paginate_array(@permissions.where(:context_id => @context_ids.map(&:id), :context_type => @context_type)).page(params[:page])
     }
   end
 
@@ -30,8 +42,17 @@ class Dean::PermissionsController < AuthController
   private
     def build_context
       @faculty      = current_user.faculties.first
-      @context_type = 'Group'
-      @context_ids  = @faculty.groups.order('number')
+      case params[:for_role]
+      when 'group_leader'
+        @context_type = 'Group'
+        @context_ids  = @faculty.groups.order('number')
+      when'curator'
+        @context_type = 'Group'
+        @context_ids  = @faculty.groups.order('number')
+      else 'subdepartment'
+        @context_type = 'Subdepartment'
+        @context_ids  = @faculty.subdepartments.order('title')
+      end
     end
 
     def permission_params
