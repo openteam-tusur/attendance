@@ -41,6 +41,14 @@ class Listener
   def create_user_by(json)
     begin
       user = User.find_or_create_by json
+      if user
+        Permission.skip_callback(:create, :after, :notify_about_add)
+
+        user.after_oauth_authentication
+        user.permissions.select {|p| p.notifiable?}.map(&:notify_about_add)
+
+        Permission.set_callback(:create, :after, :notify_about_add)
+      end
     rescue ActiveRecord::RecordNotUnique
     end
   end

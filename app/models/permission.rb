@@ -52,8 +52,6 @@ class Permission < ActiveRecord::Base
     self.user_id_changed?
   end
 
-  private
-
   def notify_about_delete
     redis = Redis.new(:url => Settings['messaging.url'])
     index = redis.incr("profile:attendance:del_permission:index")
