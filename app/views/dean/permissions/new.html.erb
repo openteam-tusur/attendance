@@ -7,7 +7,7 @@
                     :html => { :class => 'form-horizontal form-permission' },
                     :wrapper => :horizontal_form do |f| %>
 
-  <%= f.input :user_id,       :collection => User.all, :label_method => :sso_auth_name %>
+  <%= f.input :user_id,       :collection => User.order(:name), :label_method => :sso_auth_name %>
 
   <div class="form-group">
     <span class="separator col-md-offset-1 col-md-5">или</span>
