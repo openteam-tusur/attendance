@@ -10,6 +10,17 @@ class StudentCatcher
     }
   end
 
+  def wrong_groups
+    {
+      '213' => '213-1',
+      '223' => '223-1',
+      '471' => '471-1',
+      '610' => '610-1',
+      '611' => '611-1',
+      '621' => '621-1'
+    }
+  end
+
   def sync
     mark_students_deleted
 
@@ -23,6 +34,9 @@ class StudentCatcher
   def import
     Group.actual.each do |group|
       students = students_of group.number
+      if students.empty?
+        students = students_of wrong_groups[group.number]
+      end
       next if students.empty?
 
       update_group group, students.first['group']
