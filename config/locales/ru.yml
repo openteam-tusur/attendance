@@ -11,6 +11,7 @@ ru:
         context_id: Контекст
         email:      E-mail
         user_id:    ФИО
+        name:       ФИО
 
       miss:
         starts_at: С
