@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
 
   alias_attribute :to_s, :short_name
 
+  searchable do
+    string :name, :using => :ordered_name
+  end
+
   def after_oauth_authentication
     Permission.where(:email => self.email).each {|p| p.update_attribute(:user_id, self.id) }
   end
@@ -25,6 +29,20 @@ class User < ActiveRecord::Base
   def group
     return if permissions.for_role(:group_leader).empty?
     permissions.for_role(:group_leader).first.context
+  end
+
+  def ordered_name
+    res = self.name.split(/\s/)
+
+    [res.last, res.first].join(' ')
+  end
+
+  def info
+    "#{self.ordered_name}, #{self.email}"
+  end
+
+  def as_json(options)
+    super(:only => :id).merge(:label => info, :value => info)
   end
 
   def short_name

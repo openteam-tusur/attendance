@@ -6,6 +6,10 @@ class Ability
 
     roles = user.permissions.pluck(:role).uniq
 
+    if (roles.include?('administrator') || roles.include?('subdepartment') || roles.include?('dean')) && namespace == :search
+      can :search,  User
+    end
+
     if roles.include?('administrator') && namespace == :administrator
       can :manage,  Permission
       can :read,    Sync

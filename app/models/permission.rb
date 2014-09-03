@@ -1,4 +1,5 @@
 class Permission < ActiveRecord::Base
+  attr_accessor :name
   sso_auth_permission :roles => %W(administrator education_department dean subdepartment curator group_leader lecturer student)
 
   after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }

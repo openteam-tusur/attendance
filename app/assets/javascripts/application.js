@@ -15,3 +15,4 @@
 //= require popover
 //= require disruption_status
 //= require modal
+//= require users_autocomplete
