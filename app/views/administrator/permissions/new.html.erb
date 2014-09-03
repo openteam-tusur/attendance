@@ -7,7 +7,7 @@
                     :html => { :class => 'form-horizontal form-permission' },
                     :wrapper => :horizontal_form do |f| %>
 
-  <%= f.input :name, :input_html => { :class => 'users_autocomplete' } %>
+  <%= f.input :name, :input_html => { :class => 'users_autocomplete' }, :placeholder => 'Начните вводить ФИО' %>
   <%= f.input :user_id,       :as => :hidden %>
 
   <div class="form-group">
