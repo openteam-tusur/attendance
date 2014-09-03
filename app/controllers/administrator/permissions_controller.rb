@@ -10,7 +10,7 @@ class Administrator::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions).page(params[:page])
+      @permissions = Kaminari.paginate_array(@permissions.sort_by(&:to_s)).page(params[:page])
     }
   end
 
