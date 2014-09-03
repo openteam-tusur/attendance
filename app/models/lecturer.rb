@@ -8,11 +8,6 @@ class Lecturer < Person
   has_many :lessons,        :through => :realizes
   has_many :groups,         -> { uniq.order('groups.number') }, :through => :lessons
 
-  searchable :auto_index => false do
-    string :info
-    string :deleted_at
-  end
-
   def info
     "#{self.to_s} #{actual_subdepartment.abbr}"
   end
