@@ -1,9 +1,9 @@
-<% if @students.any? %>
-  <div class="filters">
-    <%= date_filters %>
-  </div>
+<div class="filters">
+  <%= date_filters %>
+</div>
 
-  <div class="table-responsive">
+<div class="table-responsive">
+  <% if @students.any? %>
     <table class="table table-condensed table-striped">
       <thead>
         <tr>
@@ -22,10 +22,10 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-  <%= paginate @students %>
-<% else %>
-  <div class="empty">
-    <%= I18n.t("empty.#{controller_name}") %>
-  </div>
-<% end %>
+  <% else %>
+    <div class="empty">
+      <%= I18n.t("empty.#{controller_name}") %>
+    </div>
+  <% end %>
+</div>
+<%= paginate @students %>
