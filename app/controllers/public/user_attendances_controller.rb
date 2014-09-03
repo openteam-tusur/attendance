@@ -3,7 +3,7 @@ class Public::UserAttendancesController < ApplicationController
 
   def show
     redirect_to root_path and return unless @context
-    redirect_to lecturer_groups_path and return if @context.is_a?(Lecturer)
+    redirect_to lecturer_disciplines_path and return if @context.is_a?(Lecturer)
     redirect_to student_path(@context.secure_id) and return if @context.is_a?(Student)
   end
 
