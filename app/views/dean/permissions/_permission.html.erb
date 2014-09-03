@@ -1,5 +1,14 @@
 <li class="list-item <%= cycle( "odd", "even" ) %>">
-  <%= content_tag(:span, permission, :class => 'user') %>
+  <span class='user'>
+    <% if permission.user %>
+      <%= permission.user %>,
+      <%= link_to permission.user.email, "mailto:#{permission.user.email}" %>,
+    <% else %>
+      <%= link_to permission.email, "mailto:#{permission.email}" %>,
+    <% end %>
+    <%= permission.role_text %>,
+    <%= permission.context %>
+  </span>
 
   <span class="actions pull-right">
     <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
