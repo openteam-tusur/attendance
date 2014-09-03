@@ -139,5 +139,9 @@ Attendance::Application.routes.draw do
     root 'students#show'
   end
 
+  resources :users, :only => [] do
+    get 'search', :on => :collection
+  end
+
   mount API => '/'
 end
