@@ -30,6 +30,8 @@ class LessonCatcher
 
     def import_lessons_for(group_number, lessons, date)
         lessons.each do |lesson|
+          next if lesson['lecturers'].empty?
+
           lesson_id = nil
           discipline = import_discipline(lesson['discipline']['title'], lesson['discipline']['abbr'])
           begin
