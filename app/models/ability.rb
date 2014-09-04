@@ -6,7 +6,7 @@ class Ability
 
     roles = user.permissions.pluck(:role).uniq
 
-    if (roles.include?('administrator') || roles.include?('subdepartment') || roles.include?('dean')) && namespace == :search
+    if (roles.include?('administrator') || roles.include?('education_department') || roles.include?('dean')) && namespace == :search
       can :search,  User
     end
 
