@@ -60,7 +60,6 @@ class LessonCatcher
             lect.directory_id = lecturer['directory_id']
             lect.subdepartments << subdepartment unless lect.subdepartments.include?(subdepartment)
             lect.save!
-            lect.reload.index
 
             LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
 
