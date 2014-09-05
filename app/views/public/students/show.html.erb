@@ -4,25 +4,29 @@
 
 <%= charts %>
 
-<h2 class="text-center">Пропуски занятий</h2>
-<div class="table-responsive">
-  <table class="table table-condensed table-striped">
-    <thead>
-      <tr>
-        <td>Дисциплина</td>
-        <td>Дата</td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @omissions.each do |omission| %>
+<% if @omissions.any? %>
+  <h2 class="text-center">Пропуски занятий</h2>
+  <div class="table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
         <tr>
-          <td>
-            <%= omission.lesson.discipline.title %>
-            <%= " (#{omission.lesson.kind_abbr})" %>
-          </td>
-          <td><%= I18n.l(omission.lesson.date_on)  %></td>
+          <td>Дисциплина</td>
+          <td>Дата</td>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <% @omissions.each do |omission| %>
+          <tr>
+            <td>
+              <%= omission.lesson.discipline.title %>
+              <%= " (#{omission.lesson.kind_abbr})" %>
+            </td>
+            <td><%= I18n.l(omission.lesson.date_on)  %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <h2 class="text-center">Нет пропущенных занятий</h2>
+<% end %>
