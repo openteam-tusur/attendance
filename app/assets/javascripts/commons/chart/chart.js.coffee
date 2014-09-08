@@ -5,6 +5,7 @@ class Chart
 
   defaultOptions =
     chart:
+      height: 600
       zoomType: 'x'
 
     xAxis:
