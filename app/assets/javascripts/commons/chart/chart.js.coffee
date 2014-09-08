@@ -65,6 +65,7 @@ class @LineChart extends Chart
         type: 'spline'
 
       xAxis:
+        minTickInterval: 24 * 3600 * 1000
         type: 'datetime'
 
       series: [{
