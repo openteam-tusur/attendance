@@ -14,9 +14,7 @@ class StudentCatcher
     {
       '213' => '213-1',
       '223' => '223-1',
-      '471' => '471-1',
-      '611' => '611-1',
-      '621' => '621-1'
+      '471' => '471-1'
     }
   end
 
@@ -36,6 +34,7 @@ class StudentCatcher
       if students.empty?
         students = students_of wrong_groups[group.number]
       end
+      students += students_of "#{group.number}_"
       next if students.empty?
 
       update_group group, students.first['group']
