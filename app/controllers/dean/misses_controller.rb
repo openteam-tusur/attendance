@@ -2,6 +2,8 @@ class Dean::MissesController < AuthController
   include FilterParams
   include DateRange
 
+  before_filter :find_faculty, :only => :index
+
   inherit_resources
   load_and_authorize_resource
 
@@ -21,6 +23,14 @@ class Dean::MissesController < AuthController
   end
 
   private
+
+  def begin_of_association_chain
+    @faculty
+  end
+
+  def find_faculty
+    @faculty = current_user.faculties.first
+  end
 
   def miss_params
     params.require(:miss).permit(:missing_id, :starts_at, :ends_at, :note)
