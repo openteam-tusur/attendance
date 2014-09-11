@@ -21,6 +21,7 @@ class Dean::StudentsController < AuthController
     @subdepartment = @faculty.subdepartments.actual.find_by(:abbr => params[:subdepartment_id])
     @group = @subdepartment.groups.actual.find_by(:number => params[:group_id])
     @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @omissions = @student.presences.by_state(:wasnt).between_dates(*filter_params.values)
     @course  = params[:course_id]
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
