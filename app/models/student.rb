@@ -2,7 +2,7 @@ class Student < Person
   include DateRange
 
   has_many :memberships, :as => :person
-  has_many :groups,      :through => :memberships, :source => :participate, :source_type => 'Group'
+  has_many :groups,      ->{ where(:memberships => { :deleted_at => nil }) }, :through => :memberships, :source => :participate, :source_type => 'Group'
 
   has_many :presences,   :dependent => :destroy
   has_many :lessons,     :through => :presences
