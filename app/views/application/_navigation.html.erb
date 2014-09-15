@@ -21,7 +21,7 @@
       <% end %>
       <li class="dropdown">
         <div class="dropdown-toggle login" data-toggle='dropdown'>
-          <span class='current_user'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.name %></span>
+          <span class='current_user truncated'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.name %></span>
           <b class='caret'></b>
         </div>
         <% begin %>
