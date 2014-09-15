@@ -1,7 +1,7 @@
 class Public::MainPageController < ApplicationController
   def index
     if user_signed_in? && available_user_namespaces.any?
-      permission = current_user.permissions.first
+      permission = PriorityPermission.new(current_user).fetch
       if permission.role == 'student'
         redirect_to student_path(permission.context.secure_id)
       else
