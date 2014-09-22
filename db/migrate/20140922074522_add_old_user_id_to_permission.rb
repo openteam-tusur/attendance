@@ -1,0 +1,20 @@
+class AddOldUserIdToPermission < ActiveRecord::Migration
+  def up
+    add_column :permissions, :old_user_id, :integer
+    Permission.find_each do |perm|
+      perm.update_column(:old_user_id, perm.user_id)
+    end
+
+    change_column :permissions, :user_id, :string
+  end
+
+  def down
+    change_column :permissions, :user_id, :integer
+
+    Permission.find_each do |perm|
+      perm.update_column(:user_id, perm.old_user_id)
+    end
+
+    remove_column :permissions, :old_user_id
+  end
+end
