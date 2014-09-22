@@ -21,11 +21,12 @@
       <% end %>
       <li class="dropdown">
         <div class="dropdown-toggle login" data-toggle='dropdown'>
-          <span class='current_user truncated'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.name %></span>
+          <span class='current_user truncated'><%= image_tag current_user.gravatar_url(:size => 24), :width => 24, :height => 24 %><%= current_user.fullname %></span>
           <b class='caret'></b>
         </div>
         <% begin %>
           <ul class="dropdown-menu">
+            <li><%= link_to "Выход", sign_out_url, :method => :delete %></li>
             <% current_user.get_menu.each do |title, link| %>
               <% if link.present? %>
                 <li><%= link_to title, link %></li>
@@ -39,7 +40,7 @@
       </li>
     <% else %>
       <li class='sign_in'>
-        <%= link_to 'Вход в систему', user_omniauth_authorize_path(:identity)  %>
+        <%= link_to 'Вход', sign_in_url %>
       </li>
     <% end %>
   </ul>
