@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 group :default do
   gem 'attribute_normalizer'
+  gem 'auth_client'
   gem 'coffee-rails',           '~> 4.0.0'
   gem 'compass-rails'
   gem 'enumerize'
@@ -29,7 +30,6 @@ group :default do
   gem 'simple-navigation'
   gem 'simple_form',            '~> 3.1.0.rc2'
   gem 'sinatra',                '>= 1.3.0', :require => nil
-  gem 'sso-auth',               '0.1.4'
   gem 'sunspot_rails',          '~> 2.1.1'
   gem 'tusur_header'
   gem 'uglifier',               '>= 1.3.0'
