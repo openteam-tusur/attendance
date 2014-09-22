@@ -8,6 +8,7 @@ class Subdepartment::StudentsController < AuthController
     @charts = {}
     @group = @subdepartment.groups.actual.find_by(:number => params[:group_id])
     @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @omissions = @student.presences.by_state(:wasnt).between_dates(*filter_params.values)
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
     if params[:course_id]
