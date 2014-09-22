@@ -18,7 +18,7 @@ group :default do
   gem 'openteam-commons'
   gem 'pg'
   gem 'progress_bar'
-  gem 'rails',                  '4.0.8'
+  gem 'rails',                  '4.1.6'
   gem 'redis',                  '= 3.0.7'
   gem 'redis-rails'
   gem 'rest-client'
