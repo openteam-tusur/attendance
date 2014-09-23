@@ -6,7 +6,6 @@ class Group < ActiveRecord::Base
   has_many   :students,     -> { where(:memberships => {:deleted_at => nil}).order('surname, name, patronymic') }, :through => :memberships, :source => :person, :source_type => 'Person', :class_name => 'Student'
   has_many   :lessons,      :dependent => :destroy
   has_many   :presences,    :through => :lessons
-  has_many   :group_leaders, -> { where(:permissions => { :role => :group_leader }) }, :through => :permissions, :source => :user
 
   validates_presence_of :number
   normalize_attribute :number
@@ -16,6 +15,10 @@ class Group < ActiveRecord::Base
   scope :by_course,   -> (c) { where(:course => c) }
 
   alias_attribute :to_s, :number
+
+  def group_leaders
+    Permission.where(:role => :group_leader).flat_map(&:user).compact
+  end
 
   def group_leader
     permission = permissions.where(:role => :group_leader).first
