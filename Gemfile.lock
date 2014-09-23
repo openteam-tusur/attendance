@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openteam-tusur/auth_client
-  revision: 1bd78a65b37c96c1f92d6bd1aa6e5d6bfa2b506f
+  revision: 35f53bc906e9db60e6c7120a65d0e892f37a2871
   specs:
     auth_client (0.0.2)
       activesupport
@@ -305,7 +305,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    validates_email_format_of (1.5.3)
+    validates_email_format_of (1.6.1)
+      i18n
     virtus (1.0.1)
       axiom-types (~> 0.0.5)
       coercible (~> 1.0)

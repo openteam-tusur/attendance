@@ -70,7 +70,7 @@ SimpleNavigation::Configuration.run do |navigation|
           role_item.item :my_statistic, 'Моя статистика',                         student_path(current_user.students.first.secure_id)
         end
 
-        end if current_user.send("#{role}?")
+        end if current_user.send(:has_permission?, role: role)
       end
     else
       primary.item :main_page, I18n.t("page_title.main_page.index"), root_path

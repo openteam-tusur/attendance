@@ -1,0 +1,34 @@
+module AuthClient
+  class User
+    def gravatar_url(*args)
+      ''
+    end
+
+    def fullname
+      [surname, name, patronymic].compact.join(' ')
+    end
+
+    def method_missing(method, *args, &block)
+      case method
+      when :curated_groups
+        get_collection('Group', :curator)
+      when :leaded_groups
+        get_collection('Group', :group_leader)
+      when :lecturers
+        get_collection('Lecturer', :lecturer)
+      when :students
+        get_collection('Student', :student)
+      when :faculties
+        get_collection('Faculty', :dean)
+      when :subdepartments
+        get_collection('Subdepartment', :subdepartment)
+      else
+        super
+      end
+    end
+
+    def get_collection(klass, role)
+      klass.constantize.joins(:permissions).where(:permissions => { :role => role, :user_id => self.id })
+    end
+  end
+end

@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20140922074522) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_user_uid"
     t.integer  "old_user_id"
   end
 
