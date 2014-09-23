@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 group :default do
   gem 'attribute_normalizer'
-  gem 'auth_client'
+  gem 'auth_client', :git => 'https://github.com/openteam-tusur/auth_client'
+  gem 'cancan'
   gem 'coffee-rails',           '~> 4.0.0'
   gem 'compass-rails'
   gem 'enumerize'

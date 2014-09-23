@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/openteam-tusur/auth_client
+  revision: 1bd78a65b37c96c1f92d6bd1aa6e5d6bfa2b506f
+  specs:
+    auth_client (0.0.2)
+      activesupport
+      auth_redis_user_connector
+      configliere
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -32,10 +41,6 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     attribute_normalizer (1.2.0.b)
-    auth_client (0.0.2)
-      activesupport
-      auth_redis_user_connector
-      configliere
     auth_redis_user_connector (0.0.5)
       hiredis
       redis
@@ -45,6 +50,7 @@ GEM
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     builder (3.2.2)
+    cancan (1.6.10)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
@@ -314,7 +320,8 @@ PLATFORMS
 
 DEPENDENCIES
   attribute_normalizer
-  auth_client
+  auth_client!
+  cancan
   coffee-rails (~> 4.0.0)
   compass-rails
   enumerize

@@ -1,6 +1,10 @@
 class Permission < ActiveRecord::Base
   attr_accessor :name
 
+  include AuthClient::Permission
+
+  acts_as_auth_client_permission roles: %W(administrator education_department dean subdepartment curator group_leader lecturer student)
+
   after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
   after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
 
@@ -25,10 +29,6 @@ class Permission < ActiveRecord::Base
   validates_email_format_of :email, :check_mx => true, :allow_nil => true
 
   scope :for_context, ->(context) { where(:context_type => context)}
-
-  def self.available_roles
-    []
-  end
 
   def self.available_roles_for(role_name)
     case role_name
