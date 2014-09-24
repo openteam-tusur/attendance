@@ -1,0 +1,69 @@
+<%= content_for :page_title do %>
+  <h1>Статистика по старостам факультетов</h1>
+<% end %>
+
+<% @faculties.each do |faculty| %>
+  <% without_group_leaders = faculty.groups.select {|g| g.permissions.where(:role => :group_leader).empty?} %>
+  <% not_active_group_leaders = faculty.groups.joins(:permissions).where(:permissions => {:role => :group_leader, :user_id => nil}) %>
+  <% unfilled = GroupLeader.new(faculty).who_unfilled %>
+  <% next if without_group_leaders.empty? && not_active_group_leaders.empty? && unfilled.empty? %>
+
+  <h2><%= faculty.abbr %></h2>
+
+  <% if without_group_leaders.any? %>
+    <h3>Группы без старост</h3>
+    <div class="without_group_leaders table-responsive">
+      <table class='table table-condensed table-striped'>
+        <tbody>
+          <tr>
+            <td><%= without_group_leaders.map(&:number).join(', ') %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <% if not_active_group_leaders.any? %>
+    <h3>Группы где староста не активирован</h3>
+    <div class="not_active_group_leaders table-responsive">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <td>№ группы</td>
+            <td>Email старосты</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% not_active_group_leaders.each do |group| %>
+            <tr>
+              <td><%= group.number %></td>
+              <td><%= group.permissions.for_role(:group_leader).first.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <% if unfilled.any? %>
+    <h3>Старосты незаполнившие журнал</h3>
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <td>№ группы</td>
+            <td>ФИО старосты</td>
+            <td>Не заполнено дней (с начала семестра до предыдущей недели)</td>
+          </tr>
+        </thead>
+        <% unfilled.each do |(group_number, group_leader, count)| %>
+          <tr>
+            <td><%= group_number %></td>
+            <td><%= group_leader %> <%= mail_to group_leader.email %></td>
+            <td><%= count %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

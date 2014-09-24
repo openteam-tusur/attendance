@@ -73,6 +73,7 @@ Attendance::Application.routes.draw do
       end
     end
     resources   :faculties,         :only => [:index, :show] do
+      get 'statistics',             :on => :collection
       resources :courses,           :only => [:show] do
         resources :groups,          :only => [:show]
       end
