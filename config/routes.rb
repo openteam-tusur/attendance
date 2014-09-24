@@ -1,4 +1,3 @@
-require 'sidekiq/web'
 Attendance::Application.routes.draw do
   scope :module => :public do
     get '/search' => 'search#index'
@@ -8,7 +7,6 @@ Attendance::Application.routes.draw do
   end
 
   namespace :administrator do
-    mount Sidekiq::Web => '/sidekiq', :as => :sidekiq
     resources :permissions, :only => [:index, :new, :create, :destroy]
     resources :syncs,       :only => [:index]
     root 'syncs#index'
