@@ -25,11 +25,8 @@ group :default do
   gem 'rest-client'
   gem 'russian'
   gem 'sass-rails',             '~> 4.0.2'
-  gem 'sidekiq'
-  gem 'sidetiq'
   gem 'simple-navigation'
   gem 'simple_form',            '~> 3.1.0.rc2'
-  gem 'sinatra',                '>= 1.3.0', :require => nil
   gem 'sunspot_rails',          '~> 2.1.1'
   gem 'tusur_header'
   gem 'uglifier',               '>= 1.3.0'

@@ -12,7 +12,6 @@ SimpleNavigation::Configuration.run do |navigation|
             permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
           end
           role_item.item :sync,         I18n.t('page_title.syncs.index'),         administrator_syncs_path
-          role_item.item :sidekiq,     'Sidekiq',                                 administrator_sidekiq_path
         end
 
         if role == 'curator'

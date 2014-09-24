@@ -5,9 +5,6 @@ class Permission < ActiveRecord::Base
 
   acts_as_auth_client_permission roles: %W(administrator education_department dean subdepartment curator group_leader lecturer student)
 
-  after_save  :notify_about_add, :if => ->(p) { p.user_changed? && p.notifiable? }
-  after_destroy :notify_about_delete, :if => ->(p) { p.with_user? && p.notifiable? }
-
   normalize_attribute :email do |value|
     value.presence.present? ? value.downcase : nil
   end
@@ -45,29 +42,5 @@ class Permission < ActiveRecord::Base
 
   def to_s
     [user || email, role_text, context].join(', ')
-  end
-
-  def notifiable?
-    !['student'].include?(self.role)
-  end
-
-  def with_user?
-    self.user
-  end
-
-  def user_changed?
-    self.user_id_changed?
-  end
-
-  def notify_about_delete
-    redis = Redis.new(:url => Settings['messaging.url'])
-    index = redis.incr("profile:attendance:del_permission:index")
-    redis.set "profile:attendance:del_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
-  end
-
-  def notify_about_add
-    redis = Redis.new(:url => Settings['messaging.url'])
-    index = redis.incr("profile:attendance:add_permission:index")
-    redis.set "profile:attendance:add_permission:#{index}", { :uid => self.user.uid, :role => self.role }.to_json
   end
 end

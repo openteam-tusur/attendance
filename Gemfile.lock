@@ -125,7 +125,6 @@ GEM
     hirb (0.7.2)
     hiredis (0.4.5)
     i18n (0.6.11)
-    ice_cube (0.12.0)
     ice_nine (0.11.0)
     inherited_resources (1.5.0)
       has_scope (~> 0.6.0.rc)
@@ -181,8 +180,6 @@ GEM
       rack (>= 0.4)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    rack-protection (1.5.0)
-      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.6)
@@ -235,19 +232,11 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
-    sidetiq (0.6.1)
-      celluloid (>= 0.14.1)
-      ice_cube (~> 0.12.0)
-      sidekiq (>= 2.16.0)
     simple-navigation (3.13.0)
       activesupport (>= 2.3.2)
     simple_form (3.1.0.rc2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
-    sinatra (1.4.3)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -335,11 +324,8 @@ DEPENDENCIES
   rest-client
   russian
   sass-rails (~> 4.0.2)
-  sidekiq
-  sidetiq
   simple-navigation
   simple_form (~> 3.1.0.rc2)
-  sinatra (>= 1.3.0)
   sunspot_rails (~> 2.1.1)
   tusur_header
   uglifier (>= 1.3.0)
