@@ -8,6 +8,16 @@ module AuthClient
       [surname, name, patronymic].compact.join(' ')
     end
 
+    def faculty_groups
+      return if permissions.for_role(:dean).empty?
+      permissions.for_role(:dean).first.context.groups
+    end
+
+    def group
+      return if permissions.for_role(:group_leader).empty?
+      permissions.for_role(:group_leader).first.context
+    end
+
     def method_missing(method, *args, &block)
       case method
       when :curated_groups
