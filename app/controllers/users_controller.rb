@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class UsersController < ApplicationController
   authorize_resource
 
@@ -6,10 +8,10 @@ class UsersController < ApplicationController
   end
 
   def search
-    search = User.search do
-      with(:name).starting_with(params[:term])
-    end
+    url = Settings['auth_server.users_url'] + "?term=#{params[:term]}"
 
-    render :json => search.results
+    result = open(URI.encode(url)).read
+
+    render :json => result
   end
 end
