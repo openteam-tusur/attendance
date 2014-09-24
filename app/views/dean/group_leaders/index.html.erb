@@ -1,8 +1,44 @@
 <%= content_for :page_title do %>
-  <h1>Старосты незаполнившие журнал на факультете <%= current_user.faculties.first %></h1>
+  <h1>Старосты факультета <%= current_user.faculties.first %></h1>
+<% end %>
+
+<% if @without_group_leaders.any? %>
+  <h3>Группы без старост</h3>
+  <div class="without_group_leaders table-responsive">
+    <table class='table table-condensed table-striped'>
+      <tbody>
+        <tr>
+          <td><%= @without_group_leaders.map(&:number).join(', ') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<% if @inactive.any? %>
+  <h3>Группы где староста не активирован</h3>
+  <div class="not_active_group_leaders table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <td>№ группы</td>
+          <td>Email старосты</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @inactive.each do |group| %>
+          <tr>
+            <td><%= group.number %></td>
+            <td><%= group.permissions.for_role(:group_leader).first.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 
 <% if @group_leaders.any? %>
+  <h3>Старосты незаполнившие журнал</h3>
   <div class="table-responsive">
     <table class="table table-condensed table-striped">
       <thead>
