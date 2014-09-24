@@ -23,8 +23,10 @@ $ ->
 
     check_textarea()
 
-  $('body').on 'ajax:success', (evt, response, status, jqXHR) ->
+
+  $('').on 'ajax:success', (evt, response, status, jqXHR) ->
     target = $(evt.target)
+    console.log target
 
     if target.hasClass('form-declaration')
       $('.modal').modal('toggle')
