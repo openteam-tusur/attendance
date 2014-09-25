@@ -42,7 +42,7 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     attribute_normalizer (1.2.0.b)
-    auth_redis_user_connector (0.0.5)
+    auth_redis_user_connector (0.0.6)
       hiredis
       redis
     axiom-types (0.0.5)
