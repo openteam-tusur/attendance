@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-body">
         <%= simple_form_for [:lecturer, @realize, @lecturer_declaration],
-                  :html => { :class => 'form-horizontal form-declaration js-validation', :remote => true } do |f| %>
+                  :html => { :class => 'form-horizontal form-declaration js-validation' } do |f| %>
 
           <%= f.input :reason %>
           <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm disabled js-submit', :disabled => true %>
