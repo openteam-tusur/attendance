@@ -18,7 +18,7 @@ class Lecturer::LecturerDeclarationsController < AuthController
 
   def update
     update!{
-      render :partial => 'lecturer/disruptions/lesson', :locals => { :realize => @lecturer_declaration.realize } and return
+      redirect_to lecturer_disruptions_path and return
     }
   end
 
