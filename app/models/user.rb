@@ -1,23 +1,8 @@
-class User < ActiveRecord::Base
-  include Gravtastic
-  gravtastic
-  has_remote_profile
+class User
+  include AuthClient::User
 
-  has_many :curated_groups, -> { where('permissions.role = ?', :curator) },       :through => :permissions, :source => :context, :source_type => 'Group'
-  has_many :leaded_groups,  -> { where('permissions.role = ?', :group_leader) },  :through => :permissions, :source => :context, :source_type => 'Group'
-  has_many :lecturers,      -> { where('permissions.role = ?', :lecturer) },      :through => :permissions, :source => :context, :source_type => 'Person',:class_name => 'Lecturer'
-  has_many :students,       -> { where('permissions.role = ?', :student) },       :through => :permissions, :source => :context, :source_type => 'Person',:class_name => 'Student'
-  has_many :subdepartments, -> { where('permissions.role = ?', :subdepartment) }, :through => :permissions, :source => :context, :source_type => 'Subdepartment'
-  has_many :faculties,      -> { where('permissions.role = ?', :dean) },          :through => :permissions, :source => :context, :source_type => 'Faculty'
-
-  alias_attribute :to_s, :short_name
-
-  searchable do
-    string :name, :using => :ordered_name
-  end
-
-  def after_oauth_authentication
-    Permission.where(:email => self.email).each {|p| p.update_attribute(:user_id, self.id) }
+  def gravatar_url(*args)
+    ''
   end
 
   def faculty_groups
@@ -30,37 +15,38 @@ class User < ActiveRecord::Base
     permissions.for_role(:group_leader).first.context
   end
 
-  def ordered_name
-    res = self.name.split(/\s/)
-
-    [res.last, res.first].join(' ')
-  end
-
-  def info
-    "#{self.ordered_name}, #{self.email}"
-  end
-
-  def as_json(options)
-    super(:only => :id).merge(:label => info, :value => info)
-  end
-
-  def short_name
-    res = 'anonymous'
-
-    if name
-      fio = name.split(/\s+/)
-      case fio.count
-      when 1
-        res = fio[0]
-      when 2
-        res = "#{fio[1]} #{fio[0][0]}."
-      when 3
-        res = "#{fio[2]} #{fio[0][0]}. #{fio[1][0]}."
-      else
-        res = "#{fio[-1][0]} #{fio[0][0]}."
-      end if fio.any?
+  def method_missing(method, *args, &block)
+    case method
+    when :curated_groups
+      get_collection('Group', :curator)
+    when :leaded_groups
+      get_collection('Group', :group_leader)
+    when :lecturers
+      get_collection('Lecturer', :lecturer)
+    when :students
+      get_collection('Student', :student)
+    when :faculties
+      get_collection('Faculty', :dean)
+    when :subdepartments
+      get_collection('Subdepartment', :subdepartment)
+    else
+      super
     end
+  end
 
-    res
+  def get_collection(klass, role)
+    klass.constantize.joins(:permissions).where(:permissions => { :role => role, :user_id => self.id })
+  end
+
+  def activity_notify
+    RedisUserConnector.set self.id, 'attendance_last_activity', Time.zone.now.to_i
+  end
+
+  def info_notify
+    RedisUserConnector.set self.id, 'attendance_info', self.permissions_info.to_json
+  end
+
+  def permissions_info
+    self.permissions.map {|p| {:role => p.role, :info => p.context.try(:to_s)}}
   end
 end
