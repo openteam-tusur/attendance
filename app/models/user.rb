@@ -1,10 +1,6 @@
 class User
   include AuthClient::User
 
-  def gravatar_url(*args)
-    ''
-  end
-
   def app_name
     'attendance'
   end
