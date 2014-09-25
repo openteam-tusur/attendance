@@ -1,7 +1,4 @@
 $ ->
-  btn   = $('.js-modal')
-  modal = $('.modal')
-
   # Валидация для textarea
   handle_validation = ->
     textarea = $('.js-validation textarea')
@@ -23,20 +20,16 @@ $ ->
 
     check_textarea()
 
+  # Удаление объяснительной
   $('.ajaxed').on 'ajax:success', (evt, response, status, jqXHR) ->
     target = $(evt.target)
-
-    if target.hasClass('form-declaration')
-      $('.modal').modal('toggle')
-
-      $('.lesson').html(response)
 
     if target.hasClass('js-delete')
       $('.lesson').html(response)
 
-    init_popover()
+      init_popover()
 
-
+  # Показываем модальное окно при добавлении и редактировании объяснительной
   $('.ajaxed').on 'click', '.js-modal', ->
     url = $(this).attr("href")
 
