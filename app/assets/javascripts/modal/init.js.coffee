@@ -23,10 +23,8 @@ $ ->
 
     check_textarea()
 
-
-  $('').on 'ajax:success', (evt, response, status, jqXHR) ->
+  $('.ajaxed').on 'ajax:success', (evt, response, status, jqXHR) ->
     target = $(evt.target)
-    console.log target
 
     if target.hasClass('form-declaration')
       $('.modal').modal('toggle')
@@ -39,7 +37,7 @@ $ ->
     init_popover()
 
 
-  $('body').on 'click', '.js-modal', ->
+  $('.ajaxed').on 'click', '.js-modal', ->
     url = $(this).attr("href")
 
     $.get(url, (data) ->
