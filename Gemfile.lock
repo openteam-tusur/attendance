@@ -6,6 +6,7 @@ GIT
       activesupport
       auth_redis_user_connector
       configliere
+      daemons
       rails
 
 GEM
@@ -97,6 +98,7 @@ GEM
       highline (>= 1.5.2)
       multi_json (>= 1.1)
     connection_pool (2.0.0)
+    daemons (1.1.9)
     descendants_tracker (0.0.3)
     enumerize (0.8.0)
       activesupport (>= 3.2)
