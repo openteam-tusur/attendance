@@ -264,7 +264,7 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timers (1.1.0)
-    tusur_header (0.1.9)
+    tusur_header (0.2.0)
       bootstrap-sass (~> 3.1.1)
       coffee-rails
       compass-rails
@@ -327,7 +327,7 @@ DEPENDENCIES
   simple-navigation
   simple_form (~> 3.1.0.rc2)
   sunspot_rails (~> 2.1.1)
-  tusur_header
+  tusur_header (~> 0.2.0)
   uglifier (>= 1.3.0)
   unicorn
   validates_email_format_of

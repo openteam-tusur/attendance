@@ -29,23 +29,30 @@ h4
 textarea.form-control
   height: 120px
 
-
 .current_user
   &.truncated
     max-width: 200px
 
-#wrapper
+.wrapper
   min-height: 100%
   height: auto
-  margin: 0 auto -75px
-  padding: 0 0 35px
+  margin: -0.1px auto -35px
+  padding: 0.1px 0 35px 0
 
-#footer
-  background: #f2f2f2
-  bottom: 0
+.footer
   height: 35px
+  bottom: 0
   position: relative
   width: 100%
+
+  .contacts
+    background: #f2f2f2
+    font-size: 13px
+    line-height: 22px
+    padding: 10px 0 0 0
+
+    .glyphicon
+      color: #005bae
 
   .copyright
     background: #005bae
@@ -53,8 +60,11 @@ textarea.form-control
     font-size: 13px
     height: 35px
     line-height: 35px
+    text-align: right
 
-  .feedback, .openteam
+    .openteam
+      float: right
+
     a
       color: #fff
       text-decoration: underline
@@ -62,11 +72,6 @@ textarea.form-control
       &:hover
         text-decoration: none
 
-  .feedback
-    float: left
-
-  .openteam
-    float: right
 
 #search_form
   margin: 0
