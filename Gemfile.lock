@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/openteam-tusur/auth_client
-  revision: 35f53bc906e9db60e6c7120a65d0e892f37a2871
+  revision: 7e6f8aaff8023fa77d2e106ffdc31c98d787310c
   specs:
     auth_client (0.0.2)
       activesupport
       auth_redis_user_connector
       configliere
+      rails
 
 GEM
   remote: https://rubygems.org/
@@ -204,7 +205,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
-    redis (3.0.7)
+    redis (3.1.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     redis-session-store (0.8.0)
