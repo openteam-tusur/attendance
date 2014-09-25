@@ -12,13 +12,13 @@ class Subdepartment::SubdepartmentDeclarationsController < AuthController
 
   def create
     create!{
-      render :partial => 'subdepartment/disruptions/lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+      redirect_to subdepartment_disruptions_path and return
     }
   end
 
   def update
     update!{
-      render :partial => 'subdepartment/disruptions/lesson', :locals => { :realize => @subdepartment_declaration.realize } and return
+      redirect_to subdepartment_disruptions_path and return
     }
   end
 
