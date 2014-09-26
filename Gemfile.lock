@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openteam-tusur/auth_client
-  revision: f8fb50c0153fc45c9147ca856854e59ba3e13c40
+  revision: 3e74cd1bc590ca8a76032f1d741e90beee4b1182
   specs:
     auth_client (0.0.2)
       activesupport
