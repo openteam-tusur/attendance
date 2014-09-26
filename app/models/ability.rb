@@ -35,6 +35,7 @@ class Ability
       can :read,   Disruption
       can :manage, Miss,       :missing_type => ['Lecturer']
       can [:accept, :refuse, :change], Realize
+      can :read,   Student
     end
 
     if roles.include?('group_leader') && namespace == :group_leader

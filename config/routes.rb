@@ -69,13 +69,18 @@ Attendance::Application.routes.draw do
     #statistic
     resources   :courses,           :only => [:show] do
       resources :faculties,         :only => [:show] do
-        resources :groups,          :only => [:show]
+        resources :groups,          :only => [:show] do
+          resources :students, :only => [:show]
+        end
       end
     end
+
     resources   :faculties,         :only => [:index, :show] do
       get 'statistics',             :on => :collection
       resources :courses,           :only => [:show] do
-        resources :groups,          :only => [:show]
+        resources :groups,          :only => [:show] do
+          resources :students, :only => [:show]
+        end
       end
     end
 
