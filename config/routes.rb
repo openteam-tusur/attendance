@@ -76,13 +76,14 @@ Attendance::Application.routes.draw do
     end
 
     resources   :faculties,         :only => [:index, :show] do
-      get 'statistics',             :on => :collection
       resources :courses,           :only => [:show] do
         resources :groups,          :only => [:show] do
           resources :students, :only => [:show]
         end
       end
     end
+
+    get 'group_leaders' => 'group_leaders#index'
 
     root 'faculties#index'
   end

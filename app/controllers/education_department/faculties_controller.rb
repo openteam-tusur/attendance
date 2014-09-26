@@ -33,7 +33,4 @@ class EducationDepartment::FacultiesController < AuthController
       @charts['attendance_by_courses.bar']         = faculty_statistic.attendance_by('courses', **filter_params)
     end
   end
-
-  def statistics
-  end
 end
