@@ -5,6 +5,8 @@
     <thead>
       <tr>
         <td>Преподаватель / Дисциплина</td>
+        <td>Група</td>
+        <td>Тип</td>
         <td>Дата</td>
         <td>Объяснительная зав.кафедры</td>
         <td>Объяснительная преподавателя</td>
@@ -14,15 +16,15 @@
     <tbody>
       <% group.results.group_by(&:lecturer).each do |lecturer, realizes| %>
         <tr class="teacher">
-          <td colspan="3"><%= lecturer.to_s %></td>
+          <td colspan="3"><%= "#{lecturer.to_s} (#{lecturer.subdepartments.first.abbr})" %></td>
         </tr>
         <% realizes.each do |realize| %>
           <tr class="lesson">
-            <td class="discipline truncated">
+            <td class="discipline">
               <%= realize.lesson.discipline.title %>
-              <%= " (#{realize.lesson.kind_abbr})," %>
-              <%= "гр. #{realize.lesson.group}" %>
             </td>
+            <td><%= realize.lesson.group %></td>
+            <td><%= realize.lesson.kind_abbr %></td>
             <td class="date"><%= I18n.l(realize.lesson.date_on) %></td>
 
             <% if realize.subdepartment_declaration %>
