@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/openteam-tusur/auth_client
-  revision: 3e530d2122767062b59ca7dec2f54b5b7ee56a5a
+  remote: git://github.com/openteam-tusur/auth_client.git
+  revision: f0301ced0e18688a415002a9ae03507ca59ac6e2
   specs:
     auth_client (0.0.2)
       activesupport
@@ -8,6 +8,14 @@ GIT
       configliere
       daemons
       rails
+
+GIT
+  remote: git://github.com/openteam-tusur/auth_redis_user_connector.git
+  revision: 57ffe41b69a43afce38918eb2c2745e1a8ed47ec
+  specs:
+    auth_redis_user_connector (0.0.7)
+      hiredis
+      redis
 
 GEM
   remote: https://rubygems.org/
@@ -43,9 +51,6 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     attribute_normalizer (1.2.0.b)
-    auth_redis_user_connector (0.0.7)
-      hiredis
-      redis
     axiom-types (0.0.5)
       descendants_tracker (~> 0.0.1)
       ice_nine (~> 0.9)
@@ -303,6 +308,7 @@ PLATFORMS
 DEPENDENCIES
   attribute_normalizer
   auth_client!
+  auth_redis_user_connector!
   cancan
   capistrano-auth-subscriber
   coffee-rails (~> 4.0.0)
