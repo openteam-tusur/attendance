@@ -37,4 +37,14 @@ class User
   def get_collection(klass, role)
     klass.constantize.joins(:permissions).where(:permissions => { :role => role, :user_id => self.id })
   end
+
+  def associate_pending_permissions
+    Permission.where(:email => email).where("user_id IS NULL OR user_id = ''").update_all :user_id => id
+  end
+
+  def after_signed_in
+    super
+
+    associate_pending_permissions
+  end
 end
