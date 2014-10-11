@@ -1,4 +1,7 @@
 ru:
+  app:
+    title: Журнал успеваемости
+
   activemodel:
     errors:
       messages:
