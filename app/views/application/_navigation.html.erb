@@ -12,8 +12,8 @@
     <% if current_user %>
       <% begin %>
         <li class='notification_icon'>
-          <%= link_to "#{Settings['profile.url']}notifications", :class => 'notifications', :title => 'Уведомления' do %>
-            <span class='counter'><%= current_user.get_notifications > 0 ? "+#{current_user.get_notifications}" : '' %></span>
+          <%= link_to "#{Settings['profile.url']}/notifications", :class => 'notifications', :title => 'Уведомления' do %>
+            <span class='counter'><%= (current_user.respond_to?(:unreaded_notifications) && current_user.unreaded_notifications.to_i > 0) ? "+#{current_user.unreaded_notifications}" : '' %></span>
             <%= image_tag image_url('mail.png'), :width => 16, :height => 16 %>
           <% end %>
         </li>
@@ -26,19 +26,7 @@
             <b class='caret'></b>
           </span>
         </div>
-        <% begin %>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Выход", sign_out_url, :method => :delete %></li>
-            <% current_user.get_menu.each do |title, link| %>
-              <% if link.present? %>
-                <li><%= link_to title, link %></li>
-              <% else %>
-                <li class='divider'></li>
-              <% end %>
-            <% end %>
-          </ul>
-        <% rescue %>
-        <% end %>
+        <%= current_user.menu_list %>
       </li>
     <% else %>
       <li class='sign_in'>

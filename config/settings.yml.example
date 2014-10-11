@@ -3,6 +3,7 @@ app:
   secret:    SECRET
   from:      mail@mail.ma
   host:      hostname
+  url:       url
 
 devise:
   secret:    SECRET
