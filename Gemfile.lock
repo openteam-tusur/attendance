@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openteam-tusur/auth_client
-  revision: cd42a153830d0fe7b165583cb51e47eb4197eee9
+  revision: 338bb7b3cf6a695545bd1ee977fc1027e73969b0
   specs:
     auth_client (0.0.3)
       activesupport
@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/openteam-tusur/tusur_header
-  revision: 53eda91c32056ff5a4dcbbc34a1be41a4350a387
+  revision: d8a5aa1354e364e1de142430095b72c751e3670a
   branch: user_menu
   specs:
     tusur_header (0.2.1)
