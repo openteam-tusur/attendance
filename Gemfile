@@ -29,7 +29,7 @@ group :default do
   gem 'simple-navigation'
   gem 'simple_form',            '~> 3.1.0.rc2'
   gem 'sunspot_rails',          '~> 2.1.1'
-  gem 'tusur_header',               :git => 'https://github.com/openteam-tusur/tusur_header', :branch => 'user_menu'
+  gem 'tusur_header',           :git => 'https://github.com/openteam-tusur/tusur_header', :branch => 'user_menu'
   gem 'uglifier',               '>= 1.3.0'
   gem 'validates_email_format_of'
 end
