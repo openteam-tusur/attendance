@@ -126,10 +126,6 @@ Attendance::Application.routes.draw do
     root 'disruptions#index'
   end
 
-  namespace :student do
-    root 'students#show'
-  end
-
   resources :users, :only => [] do
     get 'search', :on => :collection
   end

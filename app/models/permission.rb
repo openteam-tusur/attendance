@@ -3,7 +3,7 @@ class Permission < ActiveRecord::Base
 
   include AuthClient::Permission
 
-  acts_as_auth_client_permission roles: %W(administrator education_department dean subdepartment curator group_leader lecturer student)
+  acts_as_auth_client_permission roles: %W(administrator education_department dean subdepartment curator group_leader lecturer)
 
   normalize_attribute :email do |value|
     value.presence.present? ? value.downcase : nil

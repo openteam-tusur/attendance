@@ -1,11 +1,12 @@
 class Public::MainPageController < ApplicationController
   def index
-    if user_signed_in? && available_user_namespaces.any?
-      permission = PriorityPermission.new(current_user).fetch
-      if permission.role == 'student'
-        redirect_to student_path(permission.context.secure_id)
-      else
-        redirect_to [permission.role.to_sym, :root]
+    if user_signed_in?
+      if available_user_namespaces.any?
+        permission = PriorityPermission.new(current_user).fetch
+        redirect_to [permission.role.to_sym, :root] and return
+      end
+      if current_user.student
+        redirect_to student_path(current_user.student.secure_id) and return
       end
     end
   end

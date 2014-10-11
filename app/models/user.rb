@@ -43,6 +43,22 @@ class User
     Permission.where(:email => email).where("user_id IS NULL OR user_id = ''").update_all :user_id => id
   end
 
+  def student
+    @student ||= Student.actual.find_by(:contingent_id => try(:contingent_id))
+  end
+
+  def info_hash
+    hash = {}
+
+    hash.merge!(:my_url => { :title => 'Мой журнал посещаемости', :link => "#{Settings['app.url']}/lecturer" }) if has_permission?(role: :lecturer)
+
+    if try(:contingent_id) && try(:group_number) && student
+      hash.merge!(:my_url => { :title => 'Мой журнал посещаемости', :link => "#{Settings['app.url']}/students/#{student.secure_id}" })
+    end
+
+    super.merge(hash)
+  end
+
   def after_signed_in
     super
 
