@@ -21,17 +21,18 @@ class API < Grape::API
 
     lesson_ids = discipline.lesson_ids
 
+
     presences = student.
       presences.
       between_dates(student.semester_begin, student.semester_end).
-      where('lessons.id' => lesson_ids, 'lessons.group_id' => group.id)
+      where('lessons.id' => lesson_ids, 'lessons.group_id' => group.id).where.not(:state => nil)
 
     misses = student.
       misses.
       between_dates(student.semester_begin, student.semester_end)
 
     presences.each do |p|
-      p.state = 'valid_excuse' if p.state == 'wasnt' && misses.where('misses.starts_at <= ? AND misses.ends_at >= ?', LessonTime.new(p.lesson.order_number, p.lesson.date_on).lesson_time).any?
+      p.state = 'valid_excuse' if p.state == 'wasnt' && misses.where('misses.starts_at <= :time AND misses.ends_at >= :time', :time => LessonTime.new(p.lesson.order_number, p.lesson.date_on).lesson_time).any?
     end
 
     presences
