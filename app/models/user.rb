@@ -44,11 +44,12 @@ class User
   end
 
   def associate_lecturer
-    return unless try(:directory_id)
-
-    lecturer = Lecturer.find_by(:directory_id => directory_id)
-
-    permissions.find_or_create_by(:role => :lecturer, :context_type => 'Person', :context_id => lecturer.id, :user_id => id)
+    if try(:directory_id)
+      lecturer = Lecturer.find_by(:directory_id => directory_id)
+      permissions.find_or_create_by(:role => :lecturer, :context_type => 'Person', :context_id => lecturer.id, :user_id => id)
+    else
+      permissions.where(:role => :lecturer, :user_id => id).destroy_all
+    end
   end
 
   def student
