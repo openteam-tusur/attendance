@@ -43,6 +43,14 @@ class User
     Permission.where(:email => email).where("user_id IS NULL OR user_id = ''").update_all :user_id => id
   end
 
+  def associate_lecturer
+    return unless try(:directory_id)
+
+    lecturer = Lecturer.find_by(:directory_id => directory_id)
+
+    permissions.find_or_create_by(:role => :lecturer, :context_type => 'Person', :context_id => lecturer.id, :user_id => id)
+  end
+
   def student
     @student ||= Student.actual.find_by(:contingent_id => try(:contingent_id))
   end
@@ -60,8 +68,8 @@ class User
   end
 
   def after_signed_in
-    super
-
     associate_pending_permissions
+    associate_lecturer
+    super
   end
 end
