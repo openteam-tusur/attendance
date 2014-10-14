@@ -23,6 +23,12 @@
       </div>
     </div>
 
+    <% if flash['alert'] || flash['notice'] %>
+      <div class='alert flash_message <%= flash['alert'] ? 'alert-danger' : 'alert-success' %>'>
+        <%= flash['alert'] || flash['notice'] %>
+      </div>
+    <% end %>
+
     <%= render :partial => 'footer' %>
     <%= render :partial => 'metrika' %>
 
