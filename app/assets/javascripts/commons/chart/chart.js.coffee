@@ -51,13 +51,28 @@ class Chart
 
   render: ->
     $ =>
-      $(@id).highcharts $.extend(true, {}, defaultOptions, @options)
+      wrapper = $(@id)
+      @add_csv_link(wrapper)
+      wrapper.highcharts $.extend(true, {}, defaultOptions, @options)
+
+  add_csv_link: (wrapper) ->
+    csvContent = ""
+    for index, arr of @csv_data
+      csvContent += arr.join('; ')+'\n'
+
+    blob = new Blob([csvContent], {
+      'type': 'text/csv;charset=cp1251;'
+    })
+
+    wrapper.prev('script').prev('a.csv_link').attr('href',  window.URL.createObjectURL(blob))
 
 class @LineChart extends Chart
   constructor: (id, data) ->
+    @csv_data = []
     formatted_data = []
 
     for k,v of data
+      @csv_data.push [k, v]
       formatted_data.push [Date.parse(k), v]
 
     @options =
@@ -77,9 +92,11 @@ class @LineChart extends Chart
 
 class @BarChart extends Chart
   constructor: (id, data) ->
+    @csv_data = []
     formatted_data = []
 
     for k,v of data
+      @csv_data.push [v[0], v[1].value]
       formatted_data.push { name: v[0], url: v[1].url, y: v[1].value }
 
     @options =

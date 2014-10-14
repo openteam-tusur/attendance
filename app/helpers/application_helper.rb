@@ -70,12 +70,15 @@ module ApplicationHelper
 
   def render_chart(kind, data)
     chart_id = "chart-#{incr_counter}"
-    javascript_tag do
+    res = ''
+    res += link_to('Показать в формате csv', '#', :class => 'csv_link') if current_namespace =~ /education_department/
+    res += javascript_tag do
       res = ''
       res += "new #{kind.capitalize}Chart('#{chart_id}', #{data.to_json});"
       res.html_safe
-    end +
-    content_tag(:div, '', :class => 'chart_wrapper', :id => chart_id)
+    end
+    res += content_tag(:div, '', :class => 'chart_wrapper', :id => chart_id)
+    res.html_safe
   end
 
   def line_chart(data)
