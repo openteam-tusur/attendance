@@ -9,7 +9,7 @@ class Miss < ActiveRecord::Base
 
   scope :for_missing,  ->(type) { where(:missing_type => type) }
   scope :by_date,      ->(date) { where('starts_at <= :date and ends_at >= :date', :date => date) }
-  scope :between_dates, ->(starts_at, ends_at) { where('starts_at >= :starts_at and starts_at <= :ends_at', :starts_at => starts_at, :ends_at => ends_at) }
+  scope :between_dates, ->(starts_at, ends_at) { where('starts_at >= :starts_at and starts_at <= :ends_at or ends_at >= :starts_at and ends_at <= :ends_at', :starts_at => starts_at, :ends_at => ends_at) }
   scope :ordered,      ->(_)    { order('created_at') }
 
   def absent_period
