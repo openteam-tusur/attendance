@@ -60,7 +60,7 @@ class Chart
     for index, arr of @csv_data
       csvContent += arr.join('; ')+'\n'
 
-    blob = new Blob(['\ufeff', csvContent])
+    blob = new Blob(['\ufeff', csvContent], { type: 'text/csv;charset=utf-8;' })
     href = window.URL.createObjectURL(blob)
     download = href.split('/')[href.split('/').length - 1]
 
