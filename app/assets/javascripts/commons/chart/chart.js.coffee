@@ -60,11 +60,11 @@ class Chart
     for index, arr of @csv_data
       csvContent += arr.join('; ')+'\n'
 
-    blob = new Blob([csvContent], {
-      'type': 'text/csv;charset=cp1251;'
-    })
+    blob = new Blob(['\ufeff', csvContent])
+    href = window.URL.createObjectURL(blob)
+    download = href.split('/')[href.split('/').length - 1]
 
-    wrapper.prev('script').prev('a.csv_link').attr('href',  window.URL.createObjectURL(blob))
+    wrapper.prev('script').prev('a.csv_link').attr('href', href).attr('download', "#{download}.csv")
 
 class @LineChart extends Chart
   constructor: (id, data) ->
