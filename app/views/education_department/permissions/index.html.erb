@@ -2,7 +2,7 @@
   <ul class='nav'>
     <% Permission.available_roles_for(:education_department).each do |role| %>
       <li <%= 'class=active' if params[:for_role] == role.to_s %>>
-        <%= link_to I18n.t("role_names.#{role}"), education_department_permissions_path(:for_role => role) %>
+        <%= link_to I18n.t("role_names.#{role}", :title => '').strip, education_department_permissions_path(:for_role => role) %>
       </li>
     <% end %>
   </ul>

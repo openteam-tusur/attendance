@@ -4,7 +4,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |primary|
     if user_signed_in?
       Permission.available_roles.each do |role|
-        primary.item role.to_sym, I18n.t("role_names.#{role}"), [role.to_sym, :root] do |role_item|
+        primary.item role.to_sym, I18n.t("role_names.#{role}", :title => current_user.title_for_role(role)), [role.to_sym, :root] do |role_item|
         primary.dom_class = 'dropdown-menus'
 
         if role == 'administrator'

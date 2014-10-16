@@ -150,11 +150,11 @@ ru:
   role_names:
     administrator:         Администратор
     curator:               Куратор группы
-    dean:                  Деканат
+    dean:                  'Деканат %{title}'
     education_department:  Учебное управление
     group_leader:          Староста группы
     lecturer:              Преподаватель
-    subdepartment:         Кафедра
+    subdepartment:         'Кафедра %{title}'
     student:               Студент
 
   lesson:

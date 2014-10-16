@@ -73,4 +73,15 @@ class User
     associate_lecturer
     super
   end
+
+  def title_for_role(role)
+    case role
+    when 'dean'
+      faculties.first.abbr
+    when 'subdepartment'
+      subdepartments.first.abbr
+    else
+      ''
+    end
+  end
 end
