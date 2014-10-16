@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/openteam-tusur/tusur_header
-  revision: d8a5aa1354e364e1de142430095b72c751e3670a
+  revision: 6e1ef5af5d10bb9ed736740e02957772314627ea
   branch: user_menu
   specs:
     tusur_header (0.2.1)
