@@ -20,7 +20,6 @@ class Realize < ActiveRecord::Base
     string :state
     string :approved
     string(:lecturer) { self.lecturer.to_s }
-    string(:faculty) { self.lecturer.actual_subdepartment.faculty.abbr }
     string(:subdepartment_id) { self.lecturer.actual_subdepartment.id }
     time(:lesson_date) { self.lesson.date_on }
   end

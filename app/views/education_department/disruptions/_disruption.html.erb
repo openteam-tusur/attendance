@@ -1,5 +1,3 @@
-<h4><%= group.value %></h4>
-
 <div class="table-responsive">
   <table class="table table-condensed table-disruptions education-department">
     <thead>
@@ -14,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <% group.results.group_by(&:lecturer).each do |lecturer, realizes| %>
+      <% realizes.group_by(&:lecturer).each do |lecturer, realizes| %>
         <tr class="teacher">
           <td colspan="3"><%= "#{lecturer.to_s} (#{lecturer.subdepartments.first.abbr})" %></td>
         </tr>

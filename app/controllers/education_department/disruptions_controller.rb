@@ -12,7 +12,7 @@ class EducationDepartment::DisruptionsController < AuthController
 
     @faculties = Faculty.all
 
-    @disruptions = Realize.search do |s|
+    search = Realize.search do |s|
       s.with(:lecturer).starting_with(@name) if @name.present?
       s.with(:lesson_date).between(filter_params[:from]..filter_params[:to])
       s.with :faculty, @faculty if @faculty.present?
@@ -20,12 +20,9 @@ class EducationDepartment::DisruptionsController < AuthController
       s.with :state, :wasnt
 
       s.order_by(:lesson_date, :desc)
-      s.group :faculty do
-        limit 10000
-      end
+    end
 
-      s.paginate :page => params[:page]
-    end.group(:faculty).groups
+    @disruptions = search.results.group_by {|d| d.lecturer.actual_subdepartment.faculty}.sort_by{|k,_| k.id}
   end
 
   private
