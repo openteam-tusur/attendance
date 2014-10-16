@@ -25,7 +25,7 @@ class Group < ActiveRecord::Base
     permission ? permission.user : 'нет старосты'
   end
 
-  def absent_days
-    lessons.actual.realized.unfilled.by_semester.map(&:date_on).uniq.count
+  def absent_days(from = nil, to = nil)
+    lessons.actual.realized.unfilled.by_semester.between_dates(from, to).map(&:date_on).uniq.count
   end
 end

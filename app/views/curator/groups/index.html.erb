@@ -1,4 +1,8 @@
 <% if @groups.any? %>
+  <div class="filters">
+    <%= date_filters %>
+  </div>
+
   <div class="table-responsive">
     <table class="table table-condensed table-striped">
       <thead>
@@ -16,7 +20,7 @@
               <%= group.group_leader %>
               <%= mail_to group.group_leader.try(:email) %>
             </td>
-            <td><%= group.absent_days %></td>
+            <td><%= group.absent_days(@filter[:from], @filter[:to]) %></td>
           </tr>
         <% end %>
       </tbody>

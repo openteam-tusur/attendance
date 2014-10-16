@@ -2,6 +2,10 @@
   <h1>Старосты факультета <%= current_user.faculties.first %></h1>
 <% end %>
 
+<div class="filters">
+  <%= date_filters %>
+</div>
+
 <% if @without_group_leaders.any? %>
   <h3>Группы без старост</h3>
   <div class="without_group_leaders table-responsive">
@@ -56,7 +60,6 @@
         </tr>
       <% end %>
     </table>
-    <%= paginate @group_leaders %>
   </div>
 <% else %>
   <%= I18n.t("empty.#{controller_name}") %>
