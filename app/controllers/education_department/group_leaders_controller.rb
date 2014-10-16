@@ -6,6 +6,7 @@ class EducationDepartment::GroupLeadersController < AuthController
 
   def index
     @faculties = Faculty.actual
+    authorize! :read, GroupLeader
   end
 
   private
