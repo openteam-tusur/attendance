@@ -15,7 +15,10 @@
       <tbody>
         <% @students.each do |student| %>
           <tr>
-            <td><%= student %></td>
+            <td>
+              <% group = student.groups.first %>
+              <%= link_to student, dean_subdepartment_course_group_student_path(group.subdepartment.abbr, group.course, group.number, student.to_s) %>
+            </td>
             <td><%= student.actual_group %></td>
             <td><%= student.total_attendance(@params[:from], @params[:to]) %></td>
           </tr>
