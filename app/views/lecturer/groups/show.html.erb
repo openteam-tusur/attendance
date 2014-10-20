@@ -3,6 +3,8 @@
     <%= link_to_back %>
     Статистика посещаемости группы <%= @group %> <%= @discipline ? "дисциплины #{@discipline}" : '' %>
   </h1>
+
+  <%= render 'commons/group_leader' %>
 <% end %>
 
 <%= charts %>

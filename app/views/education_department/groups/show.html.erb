@@ -1,7 +1,10 @@
 <%= content_for :page_title do %>
   <h1 class="text-center">
     <%= link_to_back %>
-    <%= I18n.t('page_title.groups.show', :title => @group.number) %> <%= @group.faculty.abbr %> <%= @group.course %> курс</h1>
+    <%= I18n.t('page_title.groups.show', :title => @group.number) %> <%= @group.faculty.abbr %> <%= @group.course %> курс
+  </h1>
+
+  <%= render 'commons/group_leader' %>
 <% end %>
 
 <%= charts %>

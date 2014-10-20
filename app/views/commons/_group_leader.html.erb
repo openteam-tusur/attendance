@@ -1,0 +1,5 @@
+<div class="group-leader">
+  <strong>Староста группы:</strong>
+  <%= @group.group_leader %>
+  <%= mail_to @group.group_leader.try :email %>
+</div>
