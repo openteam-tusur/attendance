@@ -8,6 +8,7 @@ SimpleNavigation::Configuration.run do |navigation|
         primary.dom_class = 'dropdown-menus'
 
         if role == 'administrator'
+          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    administrator_miss_kinds_path
           role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path(:for_role => (current_namespace == :administrator && params[:for_role]) || :administrator) do |permission|
             permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
           end

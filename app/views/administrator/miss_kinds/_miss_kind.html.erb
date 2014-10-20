@@ -1,0 +1,7 @@
+<li class='list-item list-bordered'>
+  <span><%= miss_kind.kind %></span>
+  <span class="actions pull-right">
+    <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_administrator_miss_kind_path(miss_kind) %>
+    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, administrator_miss_kind_path(miss_kind), :method => :delete, :data => { :confirm => t('confirm.delete') } %>
+  </span>
+</li>

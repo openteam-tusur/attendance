@@ -33,6 +33,6 @@ class Dean::MissesController < AuthController
   end
 
   def miss_params
-    params.require(:miss).permit(:missing_id, :starts_at, :ends_at, :note)
+    params.require(:miss).permit(:missing_id, :starts_at, :ends_at, :note, :miss_kind_id)
   end
 end

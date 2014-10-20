@@ -16,6 +16,8 @@
               :input_html => { :value => l(Time.zone.now.end_of_day, :format => '%d.%m.%Y %H:%M') },
               :wrapper_html => { :class => 'end-miss' }, :wrapper => :horizontal_datetime_picker %>
 
+            <%= f.association :miss_kind, :include_blank => '--- не выбрано ---' %>
+
   <%= f.input :note %>
   <%= content_tag :div, f.error(:dates_in_wrong_order), :class => :error %>
 

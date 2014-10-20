@@ -2,10 +2,13 @@ class Miss < ActiveRecord::Base
   attr_accessor :name
 
   belongs_to :missing, :polymorphic => true
+  belongs_to :miss_kind
 
-  validates_presence_of :starts_at, :ends_at, :note
+  validates_presence_of :starts_at, :ends_at, :miss_kind_id
   validates_presence_of :missing_id, :message => 'ФИО не может быть пустым'
   validate :dates_order, :unless => 'starts_at.nil?' && 'ends_at.nil?'
+
+  normalize_attribute :note
 
   scope :for_missing,  ->(type) { where(:missing_type => type) }
   scope :by_date,      ->(date) { where('starts_at <= :date and ends_at >= :date', :date => date) }

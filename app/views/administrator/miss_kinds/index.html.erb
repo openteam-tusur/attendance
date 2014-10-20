@@ -1,0 +1,9 @@
+<%= link_to 'Добавить причину', new_administrator_miss_kind_path, :class => 'btn btn-primary btn-sm' %>
+
+<ul class="list">
+  <% if @miss_kinds.any? %>
+    <%= render @miss_kinds %>
+  <% else %>
+    <li class="list-item empty"><%= I18n.t("empty.#{controller_name}") %></li>
+  <% end %>
+</ul>

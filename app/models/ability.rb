@@ -12,6 +12,7 @@ class Ability
 
     if roles.include?('administrator') && namespace == :administrator
       can :manage,  Permission
+      can :manage,  MissKind
       can :read,    Sync
       can :read,    :sidekiq
     end

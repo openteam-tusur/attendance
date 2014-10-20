@@ -7,6 +7,7 @@ Attendance::Application.routes.draw do
   end
 
   namespace :administrator do
+    resources :miss_kinds, :except => :show
     resources :permissions, :only => [:index, :new, :create, :destroy]
     resources :syncs,       :only => [:index]
     root 'syncs#index'

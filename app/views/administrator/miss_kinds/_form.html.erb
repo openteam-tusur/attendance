@@ -1,0 +1,9 @@
+<%= simple_form_for [:administrator, @miss_kind],
+                    :html => { :class => 'form-horizontal form-permission' },
+                    :wrapper => :horizontal_form do |f| %>
+
+  <%= f.input :kind %>
+
+  <%= f.submit 'Сохранить', :class => 'btn btn-primary btn-sm' %>
+  <%= link_to 'Отмена', administrator_miss_kinds_path, :class => 'btn btn-default btn-sm' %>
+<% end %>

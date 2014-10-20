@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922074522) do
+ActiveRecord::Schema.define(version: 20141020094542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,12 @@ ActiveRecord::Schema.define(version: 20140922074522) do
   add_index "memberships", ["participate_id", "participate_type"], name: "index_memberships_on_participate_id_and_participate_type", using: :btree
   add_index "memberships", ["person_id", "person_type"], name: "index_memberships_on_person_id_and_person_type", using: :btree
 
+  create_table "miss_kinds", force: true do |t|
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "misses", force: true do |t|
     t.integer  "missing_id"
     t.string   "missing_type"
@@ -93,6 +99,7 @@ ActiveRecord::Schema.define(version: 20140922074522) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "miss_kind_id"
   end
 
   add_index "misses", ["missing_id", "missing_type"], name: "index_misses_on_missing_id_and_missing_type", using: :btree
