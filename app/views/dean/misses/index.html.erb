@@ -22,7 +22,10 @@
       <tbody>
         <% @misses.each do |miss| %>
           <tr>
-            <td><%= miss.missing %></td>
+            <td>
+              <% group = miss.missing.groups.first %>
+              <%= link_to miss.missing, dean_subdepartment_course_group_student_path(group.subdepartment.abbr, group.course, group.number, miss.missing.to_s) %>
+            </td>
             <td><%= miss.missing.actual_group %></td>
             <td><%= miss.absent_period %></td>
             <td><%= miss.note %></td>
