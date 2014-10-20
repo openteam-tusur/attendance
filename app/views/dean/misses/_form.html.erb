@@ -8,10 +8,12 @@
 
   <%= f.input :starts_at,
               :as => :datetime_picker,
+              :input_html => { :value => l(Time.zone.now.beginning_of_day, :format => '%d.%m.%Y %H:%M') },
               :wrapper_html => { :class => 'start-miss' }, :wrapper => :horizontal_datetime_picker %>
 
   <%= f.input :ends_at,
               :as => :datetime_picker,
+              :input_html => { :value => l(Time.zone.now.end_of_day, :format => '%d.%m.%Y %H:%M') },
               :wrapper_html => { :class => 'end-miss' }, :wrapper => :horizontal_datetime_picker %>
 
   <%= f.input :note %>
