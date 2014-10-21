@@ -4,7 +4,7 @@ class MissKind < ActiveRecord::Base
 
   normalize_attribute :kind
 
-  scope :ordered, ->(_) { order('kind desc')  }
+  scope :ordered, ->(_) { order('kind') }
 
   alias_attribute :to_s, :kind
 end
