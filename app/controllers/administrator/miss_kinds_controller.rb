@@ -4,6 +4,8 @@ class Administrator::MissKindsController < AuthController
 
   actions :all, :except => :show
 
+  has_scope :ordered, :default => 1, :only => :index
+
   private
 
   def miss_kind_params
