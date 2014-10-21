@@ -38,6 +38,7 @@ class Ability
       can [:accept, :refuse, :change], Realize
       can :read,   Student
       can :read,   GroupLeader
+      can :manage, MissKind
     end
 
     if roles.include?('group_leader') && namespace == :group_leader

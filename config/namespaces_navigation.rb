@@ -8,11 +8,11 @@ SimpleNavigation::Configuration.run do |navigation|
         primary.dom_class = 'dropdown-menus'
 
         if role == 'administrator'
-          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    administrator_miss_kinds_path
           role_item.item :permissions,  I18n.t('page_title.permissions.index'),   administrator_permissions_path(:for_role => (current_namespace == :administrator && params[:for_role]) || :administrator) do |permission|
             permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
           end
           role_item.item :sync,         I18n.t('page_title.syncs.index'),         administrator_syncs_path
+          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    administrator_miss_kinds_path
         end
 
         if role == 'curator'
@@ -40,6 +40,7 @@ SimpleNavigation::Configuration.run do |navigation|
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
           role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, :highlights_on => /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/groups/
           role_item.item :statistics,   I18n.t('page_title.faculties.statistics'), education_department_group_leaders_path
+          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    education_department_miss_kinds_path
         end
 
         if role == 'group_leader'
