@@ -2,6 +2,5 @@
   <span><%= miss_kind.kind %></span>
   <span class="actions pull-right">
     <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_education_department_miss_kind_path(miss_kind) %>
-    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, education_department_miss_kind_path(miss_kind), :method => :delete, :data => { :confirm => t('confirm.delete') } %>
   </span>
 </li>

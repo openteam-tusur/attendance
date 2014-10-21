@@ -51,7 +51,7 @@ Attendance::Application.routes.draw do
 
   namespace :education_department do
     resources :disruptions
-    resources :miss_kinds, :except => :show
+    resources :miss_kinds, :except => [:show, :destroy]
     resources :permissions, :only => [:index, :new, :create, :destroy]
     resources :realizes,    :only => [] do
       get 'accept', :on => :member
