@@ -12,7 +12,10 @@ SimpleNavigation::Configuration.run do |navigation|
             permission.item :new,       I18n.t('page_title.permissions.new'),     new_administrator_permission_path
           end
           role_item.item :sync,         I18n.t('page_title.syncs.index'),         administrator_syncs_path
-          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    administrator_miss_kinds_path
+          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    administrator_miss_kinds_path do |miss_kind|
+            miss_kind.item :new,        I18n.t('page_title.miss_kinds.new'),      new_administrator_miss_kind_path
+            miss_kind.item :edit,       I18n.t('page_title.miss_kinds.edit'),     edit_administrator_miss_kind_path(miss_kind)
+          end
         end
 
         if role == 'curator'
@@ -40,7 +43,10 @@ SimpleNavigation::Configuration.run do |navigation|
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
           role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, :highlights_on => /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/groups/
           role_item.item :statistics,   I18n.t('page_title.faculties.statistics'), education_department_group_leaders_path
-          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    education_department_miss_kinds_path
+          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    education_department_miss_kinds_path do |miss_kind|
+            miss_kind.item :new,        I18n.t('page_title.miss_kinds.new'),      new_education_department_miss_kind_path
+            miss_kind.item :edit,       I18n.t('page_title.miss_kinds.edit'),     edit_education_department_miss_kind_path(miss_kind)
+          end
         end
 
         if role == 'group_leader'
