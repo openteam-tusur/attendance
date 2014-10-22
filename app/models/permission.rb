@@ -32,6 +32,7 @@ class Permission < ActiveRecord::Base
   searchable do
     integer(:context_ids, :multiple => true) { [context_id].compact }
 
+    string :context_type
     string :user_fullname
 
     text :user_email, :using => :email
