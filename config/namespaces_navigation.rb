@@ -34,8 +34,9 @@ SimpleNavigation::Configuration.run do |navigation|
           end
           role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   dean_disruptions_path
           role_item.item :group_leaders,I18n.t('page_title.group_leaders.index'), dean_group_leaders_path
-          role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path, :highlights_on => /^\/dean\/groups|\/dean\/courses|\/dean\/subdepartments/
+          role_item.item :groups,       I18n.t('page_title.groups.index'),        dean_groups_path, :highlights_on => /^\/dean\/groups(?!\/list)|\/dean\/courses|\/dean\/subdepartments/
           role_item.item :students,     I18n.t('page_title.students.index'),      dean_students_path
+          role_item.item :groups_list,  I18n.t('page_title.groups.list'),         list_dean_groups_path
         end
 
         if role == 'education_department'
