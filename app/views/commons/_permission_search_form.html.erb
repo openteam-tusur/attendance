@@ -1,0 +1,7 @@
+<div class="permission_search_wrapper">
+  <%= form_tag url_for(:controller => controller_name, :action => action_name), :method => :get do %>
+    <%= text_field_tag :q, params[:q], :placeholder => 'Поиск по UUID, ФИО, E-mail' %>
+    <%= submit_tag 'Поиск', :class => 'btn btn-primary btn-sm' %>
+  <% end %>
+</div>
+
