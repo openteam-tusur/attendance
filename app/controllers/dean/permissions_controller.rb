@@ -24,7 +24,29 @@ class Dean::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions.where(:context_id => @context_ids.map(&:id), :context_type => @context_type).sort_by(&:to_s)).page(params[:page])
+       @permissions = if params[:q]
+                        Permission.search {
+                          keywords params[:q]
+
+                          any_of do
+                            all_of do
+                              with :context_type, 'Subdepartment'
+                              with :context_ids, current_user.faculties.first.subdepartments.pluck(:id)
+                            end
+
+                            all_of do
+                              with :context_type, 'Group'
+                              with :context_ids, current_user.faculties.first.groups.pluck(:id)
+                            end
+                          end
+
+                          order_by :user_fullname, :asc
+
+                          paginate :page => params[:page], :per_page => 20
+                        }.results
+                      else
+                        Kaminari.paginate_array(@permissions.where(:context_id => @context_ids.map(&:id), :context_type => @context_type).sort_by(&:to_s)).page(params[:page])
+                      end
     }
   end
 
@@ -49,7 +71,7 @@ class Dean::PermissionsController < AuthController
       when'curator'
         @context_type = 'Group'
         @context_ids  = @faculty.groups.order('number')
-      else 'subdepartment'
+      else
         @context_type = 'Subdepartment'
         @context_ids  = @faculty.subdepartments.order('title')
       end

@@ -27,6 +27,18 @@ class Permission < ActiveRecord::Base
 
   scope :for_context, ->(context) { where(:context_type => context)}
 
+  delegate :fullname, :to => :user, :prefix => true, :allow_nil => true
+
+  searchable do
+    integer(:context_ids, :multiple => true) { [context_id].compact }
+
+    string :user_fullname
+
+    text :user_email, :using => :email
+    text :user_fullname_ru, :using => :user_fullname
+    text :user_id
+  end
+
   def self.available_roles_for(role_name)
     case role_name
       when :dean

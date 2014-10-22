@@ -21,7 +21,30 @@ class EducationDepartment::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions.sort_by(&:to_s)).page(params[:page])
+
+      @permissions = if params[:q]
+                       Permission.search {
+                         keywords params[:q]
+
+                         any_of do
+                           all_of do
+                             with :context_type, 'Faculty'
+                             with :context_ids, Faculty.pluck(:id)
+                           end
+
+                           all_of do
+                             with :context_type, 'Subdepartment'
+                             with :context_ids, Subdepartment.pluck(:id)
+                           end
+                         end
+
+                         order_by :user_fullname, :asc
+
+                         paginate :page => params[:page], :per_page => 20
+                       }.results
+                     else
+                       Kaminari.paginate_array(@permissions.sort_by(&:to_s)).page(params[:page])
+                     end
     }
   end
 

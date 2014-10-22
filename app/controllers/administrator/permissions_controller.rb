@@ -10,7 +10,15 @@ class Administrator::PermissionsController < AuthController
 
   def index
     index!{
-      @permissions = Kaminari.paginate_array(@permissions.sort_by(&:to_s)).page(params[:page])
+      @permissions = if params[:q]
+                       Permission.search {
+                         keywords params[:q]
+
+                         order_by :user_fullname, :asc
+                       }.results
+                     else
+                       Kaminari.paginate_array(@permissions.sort_by(&:to_s)).page(params[:page])
+                     end
     }
   end
 
