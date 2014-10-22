@@ -2,15 +2,13 @@
   <h1 class="text-center">Группы факультета <%= @faculty %></h1>
 <% end %>
 
-<ul>
+<div class="group_list">
   <% @groups.each do |course, groups| %>
-    <li>
     <h3><%= course %> курс</h3>
-      <ul>
+      <ul class='list'>
         <% groups.each do |group| %>
           <li><%= link_to group, dean_group_path(group.number) %></li>
         <% end %>
       </ul>
-    </li>
   <% end %>
-</ul>
+</div>
