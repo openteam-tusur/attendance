@@ -4,6 +4,11 @@ class Dean::GroupsController < AuthController
 
   load_and_authorize_resource :find_by => :number
 
+  def list
+    @faculty = current_user.faculties.first
+    @groups = @faculty.groups.group_by(&:course).sort
+  end
+
   def index
     @charts = {}
     @faculty = current_user.faculties.first
@@ -21,7 +26,10 @@ class Dean::GroupsController < AuthController
     @course = params[:course_id]
     @subdepartment = params[:subdepartment_id]
 
-    if params.to_a[-3..-2][0][0] == 'course_id'
+    if params.to_a[-1][0] == 'id' && params.to_a[-2..-1][0][0] != 'subdepartment_id' && params.to_a[-2..-1][0][0] != 'course_id'
+      @parent_url = list_dean_groups_path
+      group_statistic = Statistic::Group.new(@group, "#{current_namespace}/groups/#{@group}")
+    elsif params.to_a[-3..-2][0][0] == 'course_id'
       @parent_url = dean_course_subdepartment_path(@course, @subdepartment, :filter => params[:filter])
       group_statistic = Statistic::Group.new(@group, "#{current_namespace}/courses/#{@course}/subdepartments/#{@subdepartment}/groups/#{@group}")
     else

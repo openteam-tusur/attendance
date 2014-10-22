@@ -26,7 +26,7 @@ class Ability
       can :read,   Disruption
       can :manage, Miss,       :missing_type => ['Student']
       can :manage, Permission, :context_type => ['Group', 'Subdepartment']
-      can :read,   Group
+      can [:read, :list],   Group
       can [:read, :search],   Student
       can :read,   GroupLeader
       can :read,   Lesson
