@@ -6,8 +6,4 @@ class Statistic::Base
   def get_all(key)
     redis.get_all(key)
   end
-
-  def redis
-    @redis ||= Statistic::Redis.instance
-  end
 end

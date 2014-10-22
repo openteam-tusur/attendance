@@ -1,16 +1,18 @@
 class Statistic::Redis
   include Singleton
 
+  attr_accessor :timestamp
+
+  def set(key, value)
+    connection.set("#{namespace}:#{key}", value)
+  end
+
   def incr(key, field)
-    connection.hincrby("#{namespace}:#{key}", field, 1)
+    connection.hincrby("#{namespace}:#{timestamp}:#{key}", field, 1)
   end
 
   def get_all(key)
-    connection.hgetall("#{namespace}:#{key}")
-  end
-
-  def flushdb
-    connection.flushdb
+    connection.hgetall("#{namespace}:#{timestamp}:#{key}")
   end
 
   def connection

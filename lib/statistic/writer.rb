@@ -1,8 +1,16 @@
 class Statistic::Writer < Statistic::Base
-  attr_accessor :item
+  attr_accessor :item, :timestamp
 
   def initialize(item)
     self.item = item
+  end
+
+  def redis
+    unless @redis
+      @redis = Statistic::RedisWriter.instance
+      @redis.timestamp = timestamp
+    end
+    @redis
   end
 
   def process

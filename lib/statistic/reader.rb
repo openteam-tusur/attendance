@@ -6,6 +6,10 @@ class Statistic::Reader < Statistic::Base
     self.route_namespace = route_namespace
   end
 
+  def redis
+    @redis ||= Statistic::RedisReader.instance
+  end
+
   def attendance_by_date(from: nil, to: nil)
     get('dates').inject({}) do |h, (k, v)|
       date = Date.parse(k)
