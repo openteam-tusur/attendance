@@ -35,9 +35,12 @@ class Permission < ActiveRecord::Base
     string :context_type
     string :user_fullname
 
+    text :role_text
     text :user_email, :using => :email
     text :user_fullname_ru, :using => :user_fullname
     text :user_id
+
+    text(:context_info) { context.try :to_s }
   end
 
   def self.available_roles_for(role_name)
