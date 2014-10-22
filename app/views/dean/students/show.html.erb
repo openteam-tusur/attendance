@@ -23,8 +23,9 @@
             <td>
               <%= omission.lesson.discipline.title %>
               <%= " (#{omission.lesson.kind_abbr})" %>
+              <%= content_tag :span, '(Уважительная причина)', :class => 'text-success' if @student.misses.by_date(omission.lesson.date_on).any? %>
             </td>
-            <td><%= I18n.l(omission.lesson.date_on)  %></td>
+            <td><%= I18n.l(omission.lesson.date_on) %></td>
           </tr>
         <% end %>
       </tbody>
