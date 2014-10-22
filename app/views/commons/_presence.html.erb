@@ -1,0 +1,5 @@
+<% if presence && lesson.realizes.first.state == 'was' %>
+  <%= content_tag :span, presence, :class => "#{presence.state}" %>
+<% else %>
+  -
+<% end %>

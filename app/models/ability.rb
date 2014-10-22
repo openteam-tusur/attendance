@@ -39,6 +39,7 @@ class Ability
       can :read,   Student
       can :read,   GroupLeader
       can [:read, :create, :update], MissKind
+      can :read,   Lesson
     end
 
     if roles.include?('group_leader') && namespace == :group_leader

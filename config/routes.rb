@@ -16,7 +16,10 @@ Attendance::Application.routes.draw do
   namespace :curator do
     resources :groups,      :only => [:index, :show] do
       resources :students,  :only => [:show]
+
+      resources :lessons, :only => :index
     end
+
     root 'groups#index'
   end
 
@@ -30,7 +33,10 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resources :groups,         :only => [:index]
+    resources :groups,         :only => [:index] do
+      resources :lessons, :only => :index
+    end
+
     resources :courses,        :only => [:show] do
       resources :subdepartments, :only => [:show] do
         resources :groups,     :only => [:show] do
@@ -57,6 +63,10 @@ Attendance::Application.routes.draw do
       get 'accept', :on => :member
       get 'refuse', :on => :member
       get 'change', :on => :member
+    end
+
+    resources :groups, :only => :show do
+      resources :lessons, :only => :index
     end
 
     #statistic
@@ -125,7 +135,9 @@ Attendance::Application.routes.draw do
     #statistic
     resources :groups,   :only => [:index, :show] do
       resources :students, :only => [:show]
+      resources :lessons, :only => :index
     end
+
     resources :courses,  :only => [:show] do
       resources :groups,   :only => [:show] do
         resources :students, :only => [:show]

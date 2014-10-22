@@ -9,6 +9,7 @@
 //= require tusur_header
 //= require highcharts
 //= require commons/ajaxed_delete
+//= require commons/calendar
 //= require commons/chart
 //= require commons/datetime_picker
 //= require commons/disruption_status

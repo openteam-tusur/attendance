@@ -16,6 +16,10 @@ class Group < ActiveRecord::Base
 
   alias_attribute :to_s, :number
 
+  def to_param
+    number
+  end
+
   def group_leaders
     permissions.where(:role => :group_leader).map(&:user).compact
   end
