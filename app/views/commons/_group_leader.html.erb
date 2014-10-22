@@ -2,4 +2,6 @@
   <strong>Староста группы:</strong>
   <%= @group.group_leader %>
   <%= mail_to @group.group_leader.try :email %>
+  <br/>
+  <%= link_to "Открыть журнал группы", [current_namespace, @group, :lessons], :target => '_blank' %>
 </div>
