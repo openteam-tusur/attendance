@@ -62,6 +62,13 @@ class Statistic::Writer < Statistic::Base
         incr("lecturer:#{lecturer}:#{item['discipline']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
         incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:dates",     "#{item['date_on']}:#{kind}")
         incr("lecturer:#{lecturer}:#{item['discipline']}:#{item['group']}:students",  "#{item['student']}:#{item['date_on']}:#{kind}")
+
+        incr("faculty:#{item['faculty']}:lecturers",                                                     "#{lecturer}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['faculty']}:disciplines",                                      "#{item['discipline']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['faculty']}:#{item['discipline']}:dates",                      "#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['faculty']}:#{item['discipline']}:groups",                     "#{item['group']}:#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['faculty']}:#{item['discipline']}:#{item['group']}:dates",     "#{item['date_on']}:#{kind}")
+        incr("lecturer:#{lecturer}:#{item['faculty']}:#{item['discipline']}:#{item['group']}:students",  "#{item['student']}:#{item['date_on']}:#{kind}")
       end
     end
   end
