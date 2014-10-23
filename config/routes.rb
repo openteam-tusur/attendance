@@ -33,7 +33,7 @@ Attendance::Application.routes.draw do
     end
 
     #statistic
-    resources :groups,         :only => [:index] do
+    resources :groups,         :only => [:index, :show] do
       resources :lessons, :only => :index
       get 'list',              :on => :collection
       resources :students, :only => [:show]
