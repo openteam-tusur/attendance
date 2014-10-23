@@ -5,6 +5,7 @@ class Curator::GroupsController < AuthController
   before_filter :set_filter_dates, :only => :index
 
   inherit_resources
+  defaults :finder => :find_by_number
   load_and_authorize_resource
 
   actions :index, :show
@@ -15,7 +16,7 @@ class Curator::GroupsController < AuthController
 
   def show
     @charts = {}
-    @group = current_user.curated_groups.actual.find(params[:id])
+    @group = current_user.curated_groups.actual.find_by(:number => params[:id])
     group_statistic = Statistic::Group.new(@group, "#{current_namespace}/groups/#{@group}")
 
     @parent_url = curator_groups_path(:filter => params[:fiter])

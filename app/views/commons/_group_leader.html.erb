@@ -3,5 +3,5 @@
   <%= @group.group_leader %>
   <%= mail_to @group.group_leader.try :email %>
   <br/>
-  <%= link_to "Открыть журнал группы", [current_namespace, @group, :lessons], :target => '_blank' %>
+  <%= link_to "Открыть журнал группы", [current_namespace, @group, :lessons], :target => '_blank' if can? :read, Lesson %>
 </div>

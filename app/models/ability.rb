@@ -19,6 +19,7 @@ class Ability
 
     if roles.include?('curator') && namespace == :curator
       can :manage, Group
+      can :read,   Lesson
     end
 
     if roles.include?('dean') && namespace == :dean
@@ -28,6 +29,7 @@ class Ability
       can :read,   Group
       can [:read, :search],   Student
       can :read,   GroupLeader
+      can :read,   Lesson
     end
 
     if roles.include?('education_department') && namespace == :education_department
@@ -60,6 +62,8 @@ class Ability
     if roles.include?('subdepartment') && namespace == :subdepartment
       can :read,   Disruption
       can :read,   Group
+      can :read,   Lesson
+
       can :manage, SubdepartmentDeclaration do |subdepartment_declaration|
         subdepartment_declaration.realize.lecturer.subdepartments.include?(user.subdepartments.first)
       end
