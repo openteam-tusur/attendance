@@ -22,15 +22,23 @@ class Subdepartment::GroupsController < AuthController
     @charts = {}
     @group = @subdepartment.groups.actual.find_by(:number => params[:id])
 
-    if params[:course_id]
+    @discipline = params[:discipline_id]
+    @lecturer = params[:lecturer_id]
+
+    if params.to_a[-2..-1][0][0] == 'discipline_id'
+      @parent_url = subdepartment_lecturer_discipline_path(@lecturer, @discipline, :filter => params[:filter])
+      group_statistic = Statistic::Lecturer.new("#{@lecturer}:#{@subdepartment}:#{@discipline}:#{@group}", nil)
+    elsif params[:course_id]
       namespace = "#{current_namespace}/courses/#{params[:course_id]}/groups/#{@group}"
+      @parent_url = subdepartment_course_path(params[:course_id], :filter => params[:filter])
+      group_statistic = Statistic::Group.new(@group, namespace)
     else
       namespace = "#{current_namespace}/groups/#{@group}"
+      @parent_url = subdepartment_groups_path(:filter => params[:filter])
+      group_statistic = Statistic::Group.new(@group, namespace)
     end
 
-    group_statistic = Statistic::Group.new(@group, namespace)
 
-    @parent_url = params[:course_id] ? subdepartment_course_path(params[:course_id], :filter => params[:filter]): subdepartment_groups_path(:filter => params[:filter])
 
     @charts['attendance_by_dates.line']   = group_statistic.attendance_by_date(**filter_params)
     @charts['attendance_by_students.bar'] = group_statistic.attendance_by('students', **filter_params)

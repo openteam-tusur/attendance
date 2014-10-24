@@ -72,6 +72,7 @@ ru:
     attendance_by_faculties:      Посещаемость по факультетам
     attendance_by_subdepartments: Посещаемость по кафедрам
     attendance_by_disciplines:    Посещаемость по дисциплинам
+    attendance_by_lecturers:      Посещаемость по преподавателям
 
     courses:
       show:                       Статистика посещаемости
@@ -105,7 +106,7 @@ ru:
       index:                      'Заполнение журнала посещаемости группы %{title}'
 
     lecturers:
-      index:                      Статистика преподавателей
+      index:                      Статистика посещаемости по преподавателям
 
     main_page:
       index:                      Главная страница
