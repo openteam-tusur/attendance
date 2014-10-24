@@ -74,6 +74,7 @@ SimpleNavigation::Configuration.run do |navigation|
             end
           end
           role_item.item :groups,       I18n.t('page_title.groups.index'),        subdepartment_groups_path, :highlights_on => /^\/subdepartment\/groups|\/subdepartment\/courses/
+          role_item.item :groups,       I18n.t('page_title.lecturers.index'),     subdepartment_lecturers_path, :highlights_on => /^\/subdepartment\/lecturers/
         end
 
         if role == 'student'

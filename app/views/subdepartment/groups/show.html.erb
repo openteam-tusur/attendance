@@ -1,7 +1,11 @@
 <%= content_for :page_title do %>
   <h1 class="text-center">
     <%= link_to_back %>
-    Статистика посещаемости группы <%= @group %>
+    <% if @discipline %>
+      Статистика посещаемости группы <%= @group %> дисциплины <%= @discipline %>
+    <% else %>
+      Статистика посещаемости группы <%= @group %>
+    <% end %>
   </h1>
 
   <%= render 'commons/group_leader' %>

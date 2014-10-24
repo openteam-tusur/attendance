@@ -150,6 +150,12 @@ Attendance::Application.routes.draw do
       end
     end
 
+    resources :lecturers,      :only => [:index, :show] do
+      resources :disciplines,  :only => [:index, :show] do
+        resources :groups,     :only => [:show]
+      end
+    end
+
     root 'disruptions#index'
   end
 
