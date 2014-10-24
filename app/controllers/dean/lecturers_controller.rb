@@ -2,6 +2,8 @@ class Dean::LecturersController < AuthController
   include FilterParams
   include DateRange
 
+  authorize_resource
+
   def index
     @charts = {}
     @faculty = current_user.faculties.first

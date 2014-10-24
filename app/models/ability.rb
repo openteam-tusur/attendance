@@ -30,6 +30,8 @@ class Ability
       can [:read, :search],   Student
       can :read,   GroupLeader
       can :read,   Lesson
+      can [:index, :show], Lecturer
+      can :show, Discipline
     end
 
     if roles.include?('education_department') && namespace == :education_department
@@ -63,6 +65,8 @@ class Ability
       can :read,   Disruption
       can :read,   Group
       can :read,   Lesson
+      can [:index, :show], Lecturer
+      can :show, Discipline
 
       can :manage, SubdepartmentDeclaration do |subdepartment_declaration|
         subdepartment_declaration.realize.lecturer.subdepartments.include?(user.subdepartments.first)
