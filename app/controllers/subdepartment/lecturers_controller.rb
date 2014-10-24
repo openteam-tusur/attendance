@@ -2,6 +2,8 @@ class Subdepartment::LecturersController < AuthController
   include FilterParams
   include DateRange
 
+  authorize_resource
+
   def index
     @charts = {}
     @subdepartment = current_user.subdepartments.first

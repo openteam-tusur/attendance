@@ -2,6 +2,8 @@ class Dean::DisciplinesController < AuthController
   include FilterParams
   include DateRange
 
+  authorize_resource
+
   before_filter :find_lecturer
 
   def show
