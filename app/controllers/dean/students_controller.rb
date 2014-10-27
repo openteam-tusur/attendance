@@ -11,7 +11,7 @@ class Dean::StudentsController < AuthController
 
   def index
     index!{
-      @students = Kaminari.paginate_array(@faculty.students.select {|s| s.slacker?(**filter_params)}.sort_by {|s| [-s.total_attendance(filter_params[:from], filter_params[:to]), s.actual_group.number, s.surname]}).page(params[:page])
+      @students = Kaminari.paginate_array(@faculty.students.select {|s| s.slacker?(**filter_params)}.sort_by {|s| [s.total_attendance(filter_params[:from], filter_params[:to]), s.actual_group.number, s.surname]}).page(params[:page])
       @params = filter_params
     }
   end
