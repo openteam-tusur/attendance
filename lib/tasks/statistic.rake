@@ -24,10 +24,11 @@ namespace :statistic do
                LEFT JOIN realizes ON realizes.lesson_id = lessons.id
                LEFT JOIN people ON people.id = presences.student_id
                LEFT JOIN groups ON lessons.group_id = groups.id
+               LEFT JOIN memberships ON  presences.student_id = memberships.person_id AND memberships.participate_id = groups.id AND memberships.participate_type = 'Group'
                LEFT JOIN disciplines ON lessons.discipline_id = disciplines.id
                LEFT JOIN subdepartments ON subdepartments.id = groups.subdepartment_id
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
-             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was';"
+             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was' AND memberships.deleted_at IS NULL;"
 
     timestamp = Time.now.to_i
     res = ActiveRecord::Base.connection.select_all(query)
