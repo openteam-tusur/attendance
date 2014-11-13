@@ -40,7 +40,7 @@ class Chart
       formatter: ->
         res = ""
         if this.point.x > 100000
-          res += '<b>'+Highcharts.dateFormat('%e %b %Y', this.point.x)+'</b><br/>'
+          res += '<b>'+Highcharts.dateFormat('%A, %e %b %Y', this.point.x)+'</b><br/>'
         else
           res += '<b>'+this.key+'</b><br/>'
         res += 'Посещаемость: '+this.point.y+'%'
