@@ -43,6 +43,10 @@
 <% content_for :tusur_header_mobile_menu_block do %>
   <ul class='nav navbar-nav'>
     <%= render_navigation :renderer => :mobile_menu_renderer, :level => 1, :context => :namespaces %>
+
+    <li class='sign_in'>
+      <%= link_to 'Вход', sign_in_url %>
+    </li>
   </ul>
 <% end %>
 
