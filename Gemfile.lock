@@ -17,22 +17,6 @@ GIT
       hiredis
       redis
 
-GIT
-  remote: https://github.com/openteam-tusur/tusur_header
-  revision: 6e1ef5af5d10bb9ed736740e02957772314627ea
-  branch: user_menu
-  specs:
-    tusur_header (0.2.1)
-      bootstrap-sass (~> 3.1.1)
-      coffee-rails
-      compass-rails
-      configliere
-      jquery-rails
-      rails (~> 4.0)
-      rest-client
-      sass-rails (>= 3.2)
-      stop_ie (>= 0.1.5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -290,6 +274,16 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timers (1.1.0)
+    tusur_header (0.2.2)
+      bootstrap-sass (~> 3.1.1)
+      coffee-rails
+      compass-rails
+      configliere
+      jquery-rails
+      rails (~> 4.0)
+      rest-client
+      sass-rails (>= 3.2)
+      stop_ie (>= 0.1.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.1)
@@ -347,7 +341,7 @@ DEPENDENCIES
   simple-navigation
   simple_form (~> 3.1.0.rc2)
   sunspot_rails (~> 2.1.1)
-  tusur_header!
+  tusur_header
   uglifier (>= 1.3.0)
   unicorn
   validates_email_format_of
