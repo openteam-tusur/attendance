@@ -16,12 +16,12 @@ class GroupLeader::PresencesController < AuthController
   end
 
   def check_all
-    @lesson.presences.update_all(:state => 'was')
+    @lesson.presences.each { |p| p.update_attributes(:state => 'was') } if @lesson.realized?
     redirect_to group_leader_lessons_url(:by_date => @lesson.date_on)
   end
 
   def uncheck_all
-    @lesson.presences.update_all(:state => 'wasnt')
+    @lesson.presences.each { |p| p.update_attributes(:state => 'wasnt') } if @lesson.realized?
     redirect_to group_leader_lessons_url(:by_date => @lesson.date_on)
   end
 

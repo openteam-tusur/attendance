@@ -7,6 +7,8 @@ class Presence < ActiveRecord::Base
   scope :by_state,      -> (state)              { where(:state => state) }
   scope :between_dates, -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
+  after_save :set_statistic
+
   def change_state
     state.nil? ? self.state = 'was' : state == 'was' ? self.state = 'wasnt' : self.state = 'was'
   end
@@ -17,5 +19,25 @@ class Presence < ActiveRecord::Base
 
   def to_s
     I18n.t("states.presences.#{state || :empty}")
+  end
+
+  def set_statistic
+    if changed?
+      presentator = Statistic::Presentors::PresencePresentor.new(self).data
+      writer = Statistic::Writer.new(presentator)
+      prev_value, new_value = changes['state']
+
+      case prev_value
+        when 'was'
+          writer.decr_process
+          writer.decr_total if new_value.nil?
+        when 'wasnt'
+          writer.process if new_value == 'was'
+          writer.decr_total if new_value.nil?
+        when nil
+          writer.process if new_value == 'was'
+          writer.incr_total
+      end
+    end
   end
 end

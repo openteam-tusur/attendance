@@ -11,6 +11,7 @@ class Lesson < ActiveRecord::Base
   has_many   :realizes,   :dependent  => :destroy do
     def change_state
       new_state = proxy_association.owner.realized? ? :wasnt : :was
+      proxy_association.owner.presences.each {|p| p.update_attributes(:state => nil) }
       self.update_all(:state => new_state)
       self.index
     end
