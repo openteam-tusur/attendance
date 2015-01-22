@@ -1,6 +1,9 @@
 class Miss < ActiveRecord::Base
   attr_accessor :name
 
+  after_save    :set_statistic
+  after_destroy :set_statistic_after_destroy
+
   belongs_to :missing, :polymorphic => true
   belongs_to :miss_kind
 
@@ -23,5 +26,18 @@ class Miss < ActiveRecord::Base
 
   def dates_order
     errors.add(:dates_in_wrong_order, "Дата 'С' должна быть меньше даты 'По'") if self.starts_at > self.ends_at
+  end
+
+  def set_statistic
+    prev_starts_at, new_starts_at = changes['starts_at']
+    prev_ends_at, new_ends_at = changes['ends_at']
+    old_scope = missing.presences.between_dates(prev_starts_at, prev_ends_at).by_state('wasnt')
+    new_scope = missing.presences.between_dates(new_starts_at, new_ends_at).by_state('wasnt')
+    puts (old_scope+new_scope).uniq.inspect
+    (old_scope+new_scope).uniq.each {|p| p.update_attributes(:updated_at => Time.zone.now)}
+  end
+
+  def set_statistic_after_destroy
+    missing.presences.between_dates(starts_at, ends_at).by_state('wasnt').each {|p| p.update_attributes(:updated_at => Time.zone.now)}
   end
 end

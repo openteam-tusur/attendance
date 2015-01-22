@@ -7,7 +7,7 @@ class Presence < ActiveRecord::Base
   scope :by_state,      -> (state)              { where(:state => state) }
   scope :between_dates, -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
-  after_save :set_statistic
+  after_commit :set_statistic
 
   def change_state
     state.nil? ? self.state = 'was' : state == 'was' ? self.state = 'wasnt' : self.state = 'was'
@@ -22,21 +22,40 @@ class Presence < ActiveRecord::Base
   end
 
   def set_statistic
-    if changed?
+    if previous_changes.any?
       presentator = Statistic::Presentors::PresencePresentor.new(self).data
       writer = Statistic::Writer.new(presentator)
-      prev_value, new_value = changes['state']
+      prev_value, new_value = previous_changes['state']
 
       case prev_value
         when 'was'
-          writer.decr_process
-          writer.decr_total if new_value.nil?
+          return if missed_by_cause?
+          writer.decr_attendance
+          writer.decr_total         if new_value.nil?
         when 'wasnt'
-          writer.process if new_value == 'was'
-          writer.decr_total if new_value.nil?
+          return if missed_by_cause?
+          writer.incr_attendance    if new_value == 'was'
+          writer.decr_total         if new_value.nil?
         when nil
-          writer.process if new_value == 'was'
-          writer.incr_total
+          puts 'prev value nil'
+          writer.incr_attendance    if new_value == 'was' || (missed_by_cause? && new_value == 'wasnt')
+          writer.incr_total unless new_value.nil?
+
+          #################
+          if new_value.nil?
+            puts 'new value nil'
+            if missed_by_cause?
+              puts 'by cause'
+              if state == 'wasnt'
+                writer.incr_attendance
+              end
+            else
+              puts 'not_by_cause'
+              if state == 'wasnt'
+                writer.decr_attendance
+              end
+            end
+          end
       end
     end
   end

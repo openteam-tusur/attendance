@@ -1,5 +1,5 @@
 class Statistic::Writer < Statistic::Base
-  attr_accessor :item, :timestamp
+  attr_accessor :item
 
   def initialize(item)
     self.item = item
@@ -8,16 +8,11 @@ class Statistic::Writer < Statistic::Base
   def redis
     unless @redis
       @redis = Statistic::RedisWriter.instance
-      @redis.timestamp = timestamp
     end
     @redis
   end
 
-  def process
-    incr_attendance if (item['state'] == 'was' || item['missed'].to_i > 0)
-  end
-
-  def decr_process
+  def decr_attendance
     calc_('attendance', :decr)
   end
 

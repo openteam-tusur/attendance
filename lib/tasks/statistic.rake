@@ -30,24 +30,14 @@ namespace :statistic do
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
              WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was' AND memberships.deleted_at IS NULL;"
 
-    timestamp = Time.now.to_i
     res = ActiveRecord::Base.connection.select_all(query)
     pb  = ProgressBar.new(res.count)
 
     res.each do |item|
       writer = Statistic::Writer.new(item)
-      writer.timestamp = timestamp
-      writer.process
+      writer.incr_attendance if (item['state'] == 'was' || item['missed'].to_i > 0)
+      writer.incr_total
       pb.increment!
-    end
-
-    redis = Statistic::Redis.instance
-    redis.connection.select(1)
-    redis.set('timestamp', timestamp)
-
-    redis.connection.select(0)
-    redis.connection.keys('attendance:statistic*').each do |key|
-      redis.connection.del(key) unless key.match(timestamp.to_s)
     end
   end
 end
