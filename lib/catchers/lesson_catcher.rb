@@ -56,11 +56,17 @@ class LessonCatcher
             rescue ActiveRecord::RecordNotFound
               raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
-            lect = subdepartment.lecturers.find_or_initialize_by(:surname => lecturer['lastname'].squish,
-                                                                 :name => lecturer['firstname'].squish,
-                                                                 :patronymic => lecturer['middlename'].squish)
+            lect = Lecturer.find_or_initialize_by(:surname => lecturer['lastname'].squish,
+                                                  :name => lecturer['firstname'].squish,
+                                                  :patronymic => lecturer['middlename'].squish)
+
             lect.directory_id = lecturer['directory_id']
-            lect.subdepartments << subdepartment unless lect.subdepartments.include?(subdepartment)
+
+            unless lect.subdepartments.include?(subdepartment)
+              lect.subdepartments.clear if lect.persisted?
+              lect.subdepartments << subdepartment
+            end
+
             lect.save!
 
             LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
