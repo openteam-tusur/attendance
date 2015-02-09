@@ -28,6 +28,6 @@ module DateRange
   end
 
   def current_year
-    @current_year ||= today.year-1
+    @current_year ||= today.year
   end
 end
