@@ -37,20 +37,16 @@ class Presence < ActiveRecord::Base
           writer.incr_attendance    if new_value == 'was'
           writer.decr_total         if new_value.nil?
         when nil
-          puts 'prev value nil'
           writer.incr_attendance    if new_value == 'was' || (missed_by_cause? && new_value == 'wasnt')
           writer.incr_total unless new_value.nil?
 
           #################
           if new_value.nil?
-            puts 'new value nil'
             if missed_by_cause?
-              puts 'by cause'
               if state == 'wasnt'
                 writer.incr_attendance
               end
             else
-              puts 'not_by_cause'
               if state == 'wasnt'
                 writer.decr_attendance
               end
