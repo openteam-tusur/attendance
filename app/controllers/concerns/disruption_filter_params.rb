@@ -4,8 +4,6 @@ module DisruptionFilterParams
   def filter_params
     dates_filter = params[:filter]
 
-    puts dates_filter
-
     if dates_filter
       if dates_filter[:dates].present?
         case dates_filter[:dates]
@@ -13,7 +11,7 @@ module DisruptionFilterParams
           { :from => Date.parse('2014-01-01'), :to => today }
 
         when 'from_semester_begin'
-          { :from => semester_begin, :to => last_week_end }
+          { :from => semester_begin, :to => today }
 
         when 'last_week'
           { :from => last_week_begin, :to => last_week_end }

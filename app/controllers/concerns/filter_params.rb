@@ -7,7 +7,7 @@ module FilterParams
       { :from => Date.parse('2014-01-01'), :to => today }
 
     when 'from_semester_begin'
-      { :from => semester_begin, :to => last_week_end }
+      { :from => semester_begin, :to => today }
 
     when 'last_week', nil
       { :from => last_week_begin, :to => last_week_end }

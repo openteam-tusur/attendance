@@ -33,7 +33,6 @@ class Miss < ActiveRecord::Base
     prev_ends_at, new_ends_at = changes['ends_at']
     old_scope = missing.presences.between_dates(prev_starts_at, prev_ends_at).by_state('wasnt')
     new_scope = missing.presences.between_dates(new_starts_at, new_ends_at).by_state('wasnt')
-    puts (old_scope+new_scope).uniq.inspect
     (old_scope+new_scope).uniq.each {|p| p.update_attributes(:updated_at => Time.zone.now)}
   end
 
