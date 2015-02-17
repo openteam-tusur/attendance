@@ -4,6 +4,6 @@ class Person < ActiveRecord::Base
   normalize_attributes    :name, :surname, :patronymic
 
   def to_s
-    [surname, name, patronymic].compact.join(' ')
+    [surname, name, patronymic].map(&:presence).compact.join(' ')
   end
 end
