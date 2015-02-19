@@ -22,7 +22,7 @@ class Statistic::Presentors::PresencePresentor
   end
 
   def student
-    @student ||= "#{presence.student.surname} #{presence.student.name} #{presence.student.patronymic}"
+    @student ||= "#{presence.student.surname} #{presence.student.name} #{presence.student.patronymic}".squish
   end
 
   def contingent_id
