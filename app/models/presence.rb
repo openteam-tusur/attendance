@@ -7,7 +7,7 @@ class Presence < ActiveRecord::Base
   scope :by_state,      -> (state)              { where(:state => state) }
   scope :between_dates, -> (starts_at, ends_at) { joins(:lesson).where(:lessons => { :date_on => (starts_at..ends_at) }) }
 
-  after_commit :set_statistic
+  after_commit :set_statistic, :on => [:update, :destroy]
 
   def change_state
     state.nil? ? self.state = 'was' : state == 'was' ? self.state = 'wasnt' : self.state = 'was'

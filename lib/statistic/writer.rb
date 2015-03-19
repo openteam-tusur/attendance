@@ -6,10 +6,7 @@ class Statistic::Writer < Statistic::Base
   end
 
   def redis
-    unless @redis
-      @redis = Statistic::RedisWriter.instance
-    end
-    @redis
+    @redis ||= Statistic::RedisWriter.instance
   end
 
   def decr_attendance
