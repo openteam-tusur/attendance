@@ -28,7 +28,7 @@ namespace :statistic do
                LEFT JOIN disciplines ON lessons.discipline_id = disciplines.id
                LEFT JOIN subdepartments ON subdepartments.id = groups.subdepartment_id
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
-             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was' AND memberships.deleted_at IS NULL;"
+             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was';"
 
     res = ActiveRecord::Base.connection.select_all(query)
     pb  = ProgressBar.new(res.count)

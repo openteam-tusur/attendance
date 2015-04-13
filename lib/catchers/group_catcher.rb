@@ -6,7 +6,7 @@ class GroupCatcher
 
     import groups
 
-    delete_marked_groups
+    #delete_marked_groups
   end
 
   private
