@@ -3,7 +3,7 @@ class Public::SearchController < ApplicationController
   include ApplicationHelper
 
   def index
-    page_title(params[:q])
+    @page_title = params[:q]
 
     @results = if params[:q].present?
                  StudentSearcher.new(params).search.results
