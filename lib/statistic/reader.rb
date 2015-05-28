@@ -66,7 +66,7 @@ class Statistic::Reader < Statistic::Base
     res = {}
 
     get_all("#{uniq_id}:#{kind}").each do |k, v|
-      key1, key2, key3 = k.split(':')
+      key1, key2, key3 = k.gsub(/:([\S])/, '___\1').split('___')
       res[key1]  ||= {}
       if key3
         res[key1][key2] ||= {}
