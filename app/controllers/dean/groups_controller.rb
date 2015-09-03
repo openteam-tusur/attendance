@@ -6,7 +6,7 @@ class Dean::GroupsController < AuthController
 
   def list
     @faculty = current_user.faculties.first
-    @groups = @faculty.groups.group_by(&:course).sort
+    @groups = @faculty.groups.where(:deleted_at => nil).group_by(&:course).sort
   end
 
   def index
