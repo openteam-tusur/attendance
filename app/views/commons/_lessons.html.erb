@@ -34,7 +34,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @group.students.each do |student| %>
+      <% @group.students.actual.each do |student| %>
         <tr>
           <td class="student"><%= student %></td>
           <% (1..7).each do |index| %>

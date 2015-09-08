@@ -1,6 +1,6 @@
 namespace :statistic do
   desc 'Рассчитать всю статистику'
-  task :calculate => :environment do
+    task :calculate, [:start, :end] => :environment do |t, args|
     query = "SELECT DISTINCT  presences.state,
                               lessons.date_on,
                               concat_ws(' ', people.surname, people.name, people.patronymic) AS student,
@@ -28,7 +28,11 @@ namespace :statistic do
                LEFT JOIN disciplines ON lessons.discipline_id = disciplines.id
                LEFT JOIN subdepartments ON subdepartments.id = groups.subdepartment_id
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
-             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was';"
+             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was' AND people.deleted_at IS NULL"
+
+    query += " AND lessons.date_on >= '#{Date.parse(args['start'])}'" unless args['start'].blank?
+    query += " AND lessons.date_on <= '#{Date.parse(args['end'])}'" unless args['end'].blank?
+    query += ";"
 
     res = ActiveRecord::Base.connection.select_all(query)
     pb  = ProgressBar.new(res.count)
@@ -40,4 +44,5 @@ namespace :statistic do
       pb.increment!
     end
   end
+
 end

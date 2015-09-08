@@ -7,7 +7,7 @@
 </div>
 
 <% @faculties.each do |faculty| %>
-  <% without_group_leaders = faculty.groups.where(deleted_at: nil).select {|g| g.permissions.where(:role => :group_leader).empty?} %>
+  <% without_group_leaders = faculty.groups.actual.select {|g| g.permissions.where(:role => :group_leader).empty?} %>
   <% not_active_group_leaders = faculty.groups.joins(:permissions).where(:permissions => {:role => :group_leader, :user_id => nil}) %>
   <% unfilled = GroupLeader.new(faculty).who_unfilled(@filter) %>
   <% next if (without_group_leaders.empty? && not_active_group_leaders.empty? && unfilled.empty?) %>
