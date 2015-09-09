@@ -1,6 +1,8 @@
 namespace :statistic do
   desc 'Рассчитать всю статистику'
 
+    task :clean => "delete:presences_for_deleted_students"
+
     task :clean => :environment do |t, args|
       start = args['start'].blank? ? Date.today : Date.parse(args['start'])
       finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
