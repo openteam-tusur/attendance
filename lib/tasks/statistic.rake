@@ -8,10 +8,10 @@ namespace :statistic do
       finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
       p "Очистка статистики"
       Statistic::Cleaner.instance.clean(start, finish)
-      p "Начало обновления статистики"
     end
 
     task :calculate, [:start, :end] => :clean do |t, args|
+    p "Начало обновления статистики"
     start = args['start'].blank? ? Date.today : Date.parse(args['start'])
     finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
     query = "SELECT DISTINCT  presences.state,
@@ -41,11 +41,8 @@ namespace :statistic do
                LEFT JOIN disciplines ON lessons.discipline_id = disciplines.id
                LEFT JOIN subdepartments ON subdepartments.id = groups.subdepartment_id
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
-             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was'"
-
-    query += " AND lessons.date_on >= '#{start}'"
-    query += " AND lessons.date_on <= '#{finish}'"
-    query += ";"
+             WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was'
+               AND lessons.date_on >= '#{start}' AND lessons.date_on <= '#{finish}';"
 
     res = ActiveRecord::Base.connection.select_all(query)
     pb  = ProgressBar.new(res.count)
