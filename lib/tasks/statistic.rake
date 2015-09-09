@@ -1,6 +1,8 @@
 namespace :statistic do
   desc 'Рассчитать всю статистику'
     task :calculate, [:start, :end] => :environment do |t, args|
+    start = args['start'].blank? ? Date.today : Date.parse(args['start'])
+    finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
     query = "SELECT DISTINCT  presences.state,
                               lessons.date_on,
                               concat_ws(' ', people.surname, people.name, people.patronymic) AS student,
@@ -30,8 +32,8 @@ namespace :statistic do
                LEFT JOIN faculties ON faculties.id = subdepartments.faculty_id
              WHERE presences.state IS NOT NULL AND lessons.deleted_at IS NULL AND realizes.state = 'was'"
 
-    query += " AND lessons.date_on >= '#{Date.parse(args['start'])}'" unless args['start'].blank?
-    query += " AND lessons.date_on <= '#{Date.parse(args['end'])}'" unless args['end'].blank?
+    query += " AND lessons.date_on >= '#{start}'"
+    query += " AND lessons.date_on <= '#{finish}'"
     query += ";"
 
     res = ActiveRecord::Base.connection.select_all(query)
