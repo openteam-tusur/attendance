@@ -1,9 +1,7 @@
 class Statistic::Cleaner < Statistic::Redis
   include Singleton
 
-  def clean(from=nil, to=nil)
-    from = from ? Date.parse(from) : Date.today
-    to = to ? Date.parse(to) : Date.today
+  def clean(from, to)
     dates = (from..to).map(&:to_s)
     %w(student lecturer group subdepartment faculty university).each do |folder|
       connection.keys("#{namespace}:#{folder}*").each do |key|

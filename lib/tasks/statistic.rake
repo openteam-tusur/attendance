@@ -1,6 +1,15 @@
 namespace :statistic do
   desc 'Рассчитать всю статистику'
-    task :calculate, [:start, :end] => :environment do |t, args|
+
+    task :clean => :environment do |t, args|
+      start = args['start'].blank? ? Date.today : Date.parse(args['start'])
+      finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
+      p "Очистка статистики"
+      Statistic::Cleaner.instance.clean(start, finish)
+      p "Начало обновления статистики"
+    end
+
+    task :calculate, [:start, :end] => :clean do |t, args|
     start = args['start'].blank? ? Date.today : Date.parse(args['start'])
     finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
     query = "SELECT DISTINCT  presences.state,
