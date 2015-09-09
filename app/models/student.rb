@@ -1,7 +1,7 @@
 class Student < Person
   include DateRange
 
-  has_many :memberships, :as => :person
+  has_many :memberships, :as => :person, :dependent => :destroy
   has_many :groups,      ->{ where(:memberships => { :deleted_at => nil }) }, :through => :memberships, :source => :participate, :source_type => 'Group'
 
   has_many :presences,   :dependent => :destroy
@@ -18,7 +18,7 @@ class Student < Person
 
   searchable :auto_index => false do
     string(:info)
-    integer(:faculty_id) { actual_group.subdepartment.faculty_id }
+    integer(:faculty_id) { actual_group.try(:subdepartment).try(:faculty_id) }
     string :deleted_at
   end
 

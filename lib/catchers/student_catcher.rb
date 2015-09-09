@@ -54,10 +54,8 @@ class StudentCatcher
         s.patronymic = student['patronymic']
         s.deleted_at = nil
         s.save
-        unless s.groups.include?(group)
-          s.memberships.update_all(:deleted_at => Time.zone.now)
-          s.groups << group
-        end
+        s.memberships.where(:participate => group).update_all(:deleted_at => nil)
+        s.groups << group unless s.groups.include?(group)
         s.index
       end
     end
@@ -77,6 +75,7 @@ class StudentCatcher
 
   def mark_students_deleted
     Student.actual.update_all(:deleted_at => Time.zone.now)
+    Membership.actual.students.update_all(:deleted_at => Time.zone.now)
   end
 
   def delete_marked_students
