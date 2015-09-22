@@ -11,6 +11,10 @@ module DateRange
     today
   end
 
+  def last_day_needed_to_fill
+    Time.zone.now.hour >= 9 ? today : today - 1.days
+  end
+
   def last_week_begin
     today.beginning_of_week - 7.day
   end

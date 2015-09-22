@@ -24,7 +24,7 @@ class Lesson < ActiveRecord::Base
   scope :not_actual,    ->           { where.not(:deleted_at => nil) }
   scope :unfilled,      ->           { joins(:presences).where(:presences => { :state => nil }).uniq }
   scope :filled,        ->           { joins(:presences).where.not(:presences => { :state => nil }).uniq }
-  scope :by_semester,   ->           { where('date_on > :start_at and date_on < :end_at', :start_at => semester_begin, :end_at => last_week_end)}
+  scope :by_semester,   ->           { where('date_on > :start_at and date_on < :end_at', :start_at => semester_begin, :end_at => last_day_needed_to_fill)}
   scope :realized,      ->           { joins(:realizes).where(:realizes => { :state => :was }).uniq }
   scope :between_dates, ->(from, to) { where('date_on between :from and :to', :from => from, :to => to) }
 

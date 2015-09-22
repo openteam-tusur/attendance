@@ -62,7 +62,7 @@
         </thead>
         <% unfilled.each do |(group_number, group_leader, count)| %>
           <tr>
-            <td><%= group_number %></td>
+            <td><%= link_to group_number, education_department_group_lessons_path(group_number) %></td>
             <td><%= group_leader %> <%= mail_to group_leader.email %></td>
             <td><%= count %></td>
           </tr>
