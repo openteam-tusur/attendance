@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'lecturer_permissions'
+require 'progress_bar'
 
 class LessonCatcher
   attr_accessor :starts_at, :ends_at
@@ -11,6 +12,7 @@ class LessonCatcher
 
   def sync
     (starts_at..ends_at).each do |date|
+      puts "синхронизируем занятия за  #{I18n.l(date)}"
       mark_lessons_deleted_at date
       import_timetable_at date
       delete_lessons_marked_at date
@@ -23,8 +25,11 @@ class LessonCatcher
     end
 
     def import_timetable_at(date)
-      timetable_at(date).each do |group_number, lessons|
+      timetable_at = timetable_at date
+      pb = ProgressBar.new(timetable_at.count)
+      timetable_at.each do |group_number, lessons|
         import_lessons_for(group_number, lessons, date)
+        pb.increment!
       end
     end
 
