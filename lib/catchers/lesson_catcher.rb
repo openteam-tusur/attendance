@@ -79,7 +79,7 @@ class LessonCatcher
             Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
           end
 
-          group.students.actual.pluck(:id).each do |student_id|
+          group.students_at(date).map(&:id).each do |student_id|
             Presence.find_or_create_by(:student_id => student_id, :lesson_id => lesson_id)
           end
         end

@@ -20,6 +20,10 @@ class Group < ActiveRecord::Base
     number
   end
 
+  def students_at(date)
+    memberships.where("created_at < :date AND deleted_at IS NULL OR deleted_at > :date", :date => date).map(&:person).uniq.sort_by{|p| p[:surname]}
+  end
+
   def group_leaders
     permissions.where(:role => :group_leader).map(&:user).compact
   end
