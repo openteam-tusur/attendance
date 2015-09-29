@@ -1,3 +1,5 @@
+require 'date_range.rb'
+include DateRange
 namespace :statistic do
   desc 'Рассчитать всю статистику'
 
@@ -8,6 +10,12 @@ namespace :statistic do
       finish = args['end'].blank? ? Date.today : Date.parse(args['end'])
       p "Очистка статистики"
       Statistic::Cleaner.instance.clean(start, finish)
+    end
+
+    task :calculate_for_last_month  do
+      start = Date.today - 31.day > semester_begin ? Date.today - 31.days : semester_begin
+      finish = Date.today
+      Rake::Task['statistic:calculate'].invoke("['#{start.to_s}','#{finish.to_s}'")
     end
 
     task :calculate, [:start, :end] => :clean do |t, args|
