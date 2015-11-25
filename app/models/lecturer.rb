@@ -13,7 +13,7 @@ class Lecturer < Person
   end
 
   def short_name
-    "#{surname} #{name.first}. #{patronymic.first}."
+    "#{surname} #{name.first}. #{patronymic.try(:first)}."
   end
 
   def actual_subdepartment
