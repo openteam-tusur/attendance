@@ -7,9 +7,9 @@ task :detailed_statistic_for_group, [:group_number, :start, :ends_at] => :enviro
     raise "#{arg} должен быть указан" if args[arg].blank?
     args[arg]
   end
-  students = Group.find_by(number: group_number).students
+  students = Group.find_by(number: group_number ).memberships.where(participate_type: "Group").map(&:person)
   dates = Date.parse(start)..Date.parse(ends_at)
-  CSV.open("statistic/#{group_number}-#{start}-#{ends_at}ends_at.csv", "w") do |csv|
+  CSV.open("statistic/#{group_number}-#{start}-#{ends_at}.csv", "w") do |csv|
 
     #собираем шапку файла
     head = ["Студент"]
