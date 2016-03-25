@@ -10,8 +10,8 @@ namespace :sync do
   desc 'Синхронизация факультетов, кафедр'
   task :structure => :environment do
     begin
-      StructureCatcher.new.sync
-      Sync.create :title => "Синхронизация факультетов и кафедр <span class='success'>прошла успешно.</span> (#{Faculty.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count + Subdepartment.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
+      report = StructureCatcher.new.sync
+      Sync.create :title => "Синхронизация факультетов и кафедр <span class='success'>прошла успешно.</span>: #{ report }."
     rescue Exception => e
       Sync.create :title => "При синхронизации факультетов и кафедр <span class='failure'>произошла ошибка:</span> \"#{e}\"", :state => :failure
       Airbrake.notify(:error_class => "Sync Lessons Rake", :error_message => e.message)

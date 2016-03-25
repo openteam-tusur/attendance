@@ -31,3 +31,6 @@ sso:
 
 profile:
   url:       http://profile.url
+
+directory:
+  url: 'https://directory.tusur.ru/'
