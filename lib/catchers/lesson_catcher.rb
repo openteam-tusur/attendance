@@ -57,7 +57,11 @@ class LessonCatcher
 
           lesson['lecturers'].each do |lecturer|
             begin
-              subdepartment = Subdepartment.find_by!(:abbr => lecturer['subdepartment'])
+              subdepartment = Subdepartment.where(abbr:  [ lecturer['subdepartment'],
+                                                           wrong_abbrs[lecturer['subdepartment']] || lecturer['subdepartment'].mb_chars.downcase.to_s,
+
+              ]).first
+              raise ActiveRecord::RecordNotFound if subdepartment.nil?
             rescue ActiveRecord::RecordNotFound
               raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
@@ -99,5 +103,12 @@ class LessonCatcher
 
     def timetable_url_with(date)
       "#{Settings['timetable.url']}/api/v1/timetables/by_date/#{date}"
+    end
+
+    def wrong_abbrs
+      {
+        'ФС' => 'ФиС',
+        'ПМиИ' => 'ПМИ'
+      }
     end
 end
