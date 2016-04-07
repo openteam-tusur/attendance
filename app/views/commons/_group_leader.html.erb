@@ -4,4 +4,8 @@
   <%= mail_to @group.group_leader.try :email %>
   <br/>
   <%= link_to "Открыть журнал группы", [current_namespace, @group, :lessons], :target => '_blank' if can? :read, Lesson %>
+  <br/>
+  <% if @group.deleted_at %>
+    <strong>Внимание: группа удалена <%= l @group.deleted_at, format: '%e %b %Y года' %> и является архивной. </strong>
+  <% end %>
 </div>

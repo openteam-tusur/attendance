@@ -4,7 +4,7 @@ class EducationDepartment::GroupsController < AuthController
 
   def show
     @charts = {}
-    @group = Group.actual.find_by(:number => params[:id])
+    @group = Group.find_by(:number => params[:id])
     @course = params[:course_id]
     @faculty = params[:faculty_id]
 
