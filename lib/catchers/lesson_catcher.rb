@@ -67,7 +67,7 @@ class LessonCatcher
             end
             lect = Lecturer.find_or_initialize_by(:surname => lecturer['lastname'].squish,
                                                   :name => lecturer['firstname'].squish,
-                                                  :patronymic => lecturer['middlename'].squish)
+                                                  :patronymic => lecturer['middlename'].squish.presence || nil)
 
             lect.directory_id = lecturer['directory_id']
 
