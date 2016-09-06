@@ -45,6 +45,8 @@ class LessonCatcher
             raise "Не найдена группа #{group_number}"
           end
 
+
+
           Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date, :group_id => group.id).tap do |l|
             l.classroom    = lesson['classroom']
             l.kind         = lesson['kind']
@@ -65,6 +67,7 @@ class LessonCatcher
             rescue ActiveRecord::RecordNotFound
               raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
+            # safe lecturer import
             lect = Lecturer.find_or_initialize_by(:surname => lecturer['lastname'].squish,
                                                   :name => lecturer['firstname'].squish,
                                                   :patronymic => lecturer['middlename'].squish.presence || nil)
@@ -76,11 +79,14 @@ class LessonCatcher
               lect.subdepartments << subdepartment
             end
 
-            lect.save!
-
-            LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
-
-            Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
+            begin
+              lect.save!
+              LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
+              Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
+            rescue
+                Sync.create title: "Возникли проблемы с преподавателем #{lect.short_name}",
+                            state: :failure
+            end
           end
 
           group.students_at(date).map(&:id).each do |student_id|
