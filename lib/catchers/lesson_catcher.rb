@@ -45,8 +45,6 @@ class LessonCatcher
             raise "Не найдена группа #{group_number}"
           end
 
-
-
           Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date, :group_id => group.id).tap do |l|
             l.classroom    = lesson['classroom']
             l.kind         = lesson['kind']
@@ -59,11 +57,16 @@ class LessonCatcher
 
           lesson['lecturers'].each do |lecturer|
             begin
-              subdepartment = Subdepartment.where(abbr:  [ lecturer['subdepartment'],
-                                                           wrong_abbrs[lecturer['subdepartment']] || lecturer['subdepartment'].mb_chars.downcase.to_s,
-
-              ]).first
-              raise ActiveRecord::RecordNotFound if subdepartment.nil?
+              sub_title = lecturer['subdepartment']
+              unless sub_title
+                Sync.create title: "#{lecturer.inspect} - не указана кафедра",
+                            state: :failure
+                raise ActiveRecord::RecordNotFound
+              end
+              search_array = [ sub_title, wrong_abbrs[sub_title],
+                               sub_title.mb_chars.downcase.to_s]
+              subdepartment = Subdepartment.find_by abbr: search_array
+              raise ActiveRecord::RecordNotFound unless subdepartment
             rescue ActiveRecord::RecordNotFound
               raise "Не найдена кафедра #{lecturer['subdepartment']}"
             end
@@ -96,7 +99,7 @@ class LessonCatcher
     end
 
     def import_discipline(title, abbr)
-      Discipline.find_or_create_by(:title => title.squish, :abbr => abbr.squish)
+      Discipline.find_or_create_by title: title.squish, abbr: abbr.squish
     end
 
     def mark_lessons_deleted_at(date)
