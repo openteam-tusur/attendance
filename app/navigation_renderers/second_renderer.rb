@@ -1,15 +1,15 @@
 class SecondRenderer < SimpleNavigation::Renderer::Base
   def render(item_container)
     if options[:is_subnavigation]
-      ul_class = "dropdown-menu"
+      ul_class = 'dropdown-menu'
     else
-      ul_class = "nav nav-pills first-menu-part"
+      ul_class = 'nav nav-pills first-menu-part'
     end
 
     list_content = item_container.items.inject([]) do |list, item|
       li_options = item.html_options.reject {|k, v| k == :link}
       if include_sub_navigation?(item)
-        li_options[:class] = [li_options[:class], "dropdown"].flatten.compact.join(' ')
+        li_options[:class] = [li_options[:class], 'dropdown'].flatten.compact.join(' ')
       end
       li_content = tag_for(item)
       if include_sub_navigation?(item)
@@ -43,14 +43,14 @@ class SecondRenderer < SimpleNavigation::Renderer::Base
     link_options = item.html_options[:link] || {}
     opts = special_options.merge(link_options)
     opts[:class] = [link_options[:class], item.selected_class].flatten.compact.join(' ')
-    opts["data-toggle"] = dropdown_link_class(item)
+    opts['data-toggle'] = dropdown_link_class(item)
     opts.delete(:class) if opts[:class].nil? || opts[:class] == ''
     opts
   end
 
   def dropdown_link_class(item)
     if include_sub_navigation?(item) && !options[:is_subnavigation]
-      "dropdown"
+      'dropdown'
     end
   end
 end

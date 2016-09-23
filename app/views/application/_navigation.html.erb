@@ -50,4 +50,36 @@
   </ul>
 <% end %>
 
-<%= render :partial => 'tusur_header/tusur_header' %>
+<%= content_for :tusur_cdn_header_subtop do %>
+  <div class='container'>
+    <div class='row'>
+
+      <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+        <div class='logotype'>
+          <div class='image-wrapper'>
+            <%= link_to '/', class: 'image' do %>
+              <%= image_tag 'logotype.png', class: 'img-responsive' %>
+            <% end %>
+          </div>
+          <div class='hidden-xs site-name-wrapper'>
+            <%= link_to I18n.t('app.title'), '/', class: 'site-name' %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>
+
+<% content_for :tusur_cdn_header_menu do %>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-xs-12'>
+        <span class='tusur-cdn-header-menu-toggler visible-xs'>&#9776;</span>
+        <%= render_navigation renderer: :second_renderer, context: :namespaces, expand_all: true %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render partial: 'tusur_header/tusur_header' %>

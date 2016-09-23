@@ -1,7 +1,7 @@
 require 'capistrano/setup'
 require 'capistrano/deploy'
+require 'slackistrano/capistrano'
 
-require 'airbrake/capistrano3'
 require 'capistrano-db-tasks'
 require 'capistrano3/unicorn'
 require 'capistrano/rvm'
