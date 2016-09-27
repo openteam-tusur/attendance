@@ -1,7 +1,7 @@
 NonStupidDigestAssets.whitelist = [
   'application.css',
   'application.js',
-  'errors',
+  'errors.css',
   'mail.png',
   'tusur_logotype.png'
 ]
