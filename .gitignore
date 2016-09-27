@@ -1,6 +1,7 @@
 /statistic
 *.swp
 .DS_Store
+.ruby-version
 /.bundle
 /.sass-cache
 /config/database.yml
