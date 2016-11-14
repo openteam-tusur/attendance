@@ -58,8 +58,8 @@ class API < Grape::API
   end
 
   params do
-    requires :group_number,            type: String, desc: "Group number"
-    requires :student_ids,      type: Array, desc: 'Student contingent ids'
+    requires :group_number,     type: String, desc: 'Group number'
+    requires :student_ids,      type: Array,  desc: 'Student contingent ids'
     requires :semester_year,    type: String, desc: 'Semester academic year'
     requires :semester_kind,    type: String, desc: 'Semester kind'
     requires :discipline_title, type: String, desc: 'Title of discipline'
@@ -67,6 +67,7 @@ class API < Grape::API
 
   post :group_attendance do
     students = Student.where(contingent_id: params[:student_ids])
+    students_ids = students.pluck(:id)
     return { error: 'Student not found'  } if students.empty?
     result = []
     start, finish = calculate_dates_for params.semester_year, params.semester_kind
@@ -75,16 +76,29 @@ class API < Grape::API
     group = Group.find_by number: params[:group_number]
     return { error: 'Group not found'  } unless group
     lesson_ids = discipline.lesson_ids
-    students.each do |student|
-      presences = student
-        .presences.between_dates(start, finish)
-        .where('lessons.id IN (?) AND lessons.group_id = ?', lesson_ids, group.id)
-        .where('state IS NOT NULL')
 
-      misses = student.misses.between_dates(start, finish)
+    presences = Presence
+                .joins(:student)
+                .includes(:lesson, :student)
+                .between_dates(start, finish)
+                .where('lessons.id IN (?) AND lessons.group_id = ?', lesson_ids, group.id)
+                .where(people: { id: students_ids })
+                .where('state IS NOT NULL')
+                .group_by(&:student)
 
+    misses = Miss.joins("INNER JOIN people ON misses.missing_id = people.id")
+                 .between_dates(start, finish)
+                 .where(missing_type: "Student")
+                 .where("people.id IN (?)", students_ids)
+                 .group_by(&:missing)
+    presences.each do |student, presences|
       presences.each do |p|
-        p.state = 'valid_excuse' if p.state == 'wasnt' && misses.where('misses.starts_at <= :time AND misses.ends_at >= :time', :time => LessonTime.new(p.lesson.order_number, p.lesson.date_on).lesson_time).any?
+        if p.state == 'wasnt' && misses[student]
+          lesson_time = LessonTime.new(p.lesson.order_number, p.lesson.date_on)
+                                  .lesson_time
+          p.state = 'valid_excuse' if misses[student].find{ |miss| miss.starts_at <= lesson_time && miss.ends_at >= lesson_time }
+        end
+
       end
 
       statistic = presences
@@ -94,7 +108,7 @@ class API < Grape::API
                     .map { |kind, presences| { kind => presences.size }  }
                     .reduce(&:merge)
          end.reduce(&:merge)
-      statistic ||= { :error => 'Presence not found'  }
+      statistic ||= { error: 'Presence not found'  }
       statistic[:student_id] = student.id
       result << statistic
     end
