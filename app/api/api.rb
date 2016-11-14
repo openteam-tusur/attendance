@@ -16,6 +16,16 @@ class API < Grape::API
       end
       [start_date, end_date]
     end
+
+    def group_leader_for(group)
+      leader = group.group_leaders.first
+      return nil unless leader
+      {
+        fullname: leader.fullname,
+        email:    leader.email,
+        id:       leader.id
+      }
+    end
   end
 
   params do
@@ -120,6 +130,7 @@ class API < Grape::API
     # после объединения массивов типы зантяй получается в необходимом порядке
     sorted_kinds = I18n.t('lesson.kind').keys.map(&:to_s) & available_kinds.uniq
     result['available_kinds'] = sorted_kinds
+    result[:group_leader] = group_leader_for group
     result
   end
 end
