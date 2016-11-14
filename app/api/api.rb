@@ -118,8 +118,8 @@ class API < Grape::API
     # Сортировка типов занятий 'как принято в ТУСУРе'
     # в локализации типы занятий лежат в 'правильном' порядке
     # после объединения массивов типы зантяй получается в необходимом порядке
-    sorted_kinds = I18n.t('lesson.kind').keys.map(&:to_s) & available_kinds
-    result['available_kinds'] = available_kinds.uniq
+    sorted_kinds = I18n.t('lesson.kind').keys.map(&:to_s) & available_kinds.uniq
+    result['available_kinds'] = sorted_kinds
     result
   end
 end
