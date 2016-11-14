@@ -104,12 +104,14 @@ class API < Grape::API
       statistic = presences
         .group_by { |p| p.lesson.kind }
         .map do |k, p|
-          value = p.group_by(&:state)
+          {
+            k => p.group_by(&:state)
                     .map { |kind, presences| { kind => presences.size }  }
                     .reduce(&:merge)
+          }
          end.reduce(&:merge)
-      statistic ||= { error: 'Presence not found'  }
-      statistic[:student_id] = student.id
+      statistic ||= { :error => 'Presence not found'  }
+      statistic[:student_id] = student.contingent_id
       result << statistic
     end
     result
