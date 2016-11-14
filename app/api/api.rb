@@ -91,6 +91,7 @@ class API < Grape::API
                  .where(missing_type: "Student")
                  .where("people.id IN (?)", students_ids)
                  .group_by(&:missing)
+    available_kinds = []
     presences.each do |student, presences|
       presences.each do |p|
         if p.state == 'wasnt' && misses[student]
@@ -100,7 +101,6 @@ class API < Grape::API
         end
 
       end
-      available_kinds = []
       statistic = presences
         .group_by { |p| p.lesson.kind }
         .map do |k, p|
