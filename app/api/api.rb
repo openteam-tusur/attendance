@@ -69,7 +69,7 @@ class API < Grape::API
     students = Student.where(contingent_id: params[:student_ids])
     students_ids = students.pluck(:id)
     return { error: 'Student not found'  } if students.empty?
-    result = []
+    result = {}
     start, finish = calculate_dates_for params.semester_year, params.semester_kind
     discipline = Discipline.find_by title: params[:discipline_title]
     return { error: 'Discipline not found'  } unless discipline.present?
@@ -111,8 +111,7 @@ class API < Grape::API
           }
          end.reduce(&:merge)
       statistic ||= { :error => 'Presence not found'  }
-      statistic[:student_id] = student.contingent_id
-      result << statistic
+      result[student.contingent_id] = statistic
     end
     result
   end
