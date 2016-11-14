@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openteam-tusur/auth_client
-  revision: af5f3aa92069d9bf257acfa9c16d2295be56b9e6
+  revision: 53da8e0d2a4ee70bb8272f8b1537e6c279247ae9
   specs:
     auth_client (0.0.5)
       activesupport
@@ -229,7 +229,7 @@ GEM
       options (~> 2.3.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.4)
+    rack (1.6.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-protection (1.5.3)
