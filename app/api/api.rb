@@ -100,10 +100,11 @@ class API < Grape::API
         end
 
       end
-
+      available_kinds = []
       statistic = presences
         .group_by { |p| p.lesson.kind }
         .map do |k, p|
+          available_kinds << k
           {
             k => p.group_by(&:state)
                     .map { |kind, presences| { kind => presences.size }  }
@@ -113,6 +114,7 @@ class API < Grape::API
       statistic ||= { :error => 'Presence not found'  }
       result[student.contingent_id] = statistic
     end
+    result['available_kinds'] = available_kinds.uniq
     result
   end
 end
