@@ -18,6 +18,7 @@ class API < Grape::API
     end
 
     def group_leader_for(group)
+      return nil unless group
       leader = group.group_leaders.first
       return nil unless leader
       {
@@ -132,5 +133,14 @@ class API < Grape::API
     result['available_kinds'] = sorted_kinds
     result[:group_leader] = group_leader_for group
     result
+  end
+
+  params do
+    requires :group_number,     type: String, desc: 'Group number'
+  end
+
+  post :group_leader do
+    group = Group.find(params[:group_number])
+    { group_leader: group_leader_for(group) }
   end
 end
