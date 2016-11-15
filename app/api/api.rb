@@ -140,7 +140,7 @@ class API < Grape::API
   end
 
   post :group_leader do
-    group = Group.find(params[:group_number])
+    group = Group.find_by(number: params[:group_number])
     { group_leader: group_leader_for(group) }
   end
 end
