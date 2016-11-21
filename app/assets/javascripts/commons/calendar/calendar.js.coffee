@@ -9,7 +9,7 @@ class Calendar
     @set_current_visible()
 
   prepare_months: ->
-    for month in @source_element.find('.month')
+    for month in $('.month', @source_element)
       @months.push(new Month(@, month))
 
   prepare_handlers: ->
@@ -50,7 +50,7 @@ class Calendar
     @source_element.animate({'top': @top -= @_visible_months()[0].height})
 
   prev: ->
-    return if @top == 0
+    return if Math.round(@top) == 0
     @source_element.animate
       'top': @top += @_visible_months()[0].prev().height
 
@@ -69,10 +69,11 @@ class Month
     @current  = @source_element.hasClass('current')
 
   visible: ->
+    top_position = Math.round(@source_element.position().top + @calendar.top)
     if @prev()
-      @source_element.position().top + @calendar.top == @prev().height || @source_element.position().top + @calendar.top == 0
+      top_position == @prev().height #|| top_position == 0
     else
-      @source_element.position().top + @calendar.top == 0
+      top_position == 0
 
   prev: ->
     @calendar.months[@id-2]
