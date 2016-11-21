@@ -20,7 +20,10 @@ class Calendar
       @set_height()
 
   set_height: ->
-    @source_element.parent().css('height', @_visible_months().reduce (x,y) -> x.height + y.height)
+    @source_element.parent().css
+      height: @_visible_months().reduce (x,y) ->
+        x.height + y.height
+      , 0
 
   set_current_visible: ->
     @source_element.css('top', @top -= @current_month_offset())
