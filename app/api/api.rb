@@ -77,17 +77,22 @@ class API < Grape::API
   end
 
   post :group_attendance do
+    result = {}
+    group = Group.find_by number: params[:group_number]
+    return result.merge!({ error: 'Group not found'  }) unless group
+
+    result[:group_leader] = group_leader_for group
     students = Student.where(contingent_id: params[:student_ids])
     students_ids = students.pluck(:id)
-    return { error: 'Student not found'  } if students.empty?
-    result = {}
-    start, finish = calculate_dates_for params.semester_year, params.semester_kind
+
+    return result.merge!({ error: 'Student not found'  }) if students.empty?
+
     discipline = Discipline.find_by title: params[:discipline_title]
-    return { error: 'Discipline not found'  } unless discipline.present?
-    group = Group.find_by number: params[:group_number]
-    return { error: 'Group not found'  } unless group
+    return result.merge!({ error: 'Discipline not found'  }) unless discipline.present?
     lesson_ids = discipline.lesson_ids
 
+
+    start, finish = calculate_dates_for params.semester_year, params.semester_kind
     presences = Presence
                 .joins(:student)
                 .includes(:lesson, :student)
@@ -131,7 +136,6 @@ class API < Grape::API
     # после объединения массивов типы зантяй получается в необходимом порядке
     sorted_kinds = I18n.t('lesson.kind').keys.map(&:to_s) & available_kinds.uniq
     result['available_kinds'] = sorted_kinds
-    result[:group_leader] = group_leader_for group
     result
   end
 
