@@ -45,7 +45,6 @@ $ ->
     offset = 0
     offset = $('.visible:last', calendar).next().outerHeight() if direction == '-'
     offset = $('.visible:first', calendar).prev().outerHeight() if direction == '+'
-    console.log "#{direction}=#{offset}"
     calendar.animate
       bottom: "#{direction}=#{offset}"
     , speed
