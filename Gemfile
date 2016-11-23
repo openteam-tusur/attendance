@@ -34,6 +34,10 @@ gem 'tusur_header'
 gem 'uglifier', '>= 1.3.0'
 gem 'validates_email_format_of'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-sugarjs'
+end
+
 group :development do
   gem 'hirb'
   gem 'openteam-capistrano', '~> 1.0.15'

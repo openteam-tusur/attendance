@@ -19,6 +19,7 @@ GIT
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (4.2.7.1)
       actionpack (= 4.2.7.1)
@@ -247,6 +248,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.7.1)
       sprockets-rails
+    rails-assets-sugarjs (1.4.1)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -394,6 +396,7 @@ DEPENDENCIES
   progress_bar
   quiet_assets
   rails (~> 4.2.7)
+  rails-assets-sugarjs!
   rails-erd
   redis-session-store
   rest-client

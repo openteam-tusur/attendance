@@ -132,7 +132,7 @@ textarea.form-control
 
 // Lessons -->
 .table-lessons
-  width: 79%
+  width: 100%
 
   .caption
     color: #222
@@ -225,27 +225,13 @@ textarea.form-control
   .uncheck-all
     color: #ff6769
 
-@media (max-width: $screen-sm-max)
-  .table-lessons
-    width: 100%
-
-  .calendar-wrapper
-    +clearfix
-    clear: both !important
-    display: block
-    margin: 0 0 20px 0
-    width: 100% !important
-
-    .date, .calendar-legend
-      display: none
-
 // <-- Lessons
 
 
 // Calendar -->
 .calendar-wrapper
-  float: right
-  width: 19%
+  //float: right
+  width: 217px
 
   .date
     font-size: 18px
@@ -288,26 +274,34 @@ textarea.form-control
 .calendar-viewport
   +clearfix
   border: 1px solid #d5d5d5
+  border-bottom: 0
   height: 415px
-  //overflow-y: scroll
   position: relative
 
 .scroll-up, .scroll-down
-  background: #f2f2f2 image-url('presence/scroll-up.png') no-repeat center center
+  background: #f2f2f2
+  font-size: 18px
   border: 1px solid #d5d5d5
-  border-bottom: none
   cursor: pointer
   height: 24px
+  line-height: 24px
   text-align: center
 
+  &.disabled
+    cursor: default
+    color: #aaa
+
+.scroll-up
+  border-bottom: 0
+
 .scroll-down
-  +rotate(180deg)
+  border-top: 0
 
 .calendar
   +clearfix
   margin: 0 auto
   position: absolute
-  top: 0
+  bottom: 0
 
   .day-names
     +clearfix

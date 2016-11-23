@@ -4,6 +4,7 @@
 //= require jquery-ui-addons
 //= require bootstrap
 //= require tusur_header
+//= require sugarjs
 //= require highcharts
 //= require commons/ajaxed_delete
 //= require commons/calendar

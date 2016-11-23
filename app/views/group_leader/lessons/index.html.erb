@@ -1,66 +1,81 @@
-<%= render 'calendar' %>
+<div class='row'>
+  <div class='col-xs-12'>
+    <%= content_for :page_title do %>
+      <h1><%= page_title(@group.number) %></h1>
+    <% end %>
+  </div>
+</div>
 
-<%= content_for :page_title do %>
-  <h1><%= page_title(@group.number) %></h1>
-<% end %>
+<div class='row'>
 
-<div class="table-responsive">
-  <table class="table table-condensed table-bordered table-lessons">
-    <thead>
-      <tr>
-        <th class="caption">Список студентов</th>
-        <% (1..7).each do |index| %>
-          <% if @lessons_grouped_by_order[index.to_s] %>
-            <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
-              <th class="lesson-caption">
-                <%= link_to lesson.realizes.first,
-                            change_group_leader_lesson_realizes_path(lesson),
-                            :data => { :confirm => t('confirm.realize') },
-                            :class => "js-lesson-realizes lesson-realizes #{lesson.realizes.first.state}" %>
+  <div class='col-lg-9 col-md-9 col-sm-12'>
 
-                <span class="lesson-info">
-                  <%= content_tag(:span, I18n.t("lesson.time.#{lesson.order_number}"), :class => 'lesson-time') %>
-                  <%= content_tag(:span, lesson.discipline.title, :class => 'lesson-discipline truncated') %>
-                  <%= content_tag(:span, I18n.t("lesson.kind.#{lesson.kind}.name"), :class => 'lesson-kind truncated') %>
-                  <%= content_tag(:span, lesson.lesson_lecturers, :class => 'lesson-lecturers truncated') %>
-                </span>
+    <div class='table-responsive'>
+      <table class='table table-condensed table-bordered table-lessons'>
+        <thead>
+          <tr>
+            <th class='caption'>Список студентов</th>
+            <% (1..7).each do |index| %>
+              <% if @lessons_grouped_by_order[index.to_s] %>
+                <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
+                  <th class='lesson-caption'>
+                    <%= link_to lesson.realizes.first,
+                      change_group_leader_lesson_realizes_path(lesson),
+                      data: { confirm: t('confirm.realize') },
+                      class: "js-lesson-realizes lesson-realizes #{lesson.realizes.first.state}" %>
 
-                <div class='check-helper'>
-                  <%= link_to "Все были",    check_all_group_leader_lesson_presences_path(lesson), :class => 'check-all' %>
-                  <%= link_to "Все не были", uncheck_all_group_leader_lesson_presences_path(lesson), :class => 'uncheck-all' %>
-                </div>
-              </th>
-            <% end %>
-          <% else %>
-            <th class='lesson-caption'>
-              <span class="lesson-info empty">
-                <%= content_tag(:span, I18n.t("lesson.time.#{index}"), :class => 'lesson-time') %>
-                <span class="lesson-discipline">нет пары</span>
-              </span>
-            </th>
-          <% end %>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @group.students_at(@date).each do |student| %>
-        <tr>
-          <td class="student"><%= student %></td>
-          <% (1..7).each do |index| %>
-            <% if @lessons_grouped_by_order[index.to_s] %>
-              <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
-                <td class='js-presence-cell presence-cell'>
-                  <%= render :partial => 'group_leader/presences/presence', :locals => { :presence => lesson.presences.select{|p| p.student_id == student.id }.first, :lesson => lesson } %>
-                </td>
+                    <span class="lesson-info">
+                      <%= content_tag(:span, I18n.t("lesson.time.#{lesson.order_number}"), class: 'lesson-time') %>
+                      <%= content_tag(:span, lesson.discipline.title, class: 'lesson-discipline truncated') %>
+                      <%= content_tag(:span, I18n.t("lesson.kind.#{lesson.kind}.name"), class: 'lesson-kind truncated') %>
+                      <%= content_tag(:span, lesson.lesson_lecturers, class: 'lesson-lecturers truncated') %>
+                    </span>
+
+                    <div class='check-helper'>
+                      <%= link_to 'Все были', check_all_group_leader_lesson_presences_path(lesson), class: 'check-all' %>
+                      <%= link_to 'Все не были', uncheck_all_group_leader_lesson_presences_path(lesson), class: 'uncheck-all' %>
+                    </div>
+                  </th>
+                <% end %>
+              <% else %>
+                <th class='lesson-caption'>
+                  <span class='lesson-info empty'>
+                    <%= content_tag(:span, I18n.t("lesson.time.#{index}"), class: 'lesson-time') %>
+                    <span class='lesson-discipline'>нет пары</span>
+                  </span>
+                </th>
               <% end %>
-            <% else %>
-                <td class='js-presence-cell presence-cell'>
-                  &dash;
-                </td>
             <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @group.students_at(@date).each do |student| %>
+            <tr>
+              <td class='student'><%= student %></td>
+              <% (1..7).each do |index| %>
+                <% if @lessons_grouped_by_order[index.to_s] %>
+                  <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
+                    <td class='js-presence-cell presence-cell'>
+                      <%= render partial: 'group_leader/presences/presence',
+                        locals: { presence: lesson.presences.select{|p| p.student_id == student.id }.first, lesson: lesson } %>
+                    </td>
+                  <% end %>
+                <% else %>
+                  <td class='js-presence-cell presence-cell'>
+                    &mdash;
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
           <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class='col-lg-3 col-md-3 col-sm-12'>
+    <%= render 'calendar' %>
+  </div>
+
 </div>

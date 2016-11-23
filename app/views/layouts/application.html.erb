@@ -2,17 +2,17 @@
 <html>
   <head>
     <title><%= document_title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 
-    <%= stylesheet_link_tag    'application', :media => 'all' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag "#{current_namespace}" %>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicon.ico'%>
   </head>
   <body class='<%= current_namespace %>_namespace'>
-    <div class="wrapper">
+    <div class='wrapper'>
       <%= render 'navigation' %>
 
       <div class='container'>
@@ -32,9 +32,11 @@
       </div>
     <% end %>
 
-    <%= render :partial => 'footer' %>
-    <%= render :partial => 'metrika' %>
+    <%= render partial: 'footer' %>
+    <%= render partial: 'metrika' %>
 
     <%= yield :stop_ie if content_for?(:stop_ie) %>
+
+    <%= render partial: 'development' %>
   </body>
 </html>
