@@ -25,7 +25,7 @@ $ ->
     $('.visible:last', calendar).removeClass('visible')
     $(this).addClass('disabled') if months.first().hasClass('visible')
     link_down.removeClass('disabled')
-    slide_and_resize('-')
+    slide_and_resize()
 
   link_down.click ->
     return if $(this).hasClass('disabled')
@@ -33,20 +33,18 @@ $ ->
     $('.visible:first', calendar).removeClass('visible')
     $(this).addClass('disabled') if months.last().hasClass('visible')
     link_up.removeClass('disabled')
-    slide_and_resize('+')
+    slide_and_resize()
 
-  slide_and_resize = (direction) ->
+  slide_and_resize = ->
     speed = 300
     height = $('.visible', calendar).get().sum (item) ->
       $(item).outerHeight()
     wrapper.animate
       height: height
     , speed
-    offset = 0
-    offset = $('.visible:last', calendar).next().outerHeight() if direction == '-'
-    offset = $('.visible:first', calendar).prev().outerHeight() if direction == '+'
+    offset = $('.visible:last').position().top + $('.visible:last').outerHeight() - calendar.outerHeight()
     calendar.animate
-      bottom: "#{direction}=#{offset}"
+      bottom: offset
     , speed
     return
 
