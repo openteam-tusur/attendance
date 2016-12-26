@@ -40,6 +40,7 @@ end
 
 group :development do
   gem 'hirb'
+  gem 'capistrano-db-tasks', '0.4', require: false
   gem 'openteam-capistrano', '~> 1.0.15'
   gem 'capistrano-auth-subscriber'
   gem 'quiet_assets'

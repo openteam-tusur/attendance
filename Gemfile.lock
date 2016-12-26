@@ -56,9 +56,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    airbrake (5.5.0)
-      airbrake-ruby (~> 1.5)
-    airbrake-ruby (1.5.0)
+    airbrake (5.6.1)
+      airbrake-ruby (~> 1.6)
+    airbrake-ruby (1.6.0)
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (6.0.3)
@@ -82,19 +82,21 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-auth-subscriber (0.0.1)
       capistrano (~> 3.1)
-    capistrano-bundler (1.1.4)
+    capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-db-tasks (0.4)
       capistrano (>= 3.0.0)
+    capistrano-faster-assets (1.0.2)
+      capistrano (>= 3.1)
     capistrano-harrow (0.5.3)
-    capistrano-rails (1.1.8)
+    capistrano-rails (1.2.1)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano-sidekiq (0.5.4)
+    capistrano-sidekiq (0.10.0)
       capistrano
       sidekiq (>= 3.4)
     capistrano3-unicorn (0.2.1)
@@ -131,7 +133,7 @@ GEM
     configliere (0.4.18)
       highline (>= 1.5.2)
       multi_json (>= 1.1)
-    connection_pool (2.2.0)
+    connection_pool (2.2.1)
     daemons (1.2.4)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -207,15 +209,16 @@ GEM
       mini_portile2 (~> 2.1.0)
     non-stupid-digest-assets (1.0.8)
       sprockets (>= 2.0)
-    openteam-capistrano (1.0.15)
+    openteam-capistrano (1.0.17)
       airbrake
       capistrano (~> 3.5.0)
       capistrano-db-tasks
+      capistrano-faster-assets
       capistrano-rails
       capistrano-rvm
       capistrano-sidekiq
       capistrano3-unicorn
-      slackistrano (= 3.1.0.beta)
+      slackistrano (~> 3.1.0)
     openteam-commons (0.3.3.1)
       airbrake
       configliere
@@ -294,17 +297,17 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sidekiq (4.2.1)
+    sidekiq (4.2.7)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
-      rack-protection (~> 1.5)
+      rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
     simple-navigation (4.0.3)
       activesupport (>= 2.3.2)
     simple_form (3.3.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
-    slackistrano (3.1.0.beta)
+    slackistrano (3.1.0)
       capistrano (>= 3.5.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
@@ -313,7 +316,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sshkit (1.11.3)
+    sshkit (1.11.5)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     stop_ie (0.1.5)
@@ -376,6 +379,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   cancan
   capistrano-auth-subscriber
+  capistrano-db-tasks (= 0.4)
   coffee-rails (~> 4.0.0)
   compass-rails
   enumerize
