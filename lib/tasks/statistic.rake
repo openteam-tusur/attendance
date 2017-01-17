@@ -53,6 +53,7 @@ namespace :statistic do
                AND lessons.date_on >= '#{start}' AND lessons.date_on <= '#{finish}';"
 
     res = ActiveRecord::Base.connection.select_all(query)
+    abort('Нет данных для обновления') if res.count <= 0
     pb  = ProgressBar.new(res.count)
 
     res.each do |item|
