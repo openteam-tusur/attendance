@@ -1,6 +1,8 @@
 require 'open-uri'
 require 'lecturer_permissions'
 require 'progress_bar'
+require 'catchers/rest_responser'
+include RestResponser
 
 class LessonCatcher
   attr_accessor :starts_at, :ends_at
@@ -11,26 +13,48 @@ class LessonCatcher
   end
 
   def sync
+    redo_counter = 0
+
     (starts_at..ends_at).each do |date|
       puts "синхронизируем занятия за  #{I18n.l(date)}"
       mark_lessons_deleted_at date
-      import_timetable_at date
+      timetable_info = import_timetable_at date
+
+      if timetable_info[:code] != 200
+        if redo_counter > 10
+          abort("LessonCatcher: timetable.openteam.ru вернул код ошибки #{timetable_info[:code]} более 10 раз.
+          Синхронизация принудительно остановлена")
+        end
+
+        redo_counter += 1
+        sleep 15
+        redo
+      end
+
       delete_lessons_marked_at date
     end
   end
 
   private
-    def timetable_at(date)
-      JSON.parse(open(timetable_url_with(date)).read)
+    def timetable_url_with(date)
+      "#{Settings['timetable.url']}/api/v1/timetables/by_date/#{date}"
     end
 
     def import_timetable_at(date)
-      timetable_at = timetable_at date
-      pb = ProgressBar.new(timetable_at.count)
-      timetable_at.each do |group_number, lessons|
-        import_lessons_for(group_number, lessons, date)
-        pb.increment!
+      url = timetable_url_with date
+      res = RestResponser.rest_response url
+
+      timetable_at = res[:json]
+
+      unless timetable_at.empty?
+        pb = ProgressBar.new(timetable_at.count)
+        timetable_at.each do |group_number, lessons|
+          import_lessons_for(group_number, lessons, date)
+          pb.increment!
+        end
       end
+
+      res
     end
 
     def import_lessons_for(group_number, lessons, date)
@@ -108,10 +132,6 @@ class LessonCatcher
 
     def delete_lessons_marked_at(date)
       Lesson.not_actual.by_date(date).destroy_all
-    end
-
-    def timetable_url_with(date)
-      "#{Settings['timetable.url']}/api/v1/timetables/by_date/#{date}"
     end
 
     def wrong_abbrs
