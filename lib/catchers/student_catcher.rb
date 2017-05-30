@@ -1,4 +1,6 @@
 require 'open-uri'
+require 'catchers/rest_responser'
+include RestResponser
 
 class StudentCatcher
   def wrong
@@ -32,12 +34,28 @@ class StudentCatcher
   private
 
   def import
+    redo_counter = 0
+
     Group.actual.each do |group|
-      students = students_of group.number
-      if students.empty?
-        students = students_of wrong_groups[group.number]
+      students_info = students_of group.number
+
+      if students_info[:code] != 200
+        if redo_counter > 10
+          abort("StudentCatcher: students.openteam.ru вернул код ошибки #{students_info[:code]} более 10 раз.
+          Синхронизация принудительно остановлена")
+        end
+
+        redo_counter += 1
+        sleep 15
+        redo
       end
-      students += students_of "#{group.number}_"
+      puts group.number
+      students = students_info[:json]
+
+      if students.empty?
+        students = students_of(wrong_groups[group.number])[:json]
+      end
+      students += students_of("#{group.number}_")[:json]
       next if students.empty?
 
       update_group group, students.first['group']
@@ -46,7 +64,8 @@ class StudentCatcher
   end
 
   def students_of(group_number)
-    JSON.parse(open(URI.encode("#{Settings['students.url']}/api/v1/students?group=#{group_number}")).read)
+    # JSON.parse(open(URI.encode("#{Settings['students.url']}/api/v1/students?group=#{group_number}")).read)
+    RestResponser.rest_response URI.encode("#{Settings['students.url']}/api/v1/students?group=#{group_number}")
   end
 
   def import_students(students, group)
