@@ -1,5 +1,13 @@
-<%= content_for :page_title do %>
-  <h1 class="text-center"><%= page_title(@group.number) %></h1>
-<% end %>
+<div class='row'>
+  <div class='col-xs-12'>
+    <%= content_for :page_title do %>
+      <% if @group.present? %>
+        <h1 class="text-center"><%= page_title(@group.number) %></h1>
+      <% else %>
+        <h1>Нет актуальной информации</h1>
+      <% end %>
+    <% end %>
 
-<%= charts %>
+    <%= charts %>
+  </div>
+</div>
