@@ -30,7 +30,14 @@ class Statistic::Reader < Statistic::Base
         hash
       end
       opts = { :value => (res['attendance'].to_i*100.0/res['total']).round(1) }
-      opts.merge! :url => "/#{route_namespace}/#{kind}/#{k}" if route_namespace
+      if route_namespace
+        ap opts.merge! url: [
+          '',
+          route_namespace,
+          kind.force_encoding('UTF-8'),
+          k
+        ].join('/')
+      end
       h[k] = opts unless res['total'].zero?
       h
     end.sort

@@ -64,6 +64,7 @@ GEM
     attribute_normalizer (1.2.0)
     autoprefixer-rails (6.4.1.1)
       execjs
+    awesome_print (1.8.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -374,6 +375,7 @@ DEPENDENCIES
   attribute_normalizer
   auth_client!
   auth_redis_user_connector!
+  awesome_print
   bootstrap-sass (~> 3.3.6)
   cancan
   capistrano-auth-subscriber
