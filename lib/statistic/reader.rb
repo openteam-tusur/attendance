@@ -34,7 +34,7 @@ class Statistic::Reader < Statistic::Base
         ap opts.merge! url: [
           '',
           route_namespace,
-          kind.force_encoding('UTF-8'),
+          kind,
           k
         ].join('/')
       end
