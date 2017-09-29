@@ -42,3 +42,6 @@ profile:
 
 directory:
   url:          https://directory
+
+cms:
+  url:          https://cms.url
