@@ -1,5 +1,52 @@
-#content
+// List of faculty abbrs and brands colors
+$faculty_list: ef fb fdo fet fit fpk fsu fvs gf rkf rtf yuf zivf
+$faculty_colors: #3eafab #376a76 #A5CD37 #ff2e34 #98248f #2C55A4 #ffc300 #ff7632 #00b2f2 #00a64e #344499 #652d90 #892A1B
 
+// Set logos of faculties
+=background_faculty_logo
+  @each $faculty in $faculty_list
+    &.logo-#{$faculty}
+      background-image: image-url("faculties/#{$faculty}.jpg")
+
+// Set faculty titles color
+=title_colors
+  @each $faculty_color in $faculty_colors
+    $i: index($faculty_colors, $faculty_color)
+    &.title-#{nth($faculty_list, $i) }
+      color: $faculty_color
+
+      a
+        color: $faculty_color
+
+// Cell of faculty
+=single_faculty_view
+  +display-flex
+  +align-items(center)
+  +flex-basis(33%)
+  margin: 5px 0
+
+  .title
+    text-transform: uppercase
+    font-family: "OfficinaSerifBookSCC", "Verdana", sans-serif
+    +flex(97%)
+    font-weight: bold
+    padding-right: 10px
+    max-width: 225px
+
+    +title_colors
+
+    &.not-bold
+      font-weight: normal
+
+  .logo
+    height: 50px
+    background-repeat: no-repeat
+    +flex-basis(60px)
+
+    +background_faculty_logo
+
+
+#content
   .hidden-li
     display: none
 
@@ -35,6 +82,128 @@
     .landing_container
       margin-left: 0
       margin-right: 0
+
+    table.subdepartment-contacts
+      border: 2px solid #cdcdcd
+
+      tr
+        td
+          border: 1px solid #ddd !important
+
+          p
+            line-height: 20px
+
+        .faculty
+          +single_faculty_view
+          margin: 5px 0 -5px 0
+
+          .logo
+            background-size: 35px
+            +flex-basis(35px)
+
+          .title
+            margin-top: -10px
+            padding-left: 5px
+            padding-right: 0
+            font-weight: normal
+
+      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
+        thead
+          display: none
+
+          th, td
+            display: block
+            text-align: left
+            border: 0
+
+          tr
+            th, td
+              padding-top: 0
+              padding-bottom: 0
+
+              &:last-child
+                padding-bottom: 10px
+
+        tbody
+          th, td
+            display: block
+            text-align: left
+            border: 0
+
+          tr
+            td
+              padding-top: 0
+              padding-bottom: 0
+
+              br
+                +inline-block
+                content: ''
+                width: 5px
+                height: 18px
+
+                &:before
+                  display: block
+                  content: ', '
+
+              &:first-child
+                padding-top: 10px
+
+              &:last-child
+                padding-bottom: 10px
+
+        tr td
+          .faculty
+            .logo
+              +flex-basis(50px)
+
+      @media (max-width: $screen-xs-max)
+        thead
+          display: none
+
+          th, td
+            display: block
+            text-align: left
+            border: 0
+
+          tr
+            th, td
+              padding-top: 0
+              padding-bottom: 0
+
+              &:last-child
+                padding-bottom: 10px
+
+        tbody
+          th, td
+            display: block
+            text-align: left
+            border: 0
+
+          tr
+            td
+              padding-top: 0
+              padding-bottom: 0
+
+              br
+                +inline-block
+                content: ''
+                width: 5px
+                height: 18px
+
+                &:before
+                  display: block
+                  content: ', '
+
+              &:first-child
+                padding-top: 10px
+
+              &:last-child
+                padding-bottom: 10px
+
+        tr td
+          .faculty
+            .logo
+              +flex-basis(50px)
 
     .image-with-caption
       margin-bottom: 10px

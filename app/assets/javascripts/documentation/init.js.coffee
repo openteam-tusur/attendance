@@ -2,7 +2,7 @@
   $('h1').hide()
   $('<div>', { class: 'col-lg-3 col-md-3 col-sm-4 hidden-xs right-side', role: 'complementary' }).insertAfter($('#introduction').next('.left-side'))
   $('#introduction').nextAll().wrapAll($('<div>', { class: 'row landing_container' }))
-  $('body').attr('data-spy': 'scroll', 'data-offset': '50').css( position: 'relative' )
+  $('body').attr('data-spy': 'scroll', 'data-offset': '200').css( position: 'relative' )
 
   landing_container = $('.landing_container')
 
@@ -84,7 +84,7 @@
     yScroll = document.body.scrollTop
     window.location.hash = hash
     document.body.scrollTop = yScroll
-    $.scrollTo(target, 1000)
+    $.scrollTo(target, 1000, { offset: { top: 0 } })
     return false
 
   return
