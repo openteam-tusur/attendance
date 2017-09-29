@@ -153,6 +153,8 @@ ru:
     subdepartment_declarations:
       new:                        Добавить объяснительную
       edit:                       Редактировать объяснительную
+    documentation:
+      show:                       Документация
 
   empty:
     disruptions:                  Нет сорванных занятий
@@ -173,6 +175,8 @@ ru:
     lecturer:              Преподаватель
     subdepartment:         'Кафедра %{title}'
     student:               Студент
+
+  temporary_unavailable: Сервис временно недоступен
 
   lesson:
     kind:

@@ -1,0 +1,14 @@
+=declare-font-face($font-family, $font-filename, $font-weight: normal, $font-style: normal, $font-stretch: normal)
+  @font-face
+    font-family: "#{$font-family}"
+    src: url(asset-path("#{$font-filename}.eot"))
+    src: url(asset-path("#{$font-filename}.eot?#iefix")) format("embedded-opentype"), url(asset-path("#{$font-filename}.woff")) format("woff"), url(asset-path("#{$font-filename}.ttf")) format("truetype"), url(asset-path("#{$font-filename}.svg##{$font-filename}")) format("svg")
+    font-weight: $font-weight
+    font-style: $font-style
+    font-stretch: $font-stretch
+
++declare-font-face('OfficinaSerifBookSCC', 'OfficinaSerifBookSCC')
+
++declare-font-face('OfficinaSerifBoldC', 'OfficinaSerifBoldC')
+
++declare-font-face('PTSans', 'PTSans')

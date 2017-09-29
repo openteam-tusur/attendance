@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery-ui-addons
+//= require jquery.scrollTo
 //= require bootstrap
 //= require tusur_header
 //= require sugarjs
@@ -15,3 +16,4 @@
 //= require commons/modal
 //= require commons/popover
 //= require commons/users_autocomplete
+//= require documentation

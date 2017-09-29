@@ -37,6 +37,7 @@ gem 'validates_email_format_of'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-sugarjs'
+  gem 'rails-assets-jquery.scrollTo'
 end
 
 group :development do
