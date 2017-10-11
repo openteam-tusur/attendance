@@ -36,8 +36,7 @@ $ ->
     $.get(url, (data) ->
       $(data).modal()
       return
-    ).success ->
-      handle_validation()
+    ).then handle_validation
 
     false
 
