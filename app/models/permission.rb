@@ -33,6 +33,7 @@ class Permission < ActiveRecord::Base
     integer(:context_ids, :multiple => true) { [context_id].compact }
 
     string :context_type
+    string :role
     string :user_fullname
 
     text :role_text
@@ -45,10 +46,12 @@ class Permission < ActiveRecord::Base
 
   def self.available_roles_for(role_name)
     case role_name
-      when :dean
-        [:subdepartment, :group_leader, :curator]
-      when :education_department
-        [:dean, :subdepartment]
+    when :dean
+      [:subdepartment, :group_leader, :curator]
+    when :education_department
+      [:dean, :subdepartment]
+    when :subdepartment
+      [:curator]
     end
   end
 

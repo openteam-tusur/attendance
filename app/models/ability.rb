@@ -24,8 +24,8 @@ class Ability
 
     if roles.include?('dean') && namespace == :dean
       can :read,   Disruption
-      can :manage, Miss,       :missing_type => ['Student']
-      can :manage, Permission, :context_type => ['Group', 'Subdepartment']
+      can :manage, Miss,       missing_type: ['Student']
+      can :manage, Permission, context_type: ['Group', 'Subdepartment']
       can [:read, :list],   Group
       can [:read, :search],   Student
       can :read,   GroupLeader
@@ -36,9 +36,9 @@ class Ability
 
     if roles.include?('education_department') && namespace == :education_department
       can [:read, :statistics],   Faculty
-      can :manage, Permission, :context_type => ['Faculty', 'Subdepartment']
+      can :manage, Permission, context_type: ['Faculty', 'Subdepartment']
       can :read,   Disruption
-      can :manage, Miss,       :missing_type => ['Lecturer']
+      can :manage, Miss,       missing_type: ['Lecturer']
       can [:accept, :refuse, :change], Realize
       can :read,   Student
       can :read,   GroupLeader
@@ -67,6 +67,8 @@ class Ability
       can :read,   Lesson
       can [:index, :show], Lecturer
       can :show, Discipline
+      can :new,  Permission
+      can :manage, Permission, context_type: ['Group'], role: 'curator'
 
       can :manage, SubdepartmentDeclaration do |subdepartment_declaration|
         subdepartment_declaration.realize.lecturer.subdepartments.include?(user.subdepartments.first)

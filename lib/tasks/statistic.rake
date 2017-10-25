@@ -12,6 +12,7 @@ namespace :statistic do
       Statistic::Cleaner.instance.clean(start, finish)
     end
 
+    desc 'просчитать статистику за последний месяц'
     task :calculate_for_last_month  do
       start = Date.today - 31.day > semester_begin ? Date.today - 31.days : semester_begin
       finish = Date.today
