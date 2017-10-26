@@ -11,7 +11,7 @@ class Curator::GroupsController < AuthController
   actions :index, :show
 
   def index
-    @groups = current_user.curated_groups
+    @groups = current_user.curated_groups.actual
   end
 
   def show
