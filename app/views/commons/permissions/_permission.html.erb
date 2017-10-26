@@ -1,0 +1,23 @@
+<li class="list-item <%= cycle( "odd", "even" ) %>">
+  <span class='user'>
+    <% if permission.user %>
+      <%= permission.user %>,
+      <%= link_to permission.user.email, "mailto:#{permission.user.email}" %>,
+    <% else %>
+      <%= link_to permission.email, "mailto:#{permission.email}" %>,
+    <% end %>
+    <%= permission.role_text %>,
+    <%= permission.context %>
+  </span>
+
+  <span class="actions pull-right">
+    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+                dean_permission_path(permission, :for_role => permission.role),
+                :method => :delete,
+                :remote => true,
+                :data => { :confirm => t('confirm.delete') },
+                :class => 'js-delete' %>
+  </span>
+
+  <%= content_tag(:span, 'роль неактивна', :class => 'role pull-right') unless permission.user %>
+</li>
