@@ -33,7 +33,7 @@
                 <p>
                   <%= link_to_if permission.user.try(:directory_id),
                                  permission.user.fullname,
-                                 "#{Settings[:directory][:url]}people/#{permission.user.try(:directory_id)}",
+                                 "#{Settings[:directory][:url]}/people/#{permission.user.try(:directory_id)}",
                                  target: :blank %>
 
                   <%= mail_to permission.user.email, permission.user.email %>
