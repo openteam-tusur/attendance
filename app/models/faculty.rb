@@ -17,4 +17,8 @@ class Faculty < ActiveRecord::Base
   def to_s
     abbr
   end
+
+  def transliterated_abbr
+    Russian.transliterate(abbr).downcase
+  end
 end

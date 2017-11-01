@@ -1,28 +1,49 @@
 <h3>Сотрудники кафедр:</h3>
-<table class='table table-bordered table-with-paddings subdepartment-contacts'>
+<table class='table lecturer-contacts table-with-paddings table-v-center'>
   <tbody>
-    <% grouped_permissions.each_slice(2) do |slice| %>
+    <% grouped_permissions.group_by{|item| item.first.faculty}.each_with_index do |(department, subdepartments), index| %>
       <tr>
-        <% slice.each do |subdepartment, contacts| %>
-          <td>
-            <div class='subdepartment'>
-              <% title = subdepartment.abbr.match(/^[а-яё]*$/)  ? subdepartment.title.mb_chars.capitalize : subdepartment.abbr %>
-              <div class='title'> <%= title %> </div>
+        <td colspan="2" class="visible-xs department-logo">
+          <div class='faculty'>
+            <div class='logo logo-<%= department.transliterated_abbr.downcase %>'></div>
+            <div class='title title-<%= department.transliterated_abbr.downcase %>'>
+              <%= department.abbr %>
             </div>
-            <% contacts.each do |contact|%>
-              <% if contact.user && contact.user.fullname %>
+          </div>
+        </td>
+      </tr>
+      <tr class='hidden-xs'>
+        <td rowspan='<%= subdepartments.length + 1 %>' class="department-logo">
+          <div class='faculty <%= department.transliterated_abbr.downcase %>'>
+            <div class='logo logo-<%= department.transliterated_abbr.downcase %>'></div>
+            <div class='title title-<%= department.transliterated_abbr.downcase %>'>
+              <%= department.abbr %>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <% subdepartments.each do |subdepartment, permissions| %>
+        <tr class='subdepartment'>
+          <td>
+            <%= subdepartment.title %> (<%= subdepartment.abbr %>)
+          </td>
+          <td>
+            <% permissions.each do |permission| %>
+              <% if permission.user.present? %>
                 <p>
-                  <%= link_to_if contact.user.try(:directory_id).present?,
-                    contact.user.fullname,
-                    "#{Settings['directory.url']}/people/#{contact.user.try(:directory_id)}",
-                    target: :blank %>
-                  <%= mail_to contact.user.email, contact.user.email %>
+                  <%= link_to_if permission.user.try(:directory_id),
+                                 permission.user.fullname,
+                                 "#{Settings[:directory][:url]}people/#{permission.user.try(:directory_id)}",
+                                 target: :blank %>
+
+                  <%= mail_to permission.user.email, permission.user.email %>
                 </p>
               <% end %>
             <% end %>
           </td>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
+

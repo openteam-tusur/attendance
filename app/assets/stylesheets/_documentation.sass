@@ -205,6 +205,66 @@ $faculty_colors: #3eafab #376a76 #A5CD37 #ff2e34 #98248f #2C55A4 #ffc300 #ff7632
             .logo
               +flex-basis(50px)
 
+    table.lecturer-contacts
+      border: 2px solid #cdcdcd
+
+      tr
+        td
+          border: 1px solid #cdcdcd !important
+
+          &.department-logo
+            width: 125px
+            border-left: 2px solid #cdcdcd !important
+            border-bottom: 2px solid #cdcdcd !important
+            border-top: 2px solid #cdcdcd !important
+
+          &:last-of-type
+            &:not(.department-logo)
+              border-right: 2px solid #cdcdcd !important
+
+          &:nth-of-type(n + 2)
+            width: 45%
+
+        &:not(.subdepartment) + .subdepartment
+          td
+            border-top: 2px solid #cdcdcd !important
+
+        &:last-of-type td
+          border-bottom: 2px solid #cdcdcd !important
+
+        .faculty
+          +single_faculty_view
+          padding-left: 5px
+
+          &.fit
+            margin-top: 20px
+
+          .logo
+            background-size: 35px
+            +flex-basis(65px)
+
+          .title
+            margin-top: -10px
+            padding-left: 5px
+            padding-right: 0
+            font-weight: normal
+
+      @media (max-width: $screen-xs-max)
+        tr td
+          &.department-logo
+            border-bottom: 0
+            border-right: 2px solid #cdcdcd
+
+          &:last-of-type
+            &:not(.department-logo)
+              border-right: 1px solid #ddd
+
+          .faculty
+            margin-top: 15px
+
+            .logo
+              +flex-basis(35px)
+
     .image-with-caption
       margin-bottom: 10px
       margin-top: 5px
