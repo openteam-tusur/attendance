@@ -16,11 +16,12 @@ class LessonCatcher
     redo_counter = 0
 
     (starts_at..ends_at).each do |date|
-      puts "синхронизируем занятия за  #{I18n.l(date)}"
+      puts "синхронизируем занятия за #{I18n.l(date)}"
       mark_lessons_deleted_at date
       timetable_info = import_timetable_at date
 
       if timetable_info[:code] != 200
+        puts "response code: #{timetable_info[:code]}"
         if redo_counter > 10
           abort("LessonCatcher: timetable.openteam.ru вернул код ошибки #{timetable_info[:code]} более 10 раз.
           Синхронизация принудительно остановлена")
