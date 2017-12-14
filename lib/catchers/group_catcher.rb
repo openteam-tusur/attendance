@@ -12,9 +12,6 @@ class GroupCatcher
   private
 
   def import(groups)
-    groups = groups.delete_if do |group|
-      group.match(/^\d{6}/) # exclude aspirants
-    end
     groups.each do |group_number|
       Group.find_or_initialize_by(:number => group_number).tap do |g|
         g.deleted_at = nil
