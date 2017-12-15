@@ -3,7 +3,7 @@ module RestResponser
     res = RestClient::Request.execute(
       method: :get,
       url: url,
-      timeout: 120.seconds
+      timeout: 600.seconds
     ) do |response, request, result, &block|
       response
     end
