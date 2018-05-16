@@ -25,7 +25,8 @@ class Presence < ActiveRecord::Base
     if previous_changes.any?
       presentator = Statistic::Presentors::PresencePresentor.new(self).data
       writer = Statistic::Writer.new(presentator)
-      prev_value, new_value = previous_changes['state']
+      prev_value = self.state_was
+      new_value = self.state
 
       case prev_value
         when 'was'

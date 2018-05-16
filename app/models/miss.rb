@@ -29,8 +29,10 @@ class Miss < ActiveRecord::Base
   end
 
   def set_statistic
-    prev_starts_at, new_starts_at = changes['starts_at']
-    prev_ends_at, new_ends_at = changes['ends_at']
+    prev_starts_at = self.starts_at_was
+    new_starts_at = self.starts_at
+    prev_ends_at = self.ends_at_was
+    new_ends_at = self.ends_at
     old_scope = missing.presences.between_dates(prev_starts_at, prev_ends_at).by_state('wasnt')
     new_scope = missing.presences.between_dates(new_starts_at, new_ends_at).by_state('wasnt')
     (old_scope+new_scope).uniq.each {|p| p.update_attributes(:updated_at => Time.zone.now)}
