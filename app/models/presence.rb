@@ -25,8 +25,7 @@ class Presence < ActiveRecord::Base
     if previous_changes.any?
       presentator = Statistic::Presentors::PresencePresentor.new(self).data
       writer = Statistic::Writer.new(presentator)
-      prev_value = self.state_was
-      new_value = self.state
+      prev_value, new_value = previous_changes['state']
 
       case prev_value
         when 'was'
@@ -43,13 +42,14 @@ class Presence < ActiveRecord::Base
 
           #################
           if new_value.nil?
+            student_stat= Statistic::Student.new(student.contingent_id, nil).send(:get, 'dates')[lesson.lesson_time.to_date.to_s]
             if missed_by_cause?
               if state == 'wasnt'
-                writer.incr_attendance
+                writer.incr_attendance if student_stat['attendance'] < student_stat['total']
               end
             else
               if state == 'wasnt'
-                writer.decr_attendance
+                writer.decr_attendance if student_stat['attendance'] > 0
               end
             end
           end
