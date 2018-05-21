@@ -45,11 +45,11 @@ class Presence < ActiveRecord::Base
             student_stat= Statistic::Student.new(student.contingent_id, nil).send(:get, 'dates')[lesson.lesson_time.to_date.to_s]
             if missed_by_cause?
               if state == 'wasnt'
-                writer.incr_attendance if student_stat['attendance'] < student_stat['total']
+                writer.incr_attendance if student_stat.try(:[], 'attendance').to_i < student_stat.try(:[], 'total').to_i
               end
             else
               if state == 'wasnt'
-                writer.decr_attendance if student_stat['attendance'] > 0
+                writer.decr_attendance if student_stat.try(:[], 'attendance').to_i > 0
               end
             end
           end
