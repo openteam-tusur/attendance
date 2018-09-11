@@ -12,3 +12,14 @@ class Sync < ActiveRecord::Base
    sync_logger.info title
  end
 end
+
+# == Schema Information
+#
+# Table name: syncs
+#
+#  id         :integer          not null, primary key
+#  state      :string(255)
+#  title      :text
+#  created_at :datetime
+#  updated_at :datetime
+#

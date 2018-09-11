@@ -42,3 +42,18 @@ class Miss < ActiveRecord::Base
     missing.presences.between_dates(starts_at, ends_at).by_state('wasnt').each {|p| p.update_attributes(:updated_at => Time.zone.now)}
   end
 end
+
+# == Schema Information
+#
+# Table name: misses
+#
+#  id           :integer          not null, primary key
+#  missing_id   :integer
+#  missing_type :string(255)
+#  starts_at    :datetime
+#  ends_at      :datetime
+#  note         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  miss_kind_id :integer
+#

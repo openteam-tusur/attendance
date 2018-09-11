@@ -63,3 +63,19 @@ class Permission < ActiveRecord::Base
     [user || email, role_text, context].join(', ')
   end
 end
+
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id           :integer          not null, primary key
+#  user_id      :string(255)
+#  context_id   :integer
+#  context_type :string(255)
+#  role         :string(255)
+#  email        :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  old_user_uid :integer
+#  old_user_id  :integer
+#

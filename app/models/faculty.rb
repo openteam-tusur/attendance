@@ -22,3 +22,15 @@ class Faculty < ActiveRecord::Base
     Russian.transliterate(abbr).downcase
   end
 end
+
+# == Schema Information
+#
+# Table name: faculties
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  abbr       :string(255)
+#  deleted_at :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#

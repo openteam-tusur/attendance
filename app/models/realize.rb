@@ -37,3 +37,16 @@ class Realize < ActiveRecord::Base
     self.state ||= :was
   end
 end
+
+# == Schema Information
+#
+# Table name: realizes
+#
+#  id          :integer          not null, primary key
+#  lecturer_id :integer
+#  lesson_id   :integer
+#  state       :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  approved    :string(255)      default("unfilled")
+#

@@ -57,3 +57,15 @@ class Presence < ActiveRecord::Base
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: presences
+#
+#  id         :integer          not null, primary key
+#  student_id :integer
+#  lesson_id  :integer
+#  state      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#

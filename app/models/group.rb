@@ -41,3 +41,16 @@ class Group < ActiveRecord::Base
     lessons.actual.realized.unfilled.by_semester.between_dates(from, to).map(&:date_on).uniq.count
   end
 end
+
+# == Schema Information
+#
+# Table name: groups
+#
+#  id               :integer          not null, primary key
+#  number           :string(255)
+#  course           :integer
+#  subdepartment_id :integer
+#  deleted_at       :datetime
+#  created_at       :datetime
+#  updated_at       :datetime
+#

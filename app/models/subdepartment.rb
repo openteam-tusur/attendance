@@ -18,3 +18,16 @@ class Subdepartment < ActiveRecord::Base
     abbr
   end
 end
+
+# == Schema Information
+#
+# Table name: subdepartments
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  abbr       :string(255)
+#  faculty_id :integer
+#  deleted_at :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#

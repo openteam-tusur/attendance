@@ -8,3 +8,13 @@ class MissKind < ActiveRecord::Base
 
   alias_attribute :to_s, :kind
 end
+
+# == Schema Information
+#
+# Table name: miss_kinds
+#
+#  id         :integer          not null, primary key
+#  kind       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#

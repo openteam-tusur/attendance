@@ -11,3 +11,14 @@ class Discipline < ActiveRecord::Base
     title
   end
 end
+
+# == Schema Information
+#
+# Table name: disciplines
+#
+#  id         :integer          not null, primary key
+#  abbr       :string(255)
+#  title      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#

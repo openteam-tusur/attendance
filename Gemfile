@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'annotate'
 gem 'attribute_normalizer'
 gem 'auth_client', git: 'https://github.com/openteam-tusur/auth_client'
 gem 'auth_redis_user_connector', git: 'https://github.com/openteam-tusur/auth_redis_user_connector'

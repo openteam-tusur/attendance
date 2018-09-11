@@ -56,3 +56,20 @@ class Student < Person
     self.secure_id = Digest::MD5.hexdigest("#{self.to_s}#{self.contingent_id}")
   end
 end
+
+# == Schema Information
+#
+# Table name: people
+#
+#  id            :integer          not null, primary key
+#  type          :string(255)
+#  name          :string(255)
+#  surname       :string(255)
+#  patronymic    :string(255)
+#  contingent_id :integer
+#  directory_id  :integer
+#  secure_id     :string(255)
+#  deleted_at    :datetime
+#  created_at    :datetime
+#  updated_at    :datetime
+#
