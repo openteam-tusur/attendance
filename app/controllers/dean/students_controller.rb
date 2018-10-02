@@ -20,7 +20,7 @@ class Dean::StudentsController < AuthController
     @charts = {}
     @group = Group.actual.find_by(:number => params[:group_id])
     @subdepartment = @group.subdepartment
-    @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @student = @group.students.actual.find{|s| s.to_s == params[:id] } or not_found
     @omissions = @student.presences.by_state(:wasnt).between_dates(*filter_params.values)
     @course  = @group.course
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)
