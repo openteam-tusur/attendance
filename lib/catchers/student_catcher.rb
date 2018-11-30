@@ -36,7 +36,8 @@ class StudentCatcher
   def import
     redo_counter = 0
 
-    Group.actual.each do |group|
+    Group.actual.find_each do |group|
+      next if group.number =~ /\d{6}-\d/
       students_info = students_of group.number
 
       if students_info[:code] != 200
