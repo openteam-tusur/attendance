@@ -5,7 +5,7 @@ class GroupLeader::StudentsController < AuthController
   def show
     @charts = {}
     @group = current_user.leaded_groups.actual.first
-    @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @student = @group.students.actual.find{|s| s.to_s == params[:id] } or not_found
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
     @parent_url = group_leader_group_path(:filter => params[:filter])

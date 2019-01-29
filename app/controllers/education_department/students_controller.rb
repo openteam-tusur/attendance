@@ -11,7 +11,7 @@ class EducationDepartment::StudentsController < AuthController
     @group = Group.actual.find_by(:number => params[:group_id])
     @course = params[:course_id]
     @faculty = params[:faculty_id]
-    @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @student = @group.students.actual.find{|s| s.to_s == params[:id] } or not_found
     @omissions = @student.presences.by_state(:wasnt).between_dates(*filter_params.values)
 
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)

@@ -5,7 +5,7 @@ class Curator::StudentsController < AuthController
   def show
     @charts = {}
     @group = current_user.curated_groups.actual.find_by(:number => params[:group_id])
-    @student = @group.students.actual.find{|s| s.to_s == params[:id] }
+    @student = @group.students.actual.find{|s| s.to_s == params[:id] } or not_found
     student_statistic = Statistic::Student.new(@student.contingent_id, nil)
 
     @parent_url = curator_group_path(@group, :filter => params[:filter])
