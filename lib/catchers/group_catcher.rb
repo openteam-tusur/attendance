@@ -13,6 +13,7 @@ class GroupCatcher
 
   def import(groups)
     groups.each do |group_number|
+      next if group_number =~ /\d{6}-\d/
       Group.find_or_initialize_by(:number => group_number).tap do |g|
         g.deleted_at = nil
         g.save

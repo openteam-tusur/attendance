@@ -59,6 +59,7 @@ class LessonCatcher
     end
 
     def import_lessons_for(group_number, lessons, date)
+      return if group_number =~ /\d{6}-\d/
       lessons.each do |lesson|
         next if lesson['lecturers'].empty?
 

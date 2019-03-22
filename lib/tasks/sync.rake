@@ -9,6 +9,7 @@ require 'catchers/lesson_catcher'
 namespace :sync do
   desc 'Синхронизация факультетов, кафедр'
   task :structure => :environment do
+    ap 'sync structure'
     begin
       report = StructureCatcher.new.sync
       Sync.create :title => "Синхронизация факультетов и кафедр <span class='success'>прошла успешно.</span>: #{ report }."
@@ -20,6 +21,7 @@ namespace :sync do
 
   desc 'Синхронизация групп'
   task :groups => :structure do
+    ap 'sync groups'
     begin
       GroupCatcher.new.sync
       Sync.create :title => "Синхронизация групп <span class='success'>прошла успешно.</span> (#{Group.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
@@ -31,6 +33,7 @@ namespace :sync do
 
   desc 'Синхронизация студентов'
   task :students => :groups do
+    ap 'sync students'
     begin
       StudentCatcher.new.sync
       Sync.create :title => "Синхронизация студентов <span class='success'>прошла успешно.</span> (#{Student.actual.where('created_at >= ?', Time.zone.now.utc.to_date).count} новых)"
@@ -42,6 +45,7 @@ namespace :sync do
 
   desc 'Синхронизация занятий на предстоящий день'
   task :lessons => :students do
+    ap 'sync lessons'
     date = Date.today
     begin
       LessonCatcher.new.sync
@@ -54,6 +58,7 @@ namespace :sync do
 
   desc 'Синхронизация занятий c start по end. %Y-%m-%d'
   task :lessons_by, [:start, :end] => :environment do |t, args|
+    ap 'sync lessons_by'
     abort 'Укажите промежуток дат!' if args.empty? || args['start'].nil? || args['end'].nil?
     dates = args.to_hash.values_at(:start, :end).map{ |d| Date.parse(d) }
     begin
