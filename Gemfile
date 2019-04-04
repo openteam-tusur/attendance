@@ -23,7 +23,7 @@ gem 'non-stupid-digest-assets'
 gem 'openteam-commons', '~> 0.3.3'
 gem 'pg'
 gem 'progress_bar'
-gem 'rails', '4.2.8' # NOTE: 4.2.9 has problem with russian characters in url -> https://github.com/rails/rails/issues/30440
+gem 'rails', '~> 4.2.8'
 gem 'redis-session-store'
 gem 'rest-client'
 gem 'russian'
