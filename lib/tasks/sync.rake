@@ -48,7 +48,7 @@ namespace :sync do
     ap 'sync lessons'
     date = Date.today
     begin
-      LessonCatcher.new.sync(date, date)
+      LessonCatcher.new(date, date).sync
       Sync.create title: "Синхронизация занятий на #{I18n.l(date, format: '%d %B %Y')} <span class='success'>прошла успешно.</span> (#{Lesson.actual.where(date_on: date).count} занятий)"
     rescue Exception => e
       Sync.create title: "При синхронизации занятий на #{I18n.l(date, format: '%d %B %Y')} <span class='failure'>произошла ошибка:</span> \"#{e}\"", state: :failure

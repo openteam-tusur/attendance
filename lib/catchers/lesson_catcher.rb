@@ -7,7 +7,7 @@ include RestResponser
 class LessonCatcher
   attr_accessor :starts_at, :ends_at
 
-  def initialize(starts_at=Date.today, ends_at=Date.today)
+  def initialize(starts_at = Date.today, ends_at = Date.today)
     self.starts_at = starts_at
     self.ends_at = ends_at
   end
