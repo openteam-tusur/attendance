@@ -29,7 +29,7 @@ class Statistic::Reader < Statistic::Base
         end
         hash
       end
-      opts = { :value => (res['attendance'].to_i*100.0/res['total']).round(1) }
+      opts = { value: (res['attendance'].to_i*100.0/res['total']).round(1) }
       if route_namespace
         ap opts.merge! url: [
           '',

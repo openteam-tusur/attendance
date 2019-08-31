@@ -13,7 +13,7 @@ class LecturerPermissions
 
     @emails.each do |email|
       next unless email.present?
-      new_permissions << @lecturer.permissions.find_or_create_by(:role => :lecturer, :email => email)
+      new_permissions << @lecturer.permissions.find_or_create_by(role: :lecturer, email: email)
     end
 
     absent_permissions = exist_permissions - new_permissions

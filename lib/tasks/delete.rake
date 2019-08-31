@@ -1,6 +1,6 @@
 namespace :delete do
   desc 'Удаление посещаемости для удаленных студентов'
-  task :presences_for_deleted_students => :environment do
+  task presences_for_deleted_students: :environment do
     p "Проверка presence у всех удаленных студентов "
     deleted_students = Membership.students.where.not(deleted_at: nil)
     pb  = ProgressBar.new(deleted_students.count)

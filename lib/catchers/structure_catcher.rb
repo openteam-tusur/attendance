@@ -58,11 +58,11 @@ class StructureCatcher
   end
 
   def mark_faculties_deleted
-    Faculty.actual.update_all(:deleted_at => Time.zone.now)
+    Faculty.actual.update_all(deleted_at: Time.zone.now)
   end
 
   def mark_subdivisions_deleted
-    Subdepartment.actual.update_all(:deleted_at => Time.zone.now)
+    Subdepartment.actual.update_all(deleted_at: Time.zone.now)
   end
 
   def delete_marked_faculties

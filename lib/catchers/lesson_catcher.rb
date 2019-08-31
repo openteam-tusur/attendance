@@ -66,12 +66,12 @@ class LessonCatcher
         lesson_id = nil
         discipline = import_discipline(lesson['discipline']['title'], lesson['discipline']['abbr'])
         begin
-          group      = Group.find_by!(:number => group_number)
+          group      = Group.find_by!(number: group_number)
         rescue ActiveRecord::RecordNotFound
           raise "Не найдена группа #{group_number}"
         end
 
-        Lesson.find_or_initialize_by(:timetable_id => lesson['timetable_id'].to_s, :date_on => date, :group_id => group.id).tap do |l|
+        Lesson.find_or_initialize_by(timetable_id: lesson['timetable_id'].to_s, date_on: date, group_id: group.id).tap do |l|
           l.classroom    = lesson['classroom']
           l.kind         = lesson['kind']
           l.order_number = lesson['order_number']
@@ -97,9 +97,9 @@ class LessonCatcher
             raise "Не найдена кафедра #{lecturer['subdepartment']}"
           end
           # safe lecturer import
-          lect = Lecturer.find_or_initialize_by(:surname => lecturer['lastname'].squish,
-                                                :name => lecturer['firstname'].squish,
-                                                :patronymic => lecturer['middlename'].squish.presence || nil)
+          lect = Lecturer.find_or_initialize_by(surname: lecturer['lastname'].squish,
+                                                name: lecturer['firstname'].squish,
+                                                patronymic: lecturer['middlename'].squish.presence || nil)
 
           lect.directory_id = lecturer['directory_id']
 
@@ -111,7 +111,7 @@ class LessonCatcher
           begin
             lect.save!
             LecturerPermissions.new(lect, lecturer['emails']).permissions_query if lecturer['emails'].present?
-            Realize.find_or_create_by(:lecturer_id => lect.id, :lesson_id => lesson_id)
+            Realize.find_or_create_by(lecturer_id: lect.id, lesson_id: lesson_id)
           rescue
             Sync.create title: "Возникли проблемы с преподавателем #{lect.short_name}",
               state: :failure
@@ -119,7 +119,7 @@ class LessonCatcher
         end
 
         group.students_at(date).map(&:id).each do |student_id|
-          Presence.find_or_create_by(:student_id => student_id, :lesson_id => lesson_id)
+          Presence.find_or_create_by(student_id: student_id, lesson_id: lesson_id)
         end
       end
     end
@@ -129,7 +129,7 @@ class LessonCatcher
     end
 
     def mark_lessons_deleted_at(date)
-      Lesson.actual.by_date(date).update_all(:deleted_at => Time.zone.now)
+      Lesson.actual.by_date(date).update_all(deleted_at: Time.zone.now)
     end
 
     def delete_lessons_marked_at(date)

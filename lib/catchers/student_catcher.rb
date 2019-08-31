@@ -71,13 +71,13 @@ class StudentCatcher
 
   def import_students(students, group)
     students.each do |student|
-      Student.find_or_initialize_by(:contingent_id => student['study_id']).tap do |s|
+      Student.find_or_initialize_by(contingent_id: student['study_id']).tap do |s|
         s.surname    = student['lastname']
         s.name       = student['firstname']
         s.patronymic = student['patronymic']
         s.deleted_at = nil
         s.save
-        s.memberships.where(:participate => group).update_all(:deleted_at => nil)
+        s.memberships.where(participate: group).update_all(deleted_at: nil)
         s.groups << group unless s.groups.include?(group)
         s.index
       end
@@ -88,7 +88,7 @@ class StudentCatcher
     group.course = group_info['course']
 
     begin
-      group.subdepartment = Subdepartment.find_by!(:title => (wrong[group_info['subfaculty']['name']] || group_info['subfaculty']['name']))
+      group.subdepartment = Subdepartment.find_by!(title: (wrong[group_info['subfaculty']['name']] || group_info['subfaculty']['name']))
     rescue ActiveRecord::RecordNotFound
       raise group_info['subfaculty']['name'].to_s
     end
@@ -97,8 +97,8 @@ class StudentCatcher
   end
 
   def mark_students_deleted
-    Student.actual.update_all(:deleted_at => Time.zone.now)
-    Membership.actual.students.update_all(:deleted_at => Time.zone.now)
+    Student.actual.update_all(deleted_at: Time.zone.now)
+    Membership.actual.students.update_all(deleted_at: Time.zone.now)
   end
 
   def delete_marked_students

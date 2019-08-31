@@ -14,7 +14,7 @@ class GroupCatcher
   def import(groups)
     groups.each do |group_number|
       next if group_number =~ /\d{6}-\d/
-      Group.find_or_initialize_by(:number => group_number).tap do |g|
+      Group.find_or_initialize_by(number: group_number).tap do |g|
         g.deleted_at = nil
         g.save
       end
@@ -26,7 +26,7 @@ class GroupCatcher
   end
 
   def mark_groups_deleted
-    Group.actual.update_all(:deleted_at => Time.zone.now)
+    Group.actual.update_all(deleted_at: Time.zone.now)
   end
 
   def delete_marked_groups
