@@ -15,6 +15,7 @@ namespace :delete do
     lessons_without_discipline = Lesson.
       where(discipline_id: nil).
       order(created_at: :desc)
+    exit 0 if lessons_without_discipline.count == 0
     pb = ProgressBar.new(lessons_without_discipline.count)
     lessons_without_discipline.each do |lwd|
       lwd.destroy
