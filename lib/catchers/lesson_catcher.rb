@@ -65,8 +65,10 @@ class LessonCatcher
 
         lesson_id = nil
         discipline = import_discipline(lesson['discipline']['title'], lesson['discipline']['abbr'])
+        next if discipline.blank? || discipline.new_record?
+
         begin
-          group      = Group.find_by!(number: group_number)
+          group = Group.find_by!(number: group_number)
         rescue ActiveRecord::RecordNotFound
           raise "Не найдена группа #{group_number}"
         end

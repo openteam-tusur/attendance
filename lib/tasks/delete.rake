@@ -9,4 +9,17 @@ namespace :delete do
       pb.increment!
     end
   end
+
+  desc 'Удаление уроков беза десциплины'
+  task lessons_without_discipline: :environment do
+    lessons_without_discipline = Lesson.
+      where(discipline_id: nil).
+      order(created_at: :desc)
+    pb = ProgressBar.new(lessons_without_discipline.count)
+    lessons_without_discipline.each do |lwd|
+      lwd.destroy
+
+      pb.increment!
+    end
+  end
 end
