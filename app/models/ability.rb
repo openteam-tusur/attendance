@@ -48,17 +48,23 @@ class Ability
       end
       if roles.include?('education_prorektor')
         can [:read, :statistics], Faculty
+
         cannot [:read, :manage], Permission
+
         cannot :manage, Disruption
         can :read, Disruption
+
         cannot :manage, Miss
-        cannot :manage, Realize
-        cannot [:accept, :refuse, :change], Realize
+
+        cannot [:manage, :accept, :refuse, :change], Realize
         can :read, Realize
+
         can :read, Student
         can :read, GroupLeader
+
+        cannot :manage, MissKind
         can :read, MissKind
-        cannot [:new, :create, :update], MissKind
+
         can :read, Lesson
       end
     end
