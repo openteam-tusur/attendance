@@ -34,29 +34,33 @@ class Ability
       can :show, Discipline
     end
 
-    if roles.include?('education_department') && namespace == :education_department
-      can [:read, :statistics],   Faculty
-      can :manage, Permission, context_type: ['Faculty', 'Subdepartment']
-      can :read,   Disruption
-      can :manage, Miss,       missing_type: ['Lecturer']
-      can [:accept, :refuse, :change], Realize
-      can :read,   Student
-      can :read,   GroupLeader
-      can [:read, :create, :update], MissKind
-      can :read,   Lesson
-    end
-
-    if roles.include?('education_prorektor') && namespace == :education_department
-      can [:read, :statistics], Faculty
-      cannot [:read, :manage], Permission
-      can :read, Disruption
-      cannot :manage, Miss
-      cannot [:accept, :refuse, :change], Realize
-      can :read, Student
-      can :read, GroupLeader
-      can :read, MissKind
-      cannot [:new, :create, :update], MissKind
-      can :read, Lesson
+    if namespace == :education_department
+      if roles.include?('education_department')
+        can [:read, :statistics], Faculty
+        can :manage, Permission, context_type: ['Faculty', 'Subdepartment']
+        can :manage, Disruption
+        can :manage, Miss, missing_type: ['Lecturer']
+        can :manage, Realize
+        can :read, Student
+        can :read, GroupLeader
+        can :manage, MissKind
+        can :read, Lesson
+      end
+      if roles.include?('education_prorektor')
+        can [:read, :statistics], Faculty
+        cannot [:read, :manage], Permission
+        cannot :manage, Disruption
+        can :read, Disruption
+        cannot :manage, Miss
+        cannot :manage, Realize
+        cannot [:accept, :refuse, :change], Realize
+        can :read, Realize
+        can :read, Student
+        can :read, GroupLeader
+        can :read, MissKind
+        cannot [:new, :create, :update], MissKind
+        can :read, Lesson
+      end
     end
 
     if roles.include?('group_leader') && namespace == :group_leader
