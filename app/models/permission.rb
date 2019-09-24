@@ -3,7 +3,16 @@ class Permission < ActiveRecord::Base
 
   include AuthClient::Permission
 
-  acts_as_auth_client_permission roles: %W(administrator education_department dean subdepartment curator group_leader lecturer)
+  acts_as_auth_client_permission roles: %W(
+    administrator
+    education_department
+    education_prorektor
+    dean
+    subdepartment
+    curator
+    group_leader
+    lecturer
+  )
 
   normalize_attribute :email do |value|
     value.presence.present? ? value.downcase : nil
@@ -11,7 +20,14 @@ class Permission < ActiveRecord::Base
 
   validates_presence_of   :user_id, :if => 'email.nil?'
   validates_presence_of   :email,   :if => 'user_id.nil?'
-  validates_presence_of   :context_type, :context_id, :unless => ->{ %w(administrator education_department).include?(role) }
+  validates_presence_of   :context_type, :context_id, unless: -> {
+    %w(
+      administrator
+      education_department
+      education_prorektor
+    ).include?(role)
+  }
+
   validates_uniqueness_of :role,    :scope => [:context_id, :context_type, :email, :user_id],
                                     :message => 'У пользователя не может быть несколько одинаковых ролей'
 

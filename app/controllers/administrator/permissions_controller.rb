@@ -61,6 +61,14 @@ class Administrator::PermissionsController < AuthController
     end
 
     def permission_params
-      params.require(:permission).permit(:user_id, :role, :email, :context_id, :context_type)
+      params.require(:permission).
+        permit(
+          :user_id,
+          :name,
+          :role,
+          :email,
+          :context_id,
+          :context_type
+      )
     end
 end

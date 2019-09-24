@@ -6,6 +6,16 @@ class User
     'attendance'
   end
 
+  Permission.available_roles.each do |role|
+    define_method %(#{role}?) do |_args = nil|
+      available_roles.include? role
+    end
+  end
+
+  def available_roles
+    @available_roles ||= permissions.pluck(:role)
+  end
+
   def faculty_groups
     return if permissions.for_role(:dean).empty?
     permissions.for_role(:dean).first.context.groups

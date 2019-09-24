@@ -3,7 +3,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
   navigation.items do |primary|
     if user_signed_in?
-      Permission.available_roles.each do |role|
+      Permission.available_roles.reject{ |namespace| namespace == 'education_prorektor' }.each do |role|
         primary.item role.to_sym, I18n.t("role_names.#{role}", title: current_user.title_for_role(role)), [role.to_sym, :root] do |role_item|
         primary.dom_class = 'dropdown-menus'
 
@@ -41,13 +41,43 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'education_department'
-          role_item.item :permissions,  I18n.t('page_title.permissions.index'),   education_department_permissions_path(for_role: (current_namespace == :education_department && params[:for_role]) || :dean)
-          role_item.item :disruptions,  I18n.t('page_title.disruptions.index'),   education_department_disruptions_path
-          role_item.item :faculties,    I18n.t('page_title.faculties.index'),     education_department_faculties_path, highlights_on: /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/groups/
-          role_item.item :statistics,   I18n.t('page_title.faculties.statistics'), education_department_group_leaders_path
-          role_item.item :miss_kinds,   I18n.t('page_title.miss_kinds.index'),    education_department_miss_kinds_path do |miss_kind|
-            miss_kind.item :new,        I18n.t('page_title.miss_kinds.new'),      new_education_department_miss_kind_path
-            miss_kind.item :edit,       I18n.t('page_title.miss_kinds.edit'),     edit_education_department_miss_kind_path(miss_kind)
+          role_item.item :faculties,
+            I18n.t('page_title.faculties.index'),
+            education_department_faculties_path,
+            highlights_on: /^\/education_department\/courses|\/education_department\/faculties|\/education_department\/groups/
+
+          role_item.item :statistics,
+            I18n.t('page_title.faculties.statistics'),
+            education_department_group_leaders_path
+
+          role_item.item :disruptions,
+            I18n.t('page_title.disruptions.index'),
+            education_department_disruptions_path
+
+          if current_user.education_prorektor?
+            role_item.item :miss_kinds,
+              I18n.t('page_title.miss_kinds.index'),
+              education_department_miss_kinds_path
+          else
+            role_item.item :miss_kinds,
+              I18n.t('page_title.miss_kinds.index'),
+              education_department_miss_kinds_path do |miss_kind|
+
+                miss_kind.item :new,
+                  I18n.t('page_title.miss_kinds.new'),
+                  new_education_department_miss_kind_path
+                miss_kind.item :edit,
+                  I18n.t('page_title.miss_kinds.edit'),
+                  edit_education_department_miss_kind_path(miss_kind)
+              end
+          end
+
+          if !current_user.education_prorektor?
+            role_item.item :permissions,
+              I18n.t('page_title.permissions.index'),
+              education_department_permissions_path(
+                for_role: (current_namespace == :education_department && params[:for_role]) || :dean
+              )
           end
         end
 

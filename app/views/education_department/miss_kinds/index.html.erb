@@ -1,4 +1,6 @@
-<%= link_to 'Добавить причину', new_education_department_miss_kind_path, :class => 'btn btn-primary btn-sm' %>
+<% if can? [:new, :create, :update], MissKind %>
+  <%= link_to 'Добавить причину', new_education_department_miss_kind_path, class: 'btn btn-primary btn-sm' %>
+<% end %>
 
 <ul class="list">
   <% if @miss_kinds.any? %>

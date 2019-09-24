@@ -167,14 +167,15 @@ ru:
     miss_kinds:                   Нет уважительных причин
 
   role_names:
-    administrator:         Администратор
-    curator:               Куратор группы
+    administrator:         'Администратор'
+    curator:               'Куратор группы'
     dean:                  'Деканат %{title}'
-    education_department:  Учебное управление
-    group_leader:          Староста группы
-    lecturer:              Преподаватель
+    education_department:  'Учебное управление'
+    education_prorektor:   'Учебное управление *'
+    group_leader:          'Староста группы'
+    lecturer:              'Преподаватель'
     subdepartment:         'Кафедра %{title}'
-    student:               Студент
+    student:               'Студент'
 
   temporary_unavailable: Сервис временно недоступен
 

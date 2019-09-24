@@ -1,6 +1,8 @@
 <li class='list-item list-bordered'>
   <span><%= miss_kind.kind %></span>
-  <span class="actions pull-right">
-    <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_education_department_miss_kind_path(miss_kind) %>
-  </span>
+  <% if can? [:new, :create, :update], MissKind %>
+    <span class='actions pull-right'>
+      <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_education_department_miss_kind_path(miss_kind) %>
+    </span>
+  <% end %>
 </li>
