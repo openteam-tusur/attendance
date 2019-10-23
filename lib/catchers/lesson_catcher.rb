@@ -38,6 +38,12 @@ class LessonCatcher
 
   private
     def timetable_url_with(date)
+      # замена занятий по распоряжение № 196 от 23.10.2019 в связи с "Днями карьеры"
+      if date == Date.parse('2019-10-28')
+        date = Date.parse('2019-10-21')
+      end
+      # / замена
+
       "#{Settings['timetable.url']}/api/v1/timetables/by_date/#{date}"
     end
 
