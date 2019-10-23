@@ -10,7 +10,7 @@ namespace :delete do
     end
   end
 
-  desc 'Удаление уроков беза десциплины'
+  desc 'Удаление уроков без десциплины'
   task lessons_without_discipline: :environment do
     lessons_without_discipline = Lesson.
       where(discipline_id: nil).
