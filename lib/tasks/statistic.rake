@@ -19,6 +19,7 @@ namespace :statistic do
       Rake::Task['statistic:calculate'].invoke("['#{start.to_s}','#{finish.to_s}'")
     end
 
+    desc 'просчитать статистику за период с :start до :end даты'
     task :calculate, [:start, :end] => :clean do |t, args|
     p "Начало обновления статистики"
     start = args['start'].blank? ? Date.today : Date.parse(args['start'])

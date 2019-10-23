@@ -19,9 +19,11 @@ module FilterParams
         to: last_week_end
       }
     else
+      from = (params[:filter][:from].presence || last_week_begin)
+      to = (params[:filter][:to].presence     || last_week_end)
       {
-        from: (params[:filter][:from].to_date rescue last_week_begin),
-        to: (params[:filter][:to].to_date rescue last_week_end)
+        from: from.to_date,
+        to: to.to_date
       }
     end
   end
