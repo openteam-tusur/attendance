@@ -120,7 +120,7 @@ SimpleNavigation::Configuration.run do |navigation|
     else
       primary.item :main_page, I18n.t("page_title.main_page.index"), root_path
     end
-    primary.item :questions, 'Задать вопрос', 'http://profile.tusur.ru/conversations/new?conversation%5Buser_groups%5D%5B%5D=3cf24e4b-f608-43dd-bc22-c5972500eac0', link: { target: '_blank' }
+    primary.item :questions, 'Тех. поддержка', 'http://profile.tusur.ru/conversations/new?conversation%5Buser_groups%5D%5B%5D=3cf24e4b-f608-43dd-bc22-c5972500eac0', link: { target: '_blank' }
     primary.item :docs, 'Как пользоваться?', docs_path
   end
 end
