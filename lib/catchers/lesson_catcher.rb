@@ -105,9 +105,9 @@ class LessonCatcher
             raise "Не найдена кафедра #{lecturer['subdepartment']}"
           end
           # safe lecturer import
-          lect = Lecturer.find_or_initialize_by(surname: lecturer['lastname'].squish,
-                                                name: lecturer['firstname'].squish,
-                                                patronymic: lecturer['middlename'].squish.presence || nil)
+          lect = Lecturer.find_or_initialize_by(surname: lecturer['lastname'].to_s.squish,
+                                                name: lecturer['firstname'].to_s.squish,
+                                                patronymic: lecturer['middlename'].to_s.squish.presence || nil)
 
           lect.directory_id = lecturer['directory_id']
 
