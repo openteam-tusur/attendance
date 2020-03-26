@@ -16,15 +16,13 @@
       <%= render 'navigation' %>
 
       <div class='container'>
-        <% if Time.zone.now < Time.zone.parse('2020-03-28 22:00') %>
-          <div class='panel panel-danger margin-bottom-0 margin-top-20'>
-            <div class='panel-heading text-center'>
-            <a href="https://tusur.ru/ru/koronavirus" target="_blank">
-                О мерах предупреждения распространения новой коронавирусной инфекции в ТУСУРе
-            </a>
-            </div>
+        <div class='panel panel-danger margin-bottom-0 margin-top-20'>
+          <div class='panel-heading text-center'>
+          <a href="https://tusur.ru/ru/koronavirus" target="_blank">
+              О мерах предупреждения распространения новой коронавирусной инфекции в ТУСУРе
+          </a>
           </div>
-        <% end %>
+        </div>      
 
         <% if false %>
           <div class='panel panel-danger margin-top-20'>
