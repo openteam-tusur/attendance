@@ -55,6 +55,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     airbrake (5.6.1)
       airbrake-ruby (~> 1.6)
     airbrake-ruby (1.8.0)
@@ -237,6 +239,7 @@ GEM
     progress_bar (1.0.5)
       highline (~> 1.6)
       options (~> 2.3.0)
+    public_suffix (3.1.1)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.11)
@@ -382,6 +385,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   annotate
   attribute_normalizer
   auth_client!
@@ -428,4 +432,4 @@ DEPENDENCIES
   validates_email_format_of
 
 BUNDLED WITH
-   1.16.6
+   1.17.3

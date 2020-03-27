@@ -35,6 +35,7 @@ gem 'sunspot_rails', '~> 2.2.5'
 gem 'tusur_header'
 gem 'uglifier', '>= 1.3.0'
 gem 'validates_email_format_of'
+gem 'addressable'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-sugarjs'
