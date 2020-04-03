@@ -28,6 +28,11 @@ ru:
       declaration:
         reason: Причина
 
+      presence:
+        creator:
+          sdo: Система
+          group_leader: Староста
+
     errors:
       models:
         permission:

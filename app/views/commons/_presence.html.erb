@@ -1,5 +1,8 @@
 <% if presence && lesson.realizes.first.state == 'was' %>
-  <%= content_tag :span, presence, :class => "#{presence.state}" %>
+  <%= content_tag :span, presence,
+                  :class => "#{presence.state}",
+                  :title => "Выставил: #{I18n.t('activerecord.attributes.presence.creator.'+presence.creator)}"
+                %>
 <% else %>
   -
 <% end %>

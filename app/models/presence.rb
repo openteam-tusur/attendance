@@ -1,7 +1,10 @@
 class Presence < ActiveRecord::Base
+  extend Enumerize
   belongs_to :student
   belongs_to :lesson
   has_one :group, :through => :lesson
+
+  enumerize :creator, in: [:group_leader, :sdo], default: :group_leader, predicates: true
 
   scope :by_student,    -> (student)            { find_by(:student_id => student.id) }
   scope :by_state,      -> (state)              { where(:state => state) }

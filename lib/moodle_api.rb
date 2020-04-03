@@ -1,19 +1,14 @@
 class MoodleApi
-  def local_api_user_get_logs
-    RestClient.log = 'stdout'
+  def local_api_user_get_logs(uid, lesson_start, lesson_end)
     url = Settings['moodle_api.url']
     url += '?wstoken=' + Settings['moodle_api.token']
     url += '&wsfunction=local_api_user_get_logs'
     url += '&moodlewsrestformat=json'
-    url += '&users[0][uid]=79d20833-a23e-4073-abf3-1a9904635171'
-    url += '&users[0][start]=1585242000'
-    url += '&users[0][end]=1585243000'
-    url += '&users[1][uid]=79d20833-a23e-4073-abf3-1a9904635171'
-    url += '&users[1][start]=1585212000'
-    url += '&users[1][end]=1585243000'
-    # raise url.inspect
+    url += '&users[0][uid]=' + uid
+    url += '&users[0][start]=' + lesson_start.to_s
+    url += '&users[0][end]=' + lesson_end.to_s
     result = RestClient.get Addressable::URI.encode(url)
-    ap JSON.parse(result.body)
+    return JSON.parse(result.body)
   end
 
   def local_api_cohort_unenrol
