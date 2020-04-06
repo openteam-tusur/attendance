@@ -16,4 +16,5 @@
 //= require commons/modal
 //= require commons/popover
 //= require commons/users_autocomplete
+//= require commons/tooltip
 //= require documentation
