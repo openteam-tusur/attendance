@@ -14,6 +14,7 @@ class PresenceCatcher
         lesson_time_start = LessonTime.new(lesson.order_number, lesson.date_on).lesson_time
         lesson_time_end = lesson_time_start + 95.minutes
         lesson.presences.each do |presence|
+          next if presence.state.present?
           uid = presence.student.user_id
           if uid.present?
             statistic = MoodleApi.new().local_api_user_get_logs(uid, lesson_time_start.to_i, lesson_time_end.to_i)
