@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200403095700) do
+ActiveRecord::Schema.define(version: 20200413113517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,10 +148,11 @@ ActiveRecord::Schema.define(version: 20200403095700) do
   create_table "realizes", force: :cascade do |t|
     t.integer  "lecturer_id"
     t.integer  "lesson_id"
-    t.string   "state",       limit: 255
+    t.string   "state",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "approved",    limit: 255, default: "unfilled"
+    t.string   "approved",          limit: 255, default: "unfilled"
+    t.boolean  "lecturer_presence"
   end
 
   add_index "realizes", ["lecturer_id"], name: "index_realizes_on_lecturer_id", using: :btree

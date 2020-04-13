@@ -1,5 +1,9 @@
 set :job_template, "bash -c 'source ~/.rvm/environments/default && :job'"
 
+every :day, at: '00:15am' do
+  rake 'import:associate_lecturers_with_users'
+end
+
 every :day, at: '00:30am' do
   rake 'import:associate_students_with_users'
 end
