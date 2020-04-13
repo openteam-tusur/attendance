@@ -16,6 +16,10 @@ class Lecturer < Person
     "#{surname} #{name.first}. #{patronymic.try(:first)}."
   end
 
+  def full_name
+    %w(surname name patronymic).map { |key| self[key] }.compact.join(' ')
+  end
+
   def actual_subdepartment
     subdepartments.where(:memberships => { :deleted_at => nil }).first
   end

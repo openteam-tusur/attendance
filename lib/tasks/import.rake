@@ -20,6 +20,42 @@ namespace :import do
     end
   end
 
+  desc 'Ассоциация преподавателей с пользователями'
+  task associate_lecturers_with_users: :environment do
+    lecturers = Lecturer.all
+    pb = ProgressBar.new lecturers.count
+    lecturers.find_each do |lecturer|
+      if lecturer.permissions.present?
+        lecturer.user_id = lecturer.permissions.first.user_id
+        lecturer.save!
+      end
+      if lecturer.directory_id.present?
+        directory_url = URI Settings['directory.url']
+        directory_url.path = '/api/persons/' + lecturer.directory_id.to_s
+      else
+        directory_url = URI Settings['directory.url']
+        directory_url.path = '/api/persons/by_fullname/'
+        directory_url.path += URI.encode lecturer.full_name
+      end
+      begin
+        request = JSON.parse(RestClient.get directory_url.to_s)
+        user_id = ''
+        if request.class == Array
+          user_id = request[0]['user_id'] if request.any?
+        else
+          user_id = request['user_id']
+        end
+        if user_id.present?
+          lecturer.user_id = user_id
+          lecturer.save!
+        end
+      rescue
+        ap directory_url.to_s
+      end
+      pb.increment!
+    end
+  end
+
   desc 'Импорт посещаемости с sdo.tusur.ru на время карантина'
   task sdo_presences: :environment do
     groups = Group.actual
