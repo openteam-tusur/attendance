@@ -98,7 +98,7 @@ class LessonCatcher
               raise ActiveRecord::RecordNotFound
             end
             search_array = [ sub_title, wrong_abbrs[sub_title],
-                             sub_title.mb_chars.downcase.to_s]
+                             sub_title.mb_chars.downcase.to_s].compact
             subdepartment = Subdepartment.find_by abbr: search_array
             raise ActiveRecord::RecordNotFound unless subdepartment
           rescue ActiveRecord::RecordNotFound
