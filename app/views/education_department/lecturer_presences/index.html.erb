@@ -1,0 +1,5 @@
+<ul>
+  <% @dates.each do |date| %>
+    <li><%= link_to date, generate_xls_education_department_lecturer_presences_path(date: date), method: :post%></li>
+  <% end %>
+</ul>

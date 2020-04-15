@@ -61,6 +61,9 @@ Rails.application.routes.draw do
   end
 
   namespace :education_department do
+    resources :lecturer_presences, only: [:index] do
+      post 'generate_xls', on: :collection
+    end
     resources :disruptions
     resources :miss_kinds, except: [:show, :destroy]
     resources :permissions, only: [:index, :new, :create, :destroy]

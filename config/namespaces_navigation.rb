@@ -50,6 +50,10 @@ SimpleNavigation::Configuration.run do |navigation|
             I18n.t('page_title.faculties.statistics'),
             education_department_group_leaders_path
 
+          role_item.item :lecturer_presences,
+            I18n.t('page_title.lecturer_presences.title'),
+            education_department_lecturer_presences_path
+
           role_item.item :disruptions,
             I18n.t('page_title.disruptions.index'),
             education_department_disruptions_path
