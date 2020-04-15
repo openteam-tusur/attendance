@@ -22,7 +22,7 @@ class Statistic::Xls::LecturerPresences
   def generate
     report.use_shared_strings = true
     @wb = report.workbook
-    @ws = wb.add_worksheet(name: 'Посещаемость ППС за' + @report_date)
+    @ws = wb.add_worksheet(name: 'Посещаемость ППС за ' + @report_date)
     set_header
     set_data
     serialize_report
@@ -58,9 +58,9 @@ class Statistic::Xls::LecturerPresences
           lesson.discipline.title,
           lesson.group.number,
           I18n.t("lesson.time.#{lesson.order_number}"),
-          realize.lecturer_presence
+          realize.lecturer_presence ? 'да' : 'нет'
         ]
-        ws.add_row data, style: [@style] * data.count
+        ws.add_row data, types: [:string]  * data.count, style: [@style] * data.count
         ws.column_widths *[50, 50, 80, 30, 30, 30]
       end
     end
