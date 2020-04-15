@@ -27,6 +27,10 @@ class Lecturer < Person
   def as_json(options)
     super(:only => :id).merge(:label => info, :value => info)
   end
+
+  def academic_fields
+    %w(academic_degree academic_rank).map { |key| self[key] }.compact.join(', ')
+  end
 end
 
 # == Schema Information

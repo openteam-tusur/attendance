@@ -11,6 +11,7 @@ class Statistic::Xls::LecturerPresences
     [
       "Кафедра",
       "ФИО преподавателя",
+      "Степень, звание",
       "Дисциплина",
       "Группа",
       "Время занятия по расписанию",
@@ -54,14 +55,15 @@ class Statistic::Xls::LecturerPresences
       lesson.realizes.each do |realize|
         data = [
           realize.lecturer.subdepartments.try(:map) {|s| s['title']}.uniq.join(', '),
-          realize.lecturer.short_name,
+          realize.lecturer.full_name,
+          realize.lecturer.academic_fields,
           lesson.discipline.title,
           lesson.group.number,
           I18n.t("lesson.time.#{lesson.order_number}"),
           realize.lecturer_presence ? 'да' : 'нет'
         ]
         ws.add_row data, types: [:string]  * data.count, style: [@style] * data.count
-        ws.column_widths *[50, 50, 80, 30, 30, 30]
+        ws.column_widths *[50, 50, 50, 80, 15, 30, 20]
       end
     end
   end

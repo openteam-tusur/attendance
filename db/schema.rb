@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200413113517) do
+ActiveRecord::Schema.define(version: 20200415113333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,17 +105,19 @@ ActiveRecord::Schema.define(version: 20200413113517) do
   add_index "misses", ["missing_id", "missing_type"], name: "index_misses_on_missing_id_and_missing_type", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "type",          limit: 255
-    t.string   "name",          limit: 255
-    t.string   "surname",       limit: 255
-    t.string   "patronymic",    limit: 255
+    t.string   "type",            limit: 255
+    t.string   "name",            limit: 255
+    t.string   "surname",         limit: 255
+    t.string   "patronymic",      limit: 255
     t.integer  "contingent_id"
     t.integer  "directory_id"
-    t.string   "secure_id",     limit: 255
+    t.string   "secure_id",       limit: 255
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user_id"
+    t.string   "academic_rank"
+    t.string   "academic_degree"
   end
 
   create_table "permissions", force: :cascade do |t|

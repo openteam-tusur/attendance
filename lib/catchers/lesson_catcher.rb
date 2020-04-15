@@ -110,6 +110,8 @@ class LessonCatcher
                                                 patronymic: lecturer['middlename'].to_s.squish.presence || nil)
 
           lect.directory_id = lecturer['directory_id']
+          lect.academic_degree = lecturer['academic_degree']
+          lect.academic_rank = lecturer['academic_rank']
 
           unless lect.subdepartments.include?(subdepartment)
             lect.subdepartments.clear if lect.persisted?
