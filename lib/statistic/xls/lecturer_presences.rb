@@ -15,7 +15,8 @@ class Statistic::Xls::LecturerPresences
       "Дисциплина",
       "Группа",
       "Время занятия по расписанию",
-      "Присутствие"
+      "Присутствие",
+      "User ID"
     ]
   end
 
@@ -60,10 +61,11 @@ class Statistic::Xls::LecturerPresences
           lesson.discipline.title,
           lesson.group.number,
           I18n.t("lesson.time.#{lesson.order_number}"),
-          realize.lecturer_presence ? 'да' : 'нет'
+          realize.lecturer_presence ? 'да' : 'нет',
+          realize.lecturer.user_id
         ]
         ws.add_row data, types: [:string]  * data.count, style: [@style] * data.count
-        ws.column_widths *[50, 50, 50, 80, 15, 30, 20]
+        ws.column_widths *[50, 50, 50, 80, 15, 30, 20, 40]
       end
     end
   end
