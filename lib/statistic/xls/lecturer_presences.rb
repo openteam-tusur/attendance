@@ -67,6 +67,6 @@ class Statistic::Xls::LecturerPresences
   end
 
   def serialize_report
-    report.serialize(Rails.root.join(%(lecturer_presences.xlsx)))
+    report.serialize(Rails.root.join(%(lecturer_presences-#{@report_date}.xlsx)))
   end
 end

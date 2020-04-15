@@ -5,7 +5,7 @@ class EducationDepartment::LecturerPresencesController < AuthController
   def generate_xls
     report = Statistic::Xls::LecturerPresences.new(params[:date]).generate
     send_data report.to_stream.read,
-      filename: 'lecturer_presences.xlsx',
+      filename: "lecturer_presences-#{params[:date]}.xlsx",
       type: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
   end
 end
