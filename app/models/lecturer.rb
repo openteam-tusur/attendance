@@ -16,9 +16,13 @@ class Lecturer < Person
     "#{surname} #{name.first}. #{patronymic.try(:first)}."
   end
 
+  alias_method :shortname, :short_name
+
   def full_name
     %w(surname name patronymic).map { |key| self[key] }.compact.join(' ')
   end
+
+  alias_method :fullname, :full_name
 
   def actual_subdepartment
     subdepartments.where(:memberships => { :deleted_at => nil }).first

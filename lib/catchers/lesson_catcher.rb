@@ -97,10 +97,14 @@ class LessonCatcher
                 state: :failure
               raise ActiveRecord::RecordNotFound
             end
-            search_array = [ sub_title, wrong_abbrs[sub_title],
-                             sub_title.mb_chars.downcase.to_s].compact
-            subdepartment = nil
-            subdepartment = Subdepartment.where.not(abbr: nil).find_by(abbr: search_array)
+            search_array = [
+              sub_title,
+              wrong_abbrs[sub_title]
+            ].delete_if(&:blank?)
+            subdepartment = Subdepartment.
+              where.not(abbr: nil).
+              where(deleted_at: nil).
+              find_by(abbr: search_array)
             raise ActiveRecord::RecordNotFound unless subdepartment
           rescue ActiveRecord::RecordNotFound
             raise "Не найдена кафедра #{lecturer['subdepartment']}"
