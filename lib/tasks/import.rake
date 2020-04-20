@@ -57,9 +57,9 @@ namespace :import do
   end
 
   desc 'Импорт посещаемости с sdo.tusur.ru на время карантина'
-  task sdo_presences: :environment do
+  task :sdo_presences, [:lesson_date] => :environment do |t, args|
     groups = Group.actual
-    lesson_date = Date.today - 1.days
+    lesson_date = args['lesson_date'].blank? ? Date.yesterday : Date.parse(args['lesson_date'])
     ap 'синхронизация за ' + lesson_date.to_s
     begin
       PresenceCatcher.new(groups, lesson_date).sync
