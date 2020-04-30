@@ -83,6 +83,7 @@ class LessonCatcher
           l.classroom    = lesson['classroom']
           l.kind         = lesson['kind']
           l.order_number = lesson['order_number']
+          l.edu_discipline_id = lesson['discipline']['edu_plan_id']
           l.discipline   = discipline
           l.deleted_at   = nil
           l.save!

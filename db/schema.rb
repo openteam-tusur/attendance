@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200415113333) do
+ActiveRecord::Schema.define(version: 20200430042836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,14 +58,16 @@ ActiveRecord::Schema.define(version: 20200415113333) do
   create_table "lessons", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "discipline_id"
-    t.string   "classroom",     limit: 255
+    t.string   "classroom",         limit: 255
     t.date     "date_on"
-    t.string   "kind",          limit: 255
-    t.string   "order_number",  limit: 255
-    t.string   "timetable_id",  limit: 255
+    t.string   "kind",              limit: 255
+    t.string   "order_number",      limit: 255
+    t.string   "timetable_id",      limit: 255
     t.date     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "edu_discipline_id"
+    t.integer  "moodle_id"
   end
 
   add_index "lessons", ["deleted_at"], name: "index_lessons_on_deleted_at", where: "(deleted_at IS NULL)", using: :btree
