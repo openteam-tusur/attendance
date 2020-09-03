@@ -1,10 +1,14 @@
 module DateRange
   def semester_begin
     if current_month > 6
-      Date.new(current_year, 7, 1)
+      Date.parse(%{#{current_year}-09-01})
     else
-      Date.new(current_year, 1, 1)
+      Date.parse(%{#{current_year}-01-01})
     end
+  end
+
+  def today
+    Date.today
   end
 
   def semester_end
@@ -23,15 +27,11 @@ module DateRange
     today.beginning_of_week - 1.day
   end
 
-  def today
-    @today ||= Date.today
-  end
-
   def current_month
-    @current_month ||= today.month
+    today.month
   end
 
   def current_year
-    @current_year ||= today.year
+    today.year
   end
 end
