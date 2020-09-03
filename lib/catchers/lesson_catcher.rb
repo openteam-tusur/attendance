@@ -23,7 +23,7 @@ class LessonCatcher
       if timetable_info[:code] != 200
         puts "response code: #{timetable_info[:code]}"
         if redo_counter > 10
-          abort("LessonCatcher: timetable.openteam.ru вернул код ошибки #{timetable_info[:code]} более 10 раз.
+          abort("LessonCatcher: #{Settings['timetable.url']} вернул код ошибки #{timetable_info[:code]} более 10 раз.
           Синхронизация принудительно остановлена")
         end
 
