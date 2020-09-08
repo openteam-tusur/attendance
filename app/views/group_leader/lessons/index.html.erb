@@ -32,7 +32,8 @@
                                         class: 'lesson-discipline truncated js-tooltip cursor-help',
                                         title: lesson.discipline.title) %>
                         <%= content_tag(:span, I18n.t("lesson.kind.#{lesson.kind}.name"),
-                                        class: 'lesson-kind truncated') %>
+                                        class: 'lesson-kind truncated js-tooltip cursor-help',
+                                        title: I18n.t("lesson.kind.#{lesson.kind}.name")) %>
                         <%= content_tag(:span, lesson.lesson_lecturers,
                                         class: 'lesson-lecturers truncated js-tooltip cursor-help',
                                         title: lesson.lesson_lecturers) %>
