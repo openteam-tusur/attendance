@@ -26,10 +26,16 @@
                         class: "js-lesson-realizes lesson-realizes #{lesson.realizes.first.state}" %>
 
                       <span class="lesson-info">
-                        <%= content_tag(:span, I18n.t("lesson.time.#{lesson.order_number}"), class: 'lesson-time') %>
-                        <%= content_tag(:span, lesson.discipline.title, class: 'lesson-discipline truncated') %>
-                        <%= content_tag(:span, I18n.t("lesson.kind.#{lesson.kind}.name"), class: 'lesson-kind truncated') %>
-                        <%= content_tag(:span, lesson.lesson_lecturers, class: 'lesson-lecturers truncated') %>
+                        <%= content_tag(:span, I18n.t("lesson.time.#{lesson.order_number}"),
+                                        class: 'lesson-time') %>
+                        <%= content_tag(:span, lesson.discipline.title,
+                                        class: 'lesson-discipline truncated js-tooltip cursor-help',
+                                        title: lesson.discipline.title) %>
+                        <%= content_tag(:span, I18n.t("lesson.kind.#{lesson.kind}.name"),
+                                        class: 'lesson-kind truncated') %>
+                        <%= content_tag(:span, lesson.lesson_lecturers,
+                                        class: 'lesson-lecturers truncated js-tooltip cursor-help',
+                                        title: lesson.lesson_lecturers) %>
                       </span>
 
                       <div class='check-helper'>
