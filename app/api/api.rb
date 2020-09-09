@@ -59,7 +59,7 @@ class API < Grape::API
       between_dates(student.semester_begin, student.semester_end)
 
     presences.each do |p|
-      p.state = 'valid_excuse' if p.state == 'wasnt' && misses.where('misses.starts_at <= :time AND misses.ends_at >= :time', :time => LessonTime.new(p.lesson.order_number, p.lesson.date_on).lesson_time).any?
+      p.state = 'valid_excuse' if p.state == 'wasnt' && misses.where('misses.starts_at <= :time AND misses.ends_at >= :time', :time => LessonTime.new(p.lesson.order_number, p.lesson.date_on, p.lesson.training_shift).lesson_time).any?
     end
 
     presences
@@ -111,7 +111,7 @@ class API < Grape::API
     presences.each do |student, presences|
       presences.each do |p|
         if p.state == 'wasnt' && misses[student]
-          lesson_time = LessonTime.new(p.lesson.order_number, p.lesson.date_on)
+          lesson_time = LessonTime.new(p.lesson.order_number, p.lesson.date_on, p.lesson.training_shift)
                                   .lesson_time
           p.state = 'valid_excuse' if misses[student].find{ |miss| miss.starts_at <= lesson_time && miss.ends_at >= lesson_time }
         end

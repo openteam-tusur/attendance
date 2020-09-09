@@ -19,3 +19,44 @@
 7:
   hour: 20
   minutes: 15
+
+training_shifts:
+  first:
+    1:
+      hour: 8
+      minutes: 50
+    2:
+      hour: 10
+      minutes: 40
+    3:
+      hour: 13
+      minutes: 00
+    4:
+      hour: 14
+      minutes: 50
+    5:
+      hour: 17
+      minutes: 10
+    6:
+      hour: 19
+      minutes: 00
+
+  second:
+    1:
+      hour: 9
+      minutes: 05
+    2:
+      hour: 10
+      minutes: 55
+    3:
+      hour: 13
+      minutes: 15
+    4:
+      hour: 15
+      minutes: 05
+    5:
+      hour: 17
+      minutes: 25
+    6:
+      hour: 19
+      minutes: 15

@@ -1,4 +1,4 @@
-class LessonTime < Struct.new(:order, :date_on)
+class LessonTime < Struct.new(:order, :date_on, :training_shift)
   def lesson_time
     date_on + start_time
   end
@@ -8,7 +8,11 @@ class LessonTime < Struct.new(:order, :date_on)
   def lesson_schedule
     lesson_hash = YAML.load_file('data/lessons.yml')
 
-    lesson_hash[order.to_i]
+    if training_shift.present?
+      lesson_hash['training_shifts'][training_shift][order.to_i]
+    else
+      lesson_hash[order.to_i]
+    end
   end
 
   def start_time
