@@ -2,15 +2,16 @@
   <div class='row'>
     <div class='col-xs-12'>
       <%= content_for :page_title do %>
-        <h1><%= page_title(@group.number) %></h1>
+        <h1>
+          <%= page_title(@group.number) %>
+          (<span class='training-shifts training-shift-<%= @group.training_shift %>'><%= I18n.t("training_shifts.#{@group.training_shift}") %></span>)
+        </h1>
       <% end %>
     </div>
   </div>
 
   <div class='row'>
-
     <div class='col-lg-9 col-md-9 col-sm-12'>
-
       <div class='table-responsive'>
         <table class='table table-condensed table-bordered table-lessons'>
           <thead>
@@ -26,7 +27,7 @@
                         class: "js-lesson-realizes lesson-realizes #{lesson.realizes.first.state}" %>
 
                       <span class="lesson-info">
-                        <%= content_tag(:span, I18n.t("lesson.time.#{lesson.order_number}"),
+                        <%= content_tag(:span, I18n.t("lesson.time_with_training_shift.#{@group.training_shift}.#{lesson.order_number}"),
                                         class: 'lesson-time') %>
                         <%= content_tag(:span, lesson.discipline.title,
                                         class: 'lesson-discipline truncated js-tooltip cursor-help',
@@ -47,10 +48,12 @@
                   <% end %>
                 <% else %>
                   <th class='lesson-caption'>
-                    <span class='lesson-info empty'>
-                      <%= content_tag(:span, I18n.t("lesson.time.#{index}"), class: 'lesson-time') %>
-                      <span class='lesson-discipline'>нет пары</span>
-                    </span>
+                    <% if index != 7 %>
+                      <span class='lesson-info empty'>
+                        <%= content_tag(:span, I18n.t("lesson.time_with_training_shift.#{@group.training_shift}.#{index}"), class: 'lesson-time') %>
+                        <span class='lesson-discipline'>нет пары</span>
+                      </span>
+                    <% end %>
                   </th>
                 <% end %>
               <% end %>

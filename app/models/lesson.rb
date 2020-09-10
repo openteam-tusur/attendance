@@ -28,7 +28,7 @@ class Lesson < ActiveRecord::Base
   scope :realized,      ->           { joins(:realizes).where(:realizes => { :state => :was }).uniq }
   scope :between_dates, ->(from, to) { where('date_on between :from and :to', :from => from, :to => to) }
 
-  delegate :faculty, to: :group, allow_nil: true
+  delegate :faculty, :training_shift, to: :group
 
   def realized?
     realizes.select(:state).first.state == 'was'
@@ -48,15 +48,6 @@ class Lesson < ActiveRecord::Base
 
   def kind_abbr
     I18n.t("lesson.kind.#{kind}.abbr")
-  end
-
-  def training_shift
-    case group.faculty.abbr.mb_chars.upcase
-    when *%w[ФСУ ФИТ РТФ ФБ РКФ ГФ]
-      'first'
-    when *%w[ФВС ФЭТ ЮФ ЭФ ЗИВФ]
-      'second'
-    end
   end
 end
 

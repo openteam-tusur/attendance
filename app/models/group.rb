@@ -40,6 +40,15 @@ class Group < ActiveRecord::Base
   def absent_days(from = nil, to = nil)
     lessons.actual.realized.unfilled.by_semester.between_dates(from, to).map(&:date_on).uniq.count
   end
+
+  def training_shift
+    case faculty.abbr.mb_chars.upcase
+    when *%w[ФСУ ФИТ РТФ ФБ РКФ ГФ]
+      'first'
+    when *%w[ФВС ФЭТ ЮФ ЭФ ЗИВФ]
+      'second'
+    end
+  end
 end
 
 # == Schema Information
