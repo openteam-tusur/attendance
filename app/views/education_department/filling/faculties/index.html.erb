@@ -6,7 +6,7 @@
   <ul>
     <% @faculties.each do |faculty| %>
       <li class='margin-bottom-10'>
-        <%= link_to '#' do %>
+        <%= link_to education_department_filling_faculty_path(faculty.abbr) do %>
           <%= faculty.title %>
           (<%= faculty.abbr %>)
         <% end %>
