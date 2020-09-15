@@ -1,0 +1,10 @@
+<% content_for :page_title, content_tag(:h1, %[#{@faculty.title} (#{@faculty.abbr})]) %>
+
+<% @groups.each do |course, groups| %>
+  <h2><%= course %> курс</h2>
+  <ul class='list-inline'>
+  <% groups.each do |group| %>
+    <li class='margin-bottom-15'><%= group.number %></li>
+  <% end %>
+  </ul>
+<% end %>
