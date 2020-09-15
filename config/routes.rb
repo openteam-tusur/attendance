@@ -62,7 +62,11 @@ Rails.application.routes.draw do
 
   namespace :education_department do
     namespace :filling do
-      resources :faculties, only: [:index, :show]
+      resources :faculties, only: [:index, :show] do
+        resources :groups, only: [:show] do
+          resources :lessons, only: [:index]
+        end
+      end
     end
 
     resources :lecturer_presences, only: [:index] do

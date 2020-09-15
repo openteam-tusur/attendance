@@ -1,10 +1,14 @@
 <% content_for :page_title, content_tag(:h1, %[#{@faculty.title} (#{@faculty.abbr})]) %>
 
-<% @groups.each do |course, groups| %>
+<% @groups.each do |course, group_items| %>
   <h2><%= course %> курс</h2>
   <ul class='list-inline'>
-  <% groups.each do |group| %>
-    <li class='margin-bottom-15'><%= group.number %></li>
-  <% end %>
+    <% group_items.each do |group| %>
+      <li class='margin-bottom-15'>
+        <%= link_to education_department_filling_faculty_group_lessons_path(@faculty.abbr, group.number) do %>
+          <%= group.number %>
+        <% end %>
+      </li>
+    <% end %>
   </ul>
 <% end %>
