@@ -13,6 +13,16 @@ class Faculty < ActiveRecord::Base
 
   scope :actual,      -> { where(:deleted_at => nil) }
   scope :not_actual,  -> { where.not(:deleted_at => nil) }
+  scope :without_untracked, -> {
+    where.not(
+      title: [
+        'Аспирантура',
+        'Заочный и вечерний факультет',
+        'Институт инноватики',
+        'Факультет дистанционного обучения',
+      ]
+    )
+  }
 
   def to_s
     abbr

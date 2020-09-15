@@ -1,0 +1,18 @@
+<% content_for :page_title, content_tag(:h1, 'Заполнение журнала посещаемости') %>
+
+<h2>Факультеты</h2>
+
+<% if @faculties.present? %>
+  <ul>
+    <% @faculties.each do |faculty| %>
+      <li class='margin-bottom-10'>
+        <%= link_to '#' do %>
+          <%= faculty.title %>
+          (<%= faculty.abbr %>)
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class='text-danger'>Нет актуальной информации</p>
+<% end %>
