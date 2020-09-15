@@ -61,6 +61,10 @@ Rails.application.routes.draw do
   end
 
   namespace :education_department do
+    namespace :filling do
+      resources :faculties, only: [:index]
+    end
+
     resources :lecturer_presences, only: [:index] do
       post 'generate_xls', on: :collection
     end

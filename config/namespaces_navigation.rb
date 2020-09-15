@@ -41,6 +41,11 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         if role == 'education_department'
+          role_item.item :faculties_with_groups,
+            I18n.t('page_title.filling.index'),
+            education_department_filling_faculties_path,
+            highlights_on: /^\/education_department\/filling/
+
           role_item.item :faculties,
             I18n.t('page_title.faculties.index'),
             education_department_faculties_path,
