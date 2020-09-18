@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200430042836) do
+ActiveRecord::Schema.define(version: 20200918091756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,10 +139,11 @@ ActiveRecord::Schema.define(version: 20200430042836) do
   create_table "presences", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "lesson_id"
-    t.string   "state",      limit: 255
+    t.string   "state",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "creator"
+    t.string   "last_change_by"
   end
 
   add_index "presences", ["lesson_id"], name: "index_presences_on_lesson_id", using: :btree

@@ -42,11 +42,12 @@ end
 #
 # Table name: realizes
 #
-#  id          :integer          not null, primary key
-#  lecturer_id :integer
-#  lesson_id   :integer
-#  state       :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  approved    :string(255)      default("unfilled")
+#  id                :integer          not null, primary key
+#  lecturer_id       :integer
+#  lesson_id         :integer
+#  state             :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  approved          :string(255)      default("unfilled")
+#  lecturer_presence :boolean
 #

@@ -55,15 +55,17 @@ end
 #
 # Table name: lessons
 #
-#  id            :integer          not null, primary key
-#  group_id      :integer
-#  discipline_id :integer
-#  classroom     :string(255)
-#  date_on       :date
-#  kind          :string(255)
-#  order_number  :string(255)
-#  timetable_id  :string(255)
-#  deleted_at    :date
-#  created_at    :datetime
-#  updated_at    :datetime
+#  id                :integer          not null, primary key
+#  group_id          :integer
+#  discipline_id     :integer
+#  classroom         :string(255)
+#  date_on           :date
+#  kind              :string(255)
+#  order_number      :string(255)
+#  timetable_id      :string(255)
+#  deleted_at        :date
+#  created_at        :datetime
+#  updated_at        :datetime
+#  edu_discipline_id :string
+#  moodle_id         :integer
 #

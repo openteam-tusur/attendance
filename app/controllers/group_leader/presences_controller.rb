@@ -9,6 +9,7 @@ class GroupLeader::PresencesController < AuthController
   before_filter :find_lesson
 
   def change
+    @presence.last_change_by = current_user.id
     @presence.change_state
     @presence.save
 

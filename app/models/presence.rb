@@ -4,7 +4,11 @@ class Presence < ActiveRecord::Base
   belongs_to :lesson
   has_one :group, :through => :lesson
 
-  enumerize :creator, in: [:group_leader, :sdo], default: :group_leader, predicates: true
+  enumerize :creator, in: [
+    :group_leader,
+    :sdo,
+    :education_department,
+  ], default: :group_leader, predicates: true
 
   scope :by_student,    -> (student)            { find_by(:student_id => student.id) }
   scope :by_state,      -> (state)              { where(:state => state) }
@@ -65,10 +69,12 @@ end
 #
 # Table name: presences
 #
-#  id         :integer          not null, primary key
-#  student_id :integer
-#  lesson_id  :integer
-#  state      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id             :integer          not null, primary key
+#  student_id     :integer
+#  lesson_id      :integer
+#  state          :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  creator        :string
+#  last_change_by :string
 #
