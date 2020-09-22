@@ -1,0 +1,11 @@
+<% if presence && lesson.realizes.first.state == 'was' %>
+  <%= link_to presence,
+    change_education_department_filling_faculty_group_lesson_presence_path(
+      lesson.faculty.abbr, lesson.group.number, lesson, presence
+    ),
+    remote: true,
+    title: 'Изменить',
+    class: "#{presence.state}" %>
+<% else %>
+  -
+<% end %>
