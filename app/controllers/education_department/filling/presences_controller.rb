@@ -10,10 +10,13 @@ class EducationDepartment::Filling::PresencesController < AuthController
 
   def change
     @presence.last_change_by = current_user.id
+    @presence.creator = :education_department
     @presence.change_state
     @presence.save
 
-    render partial: 'education_department/presences/presence', locals: { presence: @presence, lesson: @lesson }, layout: false and return
+    render partial: 'education_department/presences/presence',
+      locals: { presence: @presence, lesson: @lesson },
+      layout: false and return
   end
 
   def check_all
