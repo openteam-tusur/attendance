@@ -45,6 +45,8 @@ class Ability
         can :read, GroupLeader
         can :manage, MissKind
         can :read, Lesson
+        can [:change, :check_all, :uncheck_all], Presence
+        can :change, Realize
       end
       if roles.include?('education_prorektor')
         can [:read, :statistics], Faculty

@@ -17,12 +17,14 @@
           <thead>
             <tr>
               <th class='caption'>Список студентов</th>
-              <% (1..7).each do |index| %>
+              <% (1..6).each do |index| %>
                 <% if @lessons_grouped_by_order[index.to_s] %>
                   <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
                     <th class='lesson-caption'>
                       <%= link_to lesson.realizes.first,
-                        change_group_leader_lesson_realizes_path(lesson),
+                        change_education_department_filling_faculty_group_lesson_realizes_path(
+                          @group.faculty.abbr, @group.number, lesson
+                        ),
                         data: { confirm: t('confirm.realize') },
                         class: "js-lesson-realizes lesson-realizes #{lesson.realizes.first.state}" %>
 
@@ -63,7 +65,7 @@
             <% @group.students_at(@date).each do |student| %>
               <tr>
                 <td class='student'><%= student %></td>
-                <% (1..7).each do |index| %>
+                <% (1..6).each do |index| %>
                   <% if @lessons_grouped_by_order[index.to_s] %>
                     <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
                       <td class='js-presence-cell presence-cell'>
