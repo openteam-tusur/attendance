@@ -43,8 +43,15 @@
                       </span>
 
                       <div class='check-helper'>
-                        <%= link_to 'Все были', check_all_group_leader_lesson_presences_path(lesson), class: 'check-all' %>
-                        <%= link_to 'Все не были', uncheck_all_group_leader_lesson_presences_path(lesson), class: 'uncheck-all' %>
+                        <%= link_to 'Все были',
+                          check_all_education_department_filling_faculty_group_lesson_presences_path(
+                            @group.faculty.abbr, @group.number, lesson
+                          ), class: 'check-all' %>
+
+                        <%= link_to 'Все не были',
+                          uncheck_all_education_department_filling_faculty_group_lesson_presences_path(
+                            @group.faculty.abbr, @group.number, lesson
+                          ), class: 'uncheck-all' %>
                       </div>
                     </th>
                   <% end %>

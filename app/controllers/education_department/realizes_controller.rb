@@ -7,6 +7,7 @@ class EducationDepartment::RealizesController < AuthController
   def change
     @lesson.realizes.change_state
     @lesson.presences.update_all(state: nil)
+
     redirect_to education_department_filling_faculty_group_lessons_path(
       @lesson.faculty.abbr, @lesson.group.number, by_date: @lesson.date_on
     )
