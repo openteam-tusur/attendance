@@ -2,7 +2,7 @@ class EducationDepartment::Filling::PresencesController < AuthController
   include CacheBuster
 
   inherit_resources
-  #load_and_authorize_resource
+  load_and_authorize_resource
 
   custom_actions :resource => :change, :collection => [:check_all, :uncheck_all]
 
@@ -13,13 +13,14 @@ class EducationDepartment::Filling::PresencesController < AuthController
     @presence.change_state
     @presence.save
 
-    render :partial => 'group_leader/presences/presence', :locals => { :presence => @presence, :lesson => @lesson }, :layout => false and return
+    render partial: 'education_department/presences/presence', locals: { presence: @presence, lesson: @lesson }, layout: false and return
   end
 
   def check_all
     @lesson.presences.each { |presence|
       presence.update_attributes(
         state: 'was',
+        creator: :education_department,
         last_change_by: current_user.id
       )
     } if @lesson.realized?
@@ -33,6 +34,7 @@ class EducationDepartment::Filling::PresencesController < AuthController
     @lesson.presences.each { |presence|
       presence.update_attributes(
         state: 'wasnt',
+        creator: :education_department,
         last_change_by: current_user.id
       )
     } if @lesson.realized?

@@ -76,7 +76,7 @@
                   <% if @lessons_grouped_by_order[index.to_s] %>
                     <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
                       <td class='js-presence-cell presence-cell'>
-                        <%= render partial: 'group_leader/presences/presence',
+                        <%= render partial: 'education_department/presences/presence',
                           locals: { presence: lesson.presences.select{|p| p.student_id == student.id }.first, lesson: lesson } %>
                       </td>
                     <% end %>

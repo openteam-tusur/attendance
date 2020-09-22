@@ -34,19 +34,18 @@ class Ability
       can :show, Discipline
     end
 
-    if namespace == :education_department
+    if namespace == :education_department || namespace == :filling
       if roles.include?('education_department')
         can [:read, :statistics], Faculty
         can :manage, Permission, context_type: ['Faculty', 'Subdepartment']
         can :manage, Disruption
         can :manage, Miss, missing_type: ['Lecturer']
-        can :manage, Realize
+        can [:manage, :change], Realize
+        can [:manage, :change, :check_all, :uncheck_all], Presence
         can :read, Student
         can :read, GroupLeader
         can :manage, MissKind
         can :read, Lesson
-        can [:change, :check_all, :uncheck_all], Presence
-        can :change, Realize
       end
       if roles.include?('education_prorektor')
         can [:read, :statistics], Faculty
