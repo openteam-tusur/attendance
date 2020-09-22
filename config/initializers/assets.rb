@@ -19,6 +19,7 @@ Rails.application.config.assets.precompile += %w[
   curator/index.js
   dean/index.js
   education_department/index.js
+  filling/index.js
   group_leader/index.js
   lecturer/index.js
   public/index.js
