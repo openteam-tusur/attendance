@@ -64,7 +64,16 @@ Rails.application.routes.draw do
     namespace :filling do
       resources :faculties, only: [:index, :show] do
         resources :groups, only: [:show] do
-          resources :lessons, only: [:index]
+          resources :lessons, only: [:index] do
+            resources :presences, only: [] do
+              get 'change', on: :member
+              get 'check_all', on: :collection
+              get 'uncheck_all', on: :collection
+            end
+            resources :realizes, only: [] do
+              get 'change', on: :collection
+            end
+          end
         end
       end
     end
