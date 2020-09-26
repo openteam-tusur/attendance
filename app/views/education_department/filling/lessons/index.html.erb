@@ -16,7 +16,7 @@
         <table class='table table-condensed table-bordered table-lessons'>
           <thead>
             <tr>
-              <th class='caption'>Список студентов</th>
+              <th class='caption' colspan='2'>Список студентов</th>
               <% (1..6).each do |index| %>
                 <% if @lessons_grouped_by_order[index.to_s] %>
                   <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
@@ -69,8 +69,11 @@
             </tr>
           </thead>
           <tbody>
-            <% @group.students_at(@date).each do |student| %>
+            <% @group.students_at(@date).each_with_index do |student, index| %>
               <tr>
+                <td class='text-center valign-middle'>
+                  <%= (index + 1).to_s %>
+                </td>
                 <td class='student'><%= student %></td>
                 <% (1..6).each do |index| %>
                   <% if @lessons_grouped_by_order[index.to_s] %>
