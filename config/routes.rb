@@ -71,7 +71,7 @@ Rails.application.routes.draw do
               get 'uncheck_all', on: :collection
             end
             resources :realizes, only: [] do
-              get 'change', on: :collection
+              get 'change_all', on: :collection
             end
           end
         end

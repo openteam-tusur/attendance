@@ -22,7 +22,7 @@
                   <% @lessons_grouped_by_order[index.to_s].each do |lesson| %>
                     <th class='lesson-caption'>
                       <%= link_to lesson.realizes.first,
-                        change_education_department_filling_faculty_group_lesson_realizes_path(
+                        change_all_education_department_filling_faculty_group_lesson_realizes_path(
                           @group.faculty.abbr, @group.number, lesson
                         ),
                         data: { confirm: t('confirm.realize') },

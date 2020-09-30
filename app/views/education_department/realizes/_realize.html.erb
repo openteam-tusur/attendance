@@ -1,8 +1,12 @@
 <% if @realize.unfilled? %>
   <%= link_to "Да", accept_education_department_realize_path(@realize), :class => 'btn btn-default btn-xs btn-accept', :remote => true %>
   <%= link_to "Нет", refuse_education_department_realize_path(@realize), :class => 'btn btn-default btn-xs btn-refuse', :remote => true %>
-<% elsif @realize.approved %>
+<% end %>
+
+<% if @realize.reasonable? %>
   Да <%= link_to "изменить", change_education_department_realize_path(@realize), :remote => true %>
-<% else %>
+<% end %>
+
+<% if @realize.unreasonable? %>
   Нет <%= link_to "изменить", change_education_department_realize_path(@realize), :remote => true %>
 <% end %>
