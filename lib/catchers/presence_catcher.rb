@@ -11,7 +11,7 @@ class PresenceCatcher
     pb = ProgressBar.new(groups.count)
     groups.find_each do |group|
       group.lessons.by_date(lesson_date).order('order_number').each do |lesson|
-        lesson_time_start = LessonTime.new(lesson.order_number, lesson.date_on, lesson.training_shift).lesson_time
+        lesson_time_start = LessonTime.new(lesson.order_number, lesson.date_on, lesson.training_shift).lesson_time - 10.minutes
         lesson_time_end = lesson_time_start + 95.minutes
         lecturer_presence_import(lesson, lesson_time_start.to_i, lesson_time_end.to_i)
         lesson.presences.each do |presence|
